@@ -76,6 +76,7 @@ Route::prefix("masterizacao")->name("masterizacao.")->group(function () {
 });
 
 Route::get("/", function () {return redirect()->route("utilizador.autenticacao");});
+Route::get("/erro_data", function () {return view("index.erro_de_pagina.data-erro");});
 Route::fallback(function () {return view("index.erro_de_pagina.pagina-de-erro");});
 
 Route::get("/migrate", function () {
