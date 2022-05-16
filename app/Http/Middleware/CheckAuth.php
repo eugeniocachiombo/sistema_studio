@@ -33,37 +33,28 @@ class CheckAuth
         try {
             $response = file_get_contents($url);
             $data = json_decode($response);
-            session()->put("estado", "O sistema está em modo online");
+            session()->put("estado", "Modo online");
 
             if ($data && isset($data->datetime)) {
-                $dataAtual = new \DateTime($data->datetime);
-                $ano = $dataAtual->format('Y');
-                $mes = $dataAtual->format('m');
+                $dataInternet = new \DateTime($data->datetime);
+                $dataComputador = new \DateTime(date("Y-m-dTH:i:s"));
 
+                $dataComputador->setTime($dataComputador->format('H'), $dataComputador->format('i'), 0);
+                $dataInternet->setTime($dataInternet->format('H'), $dataInternet->format('i'), 0);
                 
-                if (date("Y") < $ano) {
-                    dd(
-                        "Impossível aceder o sistema, verifique a data.",
-                        "O Sistena só pode ser acessado em Angola"
-                    );
-                }
-
-                if (date("m") < $mes) {
-                    dd(
-                        "Impossível aceder o sistema, verifique a data.",
-                        "O Sistena só pode ser acessado em Angola"
-                    );
+                if ($dataComputador != $dataInternet) {
+                    session()->put("mensagem", "O Sistema só pode ser acessado em Angola");
+                    ?> <script> window.location = "/erro_data"; </script> <?php
                 }
             } else {
-                dd(
-                    "Impossível aceder o sistema, verifique a data.",
-                    "O Sistena só pode ser acessado em Angola"
-                );
-                //return redirect("/erro_data");
+                session()->put("mensagem", "Erro de conexao a internet, impossível buscar a localização");
+                ?> <script> window.location = "/erro_data"; </script> <?php
             }
         } catch (Exception $e) {
-            session()->put("estado", "O sistema está em modo Offiline");
-            //return redirect("/erro_data");
+            session()->put("estado", "Modo offline");
+            session()->forget("mensagem");
         }
     }
 }
+?>
+
