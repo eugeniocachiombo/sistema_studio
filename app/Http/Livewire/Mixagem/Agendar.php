@@ -235,13 +235,24 @@ class Agendar extends Component
         $masterizacao = Masterizacao::max("data_master");
         $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
 
-        $this->emit('alerta', [
-            'icon' => "warning",
-            'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
-            'btn' => true,
-            'tempo' => 100000,
-            'position' => 'center',
-        ]);
+        if($ultimoHorario){
+            $this->emit('alerta', [
+                'icon' => "warning",
+                'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
+                'btn' => true,
+                'tempo' => 100000,
+                'position' => 'center',
+            ]);
+        }else{
+            $this->emit('alerta', [
+                'icon' => "warning",
+                'mensagem' => '<b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
+                'btn' => true,
+                'tempo' => 100000,
+                'position' => 'center',
+            ]);
+        }
+
     }
 
     public function formatarDataNormal($data){
