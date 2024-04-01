@@ -32,6 +32,8 @@
   <link href="../assets/css/style.css" rel="stylesheet">
   <script src="../assets/js/alerta.js"></script>
   <script src="../assets/js/executar_alert.js"></script>
+
+  <script src="https://www.google.com/recaptcha/api.js?render=Your_reCAPTCHA_site_key"></script>
   @livewireStyles
 </head>
 

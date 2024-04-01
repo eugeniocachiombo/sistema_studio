@@ -5,7 +5,7 @@
         <li class="nav-item">
             <a class="nav-link " href="index.html">
                 <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+                <span>Painel</span>
             </a>
         </li>
 
@@ -183,13 +183,33 @@
         </li>
 
         <li class="nav-heading">Páginas</li>
+       
+        {{-- Apresentar informações de cadastro --}}
+        @if (!session('utilizador'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route("utilizador.cadastro")}}">
+                    <i class="bi bi-card-list"></i>
+                    <span>Criar Conta</span>
+                </a>
+            </li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{route("utilizador.perfil")}}">
-                <i class="bi bi-person"></i>
-                <span>Perfil</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route("utilizador.autenticacao")}}">
+                    <i class="bi bi-box-arrow-in-left"></i>
+                    <span>Iniciar Sessão</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- Apresentar Perfil --}}
+        @if (session('utilizador'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route("utilizador.perfil")}}">
+                    <i class="bi bi-person"></i>
+                    <span>Perfil</span>
+                </a>
+            </li>
+        @endif
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{route("info.ajuda")}}">

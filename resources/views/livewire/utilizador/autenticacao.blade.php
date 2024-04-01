@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                                            <button class="btn btn-primary w-100" type="submit">Iniciar Sessão</button>
                                         </div>
 
                                         <div class="col-12">
@@ -77,7 +77,7 @@
                             </div>
 
                             <div class="credits">
-                                Designed by <a href="">Jotta Art</a>
+                                <b>Contacte-nos</b> <a href="{{route("info.contacto")}}">clique aqui</a>
                             </div>
                         </div>
                     </div>

@@ -36,6 +36,7 @@ class Autenticacao extends Component
         $this->validate();
         $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
         $this->limparCampos();
+        session()->put("utilizador", "Eugenio Cachiombo");
         return redirect("/pagina_inicial");
     }
 
