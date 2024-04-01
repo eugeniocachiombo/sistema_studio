@@ -13,34 +13,35 @@ class Contacto extends Component
     public $mensagem;
 
     protected $messages = [
-      'email.required' => 'Campo obrigatório',
-      'email.email' => 'Formato de email inválido',
-      'nome.required' => 'Campo obrigatório',
-      'mensagem.required' => 'Campo obrigatório',
-      'assunto.required' => 'Campo obrigatório'
-  ];
+        'email.required' => 'Campo obrigatório',
+        'email.email' => 'Formato de email inválido',
+        'nome.required' => 'Campo obrigatório',
+        'mensagem.required' => 'Campo obrigatório',
+        'assunto.required' => 'Campo obrigatório',
+    ];
 
-  protected $rules = [
-      'email' => 'required|email',
-      'nome' => 'required|min:2',
-      'mensagem' => 'required|min:2',
-      'assunto' => 'required'
-  ];
+    protected $rules = [
+        'email' => 'required|email',
+        'nome' => 'required|min:2',
+        'mensagem' => 'required|min:2',
+        'assunto' => 'required',
+    ];
 
     public function render()
     {
         return view('livewire.info.contacto');
     }
 
-    public function enviarEmail(){
+    public function enviarEmail()
+    {
         $this->validate();
-         $mailer= Mail::send('email.email', ["msg" => $this->mensagem], function ($message) {
+        $mailer = Mail::send('email.email', ["msg" => $this->mensagem], function ($message) {
             $message->from($this->email, $this->nome);
             $message->to('eugeniocachiombo@gmail.com', 'Eugénio Cachiombo');
             $message->subject($this->assunto);
-          });
-          $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
-          $this->limparCampos();
+        });
+        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
+        $this->limparCampos();
     }
 
     public function limparCampos()
