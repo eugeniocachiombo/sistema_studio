@@ -6,7 +6,7 @@ document.addEventListener('livewire:load', function () {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000
+            timer: data.tempo
         });
     });
 });

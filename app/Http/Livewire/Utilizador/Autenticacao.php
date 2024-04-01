@@ -34,10 +34,10 @@ class Autenticacao extends Component
     public function logar()
     {
         $this->validate();
-        $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
+        $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success', 'tempo' => 2000]);
         $this->limparCampos();
         session()->put("utilizador", "Eugenio Cachiombo");
-        return redirect("/pagina_inicial");
+        $this->emit('atrazar_redirect', ['caminho' => '/pagina_inicial', 'tempo' => 2500]);
     }
 
     public function limparCampos()

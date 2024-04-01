@@ -40,7 +40,7 @@ class Contacto extends Component
             $message->to('eugeniocachiombo@gmail.com', 'Eugénio Cachiombo');
             $message->subject($this->assunto);
         });
-        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
+        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success', 'tempo' => 3000]);
         $this->limparCampos();
     }
 

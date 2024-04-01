@@ -8,7 +8,11 @@ class PaginaInicial extends Component
 {
     public function index()
     {
-        return view('index.pagina-inicial.pagina-inicial');
+        if (session('utilizador')){
+            return view('index.pagina-inicial.pagina-inicial');
+        }else{
+            return view('index.utilizador.autenticacao');
+        }
     }
 
     public function render()
