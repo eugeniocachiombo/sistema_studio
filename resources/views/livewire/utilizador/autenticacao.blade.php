@@ -8,7 +8,7 @@
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
                             <div class="d-flex justify-content-center py-4">
                                 <a href="" class="logo d-flex align-items-center w-auto">
-                                    <img src="assets/img/logo.png" alt="">
+                                    <img src="../assets/img/logo.png" alt="">
                                     <span class="d-none d-lg-block">NiceAdmin</span>
                                 </a>
                             </div>
@@ -67,7 +67,7 @@
 
                                         <div class="col-12">
                                             <p class="small mb-0">Não tem uma conta?
-                                                <a href="/cadastrar"><b>Criar
+                                                <a href="{{route("utilizador.cadastro")}}"><b>Criar
                                                         uma conta</b></a>
                                             </p>
                                         </div>

@@ -189,7 +189,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('utilizador.perfil') }}">
                             <i class="bi bi-gear"></i>
                             <span>Configurações</span>
                         </a>
@@ -199,7 +199,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('info.ajuda') }}">
                             <i class="bi bi-question-circle"></i>
                             <span>Ajuda</span>
                         </a>
