@@ -6,22 +6,41 @@
         max-height: 100px;
         overflow-y: auto;
         overflow-x: hidden;
-        position: absolute; /* Posicione absolutamente para funcionar com z-index */
-        z-index: 9999; /* Defina um valor alto para o z-index */
+        position: absolute;
+        z-index: 9999;
     }
-    
+
     * html .ui-autocomplete {
         height: 100px;
+    }
+
+    .description {
+        font-size: 0.8em;
+        color: rgb(0, 0, 0); /* Cor do texto da descrição */
+        background-color: transparent; /* Fundo transparente para não alterar a cor de fundo do item */
+        margin-top: 5px;
+    }
+
+    .ui-autocomplete li.ui-state-hover {
+        background-color: transparent !important; /* Evitar mudança de cor de fundo ao passar o mouse */
     }
 </style>
 
 <script>
     $(function() {
         var availableTags = [
-            { label: "ActionScript", value: "actionscript", route: "{{ route('pagina_inicial.') }}" },
-            { label: "AppleScript", value: "applescript", route: "{{ route('pagina_inicial.') }}" },
-            { label: "Asp", value: "asp", route: "{{ route('pagina_inicial.') }}" },
-            { label: "Página Inicial", value: "asp", route: "{{ route('pagina_inicial.') }}" },
+            {
+                label: "Página Inicial",
+                value: "Página Inicial",
+                route: "{{ route('pagina_inicial.') }}",
+                description: "Incio de toda página"
+            }, 
+            {
+                label: "Página Inicial",
+                value: "Página Inicial",
+                route: "{{ route('pagina_inicial.') }}",
+                description: "Linguagem de programação para scripts em páginas da web"
+            },
         ];
 
         $("#campoPesquisa").autocomplete({
@@ -29,7 +48,12 @@
             select: function(event, ui) {
                 window.location.href = ui.item.route;
             }
-        });
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>")
+                .append("<div class='description'>" + item.label + " <span style='font-size:1.0em; color: #999'>" + item
+                    .description + "</span></div>")
+                .appendTo(ul);
+        };;
     });
 </script>
 <div class="search-bar">
