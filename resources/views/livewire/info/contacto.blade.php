@@ -1,6 +1,5 @@
 <div>
     <main id="main" class="main">
-
         <div class="pagetitle">
             <h1>Contactos</h1>
             <nav>

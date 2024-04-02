@@ -13,6 +13,10 @@ use App\Http\Livewire\Utilizador\{
     TerminarSessao
 };
 
+Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
+    Route::get('/', [PaginaInicial::class, "index"])->name("");
+});
+
 Route::prefix("info")->name("info.")->group(function(){
     Route::get('ajuda', [Ajuda::class, "index"])->name("ajuda");
     Route::get('contacto', [Contacto::class, "index"])->name("contacto");
@@ -25,7 +29,7 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao");
 });
 
-Route::get('/pagina_inicial', [PaginaInicial::class, "index"]);
+
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
 Route::fallback(function (){ return view("index.erro_de_pagina.pagina-de-erro"); });
 
