@@ -1,5 +1,5 @@
 <aside id="sidebar" class="sidebar">
-
+    
     <ul class="sidebar-nav" id="sidebar-nav">
         @if (session('utilizador'))
             <li class="nav-item">

@@ -1,7 +1,13 @@
+@include('inclusao.headHtml')
 <main>
     @include('inclusao.logo&nome')
-    <h1>{{ $assunto }}</h1><br>
-    <h4>{{ $msg }}</h4>
+    <h2>{{ $assunto }}</h2>
+    <h3>{{ $msg }}</h3>
+    <hr>
+    <center>
+        <img src="{{ asset('assets/img/logo.png') }}" alt="">
+        <h1>@include('inclusao.nomesite')</h1>
+    </center>
     <hr>
     <b>Responsável</b> <br>
     Nome: {{ $nome }} <br>
