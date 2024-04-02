@@ -98,21 +98,20 @@
                                 </div>
 
                                 <div class="col-md-12 text-center">
-                                    <div class="loading">Loading</div>
-                                    {{-- <div class="error-message"></div> --}}
-                                    <div class="sent-message">Sua Mensagem foi enviada. Obrigado!</div>
-
-                                    <button type="submit">Enviar Mensagem</button>
+                                    <span class="text-primary" style="font-size: 20px" wire:loading wire:target='enviarEmail'>
+                                        <span class="spinner-border spinner-border-sm"></span>
+                                            Processando...
+                                    </span>
+                                    <button type="submit" wire:loading.attr='disabled' 
+                                        wire:loading.remove wire:target='enviarEmail'>
+                                                Enviar Mensagem
+                                    </button>
                                 </div>
-
                             </div>
                         </form>
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
     </main>

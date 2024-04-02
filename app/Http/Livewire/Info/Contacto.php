@@ -22,8 +22,8 @@ class Contacto extends Component
 
     protected $rules = [
         'email' => 'required|email',
-        'nome' => 'required|min:2',
-        'mensagem' => 'required|min:2',
+        'nome' => 'required',
+        'mensagem' => 'required',
         'assunto' => 'required',
     ];
 
@@ -40,7 +40,7 @@ class Contacto extends Component
             $message->to('eugeniocachiombo@gmail.com', 'Eugénio Cachiombo');
             $message->subject($this->assunto);
         });
-        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success', 'tempo' => 3000]);
+        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
         $this->limparCampos();
     }
 

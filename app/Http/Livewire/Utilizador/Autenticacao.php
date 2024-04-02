@@ -34,7 +34,7 @@ class Autenticacao extends Component
     public function logar()
     {
         $this->validate();
-        $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success', 'tempo' => 2000]);
+        $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
         $this->limparCampos();
         session()->put("utilizador", "Eugenio Cachiombo");
         $this->emit('atrazar_redirect', ['caminho' => '/pagina_inicial', 'tempo' => 2500]);
