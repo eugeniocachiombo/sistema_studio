@@ -35,6 +35,7 @@
   <script src="../assets/js/atrazar_redirect.js"></script>
 
   <script src="https://www.google.com/recaptcha/api.js?render=Your_reCAPTCHA_site_key"></script>
+  
   @livewireStyles
 </head>
 
