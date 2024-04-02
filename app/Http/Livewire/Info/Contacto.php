@@ -35,7 +35,7 @@ class Contacto extends Component
     public function enviarEmail()
     {
         $this->validate();
-        $mailer = Mail::send('email.email', ["msg" => $this->mensagem], function ($message) {
+        Mail::send('email.email', ["msg" => $this->mensagem, "email" => $this->email], function ($message) {
             $message->from($this->email, $this->nome);
             $message->to('eugeniocachiombo@gmail.com', 'Eugénio Cachiombo');
             $message->subject($this->assunto);

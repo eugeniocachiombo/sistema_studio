@@ -61,8 +61,17 @@
                                                 <label class="form-check-label" for="lembrame">Lembre-me</label>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Iniciar Sessão</button>
+
+                                        <div class="col-12 text-center">
+                                            <span class="text-primary" style="font-size: 20px" 
+                                                wire:loading wire:target='logar'>
+                                                <span class="spinner-border spinner-border-sm"></span>
+                                                    Processando...
+                                            </span>
+                                            <button class="btn btn-primary w-100" type="submit" wire:loading.attr='disabled' 
+                                                wire:loading.remove wire:target='logar'>
+                                                    Iniciar Sessão
+                                            </button>
                                         </div>
 
                                         <div class="col-12">
