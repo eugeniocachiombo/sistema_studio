@@ -9,13 +9,25 @@
                 label: "Página Inicial",
                 value: "Página Inicial",
                 route: "{{ route('pagina_inicial.') }}",
-                description: "Incio de toda página"
+                description: "- Inicio"
             }, 
             {
-                label: "Página Inicial",
-                value: "Página Inicial",
-                route: "{{ route('pagina_inicial.') }}",
-                description: "Linguagem de programação para scripts em páginas da web"
+                label: "Centrar de ajuda",
+                value: "Ajuda",
+                route: "{{ route('info.ajuda') }}",
+                description: "- Página de suporte ao utilizador"
+            },
+            {
+                label: "Contacte-nos",
+                value: "Contacte-nos",
+                route: "{{ route('info.contacto') }}",
+                description: "- Comunicar um problema ou dar sugestões"
+            },
+            {
+                label: "Perfil do utilizador",
+                value: "Perfil",
+                route: "{{ route('utilizador.perfil') }}",
+                description: "- Informações do perfil e configurações"
             },
         ];
 
@@ -32,6 +44,7 @@
         };
     });
 </script>
+
 <div class="search-bar">
     <div class="ui-widget">
         <form class="search-form d-flex align-items-center" wire:submit.prevent="submitForm">
