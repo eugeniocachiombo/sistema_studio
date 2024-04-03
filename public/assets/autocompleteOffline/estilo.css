@@ -1,0 +1,22 @@
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: 9999;
+}
+
+* html .ui-autocomplete {
+    height: 100px;
+}
+
+.description {
+    font-size: 0.8em;
+    color: rgb(0, 0, 0); /* Cor do texto da descrição */
+    background-color: transparent; /* Fundo transparente para não alterar a cor de fundo do item */
+    margin-top: 5px;
+}
+
+.ui-autocomplete li.ui-state-hover {
+    background-color: transparent !important; /* Evitar mudança de cor de fundo ao passar o mouse */
+}
