@@ -11,7 +11,7 @@ class Perfil extends Component
         if (session('utilizador')){
             return view('index.utilizador.perfil');
         }else{
-            return view('index.utilizador.autenticacao');
+            return redirect()->route("utilizador.autenticacao");
         }
     }
 

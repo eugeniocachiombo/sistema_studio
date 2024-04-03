@@ -23,7 +23,11 @@ class Autenticacao extends Component
 
     public function index()
     {
-        return view('index.utilizador.autenticacao');
+        if (session('utilizador')){
+            return redirect()->route("pagina_inicial.");
+        }else{
+            return view('index.utilizador.autenticacao');
+        }
     }
 
     public function render()
@@ -37,7 +41,7 @@ class Autenticacao extends Component
         $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
         $this->limparCampos();
         session()->put("utilizador", "Eugenio Cachiombo");
-        $this->emit('atrazar_redirect', ['caminho' => '/pagina_inicial', 'tempo' => 2500]);
+        $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
     }
 
     public function limparCampos()

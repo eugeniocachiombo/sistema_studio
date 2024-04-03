@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Utilizador;
 
 use Livewire\Component;
 
-class TerminarSessao extends Component
+class PrepararAmbiente extends Component
 {
     public function index()
     {
         if (session('utilizador')){
-            return view('index.utilizador.terminar-sessao');
+            return view('index.utilizador.preparar-ambiente');
         }else{
             return redirect()->route("utilizador.autenticacao");
         }
@@ -17,7 +17,6 @@ class TerminarSessao extends Component
 
     public function render()
     {
-        session()->forget("utilizador");
-        return view('livewire.utilizador.terminar-sessao');
+        return view('livewire.utilizador.preparar-ambiente');
     }
 }

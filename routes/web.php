@@ -10,7 +10,8 @@ use App\Http\Livewire\Utilizador\{
     Cadastro,
     Autenticacao,
     Perfil,
-    TerminarSessao
+    TerminarSessao,
+    PrepararAmbiente
 };
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
@@ -27,6 +28,7 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('autenticacao', [Autenticacao::class, "index"])->name("autenticacao");
     Route::get('perfil', [Perfil::class, "index"])->name("perfil");
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao");
+    Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
 });
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });

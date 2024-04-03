@@ -11,7 +11,7 @@ class PaginaInicial extends Component
         if (session('utilizador')){
             return view('index.pagina-inicial.pagina-inicial');
         }else{
-            return view('index.utilizador.autenticacao');
+            return redirect()->route("utilizador.autenticacao");
         }
     }
 

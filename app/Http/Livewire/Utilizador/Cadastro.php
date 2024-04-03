@@ -8,7 +8,11 @@ class Cadastro extends Component
 {
     public function index()
     {
-        return view('index.utilizador.cadastro');
+        if (session('utilizador')){
+            return redirect()->route("pagina_inicial.");
+        }else{
+            return view('index.utilizador.cadastro');
+        }
     }
 
     public function render()

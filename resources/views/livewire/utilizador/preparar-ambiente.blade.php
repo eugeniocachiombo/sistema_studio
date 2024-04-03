@@ -63,13 +63,14 @@
             <h1 style="color: black"><b>@include('inclusao.nomesite')</b></h1>
         </div>
         <div id="session-ending">
-            <div class="spinner-border spinner-border-sm text-dark" role="status"></div> Terminando a sessão...
+            <div class="spinner-border spinner-border-sm text-dark" role="status"></div> 
+                <b>Incializando:</b> Por favor Aguarde...
         </div>
     </div>
 
     <script>
         setTimeout(() => {
-            window.location = "{{ route('utilizador.autenticacao') }}";
+            window.location = "{{ route('pagina_inicial.') }}";
         }, 5000);
     </script>
 </body>
