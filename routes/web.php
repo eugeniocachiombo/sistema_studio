@@ -29,7 +29,6 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao");
 });
 
-
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
 Route::fallback(function (){ return view("index.erro_de_pagina.pagina-de-erro"); });
 

@@ -4,7 +4,7 @@
             <h1>Painel</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Página Inicial</a></li>
+                    <li class="breadcrumb-item">Página Inicial</li>
                     <li class="breadcrumb-item active">Painel</li>
                 </ol>
             </nav>
