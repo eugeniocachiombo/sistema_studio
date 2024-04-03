@@ -70,7 +70,7 @@
     <script>
         setTimeout(() => {
             window.location = "{{ route('utilizador.autenticacao') }}";
-        }, 5000);
+        }, 4000);
     </script>
 </body>
 

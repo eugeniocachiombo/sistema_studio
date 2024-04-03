@@ -8,7 +8,8 @@ class PrepararAmbiente extends Component
 {
     public function index()
     {
-        if (session('utilizador')){
+        if (session('utilizador') && session("ambientePreparado") != "true"){
+            session()->put("ambientePreparado", "true");
             return view('index.utilizador.preparar-ambiente');
         }else{
             return redirect()->route("utilizador.autenticacao");

@@ -17,6 +17,7 @@ class TerminarSessao extends Component
 
     public function render()
     {
+        session()->forget("ambientePreparado");
         session()->forget("utilizador");
         return view('livewire.utilizador.terminar-sessao');
     }
