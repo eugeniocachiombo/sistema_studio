@@ -25,20 +25,27 @@
                                         </li>
 
                                         <form action="" method="get">
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='gravacao' value="Hoje"> Hoje</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='gravacao' value="Este mês"> Este mês</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='gravacao' value="Este ano"> Este ano</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='gravacao' value="Hoje"> Hoje</a>
+                                            </li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='gravacao' value="Este mês"> Este
+                                                    mês</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='gravacao' value="Este ano"> Este
+                                                    ano</a></li>
                                         </form>
                                     </ul>
                                 </div>
 
                                 <div class="card-body ">
-                                    <h5 class="card-title">Gravação <span>| {{$gravacao ? $gravacao : "Hoje"}}</span></h5>
+                                    <h5 class="card-title">Gravação <span>| {{ $gravacao ? $gravacao : 'Hoje' }}</span>
+                                    </h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-cart"></i>
+                                            <i class="bi bi-mic"></i>
                                         </div>
                                         <div class="ps-3">
                                             <h6>145</h6>
@@ -64,26 +71,32 @@
                                         </li>
 
                                         <form action="" method="get">
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='mixagem' value="Hoje"> Hoje</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='mixagem' value="Este mês"> Este mês</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='mixagem' value="Este ano"> Este ano</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='mixagem' value="Hoje"> Hoje</a>
+                                            </li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='mixagem' value="Este mês"> Este
+                                                    mês</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='mixagem' value="Este ano"> Este
+                                                    ano</a></li>
                                         </form>
                                     </ul>
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Mixagem <span>| {{$mixagem ? $mixagem : "Hoje"}}</span></h5>
+                                    <h5 class="card-title">Mixagem <span>| {{ $mixagem ? $mixagem : 'Hoje' }}</span>
+                                    </h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
+                                            <i class="bi bi-soundwave"></i>
                                         </div>
                                         <div class="ps-3">
                                             <h6>$3,264</h6>
                                             <span class="text-success small pt-1 fw-bold">8%</span> <span
                                                 class="text-muted small pt-2 ps-1">increase</span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -102,19 +115,26 @@
                                         </li>
 
                                         <form action="" method="get">
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='masterizacao' value="Hoje"> Hoje</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='masterizacao' value="Este mês"> Este mês</a></li>
-                                            <li><a class="dropdown-item"><input type="radio" name="" id="" wire:model='masterizacao' value="Este ano"> Este ano</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='masterizacao' value="Hoje">
+                                                    Hoje</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='masterizacao' value="Este mês">
+                                                    Este mês</a></li>
+                                            <li><a class="dropdown-item"><input type="radio" name=""
+                                                        id="" wire:model='masterizacao' value="Este ano">
+                                                    Este ano</a></li>
                                         </form>
                                     </ul>
                                 </div>
-
+                               
                                 <div class="card-body">
-                                    <h5 class="card-title">Masterização <span>| {{$masterizacao ? $masterizacao : "Hoje"}}</span></h5>
+                                    <h5 class="card-title">Masterização <span>|
+                                            {{ $masterizacao ? $masterizacao : 'Hoje' }}</span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people"></i>
+                                            <i class="bi bi-speaker"></i>
                                         </div>
                                         <div class="ps-3">
                                             <h6>1244</h6>
@@ -142,20 +162,20 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Reports <span>/Hoje</span></h5>
+                                    <h5 class="card-title">Gráfico de actividades <span>| Hoje</span></h5>
                                     <div id="reportsChart"></div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
                                             new ApexCharts(document.querySelector("#reportsChart"), {
                                                 series: [{
-                                                    name: 'Sales',
+                                                    name: 'Gravação',
                                                     data: [31, 40, 28, 51, 42, 82, 56],
                                                 }, {
-                                                    name: 'Revenue',
+                                                    name: 'Mixagem',
                                                     data: [11, 32, 45, 32, 34, 52, 41]
                                                 }, {
-                                                    name: 'Customers',
+                                                    name: 'Masterização',
                                                     data: [15, 11, 32, 18, 9, 24, 11]
                                                 }],
                                                 chart: {
@@ -223,7 +243,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Recent Sales <span>| Hoje</span></h5>
+                                    <h5 class="card-title">Clientes <span>| Hoje</span></h5>
 
                                     <table class="table table-borderless datatable">
                                         <thead>
@@ -286,7 +306,7 @@
 
 
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card card-animated">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
@@ -303,9 +323,7 @@
 
                         <div class="card-body">
                             <h5 class="card-title">Recent Activity <span>| Hoje</span></h5>
-
                             <div class="activity">
-
                                 <div class="activity-item d-flex">
                                     <div class="activite-label">32 min</div>
                                     <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
@@ -361,7 +379,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card card-animated">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
@@ -377,7 +395,7 @@
                         </div>
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Website Traffic <span>| Hoje</span></h5>
+                            <h5 class="card-title">Gráfico Geral <span>| Hoje</span></h5>
 
                             <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
@@ -392,7 +410,7 @@
                                             left: 'center'
                                         },
                                         series: [{
-                                            name: 'Access From',
+                                            name: 'Total de ',
                                             type: 'pie',
                                             radius: ['40%', '70%'],
                                             avoidLabelOverlap: false,
@@ -412,23 +430,23 @@
                                             },
                                             data: [{
                                                     value: 1048,
-                                                    name: 'Search Engine'
+                                                    name: 'Clientes'
                                                 },
                                                 {
                                                     value: 735,
-                                                    name: 'Direct'
+                                                    name: 'Gravação'
                                                 },
                                                 {
                                                     value: 580,
-                                                    name: 'Email'
+                                                    name: 'Mixagem'
                                                 },
                                                 {
                                                     value: 484,
-                                                    name: 'Union Ads'
+                                                    name: 'Masterização'
                                                 },
                                                 {
                                                     value: 300,
-                                                    name: 'Video Ads'
+                                                    name: 'Funcionários'
                                                 }
                                             ]
                                         }]
