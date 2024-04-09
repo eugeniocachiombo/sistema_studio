@@ -21,7 +21,7 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Filtrar</h6>
                                         </li>
 
                                         <form action="" method="get">
@@ -29,11 +29,9 @@
                                                         id="" wire:model='gravacao' value="Hoje"> Hoje</a>
                                             </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='gravacao' value="Este mês"> Este
-                                                    mês</a></li>
+                                                        id="" wire:model='gravacao' value="Pendentes"> Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='gravacao' value="Este ano"> Este
-                                                    ano</a></li>
+                                                        id="" wire:model='gravacao' value="Concluídas"> Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -67,7 +65,7 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Filtrar</h6>
                                         </li>
 
                                         <form action="" method="get">
@@ -75,11 +73,9 @@
                                                         id="" wire:model='mixagem' value="Hoje"> Hoje</a>
                                             </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='mixagem' value="Este mês"> Este
-                                                    mês</a></li>
+                                                        id="" wire:model='mixagem' value="Pendentes"> Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='mixagem' value="Este ano"> Este
-                                                    ano</a></li>
+                                                        id="" wire:model='mixagem' value="Concluídas"> Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -94,7 +90,7 @@
                                             <i class="bi bi-soundwave"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>$3,264</h6>
+                                            <h6>3264</h6>
                                             <span class="text-success small pt-1 fw-bold">8%</span> <span
                                                 class="text-muted small pt-2 ps-1">increase</span>
                                         </div>
@@ -111,19 +107,17 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Filtrar</h6>
                                         </li>
 
                                         <form action="" method="get">
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Hoje">
-                                                    Hoje</a></li>
+                                                        id="" wire:model='masterizacao' value="Hoje"> Hoje</a>
+                                            </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Este mês">
-                                                    Este mês</a></li>
+                                                        id="" wire:model='masterizacao' value="Pendentes"> Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Este ano">
-                                                    Este ano</a></li>
+                                                        id="" wire:model='masterizacao' value="Concluídas"> Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -153,7 +147,7 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Filtrar</h6>
                                         </li>
                                         <li><a class="dropdown-item" href="#">Hoje</a></li>
                                         <li><a class="dropdown-item" href="#">Este mês</a></li>
@@ -162,7 +156,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Gráfico de actividades <span>| Hoje</span></h5>
+                                    <h5 class="card-title">Actividades concluídas <span>| Hoje</span></h5>
                                     <div id="reportsChart"></div>
 
                                     <script>
@@ -215,7 +209,7 @@
                                                 },
                                                 tooltip: {
                                                     x: {
-                                                        format: 'dd/MM/yy HH:mm'
+                                                        format: 'dd/MM/yyyy HH:mm'
                                                     },
                                                 }
                                             }).render();
@@ -233,7 +227,7 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Filtrar</h6>
                                         </li>
 
                                         <li><a class="dropdown-item" href="#">Hoje</a></li>
@@ -312,17 +306,15 @@
                                     class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
+                                    <h6>Filtrar</h6>
                                 </li>
 
-                                <li><a class="dropdown-item" href="#">Hoje</a></li>
-                                <li><a class="dropdown-item" href="#">Este mês</a></li>
-                                <li><a class="dropdown-item" href="#">Este ano</a></li>
+                                <li><a class="dropdown-item" href="#">Ver todas</a></li>
                             </ul>
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title">Recent Activity <span>| Hoje</span></h5>
+                            <h5 class="card-title">Actividades Recentes <span>| Hoje</span></h5>
                             <div class="activity">
                                 <div class="activity-item d-flex">
                                     <div class="activite-label">32 min</div>
@@ -378,12 +370,12 @@
                     </div>
 
                     <div class="card card-animated">
-                        <div class="filter">
+                        <div class="filter d-none">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
+                                    <h6>Filtrar</h6>
                                 </li>
 
                                 <li><a class="dropdown-item" href="#">Hoje</a></li>
@@ -393,7 +385,7 @@
                         </div>
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Gráfico Geral <span>| Hoje</span></h5>
+                            <h5 class="card-title">Gráfico Geral</h5>
 
                             <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
