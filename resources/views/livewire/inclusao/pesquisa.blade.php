@@ -28,7 +28,7 @@
                     label: "Contacte-nos",
                     value: "Contacte-nos",
                     route: "{{ route('info.contacto') }}",
-                    description: "- Comunicar um problema ou dar sugestões"
+                    description: "- Comunicar um problema, dar sugestões ou deixar uma mensagem"
                 },
                 {
                     label: "Perfil do utilizador",
@@ -63,7 +63,7 @@
                     label: "Contacte-nos",
                     value: "Contacte-nos",
                     route: "{{ route('info.contacto') }}",
-                    description: "- Comunicar um problema ou dar sugestões"
+                    description: "- Comunicar um problema, dar sugestões ou deixar uma mensagem"
                 },
                 {
                     label: "Cadastrar-se",

@@ -6,6 +6,10 @@ use Livewire\Component;
 
 class PaginaInicial extends Component
 {
+    public $gravacao;
+    public $mixagem;
+    public $masterizacao;
+
     public function index()
     {
         if (session('utilizador')){
