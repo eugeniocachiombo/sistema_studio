@@ -6,6 +6,10 @@ use App\Http\Livewire\Info\{
     Ajuda,
     Contacto
 };
+use App\Http\Livewire\Chat\{
+    Conversa
+};
+
 use App\Http\Livewire\Utilizador\{
     Cadastro,
     Autenticacao,
@@ -29,6 +33,10 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('perfil', [Perfil::class, "index"])->name("perfil");
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao");
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
+});
+
+Route::prefix("chat")->name("chat.")->group(function(){
+    Route::get('conversa', [Conversa::class, "index"])->name("conversa");
 });
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
