@@ -1,4 +1,5 @@
 <div>
+    <link rel="stylesheet" href="{{ asset('assets/css/paginacao-conversa.css') }}">
     <div>
         <main id="main" class="main">
             <div class="pagetitle">
@@ -13,7 +14,7 @@
 
             <section class="section ">
                 <div class="row gy-4">
-                    <div class="col-xl-6">
+                    <div class="col-8">
                         <div class="card card-animated p-4">
                             <caption>
                                 <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do
@@ -26,7 +27,7 @@
                                 <div class="row gy-4">
                                     <div class="col d-table">
                                         @if ($this->todasConversas->count() > 0)
-                                            @foreach ($this->todasConversas as $item)
+                                            @foreach ($this->todasConversas->reverse() as $item)
                                                 <div class="col text-center pt-4">
                                                     @if ($this->utilizador_id == $item->emissor)
                                                         <div class="container">
@@ -74,11 +75,11 @@
                                                         </div>
                                                     @endif
                                                 </div>
-                                            @endforeach 
+                                            @endforeach
                                         @else
                                             <div class="col text-center">
                                                 <b class="">Não existe conversa com este utilizador</b>
-                                            </div>   
+                                            </div>
                                         @endif
 
                                         @if ($this->habilitarUpload == true)
@@ -119,8 +120,10 @@
                                         @endempty
                                     @endif
                                 </div>
-                                
-                                {{$this->todasConversas->links()}}
+
+                                <div class="pagination justify-content-center">
+                                    {{ $this->todasConversas->links()  }}
+                                </div>
 
                                 <div class="col-md-12">
                                     <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
@@ -153,12 +156,12 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+</div>
+</section>
+</main>
 </div>
 </div>
