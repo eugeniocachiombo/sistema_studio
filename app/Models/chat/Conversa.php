@@ -16,6 +16,8 @@ class Conversa extends Model
         "estado",
         "mensagem",
         "caminho_arquivo",
-        "tipo_arquivo"
+        "tipo_arquivo",
+        "nome_arquivo",
+        "extensao_arquivo",
     ];
 }

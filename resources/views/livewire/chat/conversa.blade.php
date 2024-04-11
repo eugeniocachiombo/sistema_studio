@@ -41,9 +41,26 @@
                                                                 <div class="col d-flex justify-content-end">
                                                                     @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                                                                         <div class=" col-6 p-3">
-                                                                            <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
-                                                                            <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto" width="100%">
-                                                                        </a>
+                                                                            @switch($item->tipo_arquivo)
+                                                                                @case('img')
+                                                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto" width="100%">
+                                                                                    </a>
+                                                                                    @break
+
+                                                                                @case('audio')
+                                                                                    <audio controls>
+                                                                                        <source src="{{ url('storage/' . $item->caminho_arquivo) }}" type="audio/mpeg">
+                                                                                        Your browser does not support the audio element.
+                                                                                    </audio>
+                                                                                    @break
+
+                                                                                @case('texto')
+                                                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">{{$item->nome_arquivo}}</a>
+                                                                                    @break
+                                                                                @default
+                                                                                    
+                                                                            @endswitch
                                                                             {{ $item->mensagem }}
                                                                         </div>
                                                                     @else

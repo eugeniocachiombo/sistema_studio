@@ -73,11 +73,15 @@ class Conversa extends Component
     {
         $caminhoArquivo = null;
         $tipoArquivo = null;
+        $nomeOriginalArquivo = null;
+        $extensaoOriginalArquivo = $this->extensaoArquivo;
         if ($this->mensagem != null || $this->arquivo != null) {
             if ($this->arquivo) {
                 $caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
                 if ($caminhoArquivo) {
                     $tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
+                    $extensaoOriginalArquivo = $this->extensaoArquivo;
+                    $nomeOriginalArquivo = $this->arquivo->getClientOriginalName();
                 } else {
                     $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
                 }
@@ -89,7 +93,9 @@ class Conversa extends Component
                 "estado" => "pendente",
                 "mensagem" => $this->mensagem,
                 "caminho_arquivo" => $caminhoArquivo ? $caminhoArquivo : "",
-                "tipo_arquivo" => $tipoArquivo ? $tipoArquivo : ""
+                "tipo_arquivo" => $tipoArquivo ? $tipoArquivo : "",
+                "nome_arquivo" => $nomeOriginalArquivo ? $nomeOriginalArquivo : "",
+                "extensao_arquivo" => $extensaoOriginalArquivo ? $extensaoOriginalArquivo : ""
             ];
             $this->cadastrarMensagem($dados);
         }
