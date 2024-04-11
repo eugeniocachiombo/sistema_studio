@@ -41,7 +41,7 @@
 
                                                 <div class="col  d-flex  align-items-center">
                                                     <span class="text-light"
-                                                        id="nomeArquivo">{{ $arquivo ? $arquivo->getClientOriginalName() : 'Nenhum arquivo escolhido' }}</span>
+                                                        id="nomeArquivo">{{ $arquivo ? $this->nomeArquivo : 'Nenhum arquivo escolhido' }}</span>
                                                 </div>
                                             </div>
                                         @endif

@@ -1,0 +1,56 @@
+1. Qual é o seu nome completo?
+2. Qual é o seu nome artístico?
+3. Qual é o nome do estúdio?
+4. Como funciona o estúdio?
+5. Quais são os serviços feitos pelo estúdio?
+6. Quais são as principais funções (cargos) que tem o estudio ou deve ter um estúdio de música?
+7. O que é feito em cada cargo?
+8. Qual é o seu cargo?
+9. Descreva as maiores dificuldades que tens tido no seu cargo?
+10. A quanto tempo você atua com este cargo?
+11. Em qual(is) estúdio(s) você trabalha?
+12. Descreva as maiores dificuldades que tens tido no estúdio?
+
+A Respeito do Sistema.
+______________________________
+1.	Alguma vez já tiveste contacto com um sistema  gerenciamento de estúdio musical exemplo (Site ou aplicativo)?
+2.	Qual é a sua experiência prévia com sistemas de gerenciamento de estúdio musical?
+3.	Se existisse um sistema que ajude na gerencia do estúdio, que tipo de funcionalidades você considera essenciais?
+4.	Que recursos tecnológicos estão atualmente disponíveis para você para facilitar o gerenciamento do estúdio?
+5.	Você já utilizou algum site ou aplicativo específico para o gerenciamento de estúdio? Se sim, quais são os pontos fortes e fracos dessas soluções?
+
+Sobre Clientes
+___________________
+1. Existe algum requisito para ser cliente no estúdio? Se sim qual é o requisito?
+2. Qual é o seu público alvo?
+3. Qual é o gênero e a idade do seu público alvo?
+
+Sobre Gravação 
+________________________________
+1. Quanto tempo dura uma gravação?
+2. Quais estilos são gravados no estúdio?
+3. Qual é o preçário de cada estilo?
+4. Quais são os estilos com mais clientes?
+5.	Qual é o processo atual de agendamento de sessões de gravação? Existem problemas ou ineficiências nesse processo?
+6.	Como você lida com o armazenamento, organização de arquivos de áudio e projetos de música em seu estúdio?
+7.	Você vê valor em integrar funcionalidades como controle de estoque de equipamentos, gestão financeira e agendamento de clientes em um único sistema de gerenciamento de estúdio?
+8.	Que tipo de suporte técnico você espera de um sistema de gerenciamento de estúdio?
+
+
+Sobre Mixagem & Masterização
+_________________________________
+1. Como é feito o processo de masterização e Mixagem?
+1. Quais são as maiores dificuldades?
+2. Quanto tempo leva o para se fazer um mixagem e masterização?
+
+
+Sobre entrega do produto
+__________________________________
+1. Como é feito o precesso de entrega do produto?
+2. Quais são os métodos de pagamento pelo serviço? 
+
+Sobre Equipamentos
+___________________
+1. Quais são os equipamentos essenciais para fazer a gestão do estúdio?
+2. Quais são os equipamentos que o estúdio tem actualmente?
+
