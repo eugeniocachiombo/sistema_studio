@@ -44,6 +44,10 @@
                                                         id="nomeArquivo">{{ $arquivo ? $this->nomeArquivo : 'Nenhum arquivo escolhido' }}</span>
                                                 </div>
                                             </div>
+
+                                            <div class="container bg-primary text-light d-flex  align-items-center">
+                                                <b>Somente Extensões:</b> 
+                                            </div>
                                         @endif
                                     </div>
 

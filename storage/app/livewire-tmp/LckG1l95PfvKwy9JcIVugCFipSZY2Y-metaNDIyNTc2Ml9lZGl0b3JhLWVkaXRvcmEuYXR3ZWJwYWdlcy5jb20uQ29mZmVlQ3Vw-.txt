@@ -1,0 +1,17 @@
+{"applicationname":
+        "CoffeeCup Free FTP",
+        "servers":[{
+                "comment":"",
+                "connections":
+                        1,
+                        "localdir":"",
+                        "moddatedown":0,
+                        "moddateup":0,
+                        "name":""4225762_editora@editora.atwebpages.com"",
+                        "port":21,
+                        "proto":0,
+                        "remotedir":"",
+                        "url":"editora.atwebpages.com",
+                        "usepassive":1 ,
+                        "user":"4225762_editora"        }]
+}

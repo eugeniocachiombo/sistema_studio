@@ -14,6 +14,11 @@ class Conversa extends Component
     public $nomeArquivo;
     public $extensaoArquivo;
     public $tamanhoArquivo;
+    public $extensoesAceites = [
+        "img" => ["jpg", "jpeg", "png"],
+        "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
+        "texto" => ["pdf", "doc", "txt"]
+    ];
 
     public function render()
     {
@@ -42,7 +47,9 @@ class Conversa extends Component
         if($this->arquivo){
             $caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
             if($caminhoArquivo){
-                dd($caminhoArquivo);
+                $tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
+                dd("Arquivo enviado: " . $caminhoArquivo . " Tipo de arquivo: " . $tipoArquivo);
+                $this->arquivo = null;
             }else{
                 $this->arquivo = null;
                 $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
@@ -52,47 +59,28 @@ class Conversa extends Component
 
     public function verificarExtensaoArquivo($extensaoArquivo){
         $caminhoArquivo = "";
-        switch ($this->extensaoArquivo) {
-            case 'jpg': 
-                $caminhoArquivo = $this->arquivo->store("uploads/img");
-                break;
-
-            case 'jpeg': 
-                $caminhoArquivo = $this->arquivo->store("uploads/img");
-                break;
-
-            case 'png':
-                $caminhoArquivo = $this->arquivo->store("uploads/img");
-                break;
-
-            case 'aac': 
-                $caminhoArquivo = $this->arquivo->store("uploads/audio");
-                break;
-
-            case 'ogg': 
-                $caminhoArquivo = $this->arquivo->store("uploads/audio");
-                break;
-                
-            case 'm4a': 
-                $caminhoArquivo = $this->arquivo->store("uploads/audio");
-                break;
-
-            case 'wav': 
-                $caminhoArquivo = $this->arquivo->store("uploads/audio");
-                break;
-
-            case 'mp3': 
-                $caminhoArquivo = $this->arquivo->store("uploads/audio");
-                break;
-
-            case 'pdf':
-                $caminhoArquivo = $this->arquivo->store("uploads/pdf");
-                break;
-
-            default:
-                break;
+        foreach ($this->extensoesAceites as $chave => $extensao) {
+            for ($i=0; $i < count($extensao); $i++) { 
+                if($extensao[$i] == $extensaoArquivo){
+                    $caminhoArquivo = $this->arquivo->store("uploads/" . $chave);
+                    break;
+                }
+            }
         }
         return $caminhoArquivo;
+    }
+
+    public function buscarTipoArquivo($extensaoArquivo){
+        $tipo = "";
+        foreach ($this->extensoesAceites as $chave => $extensao) {
+            for ($i=0; $i < count($extensao); $i++) { 
+                if($extensao[$i] == $extensaoArquivo){
+                    $tipo = $chave;
+                    break;
+                }
+            }
+        }
+        return $tipo;
     }
 
     public function index()
