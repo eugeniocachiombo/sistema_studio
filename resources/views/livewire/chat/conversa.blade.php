@@ -11,7 +11,7 @@
                 </nav>
             </div>
 
-            <section class="section contact">
+            <section class="section ">
                 <div class="row gy-4">
                     <div class="col-xl-6">
                         <div class="card card-animated p-4">
@@ -79,7 +79,7 @@
 
                                 <div class="col-md-12 text-center d-flex">
                                     <div class="col">
-                                        <button class="btn btn-primary btn-sm" type="submit"
+                                        <button class="btn btn-primary btn-md" type="submit"
                                             wire:click='habilitarInputFile'>
                                             <i class="bi bi-upload "></i> Carregar arquivo
                                         </button>
@@ -91,7 +91,7 @@
                                             <span class="spinner-border spinner-border-sm"></span>
                                             Processando...
                                         </span>
-                                        <button class="btn-primary" type="submit" wire:loading.attr='disabled'
+                                        <button class="btn btn-primary btn-lg" type="submit" wire:loading.attr='disabled'
                                             wire:loading.remove wire:target='enviarMensagem'>
                                             <i class="bi bi-cursor-fill text-light"></i> Enviar
                                         </button>

@@ -19,6 +19,7 @@ class Conversa extends Component
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
         "texto" => ["pdf", "doc", "txt"]
     ];
+    public $mensagem;
 
     public function render()
     {
