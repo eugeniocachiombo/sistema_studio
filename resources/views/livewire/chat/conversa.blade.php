@@ -20,13 +20,65 @@
                                         utilizador</b> </h4>
                             </caption>
                             <hr>
+
                             <form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation"
                                 novalidate>
                                 <div class="row gy-4">
                                     <div class="col d-table">
-                                        <div class="col text-center">
-                                            <b class="">Não existe conversa com este utilizador</b>
-                                        </div>
+                                        @forelse ($todasConversas as $item)
+                                            <div class="col text-center pt-4">
+                                                @if ($this->utilizador_id == $item->emissor)
+                                                    <div class="container">
+                                                        <div class=" d-flex flex-column">
+                                                            <div class="col text-end">
+                                                                <span class="col ">
+                                                                    <b>User logado {{ $item->emissor }}</b>
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="col d-flex justify-content-end">
+
+                                                                <div class=" bg-dark text-light col-8 p-3"
+                                                                    style="border-radius: 5%">
+                                                                    {{ $item->mensagem }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end "
+                                                                style="font-size: 14px">
+                                                                Enviado: {{ $item->created_at }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="container">
+                                                        <div class=" d-flex flex-column">
+                                                            <div class="col text-start">
+                                                                <span class="col ">
+                                                                    <b>Eugénio {{ $item->emissor }}</b>
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="col d-flex justify-content-start">
+
+                                                                <div class=" bg-info text-light col-8 p-3"
+                                                                    style="border-radius: 5%">
+                                                                    {{ $item->mensagem }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-start "
+                                                                style="font-size: 14px">
+                                                                Enviado: {{ $item->created_at }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @empty
+                                            <div class="col text-center">
+                                                <b class="">Não existe conversa com este utilizador</b>
+                                            </div>
+                                        @endforelse
+
 
                                         @if ($this->habilitarUpload == true)
                                             <div
@@ -91,8 +143,9 @@
                                             <span class="spinner-border spinner-border-sm"></span>
                                             Processando...
                                         </span>
-                                        <button class="btn btn-primary btn-lg" type="submit" wire:loading.attr='disabled'
-                                            wire:loading.remove wire:target='enviarMensagem'>
+                                        <button class="btn btn-primary btn-lg" type="submit"
+                                            wire:loading.attr='disabled' wire:loading.remove
+                                            wire:target='enviarMensagem'>
                                             <i class="bi bi-cursor-fill text-light"></i> Enviar
                                         </button>
                                     </div>

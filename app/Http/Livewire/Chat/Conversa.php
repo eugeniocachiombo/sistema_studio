@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Chat;
 
+use App\Models\chat\Conversa as ChatConversa;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,10 +20,30 @@ class Conversa extends Component
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
         "texto" => ["pdf", "doc", "txt"]
     ];
+    public $utilizador_id;
+    public $remente;
+    public $estado;
     public $mensagem;
+    public $tipo_arquivo;
+    public $todasConversas;
+
+    public function mount(){
+        $this->utilizador_id = 2;
+        $this->remente = 1;
+    }
 
     public function render()
     {
+        $this->todasConversas = ChatConversa::where(function($query) {
+            $query->where("emissor", $this->utilizador_id)
+                  ->where("receptor", $this->remente);
+        })
+        ->orWhere(function($query) {
+            $query->where("receptor", $this->utilizador_id)
+                  ->where("emissor", $this->remente);
+        })
+        ->orderByDesc("id")
+        ->get();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa');
     }

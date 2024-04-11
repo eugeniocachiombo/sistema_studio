@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Conversa extends Model
 {
     use HasFactory;
+    
+    protected $table = "chat";
+    protected $fillable =[
+        "emissor",
+        "receptor",
+        "estado",
+        "mensagem",
+        "caminho_arquivo",
+        "tipo_arquivo"
+    ];
 }
