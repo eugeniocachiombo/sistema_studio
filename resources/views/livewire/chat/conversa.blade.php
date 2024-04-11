@@ -35,7 +35,7 @@
                                                     <label for="file-input" class="file-input">
                                                         Escolha um arquivo
                                                         <input type="file" wire:model="arquivo" name="file"
-                                                            id="file-input" >
+                                                            id="file-input">
                                                     </label>
                                                 </div>
 
@@ -45,49 +45,65 @@
                                                 </div>
                                             </div>
 
-                                            <div class="container bg-primary text-light d-flex  align-items-center">
-                                                <b>Somente Extensões:</b> 
+                                        @empty($arquivo)
+                                            <div class="container d-table bg-primary text-light  align-items-center">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <b>Somente Com Extensões:</b>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        @foreach ($this->extensoesAceites as $chave => $extensao)
+                                                            @for ($i = 0; $i < count($extensao); $i++)
+                                                                {{ $extensao[$i] . ' -' }}
+                                                            @endfor
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @endif
-                                    </div>
+                                        @endempty
+                                    @endif
+                                </div>
 
-                                    <div class="col-md-12">
-                                        <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
-                                            placeholder="Escreva sua mensagem aqui" required></textarea>
-                                        <div class="text-danger pt-2" style="font-size: 12.5px">
-                                            @error('mensagem')
-                                                <span class="error">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 text-center d-flex">
-                                        <div class="col">
-                                            <button class="btn btn-primary btn-sm" type="submit"
-                                                wire:click='habilitarInputFile'>
-                                                <i class="bi bi-upload "></i> Carregar arquivo
-                                            </button>
-                                        </div>
-
-                                        <div class="col">
-                                            <span class="text-primary" style="font-size: 20px" wire:loading
-                                                wire:target='enviarMensagem'>
-                                                <span class="spinner-border spinner-border-sm"></span>
-                                                Processando...
-                                            </span>
-                                            <button class="btn-primary" type="submit" wire:loading.attr='disabled'
-                                                wire:loading.remove wire:target='enviarMensagem'>
-                                                <i class="bi bi-cursor-fill text-light"></i> Enviar
-                                            </button>
-                                        </div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
+                                        placeholder="Escreva sua mensagem aqui" required></textarea>
+                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                        @error('mensagem')
+                                            <span class="error">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+
+                                <div class="col-md-12 text-center d-flex">
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-sm" type="submit"
+                                            wire:click='habilitarInputFile'>
+                                            <i class="bi bi-upload "></i> Carregar arquivo
+                                        </button>
+                                    </div>
+
+                                    <div class="col">
+                                        <span class="text-primary" style="font-size: 20px" wire:loading
+                                            wire:target='enviarMensagem'>
+                                            <span class="spinner-border spinner-border-sm"></span>
+                                            Processando...
+                                        </span>
+                                        <button class="btn-primary" type="submit" wire:loading.attr='disabled'
+                                            wire:loading.remove wire:target='enviarMensagem'>
+                                            <i class="bi bi-cursor-fill text-light"></i> Enviar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-        </main>
-    </div>
+    </main>
+</div>
 </div>
