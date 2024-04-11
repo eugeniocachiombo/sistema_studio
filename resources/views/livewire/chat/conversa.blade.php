@@ -39,12 +39,21 @@
                                                                 </div>
 
                                                                 <div class="col d-flex justify-content-end">
-
-                                                                    <div class=" bg-dark text-light col-8 p-3"
-                                                                        style="border-radius: 5%">
-                                                                        {{ $item->mensagem }}
-                                                                    </div>
+                                                                    @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
+                                                                        <div class=" col-6 p-3">
+                                                                            <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                                            <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto" width="100%">
+                                                                        </a>
+                                                                            {{ $item->mensagem }}
+                                                                        </div>
+                                                                    @else
+                                                                        <div class=" bg-dark text-light col-8 p-3"
+                                                                            style="border-radius: 5%">
+                                                                            {{ $item->mensagem }}
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
+
                                                                 <div class="d-flex justify-content-end "
                                                                     style="font-size: 14px">
                                                                     Enviado: {{ $item->created_at }}
@@ -122,7 +131,7 @@
                                 </div>
 
                                 <div class="pagination justify-content-center">
-                                    {{ $this->todasConversas->links()  }}
+                                    {{ $this->todasConversas->links() }}
                                 </div>
 
                                 <div class="col-md-12">
@@ -156,7 +165,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                        </form>
                     </div>
                 </div>
             </div>

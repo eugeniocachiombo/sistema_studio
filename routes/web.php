@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
 use App\Http\Livewire\Info\{
@@ -42,4 +44,20 @@ Route::prefix("chat")->name("chat.")->group(function(){
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
 Route::fallback(function (){ return view("index.erro_de_pagina.pagina-de-erro"); });
 
+Route::get('uploads/{filename}', function ($filename) {
+    $path = storage_path('app/' . $filename);
+
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+
+    // Carrega o conteúdo do arquivo
+    $file = Storage::get($path);
+    
+    // Obtém o tipo MIME do arquivo
+    $type = Storage::mimeType($path);
+
+    // Retorna a resposta com o conteúdo do arquivo e o tipo MIME
+    return Response::make($file, 200, ['Content-Type' => $type]);
+})->where('filename', '.*');
 
