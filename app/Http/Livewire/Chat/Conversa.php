@@ -25,11 +25,11 @@ class Conversa extends Component
     public $estado;
     public $mensagem;
     public $tipo_arquivo;
-    public $todasConversas;
+    protected $todasConversas = array();
 
     public function mount(){
-        $this->utilizador_id = 2;
-        $this->remente = 1;
+        $this->utilizador_id = 1;
+        $this->remente = 2;
     }
 
     public function render()
@@ -43,9 +43,9 @@ class Conversa extends Component
                   ->where("emissor", $this->remente);
         })
         ->orderByDesc("id")
-        ->get();
+        ->paginate(5);
         $this->setarDadosArquivo();
-        return view('livewire.chat.conversa');
+        return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
     public function setarDadosArquivo(){

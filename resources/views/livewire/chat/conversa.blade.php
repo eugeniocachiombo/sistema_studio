@@ -25,60 +25,61 @@
                                 novalidate>
                                 <div class="row gy-4">
                                     <div class="col d-table">
-                                        @forelse ($todasConversas as $item)
-                                            <div class="col text-center pt-4">
-                                                @if ($this->utilizador_id == $item->emissor)
-                                                    <div class="container">
-                                                        <div class=" d-flex flex-column">
-                                                            <div class="col text-end">
-                                                                <span class="col ">
-                                                                    <b>User logado {{ $item->emissor }}</b>
-                                                                </span>
-                                                            </div>
+                                        @if ($this->todasConversas->count() > 0)
+                                            @foreach ($this->todasConversas as $item)
+                                                <div class="col text-center pt-4">
+                                                    @if ($this->utilizador_id == $item->emissor)
+                                                        <div class="container">
+                                                            <div class=" d-flex flex-column">
+                                                                <div class="col text-end">
+                                                                    <span class="col ">
+                                                                        <b>User logado {{ $item->emissor }}</b>
+                                                                    </span>
+                                                                </div>
 
-                                                            <div class="col d-flex justify-content-end">
+                                                                <div class="col d-flex justify-content-end">
 
-                                                                <div class=" bg-dark text-light col-8 p-3"
-                                                                    style="border-radius: 5%">
-                                                                    {{ $item->mensagem }}
+                                                                    <div class=" bg-dark text-light col-8 p-3"
+                                                                        style="border-radius: 5%">
+                                                                        {{ $item->mensagem }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex justify-content-end "
+                                                                    style="font-size: 14px">
+                                                                    Enviado: {{ $item->created_at }}
                                                                 </div>
                                                             </div>
-                                                            <div class="d-flex justify-content-end "
-                                                                style="font-size: 14px">
-                                                                Enviado: {{ $item->created_at }}
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                @else
-                                                    <div class="container">
-                                                        <div class=" d-flex flex-column">
-                                                            <div class="col text-start">
-                                                                <span class="col ">
-                                                                    <b>Eugénio {{ $item->emissor }}</b>
-                                                                </span>
-                                                            </div>
+                                                    @else
+                                                        <div class="container">
+                                                            <div class=" d-flex flex-column">
+                                                                <div class="col text-start">
+                                                                    <span class="col ">
+                                                                        <b>Eugénio {{ $item->emissor }}</b>
+                                                                    </span>
+                                                                </div>
 
-                                                            <div class="col d-flex justify-content-start">
+                                                                <div class="col d-flex justify-content-start">
 
-                                                                <div class=" bg-info text-light col-8 p-3"
-                                                                    style="border-radius: 5%">
-                                                                    {{ $item->mensagem }}
+                                                                    <div class=" bg-info text-light col-8 p-3"
+                                                                        style="border-radius: 5%">
+                                                                        {{ $item->mensagem }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex justify-content-start "
+                                                                    style="font-size: 14px">
+                                                                    Enviado: {{ $item->created_at }}
                                                                 </div>
                                                             </div>
-                                                            <div class="d-flex justify-content-start "
-                                                                style="font-size: 14px">
-                                                                Enviado: {{ $item->created_at }}
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @empty
+                                                    @endif
+                                                </div>
+                                            @endforeach 
+                                        @else
                                             <div class="col text-center">
                                                 <b class="">Não existe conversa com este utilizador</b>
-                                            </div>
-                                        @endforelse
-
+                                            </div>   
+                                        @endif
 
                                         @if ($this->habilitarUpload == true)
                                             <div
@@ -118,6 +119,8 @@
                                         @endempty
                                     @endif
                                 </div>
+                                
+                                {{$this->todasConversas->links()}}
 
                                 <div class="col-md-12">
                                     <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
@@ -156,7 +159,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 </div>
 </div>
