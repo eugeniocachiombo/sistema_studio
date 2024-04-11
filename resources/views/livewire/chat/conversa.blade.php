@@ -17,8 +17,7 @@
                     <div class="col-8">
                         <div class="card card-animated p-4">
                             <caption>
-                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do
-                                        utilizador</b> </h4>
+                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do Remente {{$remente}}</b> </h4>
                             </caption>
                             <hr>
 
@@ -43,23 +42,29 @@
                                                                         <div class=" col-6 p-3">
                                                                             @switch($item->tipo_arquivo)
                                                                                 @case('img')
-                                                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
-                                                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto" width="100%">
+                                                                                    <a
+                                                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                                                            alt="foto" width="100%">
                                                                                     </a>
-                                                                                    @break
+                                                                                @break
 
                                                                                 @case('audio')
                                                                                     <audio controls>
-                                                                                        <source src="{{ url('storage/' . $item->caminho_arquivo) }}" type="audio/mpeg">
-                                                                                        Your browser does not support the audio element.
+                                                                                        <source
+                                                                                            src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                                                            type="audio/mpeg">
+                                                                                        Your browser does not support the audio
+                                                                                        element.
                                                                                     </audio>
-                                                                                    @break
+                                                                                @break
 
                                                                                 @case('texto')
-                                                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">{{$item->nome_arquivo}}</a>
-                                                                                    @break
+                                                                                    <a
+                                                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                                                @break
+
                                                                                 @default
-                                                                                    
                                                                             @endswitch
                                                                             {{ $item->mensagem }}
                                                                         </div>
@@ -75,6 +80,13 @@
                                                                     style="font-size: 14px">
                                                                     Enviado: {{ $item->created_at }}
                                                                 </div>
+                                                                <hr
+                                                                    style="
+                                                                    opacity: 0.08;
+                                                                    border: none;
+                                                                height: 3px;
+                                                                background-color: #FF5733;
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);">
                                                             </div>
                                                         </div>
                                                     @else
@@ -87,16 +99,55 @@
                                                                 </div>
 
                                                                 <div class="col d-flex justify-content-start">
+                                                                    @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
+                                                                        <div class=" col-6 p-3">
+                                                                            @switch($item->tipo_arquivo)
+                                                                                @case('img')
+                                                                                    <a
+                                                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                                                            alt="foto" width="100%">
+                                                                                    </a>
+                                                                                @break
 
-                                                                    <div class=" bg-info text-light col-8 p-3"
-                                                                        style="border-radius: 5%">
-                                                                        {{ $item->mensagem }}
-                                                                    </div>
+                                                                                @case('audio')
+                                                                                    <audio controls>
+                                                                                        <source
+                                                                                            src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                                                            type="audio/mpeg">
+                                                                                        Your browser does not support the audio
+                                                                                        element.
+                                                                                    </audio>
+                                                                                @break
+
+                                                                                @case('texto')
+                                                                                    <a
+                                                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                                                @break
+
+                                                                                @default
+                                                                            @endswitch
+                                                                            {{ $item->mensagem }}
+                                                                        </div>
+                                                                    @else
+                                                                        <div class=" bg-info text-light col-8 p-3"
+                                                                            style="border-radius: 5%">
+                                                                            {{ $item->mensagem }}
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
+
                                                                 <div class="d-flex justify-content-start "
                                                                     style="font-size: 14px">
                                                                     Enviado: {{ $item->created_at }}
                                                                 </div>
+                                                                <hr
+                                                                    style="
+                                                                    opacity: 0.08;
+                                                                    border: none;
+                                                                height: 3px;
+                                                                background-color: #FF5733;
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);">
                                                             </div>
                                                         </div>
                                                     @endif
