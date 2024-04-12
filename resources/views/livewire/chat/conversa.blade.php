@@ -27,16 +27,16 @@
                             <form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation"
                                 novalidate>
                                 <div class="col-md-12">
+                                    @error('mensagem')
+                                        <div class="alert alert-danger ">
+                                            <span class="error">{{ $message }}</span>
+                                        </div>
+                                    @enderror
                                     <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
                                         placeholder="Escreva sua mensagem aqui" required></textarea>
-                                    <div class="text-danger pt-2" style="font-size: 12.5px">
-                                        @error('mensagem')
-                                            <span class="error">{{ $message }}</span>
-                                        @enderror
-                                    </div>
                                 </div>
 
-                                <div class="col-md-12 text-center d-flex">
+                                <div class="col-md-12 text-center d-flex pt-4">
                                     <div class="col">
                                         <button class="btn btn-primary btn-md" type="submit"
                                             wire:click='habilitarInputFile'>
@@ -57,12 +57,12 @@
                                         </button>
                                     </div>
                                 </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-</div>
-</section>
-</main>
+    </div>
+    </section>
+    </main>
 </div>
 </div>

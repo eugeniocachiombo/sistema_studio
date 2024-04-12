@@ -25,11 +25,18 @@ class Conversa extends Component
     protected $todasConversas = array();
     public $listeners = ['tempoRealMensagens'];
 
+    protected $messages = [
+        'mensagem.required' => 'Descreva a mensagem ou insira um arquivo'
+    ];
+
+    protected $rules = [
+        'mensagem' => 'required',
+    ];
+
     public function mount($utilizador, $remente)
     {
         $this->utilizador_id = $utilizador;
         $this->remente = $remente;
-        
     }
 
     public function render()
@@ -105,6 +112,8 @@ class Conversa extends Component
                 "extensao_arquivo" => $extensaoOriginalArquivo ? $extensaoOriginalArquivo : "",
             ];
             $this->cadastrarMensagem($dados);
+        }else{
+            $this->validate();
         }
     }
 
