@@ -30,7 +30,7 @@ class Conversa extends Component
     ];
 
     protected $rules = [
-        'mensagem' => 'required',
+        'mensagem' => 'required'
     ];
 
     public function mount($utilizador, $remente)
@@ -89,6 +89,7 @@ class Conversa extends Component
         $tipoArquivo = null;
         $nomeOriginalArquivo = null;
         $extensaoOriginalArquivo = $this->extensaoArquivo;
+        
         if ($this->mensagem != null || $this->arquivo != null) {
             if ($this->arquivo) {
                 $caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
