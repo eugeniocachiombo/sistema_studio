@@ -70,8 +70,7 @@
                                                                             {{ $item->mensagem }}
                                                                         </div>
                                                                     @else
-
-                                                                        @if ( strlen($item->mensagem) > 20)
+                                                                        @if (strlen($item->mensagem) > 20)
                                                                             <div class=" bg-dark text-light p-3 text-start"
                                                                                 style="border-radius: 5%;">
                                                                                 {{ $item->mensagem }}
@@ -82,7 +81,6 @@
                                                                                 {{ $item->mensagem }}
                                                                             </div>
                                                                         @endif
-                                                                        
                                                                     @endif
                                                                 </div>
 
@@ -140,17 +138,17 @@
                                                                             {{ $item->mensagem }}
                                                                         </div>
                                                                     @else
-                                                                    @if ( strlen($item->mensagem) > 20)
-                                                                    <div class=" bg-info text-light p-3 text-start"
-                                                                        style="border-radius: 5%;">
-                                                                        {{ $item->mensagem }}
-                                                                    </div>
-                                                                @else
-                                                                    <div class=" bg-info text-light p-3 text-center"
-                                                                        style="border-radius: 5%; min-width: 150px;">
-                                                                        {{ $item->mensagem }}
-                                                                    </div>
-                                                                @endif
+                                                                        @if (strlen($item->mensagem) > 20)
+                                                                            <div class=" bg-info text-light p-3 text-start"
+                                                                                style="border-radius: 5%;">
+                                                                                {{ $item->mensagem }}
+                                                                            </div>
+                                                                        @else
+                                                                            <div class=" bg-info text-light p-3 text-center"
+                                                                                style="border-radius: 5%; min-width: 150px;">
+                                                                                {{ $item->mensagem }}
+                                                                            </div>
+                                                                        @endif
                                                                     @endif
                                                                 </div>
 
@@ -216,7 +214,29 @@
                                 </div>
 
                                 <div class="pagination justify-content-center">
-                                    {{ $this->todasConversas->links() }}
+                                    {{-- /*$this->todasConversas->links()*/ --}}
+
+                                    <div class="col d-flex justify-content-around">
+                                        <div class="pagination-next border">
+                                            @if ($this->todasConversas->previousPageUrl())
+                                                <a class="btn btn-light text-primary"
+                                                    href="{{ $this->todasConversas->previousPageUrl() }}">
+                                                    <span class="mr-2"><i
+                                                            class="bi bi-arrow-left-circle-fill"></i> <b>Voltar</b> </span>
+                                                </a>
+                                            @endif
+                                        </div>
+
+                                        <div class="pagination-previous border">
+                                            @if ($this->todasConversas->nextPageUrl())
+                                                <a class="btn btn-light text-primary"
+                                                    href="{{ $this->todasConversas->nextPageUrl() }}">
+                                                    <span class="mr-2"> <b>Ver mais</b> <i
+                                                            class="bi bi-arrow-right-circle-fill"></i></i></span>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-12">
