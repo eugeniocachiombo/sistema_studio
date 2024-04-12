@@ -36,7 +36,7 @@
 
                                                 @case('texto')
                                                     <a
-                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a> <br>
                                                 @break
 
                                                 @default
@@ -103,8 +103,7 @@
                                                 @break
 
                                                 @case('texto')
-                                                    <a
-                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a> <br>
                                                 @break
 
                                                 @default

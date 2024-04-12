@@ -22,15 +22,16 @@ class Conversa extends Component
         "texto" => ["pdf", "doc", "txt"],
     ];
     public $utilizador_id, $remente, $estado, $mensagem = null, $tipo_arquivo;
+    public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     protected $todasConversas = array();
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
-        'mensagem.required' => 'Descreva a mensagem ou insira um arquivo'
+        'mensagem.required' => 'Descreva a mensagem ou insira um arquivo',
     ];
 
     protected $rules = [
-        'mensagem' => 'required'
+        'mensagem' => 'required',
     ];
 
     public function mount($utilizador, $remente)
@@ -51,7 +52,8 @@ class Conversa extends Component
         $this->todasConversas = $this->listarTodasConversas();
     }
 
-    public function listarTodasConversas(){
+    public function listarTodasConversas()
+    {
         return ChatConversa::where(function ($query) {
             $query->where("emissor", $this->utilizador_id)
                 ->where("receptor", $this->remente);
@@ -85,41 +87,40 @@ class Conversa extends Component
 
     public function enviarMensagem()
     {
-        $caminhoArquivo = null;
-        $tipoArquivo = null;
-        $nomeOriginalArquivo = null;
-        $extensaoOriginalArquivo = $this->extensaoArquivo;
-        
-        if ($this->mensagem != null || $this->arquivo != null) {
-            if ($this->arquivo) {
-                $caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
-                if ($caminhoArquivo) {
-                    $tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
-                    $extensaoOriginalArquivo = $this->extensaoArquivo;
-                    $nomeOriginalArquivo = $this->arquivo->getClientOriginalName();
-                } else {
-                    $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
-                }
-            }
+        $this->vereificarArquivoExiste();
+    }
 
-            $dados = [
-                "emissor" => $this->utilizador_id,
-                "receptor" => $this->remente,
-                "estado" => "pendente",
-                "mensagem" => Crypt::encrypt($this->mensagem),
-                "caminho_arquivo" => $caminhoArquivo ? $caminhoArquivo : "",
-                "tipo_arquivo" => $tipoArquivo ? $tipoArquivo : "",
-                "nome_arquivo" => $nomeOriginalArquivo ? $nomeOriginalArquivo : "",
-                "extensao_arquivo" => $extensaoOriginalArquivo ? $extensaoOriginalArquivo : "",
-            ];
-            $this->cadastrarMensagem($dados);
-        }else{
-            $this->validate();
+    public function vereificarArquivoExiste()
+    {
+        if ($this->arquivo) {
+            $this->caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
+            if ($this->caminhoArquivo) {
+                $this->tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
+                $this->extensaoOriginalArquivo = $this->extensaoArquivo;
+                $this->nomeOriginalArquivo = $this->arquivo->getClientOriginalName();
+                $this->cadastrarMensagem();
+            } else {
+                $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
+                $this->arquivo == null;
+                //return redirect()->route("chat.conversa", ["utilizador" => $this->utilizador_id, "remente" => $this->remente]);
+            }
+        } else if ($this->mensagem != null) {
+            $this->cadastrarMensagem();
         }
     }
 
-    public function cadastrarMensagem($dados)
+    public function cadastrarMensagem()
     {
+        $dados = [
+            "emissor" => $this->utilizador_id,
+            "receptor" => $this->remente,
+            "estado" => "pendente",
+            "mensagem" => Crypt::encrypt($this->mensagem),
+            "caminho_arquivo" => $this->caminhoArquivo ? $this->caminhoArquivo : "",
+            "tipo_arquivo" => $this->tipoArquivo ? $this->tipoArquivo : "",
+            "nome_arquivo" => $this->nomeOriginalArquivo ? $this->nomeOriginalArquivo : "",
+            "extensao_arquivo" => $this->extensaoOriginalArquivo ? $this->extensaoOriginalArquivo : "",
+        ];
         ChatConversa::create($dados);
         $this->limparCampos();
         return redirect()->route("chat.conversa", ["utilizador" => $this->utilizador_id, "remente" => $this->remente]);
