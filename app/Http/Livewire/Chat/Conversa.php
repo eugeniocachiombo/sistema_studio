@@ -23,6 +23,7 @@ class Conversa extends Component
     ];
     public $utilizador_id, $remente, $estado, $mensagem = null, $tipo_arquivo;
     protected $todasConversas = array();
+    public $listeners = ['tempoRealMensagens'];
 
     public function mount($utilizador, $remente)
     {
@@ -36,6 +37,11 @@ class Conversa extends Component
         $this->todasConversas = $this->listarTodasConversas();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
+    }
+
+    public function tempoRealMensagens()
+    {
+        $this->todasConversas = $this->listarTodasConversas();
     }
 
     public function listarTodasConversas(){

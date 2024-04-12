@@ -33,6 +33,7 @@
     <script src="{{ asset('assets/js/alerta.js') }}"></script>
     <script src="{{ asset('assets/js/executar_alert.js') }}"></script>
     <script src="{{ asset('assets/js/atrazar_redirect.js') }}"></script>
+    <script src="{{ asset('assets/js/temporeal_msg.js') }}"></script>
     @livewireStyles
 </head>
 
