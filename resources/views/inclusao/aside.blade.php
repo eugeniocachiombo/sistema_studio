@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
         @if (session('utilizador'))
             <li class="nav-item">
-                <a class="nav-link " href="/pagina_inicial">
+                <a class="nav-link " href="{{ route('pagina_inicial.') }}">
                     <i class="bi bi-grid"></i>
                     <span>Painel</span>
                 </a>

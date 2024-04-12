@@ -14,10 +14,11 @@
 
             <section class="section ">
                 <div class="row gy-4">
-                    <div class="col-8">
+                    <div class="col">
                         <div class="card card-animated p-4">
                             <caption>
-                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do Remente {{$remente}}</b> </h4>
+                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do
+                                        Remente {{ $remente }}</b> </h4>
                             </caption>
                             <hr>
 
@@ -69,10 +70,19 @@
                                                                             {{ $item->mensagem }}
                                                                         </div>
                                                                     @else
-                                                                        <div class=" bg-dark text-light col-8 p-3"
-                                                                            style="border-radius: 5%">
-                                                                            {{ $item->mensagem }}
-                                                                        </div>
+
+                                                                        @if ( strlen($item->mensagem) > 20)
+                                                                            <div class=" bg-dark text-light p-3 text-start"
+                                                                                style="border-radius: 5%;">
+                                                                                {{ $item->mensagem }}
+                                                                            </div>
+                                                                        @else
+                                                                            <div class=" bg-dark text-light p-3 text-center"
+                                                                                style="border-radius: 5%; min-width: 150px;">
+                                                                                {{ $item->mensagem }}
+                                                                            </div>
+                                                                        @endif
+                                                                        
                                                                     @endif
                                                                 </div>
 
@@ -130,10 +140,17 @@
                                                                             {{ $item->mensagem }}
                                                                         </div>
                                                                     @else
-                                                                        <div class=" bg-info text-light col-8 p-3"
-                                                                            style="border-radius: 5%">
-                                                                            {{ $item->mensagem }}
-                                                                        </div>
+                                                                    @if ( strlen($item->mensagem) > 20)
+                                                                    <div class=" bg-info text-light p-3 text-start"
+                                                                        style="border-radius: 5%;">
+                                                                        {{ $item->mensagem }}
+                                                                    </div>
+                                                                @else
+                                                                    <div class=" bg-info text-light p-3 text-center"
+                                                                        style="border-radius: 5%; min-width: 150px;">
+                                                                        {{ $item->mensagem }}
+                                                                    </div>
+                                                                @endif
                                                                     @endif
                                                                 </div>
 

@@ -30,8 +30,8 @@ class Conversa extends Component
 
     public function mount($utilizador, $remente)
     {
-    $this->utilizador_id = $utilizador;
-    $this->remente = $remente;
+        $this->utilizador_id = $utilizador;
+        $this->remente = $remente;
     }
 
     public function render()
@@ -105,7 +105,7 @@ class Conversa extends Component
     {
         ChatConversa::create($dados);
         $this->limparCampos();
-        return redirect()->route("chat.conversa");
+        return redirect()->route("chat.conversa", ["utilizador" => $this->utilizador_id, "remente" => $this->remente]);
     }
 
     public function verificarExtensaoArquivo($extensaoArquivo)
@@ -146,6 +146,6 @@ class Conversa extends Component
     {
         $utilizador = $utilizador;
         $remente = $remente;
-        return view('index.chat.conversa', ["utilizador" => 1, "remente" => 2]);
+        return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
     }
 }
