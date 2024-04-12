@@ -3,7 +3,7 @@
 <main>
     @include('inclusao.header')
     @include('inclusao.aside')
-    @livewire('chat.conversa')
+    @livewire('chat.conversa', ["utilizador" => $utilizador, "remente" => $remente])
     @include('inclusao.footer')
 </main>
 @include('inclusao.footHtml')

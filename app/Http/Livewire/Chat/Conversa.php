@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -28,10 +28,10 @@ class Conversa extends Component
     public $tipo_arquivo;
     protected $todasConversas = array();
 
-    public function mount()
+    public function mount($utilizador, $remente)
     {
-        $this->utilizador_id = 1;
-        $this->remente = 2;
+    $this->utilizador_id = $utilizador;
+    $this->remente = $remente;
     }
 
     public function render()
@@ -95,13 +95,14 @@ class Conversa extends Component
                 "caminho_arquivo" => $caminhoArquivo ? $caminhoArquivo : "",
                 "tipo_arquivo" => $tipoArquivo ? $tipoArquivo : "",
                 "nome_arquivo" => $nomeOriginalArquivo ? $nomeOriginalArquivo : "",
-                "extensao_arquivo" => $extensaoOriginalArquivo ? $extensaoOriginalArquivo : ""
+                "extensao_arquivo" => $extensaoOriginalArquivo ? $extensaoOriginalArquivo : "",
             ];
             $this->cadastrarMensagem($dados);
         }
     }
 
-    public function cadastrarMensagem($dados){
+    public function cadastrarMensagem($dados)
+    {
         ChatConversa::create($dados);
         $this->limparCampos();
         return redirect()->route("chat.conversa");
@@ -141,8 +142,10 @@ class Conversa extends Component
         $this->mensagem = null;
     }
 
-    public function index()
+    public function index($utilizador, $remente)
     {
-        return view('index.chat.conversa');
+        $utilizador = $utilizador;
+        $remente = $remente;
+        return view('index.chat.conversa', ["utilizador" => 1, "remente" => 2]);
     }
 }

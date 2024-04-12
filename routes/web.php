@@ -35,7 +35,7 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
 });
 
 Route::prefix("chat")->name("chat.")->group(function(){
-    Route::get('conversa', [Conversa::class, "index"])->name("conversa");
+    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa");
 });
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
