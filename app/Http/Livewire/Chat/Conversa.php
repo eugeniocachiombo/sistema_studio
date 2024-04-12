@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -21,22 +21,25 @@ class Conversa extends Component
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
         "texto" => ["pdf", "doc", "txt"],
     ];
-    public $utilizador_id;
-    public $remente;
-    public $estado;
-    public $mensagem = null;
-    public $tipo_arquivo;
+    public $utilizador_id, $remente, $estado, $mensagem = null, $tipo_arquivo;
     protected $todasConversas = array();
 
     public function mount($utilizador, $remente)
     {
         $this->utilizador_id = $utilizador;
         $this->remente = $remente;
+        
     }
 
     public function render()
     {
-        $this->todasConversas = ChatConversa::where(function ($query) {
+        $this->todasConversas = $this->listarTodasConversas();
+        $this->setarDadosArquivo();
+        return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
+    }
+
+    public function listarTodasConversas(){
+        return ChatConversa::where(function ($query) {
             $query->where("emissor", $this->utilizador_id)
                 ->where("receptor", $this->remente);
         })
@@ -46,8 +49,6 @@ class Conversa extends Component
             })
             ->orderBy('id', 'desc')
             ->simplePaginate(5);
-        $this->setarDadosArquivo();
-        return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
     public function setarDadosArquivo()
@@ -91,7 +92,7 @@ class Conversa extends Component
                 "emissor" => $this->utilizador_id,
                 "receptor" => $this->remente,
                 "estado" => "pendente",
-                "mensagem" => $this->mensagem,
+                "mensagem" => Crypt::encrypt($this->mensagem),
                 "caminho_arquivo" => $caminhoArquivo ? $caminhoArquivo : "",
                 "tipo_arquivo" => $tipoArquivo ? $tipoArquivo : "",
                 "nome_arquivo" => $nomeOriginalArquivo ? $nomeOriginalArquivo : "",
