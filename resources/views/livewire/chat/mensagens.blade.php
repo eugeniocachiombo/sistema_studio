@@ -49,18 +49,18 @@
 
                                                 @default
                                             @endswitch
-                                            {{ Crypt::decrypt($item->mensagem) }}
+                                            {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                         </div>
                                     @else
                                         @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
                                             <div class=" bg-dark text-light p-3 text-start"
                                                 style="border-radius: 5%;">
-                                                {{ Crypt::decrypt($item->mensagem) }}
+                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                             </div>
                                         @else
                                             <div class=" bg-dark text-light p-3 text-center"
                                                 style="border-radius: 5%; min-width: 150px;">
-                                                {{ Crypt::decrypt($item->mensagem) }}
+                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                             </div>
                                         @endif
                                     @endif
@@ -116,18 +116,18 @@
 
                                                 @default
                                             @endswitch
-                                            {{ Crypt::decrypt($item->mensagem) }}
+                                            {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                         </div>
                                     @else
                                         @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
                                             <div class=" bg-info text-light p-3 text-start"
                                                 style="border-radius: 5%;">
-                                                {{ Crypt::decrypt($item->mensagem) }}
+                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                             </div>
                                         @else
                                             <div class=" bg-info text-light p-3 text-center"
                                                 style="border-radius: 5%; min-width: 150px;">
-                                                {{ Crypt::decrypt($item->mensagem) }}
+                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
                                             </div>
                                         @endif
                                     @endif
