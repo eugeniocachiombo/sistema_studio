@@ -17,8 +17,8 @@
                     <div class="col">
                         <div class="card card-animated p-4">
                             <caption>
-                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">Nome do
-                                        Remente {{ $remente }}</b></h4>
+                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">
+                                    {{ $this->buscarNomeUsuario($remente) }}</b></h4>
                             </caption>
                             <hr>
 

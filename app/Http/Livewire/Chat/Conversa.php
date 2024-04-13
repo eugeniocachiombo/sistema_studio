@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\User;
 
 class Conversa extends Component
 {
@@ -171,6 +172,10 @@ class Conversa extends Component
     {
         $this->arquivo = null;
         $this->mensagem = null;
+    }
+
+    public function buscarNomeUsuario($id){
+        return User::find($id)->name;
     }
 
     public function index($utilizador, $remente)

@@ -8,11 +8,9 @@
                             <div class=" d-flex flex-column">
                                 <div class="col text-end">
                                     <span class="col ">
-                                        <b>User logado {{ $item->emissor }}</b>
+                                        <b>{{ $this->buscarNomeUsuario($item->emissor) }}</b>
                                     </span>
                                 </div>
-                                
-                                
 
                                 <div class="col d-flex justify-content-end">
                                     <div class=" d-flex align-items-center me-2">
@@ -84,7 +82,7 @@
                             <div class=" d-flex flex-column">
                                 <div class="col text-start">
                                     <span class="col ">
-                                        <b>Eugénio {{ $item->emissor }}</b>
+                                        <b>{{ $this->buscarNomeUsuario($item->emissor) }}</b>
                                     </span>
                                 </div>
 
