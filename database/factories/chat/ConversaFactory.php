@@ -11,9 +11,16 @@ class ConversaFactory extends Factory
     
     public function definition()
     {
+        $emissor = $this->faker->numberBetween(1, 2);
+        $receptor = $this->faker->numberBetween(1, 2);
+        
+        while ($receptor === $emissor) {
+            $receptor = $this->faker->numberBetween(1, 2);
+        }
+        
         return [
-            "emissor" => 1,
-            "receptor" => 2,
+            "emissor" => $emissor,
+            "receptor" => $receptor,
             "estado" => "Pendente",
             "mensagem" => Crypt::encrypt($this->faker->text),
             "caminho_arquivo" => "",
