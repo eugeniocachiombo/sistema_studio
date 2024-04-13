@@ -42,6 +42,7 @@ class Conversa extends Component
 
     public function render()
     {
+        $this->emit('stopTimeReal');
         $this->todasConversas = $this->listarTodasConversas();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
@@ -102,10 +103,11 @@ class Conversa extends Component
             } else {
                 $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
                 $this->arquivo == null;
-                //return redirect()->route("chat.conversa", ["utilizador" => $this->utilizador_id, "remente" => $this->remente]);
             }
         } else if ($this->mensagem != null) {
             $this->cadastrarMensagem();
+        }else{
+            $this->validate();
         }
     }
 

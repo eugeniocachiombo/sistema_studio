@@ -1,3 +1,3 @@
-setInterval(function() {
-    //Livewire.emit('tempoRealMensagens');
-}, 1000);
+//setInterval(function() {
+   Livewire.emit('tempoRealMensagens');
+//}, 3000);
