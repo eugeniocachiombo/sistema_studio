@@ -44,10 +44,10 @@
 
                                 <div class="col-md-12 text-center d-flex pt-4">
                                     <div class="col">
-                                        <button class="btn btn-primary btn-md" 
-                                            wire:click='habilitarInputFile'>
+                                        <a class="btn btn-primary btn-md" 
+                                        wire:click='habilitarInputFile'>
                                             <i class="bi bi-upload "></i> Carregar arquivo
-                                        </button>
+                                        </a>
                                     </div>
 
                                     <div class="col">

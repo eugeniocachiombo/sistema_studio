@@ -45,8 +45,15 @@ class Conversa extends Component
     public function render()
     {
         $this->todasConversas = $this->listarTodasConversas();
+        $this->ocutarMsgValidateArquivo();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
+    }
+
+    public function ocutarMsgValidateArquivo(){
+        if($this->arquivo){
+            $this->ocultarValidate = true;
+        }
     }
 
     public function tempoRealMensagens()
@@ -97,6 +104,7 @@ class Conversa extends Component
         if ($this->habilitarUpload == true) {
             $this->habilitarUpload = false;
             $this->arquivo = null;
+            $this->ocultarValidate = true;
         } else {
             $this->habilitarUpload = true;
         }
