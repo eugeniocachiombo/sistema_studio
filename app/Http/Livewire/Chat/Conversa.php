@@ -223,11 +223,10 @@ class Conversa extends Component
         $data_hora = new DateTime($data);
         $agora = new DateTime('now');
         $diferenca = $data_hora->diff($agora)->days;
-    
         if ($diferenca == 0) {
-            $data_formatada = 'Hoje às ' . $data_hora->format('H:i:s');
+            $data_formatada = 'Hoje às ' . $data_hora->format('H:i');
         } elseif ($diferenca == 1) {
-            $data_formatada = 'Ontem às ' . $data_hora->format('H:i:s');
+            $data_formatada = 'Ontem às ' . $data_hora->format('H:i');
         } elseif ($diferenca >= 2 && $diferenca <= 6) {
             $dias_semana = array(
                 'Sunday' => 'Domingo',
@@ -238,7 +237,7 @@ class Conversa extends Component
                 'Friday' => 'Sexta-feira',
                 'Saturday' => 'Sábado'
             );
-            $data_formatada = $data_hora->format('l \à\s H:i:s');
+            $data_formatada = $data_hora->format('l \à\s H:i');
             $data_formatada = strtr($data_formatada, $dias_semana);
         } elseif ($diferenca >= 7) {
             $meses = array(
@@ -255,7 +254,7 @@ class Conversa extends Component
                 'November' => 'Novembro',
                 'December' => 'Dezembro'
             );
-            $data_formatada = $data_hora->format('d \d\e F \d\e Y \à\s H:i:s');
+            $data_formatada = $data_hora->format('d \d\e F \d\e Y \à\s H:i');
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
