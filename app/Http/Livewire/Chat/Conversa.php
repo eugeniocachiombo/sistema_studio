@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,11 +12,10 @@ class Conversa extends Component
 {
     use WithFileUploads;
 
+    protected $todasConversas = array();
     public $habilitarUpload = false;
     public $arquivo = null;
-    public $nomeArquivo;
-    public $extensaoArquivo;
-    public $tamanhoArquivo;
+    public $nomeArquivo, $extensaoArquivo, $tamanhoArquivo;
     public $extensoesAceites = [
         "img" => ["jpg", "jpeg", "png"],
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
@@ -23,7 +23,7 @@ class Conversa extends Component
     ];
     public $utilizador_id, $remente, $estado, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
-    protected $todasConversas = array();
+    public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -42,7 +42,6 @@ class Conversa extends Component
 
     public function render()
     {
-        $this->emit('stopTimeReal');
         $this->todasConversas = $this->listarTodasConversas();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
@@ -50,21 +49,28 @@ class Conversa extends Component
 
     public function tempoRealMensagens()
     {
-        $this->todasConversas = $this->listarTodasConversas();
+       // Este método somente ajuda a carregar a página em tempo real
+       // com a declaração em javascript no arquivo temporeal_msg.js
+       // seu listener public $listeners = ['tempoRealMensagens'];
     }
 
     public function listarTodasConversas()
     {
-        return ChatConversa::where(function ($query) {
-            $query->where("emissor", $this->utilizador_id)
-                ->where("receptor", $this->remente);
-        })
-            ->orWhere(function ($query) {
-                $query->where("receptor", $this->utilizador_id)
-                    ->where("emissor", $this->remente);
-            })
-            ->orderBy('id', 'desc')
-            ->simplePaginate(5);
+        $this->pagina_atual = 0;
+        $this->itens_por_pagina = 10;
+        if (isset($_GET['pagina'])) {
+            $this->pagina_atual = $_GET['pagina'];
+        } else {
+            $this->pagina_atual = 1;
+        }
+        $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
+        $this->total_itens = 100;
+        $this->total_paginas = ceil($this->total_itens / $this->itens_por_pagina);
+        return DB::select('select * from chat ' .
+            ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
+            ' or ' .
+            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente .
+            ' ORDER BY id DESC limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
     public function setarDadosArquivo()
@@ -106,7 +112,7 @@ class Conversa extends Component
             }
         } else if ($this->mensagem != null) {
             $this->cadastrarMensagem();
-        }else{
+        } else {
             $this->validate();
         }
     }
@@ -125,7 +131,6 @@ class Conversa extends Component
         ];
         ChatConversa::create($dados);
         $this->limparCampos();
-        return redirect()->route("chat.conversa", ["utilizador" => $this->utilizador_id, "remente" => $this->remente]);
     }
 
     public function verificarExtensaoArquivo($extensaoArquivo)

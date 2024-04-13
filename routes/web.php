@@ -38,6 +38,8 @@ Route::prefix("chat")->name("chat.")->group(function(){
     Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa");
 });
 
+
+
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });
 Route::fallback(function (){ return view("index.erro_de_pagina.pagina-de-erro"); });
 
