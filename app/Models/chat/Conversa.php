@@ -9,7 +9,7 @@ class Conversa extends Model
 {
     use HasFactory;
     
-    protected $table = "chat";
+    protected $table = "conversas";
     protected $fillable =[
         "emissor",
         "receptor",

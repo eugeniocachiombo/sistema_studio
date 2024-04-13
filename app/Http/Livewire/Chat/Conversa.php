@@ -66,11 +66,11 @@ class Conversa extends Component
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
         $this->total_paginas = ceil($this->total_itens / $this->itens_por_pagina);
-        return DB::select('select * from chat ' .
+        return DB::select('select * from conversas ' .
             ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente .
-            ' ORDER BY id DESC limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
     public function setarDadosArquivo()

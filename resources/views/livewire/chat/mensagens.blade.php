@@ -1,4 +1,3 @@
-
 <div class="row gy-4">
     <div class="col d-table">
         @if (count($this->todasConversas) > 0)
@@ -12,7 +11,7 @@
                                         <b>User logado {{ $item->emissor }}</b>
                                     </span>
                                 </div>
-
+                                
                                 
 
                                 <div class="col d-flex justify-content-end">
@@ -21,7 +20,8 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                     </div>
-                                    @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
+
+                                    @if ($item->caminho_arquivo != "" && $item->tipo_arquivo != "")
                                         <div class=" col-6 p-3">
                                             @switch($item->tipo_arquivo)
                                                 @case('img')
@@ -199,6 +199,7 @@
     @endif
 </div>
 
+{{--
 <div class="pagination justify-content-center ">
     <div class="col d-flex justify-content-around">
         <div class="pagination-next">
@@ -223,4 +224,4 @@
     </div>
 </div>
 
-
+--}}
