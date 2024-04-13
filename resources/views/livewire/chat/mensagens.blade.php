@@ -12,28 +12,29 @@
                                     </span>
                                 </div>
 
-                                <div class="col d-flex justify-content-end">
+                                <div class="col d-flex justify-content-end" wire:click='mensagemPressionada'>
+                                    @if($this->btnEliminarMsg == true)
                                     <div class=" d-flex align-items-center me-2">
-                                            <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{$item->id}})'>
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
+                                        <button class="btn btn-danger "
+                                            wire:click.prevent='eliminarMensagem({{ $item->id }})'>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
                                     </div>
+                                    @endif
 
-                                    @if ($item->caminho_arquivo != "" && $item->tipo_arquivo != "")
+                                    @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                                         <div class=" col-6 p-3">
                                             @switch($item->tipo_arquivo)
                                                 @case('img')
-                                                    <a
-                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">
-                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}"
-                                                            alt="foto" width="100%">
+                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                        <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto"
+                                                            width="100%">
                                                     </a>
                                                 @break
 
                                                 @case('audio')
                                                     <audio controls>
-                                                        <source
-                                                            src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                        <source src="{{ url('storage/' . $item->caminho_arquivo) }}"
                                                             type="audio/mpeg">
                                                         Your browser does not support the audio
                                                         element.
@@ -42,30 +43,29 @@
 
                                                 @case('texto')
                                                     <a
-                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a> <br>
+                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                    <br>
                                                 @break
 
                                                 @default
                                             @endswitch
-                                            {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                            {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                         </div>
                                     @else
                                         @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
-                                            <div class=" bg-dark text-light p-3 text-start"
-                                                style="border-radius: 5%;">
-                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                            <div class=" bg-dark text-light p-3 text-start" style="border-radius: 5%;">
+                                                {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                             </div>
                                         @else
                                             <div class=" bg-dark text-light p-3 text-center"
                                                 style="border-radius: 5%; min-width: 150px;">
-                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                                {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                             </div>
                                         @endif
                                     @endif
                                 </div>
 
-                                <div class="d-flex justify-content-end "
-                                    style="font-size: 14px">
+                                <div class="d-flex justify-content-end " style="font-size: 14px">
                                     Enviado: {{ $item->created_at }}
                                 </div>
                                 <hr
@@ -86,13 +86,12 @@
                                     </span>
                                 </div>
 
-                                <div class="col d-flex justify-content-start">
+                                <div class="col d-flex justify-content-start" wire:click='mensagemPressionada'>
                                     @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                                         <div class=" col-6 p-3">
                                             @switch($item->tipo_arquivo)
                                                 @case('img')
-                                                    <a
-                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">
+                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
                                                         <img src="{{ url('storage/' . $item->caminho_arquivo) }}"
                                                             alt="foto" width="100%">
                                                     </a>
@@ -100,8 +99,7 @@
 
                                                 @case('audio')
                                                     <audio controls>
-                                                        <source
-                                                            src="{{ url('storage/' . $item->caminho_arquivo) }}"
+                                                        <source src="{{ url('storage/' . $item->caminho_arquivo) }}"
                                                             type="audio/mpeg">
                                                         Your browser does not support the audio
                                                         element.
@@ -109,35 +107,38 @@
                                                 @break
 
                                                 @case('texto')
-                                                    <a href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a> <br>
+                                                    <a
+                                                        href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                                    <br>
                                                 @break
 
                                                 @default
                                             @endswitch
-                                            {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                            {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                         </div>
                                     @else
                                         @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
-                                            <div class=" bg-info text-light p-3 text-start"
-                                                style="border-radius: 5%;">
-                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                            <div class=" bg-info text-light p-3 text-start" style="border-radius: 5%;">
+                                                {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                             </div>
                                         @else
                                             <div class=" bg-info text-light p-3 text-center"
                                                 style="border-radius: 5%; min-width: 150px;">
-                                                {!! nl2br(  Crypt::decrypt($item->mensagem) ) !!}
+                                                {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                                             </div>
                                         @endif
                                     @endif
-                                    <div class=" d-flex align-items-center ms-2">
-                                        <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{$item->id}})'>
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                </div>
+                                    @if($this->btnEliminarMsg == true)
+                                        <div class=" d-flex align-items-center ms-2">
+                                            <button class="btn btn-danger "
+                                                wire:click.prevent='eliminarMensagem({{ $item->id }})'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </div>
+                                    @endif
                                 </div>
 
-                                <div class="d-flex justify-content-start "
-                                    style="font-size: 14px">
+                                <div class="d-flex justify-content-start " style="font-size: 14px">
                                     Enviado: {{ $item->created_at }}
                                 </div>
                                 <hr
@@ -159,13 +160,11 @@
         @endif
 
         @if ($this->habilitarUpload == true)
-            <div
-                class="col bg-primary aling-items-center d-flex justify-content-between mt-4 border">
+            <div class="col bg-primary aling-items-center d-flex justify-content-between mt-4 border">
                 <div class="col">
                     <label for="file-input" class="file-input">
                         Escolha um arquivo
-                        <input type="file" wire:model="arquivo" name="file"
-                            id="file-input">
+                        <input type="file" wire:model="arquivo" name="file" id="file-input">
                     </label>
                 </div>
 
@@ -201,23 +200,18 @@
     <div class="col d-flex justify-content-around">
         <div class="pagination-next">
             @if ($pagina_atual > 1)
-                <a class="btn btn-light text-primary border"
-                    href="{{'?pagina='.$pagina_atual - 1}}">
-                    <span class="mr-2"><i
-                            class="bi bi-arrow-left-circle-fill"></i> <b>Voltar</b> </span>
+                <a class="btn btn-light text-primary border" href="{{ '?pagina=' . $pagina_atual - 1 }}">
+                    <span class="mr-2"><i class="bi bi-arrow-left-circle-fill"></i> <b>Voltar</b> </span>
                 </a>
             @endif
         </div>
 
         <div class="pagination-previous">
             @if ($pagina_atual < $total_paginas)
-                <a class="btn btn-light text-primary border"
-                    href="{{ '?pagina='.$pagina_atual + 1 }}">
-                    <span class="mr-2"> <b>Ver mais</b> <i
-                            class="bi bi-arrow-right-circle-fill"></i></i></span>
+                <a class="btn btn-light text-primary border" href="{{ '?pagina=' . $pagina_atual + 1 }}">
+                    <span class="mr-2"> <b>Ver mais</b> <i class="bi bi-arrow-right-circle-fill"></i></i></span>
                 </a>
             @endif
         </div>
     </div>
 </div>
-

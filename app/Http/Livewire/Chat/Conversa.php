@@ -25,7 +25,7 @@ class Conversa extends Component
     public $utilizador_id, $remente, $estado, $idMensagem = null, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
-    public $ocultarValidate = false;
+    public $ocultarValidate = false, $btnEliminarMsg = false;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -151,6 +151,18 @@ class Conversa extends Component
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
 
+    public function mensagemPressionada(){
+        $this->mostrarBtnEliminarMsg();
+    }
+
+    public function mostrarBtnEliminarMsg(){
+        if($this->btnEliminarMsg == true){
+            $this->btnEliminarMsg = false;
+        }else{
+            $this->btnEliminarMsg = true;
+        }
+    }
+
     public function verificarExtensaoArquivo($extensaoArquivo)
     {
         $caminhoArquivo = "";
@@ -185,6 +197,7 @@ class Conversa extends Component
         $this->arquivo = null;
         $this->mensagem = null;
         $this->habilitarUpload = false;
+        $this->btnEliminarMsg = false;
     }
 
     public function buscarNomeUsuario($id)
