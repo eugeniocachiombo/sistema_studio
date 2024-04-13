@@ -1,15 +1,46 @@
 @if ($this->habilitarUpload == true)
     <div class="col bg-primary aling-items-center d-flex justify-content-between mt-4 border">
         <div class="col">
-            <label for="file-input" class="file-input">
-                Escolha um arquivo
+            <label for="file-input" class="file-input {{ $arquivo ? 'bg-success' : '' }} ">
+                @if ($arquivo)
+                    @switch($this->buscarTipoArquivo($extensaoArquivo))
+                        @case('img')
+                            <i class="bi bi-file-earmark-image" style="font-size: 20px;"></i>
+                        @break
+
+                        @case('audio')
+                            <i class="bi bi-file-earmark-music" style="font-size: 20px"></i>
+                        @break
+
+                        @case('texto')
+                            @if ($extensaoArquivo == 'pdf')
+                                <i class="bi bi-file-earmark-pdf" style="font-size: 20px"></i>
+                            @elseif($extensaoArquivo == 'txt')
+                                <i class="bi bi-file-earmark-font" style="font-size: 20px"></i>
+                            @endif
+                        @break
+
+                        @default
+                            <i class="bi bi-exclamation-triangle" style="font-size: 20px"></i>
+                        @break
+                    @endswitch
+
+                    <span class="text-light"> <b>{{ $this->nomeArquivo }}</b> </span>
+                @else
+                    Escolha um arquivo
+                @endif
                 <input type="file" wire:model="arquivo" name="file" id="file-input">
             </label>
         </div>
 
         <div class="col  d-flex  align-items-center">
-            <span class="text-light"
-                id="nomeArquivo">{{ $arquivo ? $this->nomeArquivo : 'Nenhum arquivo escolhido' }}</span>
+            <span class="text-light" id="nomeArquivo">
+                @if ($arquivo)
+                    <b>Arquivo Carregado</b>
+                @else
+                    Nenhum arquivo escolhido
+                @endif
+            </span>
         </div>
     </div>
 
