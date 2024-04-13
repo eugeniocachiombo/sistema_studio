@@ -5,4 +5,4 @@ setInterval(function() {
     if(valorPagina == 1 || valorPagina == null){
         Livewire.emit('tempoRealMensagens');
     }
-}, 1000);
+}, 1000); 

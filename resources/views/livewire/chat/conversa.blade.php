@@ -26,7 +26,7 @@
                             </caption>
                             <hr>
 
-                            @include('livewire.chat.mensagens')
+                            @include('livewire.chat.inc.mensagens')
 
                             <form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation"
                                 novalidate>
