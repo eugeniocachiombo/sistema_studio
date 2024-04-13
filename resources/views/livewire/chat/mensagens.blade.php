@@ -197,7 +197,6 @@
     @endif
 </div>
 
-{{--
 <div class="pagination justify-content-center ">
     <div class="col d-flex justify-content-around">
         <div class="pagination-next">
@@ -222,4 +221,3 @@
     </div>
 </div>
 
---}}

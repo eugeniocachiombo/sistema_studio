@@ -17,8 +17,12 @@
                     <div class="col">
                         <div class="card card-animated p-4">
                             <caption>
-                                <h4> <i class="bi bi-cursor-fill text-primary"></i> <b class="text-primary">
-                                    {{ $this->buscarNomeUsuario($remente) }}</b></h4>
+                                <h4>  <b class="text-primary">
+                                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                        <img width="50px" src="{{asset('assets/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle me-2">
+                                        {{ $this->buscarNomeUsuario($remente) }}</b>
+                                    </a>
+                                </h4>
                             </caption>
                             <hr>
 
@@ -27,18 +31,20 @@
                             <form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation"
                                 novalidate>
                                 <div class="col-md-12">
-                                    @error('mensagem')
-                                        <div class="alert alert-danger ">
-                                            <span class="error">{{ $message }}</span>
-                                        </div>
-                                    @enderror
+                                    @if ($ocultarValidate == false)
+                                        @error('mensagem')
+                                            <div class="alert alert-danger ">
+                                                <span class="error">{{ $message }}</span>
+                                            </div>
+                                        @enderror
+                                    @endif
                                     <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
                                         placeholder="Escreva sua mensagem aqui" required></textarea>
                                 </div>
 
                                 <div class="col-md-12 text-center d-flex pt-4">
                                     <div class="col">
-                                        <button class="btn btn-primary btn-md" type="submit"
+                                        <button class="btn btn-primary btn-md" 
                                             wire:click='habilitarInputFile'>
                                             <i class="bi bi-upload "></i> Carregar arquivo
                                         </button>

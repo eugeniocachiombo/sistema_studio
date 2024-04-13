@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
+use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\User;
 
 class Conversa extends Component
 {
@@ -25,10 +25,11 @@ class Conversa extends Component
     public $utilizador_id, $remente, $estado, $idMensagem = null, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
+    public $ocultarValidate = false;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
-        'mensagem.required' => 'Descreva a mensagem ou insira um arquivo',
+        'mensagem.required' => 'Escreva a mensagem ou insira um arquivo',
     ];
 
     protected $rules = [
@@ -50,15 +51,15 @@ class Conversa extends Component
 
     public function tempoRealMensagens()
     {
-       // Este método somente ajuda a carregar a página em tempo real
-       // com a declaração em javascript no arquivo temporeal_msg.js
-       // seu listener public $listeners = ['tempoRealMensagens'];
+        // Este método somente ajuda a carregar a página em tempo real
+        // com a declaração em javascript no arquivo temporeal_msg.js
+        // seu listener public $listeners = ['tempoRealMensagens'];
     }
 
     public function listarTodasConversas()
     {
         $this->pagina_atual = 0;
-        $this->itens_por_pagina = 10;
+        $this->itens_por_pagina = 5;
         if (isset($_GET['pagina'])) {
             $this->pagina_atual = $_GET['pagina'];
         } else {
@@ -66,12 +67,20 @@ class Conversa extends Component
         }
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
-        $this->total_paginas = ceil($this->total_itens / $this->itens_por_pagina);
+        $this->total_paginas = ceil(count($this->totalPaginas()) / 5);
         return DB::select('select * from conversas ' .
             ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente .
             ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+    }
+
+    public function totalPaginas()
+    {
+        return DB::select('select * from conversas ' .
+            ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
+            ' or ' .
+            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente);
     }
 
     public function setarDadosArquivo()
@@ -114,6 +123,7 @@ class Conversa extends Component
         } else if ($this->mensagem != null) {
             $this->cadastrarMensagem();
         } else {
+            $this->ocultarValidate = false;
             $this->validate();
         }
     }
@@ -134,7 +144,8 @@ class Conversa extends Component
         $this->limparCampos();
     }
 
-    public function eliminarMensagem($id){
+    public function eliminarMensagem($id)
+    {
         $conversa = ChatConversa::find($id);
         $conversa->delete();
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
@@ -170,11 +181,14 @@ class Conversa extends Component
 
     public function limparCampos()
     {
+        $this->ocultarValidate = true;
         $this->arquivo = null;
         $this->mensagem = null;
+        $this->habilitarUpload = false;
     }
 
-    public function buscarNomeUsuario($id){
+    public function buscarNomeUsuario($id)
+    {
         return User::find($id)->name;
     }
 
