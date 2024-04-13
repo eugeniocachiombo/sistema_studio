@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
+use DateTime;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -103,8 +104,8 @@ class Conversa extends Component
     {
         if ($this->habilitarUpload == true) {
             $this->habilitarUpload = false;
-            $this->arquivo = null;
             $this->ocultarValidate = true;
+            $this->arquivo = null;
         } else {
             $this->habilitarUpload = true;
         }
@@ -206,12 +207,39 @@ class Conversa extends Component
         $this->mensagem = null;
         $this->habilitarUpload = false;
         $this->btnEliminarMsg = false;
+        $this->mensagem = null;
+        $this->caminhoArquivo = null;
+        $this->tipoArquivo = null;
+        $this->nomeOriginalArquivo = null;
+        $this->extensaoOriginalArquivo = null;
     }
 
     public function buscarNomeUsuario($id)
     {
         return User::find($id)->name;
     }
+
+    function formatarData($data) {
+        $data_hora = new DateTime($data);
+        $meses = array(
+            'January' => 'Janeiro',
+            'February' => 'Fevereiro',
+            'March' => 'Março',
+            'April' => 'Abril',
+            'May' => 'Maio',
+            'June' => 'Junho',
+            'July' => 'Julho',
+            'August' => 'Agosto',
+            'September' => 'Setembro',
+            'October' => 'Outubro',
+            'November' => 'Novembro',
+            'December' => 'Dezembro'
+        );
+        $data_formatada = $data_hora->format('d \d\e F \d\e Y \á\s H:i:s - ');
+        $data_formatada = strtr($data_formatada, $meses);
+        $data_formatada = str_replace('dUTC', 'de', $data_formatada);
+        return $data_formatada;
+    }  
 
     public function index($utilizador, $remente)
     {

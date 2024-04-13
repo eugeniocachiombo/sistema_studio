@@ -60,7 +60,7 @@
         </div>
 
         <div class="d-flex justify-content-end " style="font-size: 14px">
-            Enviado: {{ $item->created_at }}
+            Enviado: {{ $this->formatarData($item->created_at) }}
         </div>
         <hr
             style="
