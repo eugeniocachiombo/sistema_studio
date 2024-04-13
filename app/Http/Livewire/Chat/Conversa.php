@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -77,18 +78,18 @@ class Conversa extends Component
         $this->total_itens = 100;
         $this->total_paginas = ceil(count($this->totalPaginas()) / 5);
         return DB::select('select * from conversas ' .
-            ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
+            ' where (emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
-            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente .
-            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
-    }
+            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . ')' .
+            ' and deleted_at IS NULL order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+}
 
     public function totalPaginas()
     {
         return DB::select('select * from conversas ' .
             ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
-            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente);
+            ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . " and deleted_at IS NULL");
     }
 
     public function setarDadosArquivo()
@@ -148,6 +149,7 @@ class Conversa extends Component
             "tipo_arquivo" => $this->tipoArquivo ? $this->tipoArquivo : "",
             "nome_arquivo" => $this->nomeOriginalArquivo ? $this->nomeOriginalArquivo : "",
             "extensao_arquivo" => $this->extensaoOriginalArquivo ? $this->extensaoOriginalArquivo : "",
+            "deleted_at" => null
         ];
         ChatConversa::create($dados);
         $this->limparCampos();
@@ -155,8 +157,7 @@ class Conversa extends Component
 
     public function eliminarMensagem($id)
     {
-        $conversa = ChatConversa::find($id);
-        $conversa->delete();
+       ChatConversa::where("id", $id)->update(["deleted_at" => Carbon::now()]);
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
 
