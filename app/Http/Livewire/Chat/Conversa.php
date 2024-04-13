@@ -21,7 +21,7 @@ class Conversa extends Component
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
         "texto" => ["pdf", "doc", "txt"],
     ];
-    public $utilizador_id, $remente, $estado, $mensagem = null, $tipo_arquivo;
+    public $utilizador_id, $remente, $estado, $idMensagem = null, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     public $listeners = ['tempoRealMensagens'];
@@ -131,6 +131,12 @@ class Conversa extends Component
         ];
         ChatConversa::create($dados);
         $this->limparCampos();
+    }
+
+    public function eliminarMensagem($id){
+        $conversa = ChatConversa::find($id);
+        $conversa->delete();
+        $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
 
     public function verificarExtensaoArquivo($extensaoArquivo)

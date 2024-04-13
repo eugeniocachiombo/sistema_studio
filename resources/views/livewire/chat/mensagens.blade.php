@@ -13,7 +13,14 @@
                                     </span>
                                 </div>
 
+                                
+
                                 <div class="col d-flex justify-content-end">
+                                    <div class=" d-flex align-items-center me-2">
+                                            <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{$item->id}})'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                    </div>
                                     @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                                         <div class=" col-6 p-3">
                                             @switch($item->tipo_arquivo)
@@ -124,6 +131,11 @@
                                             </div>
                                         @endif
                                     @endif
+                                    <div class=" d-flex align-items-center ms-2">
+                                        <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{$item->id}})'>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                </div>
                                 </div>
 
                                 <div class="d-flex justify-content-start "
