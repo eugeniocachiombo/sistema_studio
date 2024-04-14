@@ -22,9 +22,7 @@ class ConversaFactory extends Factory
             "emissor" => $emissor,
             "receptor" => $receptor,
             "estado" => "Pendente",
-            "mensagem" => Crypt::encrypt($this->faker->text),
-            "caminho_arquivo" => "",
-            "tipo_arquivo" =>  ""
+            "mensagem" => Crypt::encrypt($this->faker->text)
         ];
     }
 }

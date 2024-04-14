@@ -19,5 +19,7 @@ class Conversa extends Model
         "tipo_arquivo",
         "nome_arquivo",
         "extensao_arquivo",
+        "primeiroDelete",
+        "segundoDelete"
     ];
 }

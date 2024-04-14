@@ -38,7 +38,7 @@
                                             </div>
                                         @enderror
                                     @endif
-                                    <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
+                                    <textarea class="form-control" rows="{{$rowsMessagem ? $rowsMessagem : 5}}" wire:model="mensagem"
                                         placeholder="{{ $placeholderMsg ? $placeholderMsg : 'Escreva sua mensagem aqui' }}" required></textarea>
                                 </div>
 

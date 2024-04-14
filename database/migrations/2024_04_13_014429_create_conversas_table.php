@@ -23,10 +23,12 @@ class CreateConversasTable extends Migration
             $table->string('tipo_arquivo')->nullable();
             $table->string('nome_arquivo')->nullable();
             $table->string('extensao_arquivo')->nullable();
+            $table->unsignedBigInteger('primeiroDelete')->nullable();
+            $table->unsignedBigInteger('segundoDelete')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('emissor')->references('id')->on('users');
-            $table->foreign('receptor')->references('id')->on('users');
+            $table->foreign('emissor')->references('id')->on('users')->onDelete("cascade");
+            $table->foreign('receptor')->references('id')->on('users')->onDelete("cascade");
         });
     }
 

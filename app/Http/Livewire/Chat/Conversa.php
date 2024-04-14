@@ -29,6 +29,7 @@ class Conversa extends Component
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     public $ocultarValidate = false, $btnEliminarMsg = false;
     public $placeholderMsg;
+    public $rowsMessagem;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -83,7 +84,8 @@ class Conversa extends Component
             ' where (emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . ')' .
-            ' and deleted_at IS NULL order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+        // and deleted_at IS NULL
     }
 
     public function totalPaginas()
@@ -110,8 +112,10 @@ class Conversa extends Component
             $this->ocultarValidate = true;
             $this->arquivo = null;
             $this->placeholderMsg = null;
+            $this->rowsMessagem = null;
         } else {
             $this->habilitarUpload = true;
+            $this->rowsMessagem = 1;
             $this->placeholderMsg = "Descrição do arquivo...";
         }
     }
@@ -161,8 +165,22 @@ class Conversa extends Component
 
     public function eliminarMensagem($id)
     {
-        ChatConversa::where("id", $id)->update(["deleted_at" => Carbon::now()]);
-        //ChatConversa::where("id", $id)->delete();
+        $verificarPrimeiroDel = ChatConversa::where("id", $id)
+            ->select("primeiroDelete")->first();
+
+        $verificarSegundoDel = ChatConversa::where("id", $id)
+            ->select("segundoDelete")->first();
+
+        if($verificarPrimeiroDel->primeiroDelete == null){
+            ChatConversa::where("id", $id)
+                ->update(["primeiroDelete" => $this->utilizador_id]);
+        }elseif($verificarSegundoDel->segundoDelete == null){
+            ChatConversa::where("id", $id)
+                    ->update([
+                        "segundoDelete" => $this->utilizador_id,
+                        "deleted_at" => Carbon::now()
+                    ]);
+        }
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
 
@@ -221,6 +239,7 @@ class Conversa extends Component
         $this->nomeOriginalArquivo = null;
         $this->extensaoOriginalArquivo = null;
         $this->placeholderMsg = null;
+        $this->rowsMessagem = null;
     }
 
     public function buscarNomeUsuario($id)
