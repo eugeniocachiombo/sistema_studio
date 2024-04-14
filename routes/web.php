@@ -16,6 +16,7 @@ use App\Http\Livewire\Utilizador\{
     TerminarSessao,
     PrepararAmbiente
 };
+use App\Http\Middleware\CheckAuth;
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
     Route::get('/', [PaginaInicial::class, "index"])->name("");
@@ -35,9 +36,10 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
 });
 
 Route::prefix("chat")->name("chat.")->group(function(){
-    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa");
+    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])
+    ->name("conversa")
+    ->middleware(CheckAuth::class);
 });
-
 
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });

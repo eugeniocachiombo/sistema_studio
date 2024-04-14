@@ -85,7 +85,6 @@ class Conversa extends Component
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . ')' .
             ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
-        // and deleted_at IS NULL
     }
 
     public function totalPaginas()

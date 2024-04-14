@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire\Utilizador;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Autenticacao extends Component
@@ -38,10 +41,21 @@ class Autenticacao extends Component
     public function logar()
     {
         $this->validate();
-        $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
-        $this->limparCampos();
-        session()->put("utilizador", "Eugenio Cachiombo");
-        $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
+        $user = User::where('email', $this->email)->first();
+        $credenciais = [
+            'email' => $this->email,
+            'password' => $this->palavra_passe,
+        ];
+       
+        if (Auth::attempt($credenciais)) {
+            $this->limparCampos();
+            $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
+           dd("Logado: " . Auth::user()->name);
+           $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
+           session()->put("utilizador", Auth::user()->name);
+        }else{
+            dd("Não Logado: " . Auth::user());
+        }
     }
 
     public function limparCampos()
