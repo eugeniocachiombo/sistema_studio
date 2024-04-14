@@ -11,8 +11,8 @@
                 </div>
             @endforeach
         @else
-            <div class="col text-center">
-                <b class="">Não existe conversa com este utilizador</b>
+            <div class="col text-center pt-5 pb-2 mb-5">
+                <b class="alert alert-danger"><i class="bi bi-info-circle"></i> Não existe conversa com este utilizador</b>
             </div>
         @endif
 

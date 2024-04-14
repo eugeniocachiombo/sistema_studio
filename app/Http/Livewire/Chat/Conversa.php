@@ -48,13 +48,14 @@ class Conversa extends Component
     public function render()
     {
         $this->todasConversas = $this->listarTodasConversas();
-        $this->ocutarMsgValidateArquivo();
+        $this->ocutarMsgValidate();
         $this->setarDadosArquivo();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
-    public function ocutarMsgValidateArquivo(){
-        if($this->arquivo){
+    public function ocutarMsgValidate()
+    {
+        if ($this->arquivo || $this->mensagem != null) {
             $this->ocultarValidate = true;
         }
     }
@@ -83,7 +84,7 @@ class Conversa extends Component
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . ')' .
             ' and deleted_at IS NULL order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
-}
+    }
 
     public function totalPaginas()
     {
@@ -152,7 +153,7 @@ class Conversa extends Component
             "tipo_arquivo" => $this->tipoArquivo ? $this->tipoArquivo : "",
             "nome_arquivo" => $this->nomeOriginalArquivo ? $this->nomeOriginalArquivo : "",
             "extensao_arquivo" => $this->extensaoOriginalArquivo ? $this->extensaoOriginalArquivo : "",
-            "deleted_at" => null
+            "deleted_at" => null,
         ];
         ChatConversa::create($dados);
         $this->limparCampos();
@@ -160,18 +161,21 @@ class Conversa extends Component
 
     public function eliminarMensagem($id)
     {
-       ChatConversa::where("id", $id)->update(["deleted_at" => Carbon::now()]);
+        ChatConversa::where("id", $id)->update(["deleted_at" => Carbon::now()]);
+        //ChatConversa::where("id", $id)->delete();
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
 
-    public function mensagemPressionada(){
+    public function mensagemPressionada()
+    {
         $this->mostrarBtnEliminarMsg();
     }
 
-    public function mostrarBtnEliminarMsg(){
-        if($this->btnEliminarMsg == true){
+    public function mostrarBtnEliminarMsg()
+    {
+        if ($this->btnEliminarMsg == true) {
             $this->btnEliminarMsg = false;
-        }else{
+        } else {
             $this->btnEliminarMsg = true;
         }
     }
@@ -224,7 +228,8 @@ class Conversa extends Component
         return User::find($id)->name;
     }
 
-    function formatarData($data) {
+    public function formatarData($data)
+    {
         $data_hora = new DateTime($data);
         $agora = new DateTime('now');
         $diferenca = $data_hora->diff($agora)->days;
@@ -240,7 +245,7 @@ class Conversa extends Component
                 'Wednesday' => 'Quarta-feira',
                 'Thursday' => 'Quinta-feira',
                 'Friday' => 'Sexta-feira',
-                'Saturday' => 'Sábado'
+                'Saturday' => 'Sábado',
             );
             $data_formatada = $data_hora->format('l \à\s H:i');
             $data_formatada = strtr($data_formatada, $dias_semana);
@@ -257,13 +262,13 @@ class Conversa extends Component
                 'September' => 'Setembro',
                 'October' => 'Outubro',
                 'November' => 'Novembro',
-                'December' => 'Dezembro'
+                'December' => 'Dezembro',
             );
             $data_formatada = $data_hora->format('d \d\e F \d\e Y \à\s H:i');
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
-    }    
+    }
 
     public function index($utilizador, $remente)
     {
