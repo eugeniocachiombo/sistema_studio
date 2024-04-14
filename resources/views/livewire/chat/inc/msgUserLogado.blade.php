@@ -8,7 +8,7 @@
 
         <div class="col d-flex justify-content-end" {{--wire:click.debounce.500ms='mensagemPressionada'--}} >
             {{--@if ($this->btnEliminarMsg == true)--}}
-                <div class=" d-flex align-items-center me-2">
+                <div class="d-flex align-items-center me-2">
                     <button class="btn btn-danger "
                         wire:click.prevent='eliminarMensagem({{ $item->id }})'>
                         <i class="bi bi-trash-fill"></i>
@@ -17,7 +17,7 @@
             {{--@endif--}}
 
             @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
-                <div class=" col-6 p-3">
+                <div class="col-6 p-3 text-end">
                     @switch($item->tipo_arquivo)
                         @case('img')
                             <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
@@ -36,7 +36,7 @@
                         @break
 
                         @case('texto')
-                            <a
+                        <b>Arquivo:</b> <a
                                 href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
                             <br>
                         @break
@@ -44,7 +44,9 @@
                         @default
                     @endswitch
                     <div style="max-width: 300px;">
-                        {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
+                        @if (Crypt::decrypt($item->mensagem))
+                            <b>Descrição:</b> {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
+                        @endif
                     </div>
                 </div>
             @else
