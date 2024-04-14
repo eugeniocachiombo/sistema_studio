@@ -43,16 +43,19 @@
 
                         @default
                     @endswitch
-                    {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
+                    <div style="max-width: 300px;">
+                        {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
+                    </div>
                 </div>
             @else
                 @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
-                    <div class=" bg-dark text-light p-3 text-start" style="border-radius: 5%;">
+                    <div class=" bg-dark text-light p-3 text-start" 
+                    style="border-radius: 20px; max-width: 300px;">
                         {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                     </div>
                 @else
                     <div class=" bg-dark text-light p-3 text-center"
-                        style="border-radius: 5%; min-width: 150px;">
+                        style="border-radius: 20px; min-width: 150px;">
                         {!! nl2br(Crypt::decrypt($item->mensagem)) !!}
                     </div>
                 @endif
