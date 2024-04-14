@@ -28,6 +28,7 @@ class Conversa extends Component
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     public $ocultarValidate = false, $btnEliminarMsg = false;
+    public $placeholderMsg;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -107,8 +108,10 @@ class Conversa extends Component
             $this->habilitarUpload = false;
             $this->ocultarValidate = true;
             $this->arquivo = null;
+            $this->placeholderMsg = null;
         } else {
             $this->habilitarUpload = true;
+            $this->placeholderMsg = "Descrição do arquivo...";
         }
     }
 
@@ -213,6 +216,7 @@ class Conversa extends Component
         $this->tipoArquivo = null;
         $this->nomeOriginalArquivo = null;
         $this->extensaoOriginalArquivo = null;
+        $this->placeholderMsg = null;
     }
 
     public function buscarNomeUsuario($id)

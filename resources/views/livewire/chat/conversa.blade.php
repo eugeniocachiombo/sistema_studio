@@ -39,7 +39,7 @@
                                         @enderror
                                     @endif
                                     <textarea class="form-control" rows="5" wire:model="mensagem" rows="6"
-                                        placeholder="Escreva sua mensagem aqui" required></textarea>
+                                        placeholder="{{ $placeholderMsg ? $placeholderMsg : 'Escreva sua mensagem aqui' }}" required></textarea>
                                 </div>
 
                                 <div class="col-md-12 text-center d-flex pt-4">
