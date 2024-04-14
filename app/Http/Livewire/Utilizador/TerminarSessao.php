@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Utilizador;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class TerminarSessao extends Component
@@ -13,6 +14,7 @@ class TerminarSessao extends Component
 
     public function render()
     {
+        Auth::logout();
         session()->forget("ambientePreparado");
         session()->forget("utilizador");
         return view('livewire.utilizador.terminar-sessao');
