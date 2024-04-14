@@ -8,11 +8,7 @@ class TerminarSessao extends Component
 {
     public function index()
     {
-        if (session('utilizador')){
-            return view('index.utilizador.terminar-sessao');
-        }else{
-            return redirect()->route("utilizador.autenticacao");
-        }
+        return view('index.utilizador.terminar-sessao');
     }
 
     public function render()

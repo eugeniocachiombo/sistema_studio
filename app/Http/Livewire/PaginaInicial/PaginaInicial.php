@@ -12,11 +12,7 @@ class PaginaInicial extends Component
 
     public function index()
     {
-        if (session('utilizador')){
-            return view('index.pagina-inicial.pagina-inicial');
-        }else{
-            return redirect()->route("utilizador.autenticacao");
-        }
+        return view('index.pagina-inicial.pagina-inicial');
     }
 
     public function render()

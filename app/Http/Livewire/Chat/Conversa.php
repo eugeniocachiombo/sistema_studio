@@ -40,6 +40,13 @@ class Conversa extends Component
         'mensagem' => 'required',
     ];
 
+    public function index($utilizador, $remente)
+    {
+        $utilizador = $utilizador;
+        $remente = $remente;
+        return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
+    }
+
     public function mount($utilizador, $remente)
     {
         $this->utilizador_id = $utilizador;
@@ -286,12 +293,5 @@ class Conversa extends Component
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
-    }
-
-    public function index($utilizador, $remente)
-    {
-        $utilizador = $utilizador;
-        $remente = $remente;
-        return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
     }
 }

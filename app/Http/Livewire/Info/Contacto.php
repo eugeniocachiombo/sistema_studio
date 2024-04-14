@@ -27,6 +27,11 @@ class Contacto extends Component
         'assunto' => 'required',
     ];
 
+    public function index()
+    {
+        return view('index.info.contacto');
+    }
+
     public function render()
     {
         return view('livewire.info.contacto');
@@ -58,8 +63,5 @@ class Contacto extends Component
         $this->mensagem = null;
     }
 
-    public function index()
-    {
-        return view('index.info.contacto');
-    }
+    
 }

@@ -19,7 +19,7 @@ use App\Http\Livewire\Utilizador\{
 use App\Http\Middleware\CheckAuth;
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
-    Route::get('/', [PaginaInicial::class, "index"])->name("");
+    Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);
 });
 
 Route::prefix("info")->name("info.")->group(function(){
@@ -30,15 +30,13 @@ Route::prefix("info")->name("info.")->group(function(){
 Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('cadastro', [Cadastro::class, "index"])->name("cadastro");
     Route::get('autenticacao', [Autenticacao::class, "index"])->name("autenticacao");
-    Route::get('perfil', [Perfil::class, "index"])->name("perfil");
-    Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao");
+    Route::get('perfil', [Perfil::class, "index"])->name("perfil")->middleware(CheckAuth::class);
+    Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao")->middleware(CheckAuth::class);
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
 });
 
 Route::prefix("chat")->name("chat.")->group(function(){
-    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])
-    ->name("conversa")
-    ->middleware(CheckAuth::class);
+    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa")->middleware(CheckAuth::class);
 });
 
 

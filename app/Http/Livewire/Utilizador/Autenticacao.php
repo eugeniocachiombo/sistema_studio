@@ -46,15 +46,13 @@ class Autenticacao extends Component
             'email' => $this->email,
             'password' => $this->palavra_passe,
         ];
-       
         if (Auth::attempt($credenciais)) {
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
-           dd("Logado: " . Auth::user()->name);
-           $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
-           session()->put("utilizador", Auth::user()->name);
+            $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
+            session()->put("utilizador", Auth::user()->name);
         }else{
-            dd("Não Logado: " . Auth::user());
+            $this->emit('alerta', ['mensagem' => 'Erro, Dados inválidos', 'icon' => 'error']);
         }
     }
 

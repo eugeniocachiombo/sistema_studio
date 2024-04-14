@@ -8,11 +8,7 @@ class Perfil extends Component
 {
     public function index()
     {
-        if (session('utilizador')){
-            return view('index.utilizador.perfil');
-        }else{
-            return redirect()->route("utilizador.autenticacao");
-        }
+        return view('index.utilizador.perfil');
     }
 
     public function render()
