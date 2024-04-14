@@ -38,3 +38,4 @@
 </head>
 
 <body>
+    @livewire('inclusao.header')
