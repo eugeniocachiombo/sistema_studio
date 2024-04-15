@@ -192,9 +192,6 @@
                         @endif
                     @endfor
 
-
-
-
                     <li class="dropdown-footer">
                         @if (count($this->todasConversasGeral) > 3)
                             <a href="#">Mostrar todas as mensagens</a>
@@ -203,7 +200,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item dropdown pe-3">
+            <li class="nav-item dropdown pe-3 ">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
