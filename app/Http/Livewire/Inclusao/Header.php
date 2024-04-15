@@ -81,6 +81,15 @@ class Header extends Component
         ->where('estado', 'pendente')
         ->get();
     }
+    
+    public function totalParticipantesPendentes()
+    {
+        return ChatConversa::where('receptor', $this->utilizador_id)
+        ->where('estado', 'pendente')
+        ->select("emissor")
+        ->distinct()
+        ->get();
+    }
 
     public function listarParticipantes()
     {
@@ -92,7 +101,7 @@ class Header extends Component
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', '!=', $this->utilizador_id);
             })
-            ->where('estado', 'pendente')
+            ->orderby('id', 'desc')
             ->distinct()
             ->get();
 

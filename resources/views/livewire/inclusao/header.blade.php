@@ -87,23 +87,14 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
-
-                    @for ($i = 0; $i < count($this->listaParticipantes); $i++)
-                        @php
-                            $idRemente = $this->listaParticipantes[$i];
-                            $conversa = $this->ultimaMensagem($idRemente);
-                        @endphp
-
-                        @if ($conversa->estado == 'pendente' && $conversa->emissor != $utilizador_id)
-                            <span class="badge bg-success badge-number">
-                                {{ count($this->listaParticipantes) }}
-                            </span>
-                        @endif
-
-                        @php
-                            break;
-                        @endphp
-                    @endfor
+                    @php
+                        $participantesPendentes = $this->totalParticipantesPendentes();
+                    @endphp
+                    @if (count($participantesPendentes) > 0)
+                        <span class="badge bg-success badge-number">
+                            {{count($participantesPendentes)}}
+                        </span>
+                    @endif
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -134,69 +125,71 @@
                     </style>
 
                     @for ($i = 0; $i < count($this->listaParticipantes); $i++)
-                        <li class="message-item" id="bgMsg">
-                            @php
-                                $idRemente = $this->listaParticipantes[$i];
-                                $nome = $this->buscarNomeUsuario($idRemente);
-                                $conversa = $this->ultimaMensagem($idRemente);
-                                /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
-                                $criptIdRemente = Crypt::encrypt($idRemente);*/
-                            @endphp
+                        @if ($i < 3)
+                            <li class="message-item" id="bgMsg">
+                                @php
+                                    $idRemente = $this->listaParticipantes[$i];
+                                    $nome = $this->buscarNomeUsuario($idRemente);
+                                    $conversa = $this->ultimaMensagem($idRemente);
+                                    /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
+                                    $criptIdRemente = Crypt::encrypt($idRemente);*/
+                                @endphp
 
-                            @if ($conversa->estado == 'pendente' && $conversa->emissor != $utilizador_id)
-                                <a id="bgMsgPendente"
-                                    class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
-                                    href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                    style="border-radius: 50px">
-                                    <div class="col-2">
-                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                            class="rounded-circle">
-                                    </div>
+                                @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
+                                    <a id="bgMsgPendente"
+                                        class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
+                                        href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
+                                        style="border-radius: 50px">
+                                        <div class="col-2">
+                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                                class="rounded-circle">
+                                        </div>
 
-                                    <div class="col ms-1">
-                                        <h4 class="text-light">{{ $nome }}</h4>
-                                        <p class="text-light">
-                                            @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
-                                                {{ Crypt::decrypt($conversa->mensagem) }}
-                                            @else
-                                                {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
-                                            @endif
-                                        </p>
-                                        <p class="text-light">{{ $this->formatarData($conversa->created_at) }}</p>
-                                    </div>
+                                        <div class="col ms-1">
+                                            <h4 class="text-light">{{ $nome }}</h4>
+                                            <p class="text-light">
+                                                @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    {{ Crypt::decrypt($conversa->mensagem) }}
+                                                @else
+                                                    {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                @endif
+                                            </p>
+                                            <p class="text-light">{{ $this->formatarData($conversa->created_at) }}</p>
+                                        </div>
 
-                                    <div class="col text-light text-center">
-                                        <span class="badge bg-danger">{{count($this->msgPendentes())}}</span>
-                                    </div>
-                                </a>
-                            @elseif ($conversa->emissor == $utilizador_id || $conversa->estado == 'lido')
-                                <a id="bgMsgLido"
-                                    class=" bg-white pt-1 d-flex justify-content-center align-items-center"
-                                    href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                    style="border-radius: 50px">
-                                    <div class="col-2">
-                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                            class="rounded-circle">
-                                    </div>
+                                        <div class="col text-light text-center">
+                                            <span class="badge bg-danger">{{count($this->msgPendentes())}}</span>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a id="bgMsgLido"
+                                        class=" bg-white pt-1 d-flex justify-content-center align-items-center"
+                                        href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
+                                        style="border-radius: 50px">
+                                        <div class="col-2">
+                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                                class="rounded-circle">
+                                        </div>
 
-                                    <div class="col ms-1">
-                                        <h4 class="text-dark">{{ $nome }}</h4>
-                                        <p class="text-dark">
-                                            @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
-                                                {{ Crypt::decrypt($conversa->mensagem) }}
-                                            @else
-                                                {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
-                                            @endif
-                                        </p>
+                                        <div class="col ms-1">
+                                            <h4 class="text-dark">{{ $nome }}</h4>
+                                            <p class="text-dark">
+                                                @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    {{ Crypt::decrypt($conversa->mensagem) }}
+                                                @else
+                                                    {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                @endif
+                                            </p>
 
-                                        <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
-                                    </div>
-                                </a>
-                            @endif
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                                            <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
+                                        </div>
+                                    </a>
+                                @endif
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        @endif
                     @endfor
 
 

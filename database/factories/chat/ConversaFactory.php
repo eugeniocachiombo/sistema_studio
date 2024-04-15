@@ -11,11 +11,11 @@ class ConversaFactory extends Factory
     
     public function definition()
     {
-        $emissor = $this->faker->numberBetween(1, 2);
-        $receptor = $this->faker->numberBetween(1, 2);
+        $emissor = $this->faker->numberBetween(1, 10);
+        $receptor = $this->faker->numberBetween(1, 10);
         
         while ($receptor === $emissor) {
-            $receptor = $this->faker->numberBetween(1, 2);
+            $receptor = $this->faker->numberBetween(1, 10);
         }
         
         return [
