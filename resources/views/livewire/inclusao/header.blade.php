@@ -108,7 +108,7 @@
                         @else
                             Você não tem novas mensagens
                         @endif
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModal"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -234,7 +234,7 @@
                     @endfor
 
                     <li class="dropdown-footer">
-                        @if (count($this->todasConversasGeral) > 3)
+                        @if (count($this->listaParticipantes) >= 3)
                             <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModal">Mostrar todas as
                                 mensagens</a>
                         @endif
