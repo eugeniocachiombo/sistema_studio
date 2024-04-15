@@ -140,7 +140,7 @@
                                         </div>
 
                                         <div class="col-2 text-center">
-                                            @if ($conversa->estado != 'lido')
+                                            @if ($conversa->estado == 'lido')
                                                     <i class="bi bi-check-circle-fill text-primary"></i>
                                                 @else
                                                     <i class="bi bi-check text-primary"></i>

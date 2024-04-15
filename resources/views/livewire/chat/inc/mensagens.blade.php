@@ -2,6 +2,10 @@
 
 <div class="row gy-4">
     <div class="col d-table" style="margin-bottom: -20px">
+        @php
+            $ultimoEstado = "";
+            $ultimoReceptor = "";
+        @endphp
         @if (count($this->todasConversas) > 0)
             @foreach (array_reverse($this->todasConversas) as $item)
                 <div class="col text-center pt-4">
@@ -18,7 +22,18 @@
                         </div>
                     @endif
                 </div>
+                @php
+                    $ultimoEstado = $item->estado;
+                    $ultimoReceptor = $item->receptor;
+                @endphp
             @endforeach
+          
+            @if ($ultimoEstado == 'lido' )
+                Mensagem visualizada: <i class="bi bi-check-circle-fill text-primary"> </i>
+            @else
+                Mensagem enviada: <i class="bi bi-check text-primary"> </i>
+            @endif
+            <hr>
         @else
             <div class="col text-center pt-5  mb-5">
                 <b class="alert alert-danger"><i class="bi bi-info-circle"></i> Não existe conversa com este utilizador</b>
