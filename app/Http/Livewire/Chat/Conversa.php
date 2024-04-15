@@ -6,6 +6,7 @@ use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -46,7 +47,11 @@ class Conversa extends Component
         $remente = Crypt::decrypt($remente);*/
         $utilizador = $utilizador;
         $remente = $remente;
-        return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
+        if($utilizador == Auth::user()->id){
+            return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
+        }else{
+            return redirect()->to("/error");
+        }
     }
 
     public function mount($utilizador, $remente)
