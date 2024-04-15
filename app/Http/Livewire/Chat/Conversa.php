@@ -58,6 +58,7 @@ class Conversa extends Component
         $this->todasConversas = $this->listarTodasConversas();
         $this->ocutarMsgValidate();
         $this->setarDadosArquivo();
+       // $this->actualizarParaLidoMensagem();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
@@ -193,6 +194,19 @@ class Conversa extends Component
     public function mensagemPressionada()
     {
         $this->mostrarBtnEliminarMsg();
+    }
+
+    public function actualizarParaLidoMensagem()
+    {
+        ChatConversa::where(function ($query) {
+            $query->where('emissor', $this->utilizador_id)
+                ->where('receptor', $this->remente);
+        })
+        ->orWhere(function ($query) {
+            $query->where('receptor', $this->utilizador_id)
+                ->where('emissor', $this->remente);
+        })
+        ->update(['estado' => 'lido']);
     }
 
     public function mostrarBtnEliminarMsg()
