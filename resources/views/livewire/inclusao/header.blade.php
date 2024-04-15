@@ -139,14 +139,14 @@
                                 $idRemente = $this->listaParticipantes[$i];
                                 $nome = $this->buscarNomeUsuario($idRemente);
                                 $conversa = $this->ultimaMensagem($idRemente);
-                                $criptUtilizador_id = Crypt::encrypt($utilizador_id);
-                                $criptIdRemente = Crypt::encrypt($idRemente);
+                                /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
+                                $criptIdRemente = Crypt::encrypt($idRemente);*/
                             @endphp
 
                             @if ($conversa->estado == 'pendente' && $conversa->emissor != $utilizador_id)
                                 <a id="bgMsgPendente"
                                     class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
-                                    href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}"
+                                    href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                     style="border-radius: 50px">
                                     <div class="col-2">
                                         <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
@@ -168,7 +168,7 @@
                             @elseif ($conversa->emissor == $utilizador_id || $conversa->estado == 'lido')
                                 <a id="bgMsgLido"
                                     class=" bg-white pt-1 d-flex justify-content-center align-items-center"
-                                    href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}"
+                                    href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                     style="border-radius: 50px">
                                     <div class="col-2">
                                         <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""

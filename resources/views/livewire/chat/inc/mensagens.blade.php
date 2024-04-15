@@ -1,3 +1,5 @@
+@include('livewire.chat.inc.btnPaginacao') 
+
 <div class="row gy-4">
     <div class="col d-table" style="margin-bottom: -20px">
         @if (count($this->todasConversas) > 0)
@@ -25,4 +27,4 @@
         @include('livewire.chat.inc.upload')
     </div>
 
-    @include('livewire.chat.inc.btnPaginacao') 
+   
