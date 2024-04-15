@@ -4,7 +4,7 @@
     <div class="col d-table" style="margin-bottom: -20px">
         @php
             $ultimoEstado = "";
-            $ultimoReceptor = "";
+            $ultimaActualizacao = "";
         @endphp
         @if (count($this->todasConversas) > 0)
             @foreach (array_reverse($this->todasConversas) as $item)
@@ -24,16 +24,14 @@
                 </div>
                 @php
                     $ultimoEstado = $item->estado;
-                    $ultimoReceptor = $item->receptor;
+                    $ultimaActualizacao = $item->updated_at;
                 @endphp
             @endforeach
           
             @if ($ultimoEstado == 'lido' )
-                Mensagem visualizada: <i class="bi bi-check-circle-fill text-primary"> </i>
-            @else
-                Mensagem enviada: <i class="bi bi-check text-primary"> </i>
+                 Visto: <i class="bi bi-check-circle-fill text-primary"></i> &nbsp; {{$this->formatarData($ultimaActualizacao)}}
+                <hr>
             @endif
-            <hr>
         @else
             <div class="col text-center pt-5  mb-5">
                 <b class="alert alert-danger"><i class="bi bi-info-circle"></i> Não existe conversa com este utilizador</b>
