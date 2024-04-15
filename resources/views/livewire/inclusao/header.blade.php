@@ -174,7 +174,8 @@
                                                     @endif
                                                 @endif
                                             </p>
-                                            <p class="text-light">{{ $this->formatarData($conversa->created_at) }}
+                                            <p class="text-light">
+                                                {{ $this->formatarData($conversa->created_at) }}
                                             </p>
                                         </div>
 
@@ -221,8 +222,15 @@
                                                 @endif
                                             </p>
 
-                                            <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}
-                                            </p>
+                                            <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
+                                        </div>
+
+                                        <div class="col text-center">
+                                            @if ($conversa->estado != 'lido')
+                                                    <i class="bi bi-check-circle-all text-primary"></i>
+                                                @else
+                                                    <i class="bi bi-check-circle text-primary"></i>
+                                                @endif
                                         </div>
                                     </a>
                                 @endif

@@ -106,7 +106,7 @@
                                                 class="rounded-circle">
                                         </div>
 
-                                        <div class="col-8">
+                                        <div class="col-6">
                                             <b><h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}
                                             </h5></b>
                                             <p class="text-dark pe-2" style="white-space: nowrap;">
@@ -137,6 +137,14 @@
 
                                             <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}
                                             </p>
+                                        </div>
+
+                                        <div class="col-2 text-center">
+                                            @if ($conversa->estado != 'lido')
+                                                    <i class="bi bi-check-circle-all text-primary"></i>
+                                                @else
+                                                    <i class="bi bi-check-circle text-primary"></i>
+                                                @endif
                                         </div>
                                     </a>
                                 @endif
