@@ -64,6 +64,21 @@ class Conversa extends Component
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
+    public function msgPendentes()
+    {
+        return ChatConversa::where(function ($query) {
+            $query->where('emissor', $this->utilizador_id)
+                ->where('receptor', $this->remente)
+                ->where('estado', 'pendente');
+            })
+        ->orWhere(function ($query) {
+                $query->where('receptor', $this->utilizador_id)
+                    ->where('emissor', $this->remente)
+                    ->where('estado', 'pendente');
+            })
+        ->get();
+    }
+
     public function ocutarMsgValidate()
     {
         if ($this->arquivo || $this->mensagem != null) {
@@ -201,15 +216,13 @@ class Conversa extends Component
 
     public function actualizarParaLidoMensagem()
     {
-        ChatConversa::where(function ($query) {
-            $query->where('emissor', $this->utilizador_id)
-                ->where('receptor', $this->remente);
-        })
-        ->orWhere(function ($query) {
-            $query->where('receptor', $this->utilizador_id)
-                ->where('emissor', $this->remente);
-        })
-        ->update(['estado' => 'lido']);
+        $msgPendentes = $this->msgPendentes();
+        foreach ($msgPendentes as $item) {
+            if($item->receptor == $this->utilizador_id){
+                ChatConversa::where("id", $item->id)
+                ->update(['estado' => 'lido']);
+            }
+        }
     }
 
     public function mostrarBtnEliminarMsg()

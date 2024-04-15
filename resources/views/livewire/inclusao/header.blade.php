@@ -164,6 +164,10 @@
                                         </p>
                                         <p class="text-light">{{ $this->formatarData($conversa->created_at) }}</p>
                                     </div>
+
+                                    <div class="col text-light text-center">
+                                        <span class="badge bg-danger">{{count($this->msgPendentes())}}</span>
+                                    </div>
                                 </a>
                             @elseif ($conversa->emissor == $utilizador_id || $conversa->estado == 'lido')
                                 <a id="bgMsgLido"

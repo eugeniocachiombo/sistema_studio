@@ -14,6 +14,7 @@ class Header extends Component
     public $utilizador_id = null, $idRemente=null;
     public $todasConversasGeral = array();
     public $listaParticipantes = array();
+    public $todasPendentes = array();
     //public $listeners = ['tempoRealMensagens'];
 
     public function mount()
@@ -57,6 +58,21 @@ class Header extends Component
             ->orderBy("id", "desc")
             ->limit(1)
             ->first();
+    }
+
+    public function msgPendentes()
+    {
+        return ChatConversa::where(function ($query) {
+            $query->where('emissor', $this->utilizador_id)
+                ->where('receptor', $this->idRemente)
+                ->where('estado', 'pendente');
+            })
+        ->orWhere(function ($query) {
+                $query->where('receptor', $this->utilizador_id)
+                    ->where('emissor', $this->idRemente)
+                    ->where('estado', 'pendente');
+            })
+        ->get();
     }
 
     public function listarParticipantes()
