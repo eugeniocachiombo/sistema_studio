@@ -87,59 +87,78 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
+                    @if (count($this->todasConversas) > 0)
+                        <span class="badge bg-success badge-number">
+                            {{ count($this->todasConversas) }}
+                        </span>
+                    @endif
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
-                        Você tem 3 novas mensagens
+                        @if (count($this->todasConversasGeral) > 0)
+                            @if (count($this->todasConversasGeral) == 1)
+                                Você tem {{ count($this->todasConversasGeral) }} nova mensagem
+                            @else
+                                Você tem {{ count($this->todasConversasGeral) }} novas mensagens
+                            @endif
+                        @else
+                            Você não tem novas mensagens
+                        @endif
                         <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    @for ($i = 0; $i < count($this->listaParticipantes); $i++)
+                        <li class="message-item">
+                            @php
+                                $idRemente = $this->listaParticipantes[$i];
+                                $nome = $this->buscarNomeUsuario($idRemente);
+                                $conversa = $this->ultimaMensagem($idRemente);
+                                $criptUtilizador_id = Crypt::encrypt($utilizador_id);
+                                $criptIdRemente = Crypt::encrypt($idRemente);
+                            @endphp
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="{{ asset('assets/img/messages-2.jpg') }}" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Anna Nelson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>6 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                            @if ($conversa->estado == 'pendente')
+                                <a class="bg-secondary pt-1 d-flex justify-content-around align-items-center" 
+                                href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}" style="border-radius: 50px">
+                                    <div>
+                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                        class="rounded-circle">
+                                    </div>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="{{ asset('assets/img/messages-3.jpg') }}" alt="" class="rounded-circle">
-                            <div>
-                                <h4>David Muldon</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>8 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                                    <div>
+                                        <h4 class="text-light">{{ $nome }}</h4>
+                                        <p class="text-light"><b>{{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...</b></p>
+                                        <p class="text-light">{{$this->formatarData($conversa->created_at)}}</p>
+                                    </div>
+                                </a>
+                            @elseif ($conversa->estado == 'lido')
+                                <a class=" pt-1 d-flex justify-content-around align-items-center" 
+                                href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}" style="border-radius: 50px">
+                                    <div>
+                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                        class="rounded-circle">
+                                    </div>
+
+                                    <div>
+                                        <h4>{{ $nome }}</h4>
+                                        <p><b>{{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...</b></p>
+                                        <p>{{$this->formatarData($conversa->created_at)}}</p>
+                                    </div>
+                                </a>
+                            @endif
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    @endfor
+
+
+
+
 
                     <li class="dropdown-footer">
                         <a href="#">Mostrar todas as mensagens</a>

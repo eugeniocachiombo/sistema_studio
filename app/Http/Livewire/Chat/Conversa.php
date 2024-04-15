@@ -42,8 +42,8 @@ class Conversa extends Component
 
     public function index($utilizador, $remente)
     {
-        $utilizador = $utilizador;
-        $remente = $remente;
+        $utilizador = Crypt::decrypt($utilizador);
+        $remente = Crypt::decrypt($remente);
         return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
     }
 
