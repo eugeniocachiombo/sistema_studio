@@ -122,31 +122,17 @@
                             @endphp
 
                             @if ($conversa->estado == 'pendente')
-                                <a class="bg-secondary pt-1 d-flex justify-content-around align-items-center" 
+                                <a class="bg-secondary pt-1 d-flex justify-content-center align-items-center" 
                                 href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}" style="border-radius: 50px">
-                                    <div>
+                                    <div class="col-2">
                                         <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
                                         class="rounded-circle">
                                     </div>
 
-                                    <div>
+                                    <div class="col ms-1">
                                         <h4 class="text-light">{{ $nome }}</h4>
                                         <p class="text-light"><b>{{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...</b></p>
                                         <p class="text-light">{{$this->formatarData($conversa->created_at)}}</p>
-                                    </div>
-                                </a>
-                            @elseif ($conversa->estado == 'lido')
-                                <a class=" pt-1 d-flex justify-content-around align-items-center" 
-                                href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}" style="border-radius: 50px">
-                                    <div>
-                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                        class="rounded-circle">
-                                    </div>
-
-                                    <div>
-                                        <h4>{{ $nome }}</h4>
-                                        <p><b>{{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...</b></p>
-                                        <p>{{$this->formatarData($conversa->created_at)}}</p>
                                     </div>
                                 </a>
                             @endif
