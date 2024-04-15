@@ -51,6 +51,7 @@ class Conversa extends Component
     {
         $this->utilizador_id = $utilizador;
         $this->remente = $remente;
+        $this->actualizarParaLidoMensagem();
     }
 
     public function render()
@@ -58,7 +59,6 @@ class Conversa extends Component
         $this->todasConversas = $this->listarTodasConversas();
         $this->ocutarMsgValidate();
         $this->setarDadosArquivo();
-       // $this->actualizarParaLidoMensagem();
         return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
     }
 
@@ -74,6 +74,7 @@ class Conversa extends Component
         // Este método somente ajuda a carregar a página em tempo real
         // com a declaração em javascript no arquivo temporeal_msg.js
         // seu listener public $listeners = ['tempoRealMensagens'];
+        // $this->actualizarParaLidoMensagem();
     }
 
     public function listarTodasConversas()

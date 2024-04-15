@@ -12,7 +12,6 @@ use Livewire\Component;
 class Header extends Component
 {
     public $utilizador_id = null, $idRemente=null;
-    public $todasConversas = array();
     public $todasConversasGeral = array();
     public $listaParticipantes = array();
     //public $listeners = ['tempoRealMensagens'];
@@ -24,27 +23,9 @@ class Header extends Component
 
     public function render()
     {
-        $this->todasConversas = $this->listarTodasConversas();
         $this->todasConversasGeral = $this->listarTodasConversasGeral();
         $this->listaParticipantes = $this->listarParticipantes();
         return view('livewire.inclusao.header'); 
-    }
-
-    public function listarTodasConversas()
-    {
-        return ChatConversa::where('estado', '!=', 'lido')
-        ->selectRaw('LEAST(emissor, receptor) AS menor, GREATEST(emissor, receptor) AS maior')
-            ->where(function ($query) {
-                $query->where('emissor', $this->utilizador_id)
-                    ->where('receptor', '!=', $this->utilizador_id);
-            })
-            ->orWhere(function ($query) {
-                $query->where('receptor', $this->utilizador_id)
-                    ->where('emissor', '!=', $this->utilizador_id);
-            })
-            ->where('estado','pendente')
-            ->distinct()
-            ->get();
     }
 
     public function listarTodasConversasGeral()

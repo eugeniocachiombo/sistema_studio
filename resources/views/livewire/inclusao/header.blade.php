@@ -87,11 +87,23 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
-                    @if (count($this->todasConversas) > 0)
-                        <span class="badge bg-success badge-number">
-                            {{ count($this->todasConversas) }}
-                        </span>
-                    @endif
+
+                    @for ($i = 0; $i < count($this->listaParticipantes); $i++)
+                        @php
+                            $idRemente = $this->listaParticipantes[$i];
+                            $conversa = $this->ultimaMensagem($idRemente);
+                        @endphp
+
+                        @if ($conversa->estado == 'pendente' && $conversa->emissor != $utilizador_id)
+                            <span class="badge bg-success badge-number">
+                                {{ count($this->listaParticipantes) }}
+                            </span>
+                        @endif
+
+                        @php
+                            break;
+                        @endphp
+                    @endfor
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -132,7 +144,8 @@
                             @endphp
 
                             @if ($conversa->estado == 'pendente' && $conversa->emissor != $utilizador_id)
-                                <a id="bgMsgPendente" class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
+                                <a id="bgMsgPendente"
+                                    class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
                                     href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}"
                                     style="border-radius: 50px">
                                     <div class="col-2">
@@ -153,7 +166,6 @@
                                     </div>
                                 </a>
                             @elseif ($conversa->emissor == $utilizador_id || $conversa->estado == 'lido')
-                                
                                 <a id="bgMsgLido"
                                     class=" bg-white pt-1 d-flex justify-content-center align-items-center"
                                     href="{{ route('chat.conversa', [$criptUtilizador_id, $criptIdRemente]) }}"
@@ -186,13 +198,12 @@
 
 
 
-
                     <li class="dropdown-footer">
-                        <a href="#">Mostrar todas as mensagens</a>
+                        @if (count($this->todasConversasGeral) > 3)
+                            <a href="#">Mostrar todas as mensagens</a>
+                        @endif
                     </li>
-
                 </ul>
-
             </li>
 
             <li class="nav-item dropdown pe-3">
