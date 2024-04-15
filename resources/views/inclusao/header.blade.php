@@ -10,3 +10,4 @@
     @livewire('inclusao.pesquisa')
     @livewire('inclusao.header')
 </header>
+@livewire('chat.listamodal')

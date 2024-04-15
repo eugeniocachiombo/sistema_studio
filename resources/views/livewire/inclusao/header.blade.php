@@ -92,7 +92,7 @@
                     @endphp
                     @if (count($participantesPendentes) > 0)
                         <span class="badge bg-success badge-number">
-                            {{count($participantesPendentes)}}
+                            {{ count($participantesPendentes) }}
                         </span>
                     @endif
                 </a>
@@ -146,7 +146,7 @@
                                         </div>
 
                                         <div class="col ms-1">
-                                            <h4 class="text-light">{{ $nome }}</h4>
+                                            <h4 class="text-light" style="white-space: nowrap;">{{ $nome }}</h4>
                                             <p class="text-light">
                                                 @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                     {{ Crypt::decrypt($conversa->mensagem) }}
@@ -158,7 +158,7 @@
                                         </div>
 
                                         <div class="col text-light text-center">
-                                            <span class="badge bg-danger">{{count($this->msgPendentes())}}</span>
+                                            <span class="badge bg-danger">{{ count($this->msgPendentes()) }}</span>
                                         </div>
                                     </a>
                                 @else
@@ -172,7 +172,7 @@
                                         </div>
 
                                         <div class="col ms-1">
-                                            <h4 class="text-dark">{{ $nome }}</h4>
+                                            <h4 class="text-dark" style="white-space: nowrap;">{{ $nome }}</h4>
                                             <p class="text-dark">
                                                 @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                     {{ Crypt::decrypt($conversa->mensagem) }}
@@ -194,7 +194,8 @@
 
                     <li class="dropdown-footer">
                         @if (count($this->todasConversasGeral) > 3)
-                            <a href="#">Mostrar todas as mensagens</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModal">Mostrar todas as
+                                mensagens</a>
                         @endif
                     </li>
                 </ul>
@@ -259,3 +260,6 @@
         @endif
     </ul>
 </nav>
+
+
+
