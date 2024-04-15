@@ -20,17 +20,24 @@
                     <style>
                         #bgMsg {
                             text-decoration: none;
-                            min-width: 150px;
                         }
 
                         #bgMsg:hover {
                             background: gray;
                         }
+                        #bgMsgGeral {
+                            text-decoration: none;
+                            background: rgb(194, 194, 194);
+                        }
+
+                        #bgMsgGeral:hover {
+                            background: gray;
+                        }
                     </style>
 
-                    <div class="col-12 d-flex flex-column">
+                    <div class="col-12 d-flex flex-column pe-2 ps-2" >
                         @for ($i = 0; $i < count($this->listaParticipantes); $i++)
-                            <div class="" id="bgMsg">
+                            <div class="" id="bgMsgGeral">
                                 @php
                                     $idRemente = $this->listaParticipantes[$i];
                                     $nome = $this->buscarNomeUsuario($idRemente);
@@ -40,11 +47,11 @@
                                 @endphp
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
-                                    <a id="bgMsgPendente"
+                                    <a id="bgMsg"
                                         class="m-4 bg-secondary pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
-                                        <div class="col m-2">
+                                        <div class="col m-2 ps-5">
                                             <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
                                                 class="rounded-circle">
                                         </div>
@@ -68,11 +75,11 @@
                                         </div>
                                     </a>
                                 @else
-                                    <a id="bgMsgLido"
+                                    <a id="bgMsg"
                                         class="m-4 bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
-                                        <div class="col-4">
+                                        <div class="col-4 ms-2 mt-2 mb-2">
                                             <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
                                                 class="rounded-circle">
                                         </div>

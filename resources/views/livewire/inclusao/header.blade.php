@@ -117,6 +117,7 @@
                     <style>
                         #bgMsg {
                             text-decoration: none;
+                            background: rgb(194, 194, 194);
                         }
 
                         #bgMsg:hover {
@@ -126,7 +127,7 @@
 
                     @for ($i = 0; $i < count($this->listaParticipantes); $i++)
                         @if ($i < 3)
-                            <li class="message-item" id="bgMsg">
+                            <li class="message-item m-1" id="bgMsg">
                                 @php
                                     $idRemente = $this->listaParticipantes[$i];
                                     $nome = $this->buscarNomeUsuario($idRemente);
