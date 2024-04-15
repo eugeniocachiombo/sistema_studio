@@ -29,7 +29,6 @@
                             text-decoration: none;
                             background: rgb(194, 194, 194);
                         }
-
                         #bgMsgGeral:hover {
                             background: gray;
                         }

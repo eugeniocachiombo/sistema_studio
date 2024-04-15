@@ -85,7 +85,7 @@
 
             <li class="nav-item dropdown">
 
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <a class="nav-link nav-icon" wire:mouseover="travarTempoReal()" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
                     @php
                         $participantesPendentes = $this->totalParticipantesPendentes();
