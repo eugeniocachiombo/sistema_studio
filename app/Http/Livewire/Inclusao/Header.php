@@ -15,7 +15,11 @@ class Header extends Component
     public $todasConversasGeral = array();
     public $listaParticipantes = array();
     public $todasPendentes = array();
-    public $listeners = ['tempoRealMensagens'];
+    public $extensoesAceites = [
+        "img" => ["jpg", "jpeg", "png"],
+        "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
+        "texto" => ["pdf", "doc", "txt"],
+    ];
 
     public function mount()
     {
@@ -28,19 +32,6 @@ class Header extends Component
         $this->listaParticipantes = $this->listarParticipantes();
         return view('livewire.inclusao.header'); 
     }
-
-    public function tempoRealMensagens(){
-
-    }
-
-    public function travarTempoReal(){
-        if (isset($this->listeners['tempoRealMensagens'])) {
-            $this->listeners['tempoRealMensagens'] = "";
-        }
-        sleep(5);
-        $this->listeners = ['tempoRealMensagens'];
-    }
-    
 
     public function listarTodasConversasGeral()
     {

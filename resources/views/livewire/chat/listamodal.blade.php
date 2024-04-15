@@ -25,16 +25,18 @@
                         #bgMsg:hover {
                             background: gray;
                         }
+
                         #bgMsgGeral {
                             text-decoration: none;
                             background: rgb(194, 194, 194);
                         }
+
                         #bgMsgGeral:hover {
                             background: gray;
                         }
                     </style>
 
-                    <div class="col-12 d-flex flex-column pe-2 ps-2" >
+                    <div class="col-12 d-flex flex-column pe-2 ps-2">
                         @for ($i = 0; $i < count($this->listaParticipantes); $i++)
                             <div class="" id="bgMsgGeral">
                                 @php
@@ -45,57 +47,98 @@
  $criptIdRemente = Crypt::encrypt($idRemente);*/
                                 @endphp
 
-                                @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
+                                @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                     <a id="bgMsg"
-                                        class="m-4 bg-secondary pt-1 d-flex justify-content-center align-items-center"
-                                        href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                        style="border-radius: 50px">
-                                        <div class="col m-2 ps-5">
-                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                                class="rounded-circle">
-                                        </div>
+                                            class="m-4 bg-white pt-1 d-flex justify-content-center align-items-center"
+                                            href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
+                                            style="border-radius: 50px">
+                                            <div class="col-4 ms-2 mt-2 mb-2">
+                                                <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                                    class="rounded-circle">
+                                            </div>
 
-                                        <div class="col ms-1">
-                                            <h5 class="text-light" style="white-space: nowrap;">{{ $nome }}</h5>
-                                            <p class="text-light" style="white-space: nowrap;">
-                                                @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
-                                                    {{ Crypt::decrypt($conversa->mensagem) }}
-                                                @else
-                                                    {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
-                                                @endif
-                                            </p>
-                                            <p class="text-light">{{ $this->formatarData($conversa->created_at) }}</p>
-                                        </div>
+                                            <div class="col">
+                                                <h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}
+                                                </h5>
+                                                <p class="text-dark pe-2" style="white-space: nowrap;">
+                                                    @switch($conversa->tipo_arquivo)
+                                                    @case('img')
+                                                        <b>Arquivo de Foto</b>
+                                                    @break
 
-                                        <div class="col text-light text-center pe-2 ps-2">
-                                            <h4><span
-                                                    class="badge badge-lg bg-danger">{{ count($this->msgPendentes()) }}</span>
-                                            </h4>
-                                        </div>
-                                    </a>
+                                                    @case('audio')
+                                                        <b>Arquivo de udio</b>
+                                                    @break
+
+                                                    @case('texto')
+                                                        <b>Arquivo de exto</b>
+                                                    @break
+
+                                                    @default
+                                                @endswitch
+                                                </p>
+
+                                                <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}
+                                                </p>
+                                            </div>
+                                        </a>
                                 @else
-                                    <a id="bgMsg"
-                                        class="m-4 bg-white pt-1 d-flex justify-content-center align-items-center"
-                                        href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                        style="border-radius: 50px">
-                                        <div class="col-4 ms-2 mt-2 mb-2">
-                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                                class="rounded-circle">
-                                        </div>
+                                    @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
+                                        <a id="bgMsg"
+                                            class="m-4 bg-secondary pt-1 d-flex justify-content-center align-items-center"
+                                            href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
+                                            style="border-radius: 50px">
+                                            <div class="col m-2 ps-5">
+                                                <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                                    class="rounded-circle">
+                                            </div>
 
-                                        <div class="col">
-                                            <h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}</h5>
-                                            <p class="text-dark pe-2" style="white-space: nowrap;">
-                                                @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
-                                                    {{ Crypt::decrypt($conversa->mensagem) }}
-                                                @else
-                                                    {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
-                                                @endif
-                                            </p>
+                                            <div class="col ms-1">
+                                                <h5 class="text-light" style="white-space: nowrap;">{{ $nome }}
+                                                </h5>
+                                                <p class="text-light" style="white-space: nowrap;">
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                        {{ Crypt::decrypt($conversa->mensagem) }}
+                                                    @else
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                    @endif
+                                                </p>
+                                                <p class="text-light">{{ $this->formatarData($conversa->created_at) }}
+                                                </p>
+                                            </div>
 
-                                            <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
-                                        </div>
-                                    </a>
+                                            <div class="col text-light text-center pe-2 ps-2">
+                                                <h4><span
+                                                        class="badge badge-lg bg-danger">{{ count($this->msgPendentes()) }}</span>
+                                                </h4>
+                                            </div>
+                                        </a>
+                                    @else
+                                        <a id="bgMsg"
+                                            class="m-4 bg-white pt-1 d-flex justify-content-center align-items-center"
+                                            href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
+                                            style="border-radius: 50px">
+                                            <div class="col-4 ms-2 mt-2 mb-2">
+                                                <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
+                                                    class="rounded-circle">
+                                            </div>
+
+                                            <div class="col">
+                                                <h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}
+                                                </h5>
+                                                <p class="text-dark pe-2" style="white-space: nowrap;">
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                        {{ Crypt::decrypt($conversa->mensagem) }}
+                                                    @else
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                    @endif
+                                                </p>
+
+                                                <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}
+                                                </p>
+                                            </div>
+                                        </a>
+                                    @endif
                                 @endif
                             </div>
                             <hr>

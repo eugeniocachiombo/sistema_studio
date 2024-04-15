@@ -9,6 +9,7 @@ class PaginaInicial extends Component
     public $gravacao;
     public $mixagem;
     public $masterizacao;
+    //public $listeners = ['tempoRealMensagens'];
 
     public function index()
     {
@@ -19,4 +20,8 @@ class PaginaInicial extends Component
     {
         return view('livewire.pagina-inicial.pagina-inicial');
     }
+
+    /*public function tempoRealMensagens(){
+
+    }*/
 }
