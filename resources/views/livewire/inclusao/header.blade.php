@@ -227,9 +227,9 @@
 
                                         <div class="col text-center">
                                             @if ($conversa->estado != 'lido')
-                                                    <i class="bi bi-check-circle-all text-primary"></i>
+                                                    <i class="bi bi-check-circle-fill text-primary"></i>
                                                 @else
-                                                    <i class="bi bi-check-circle text-primary"></i>
+                                                    <i class="bi bi-check text-primary"></i>
                                                 @endif
                                         </div>
                                     </a>
