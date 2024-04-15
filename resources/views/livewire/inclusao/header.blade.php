@@ -108,11 +108,11 @@
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
-                        @if (count($this->todasConversasGeral) > 0)
-                            @if (count($this->todasConversasGeral) == 1)
-                                Você tem {{ count($this->todasConversasGeral) }} nova mensagem
+                        @if (count($this->msgPendentesGeral()) > 0)
+                            @if (count($this->msgPendentesGeral()) == 1)
+                                Você tem {{ count($this->msgPendentesGeral()) }} nova mensagem
                             @else
-                                Você tem {{ count($this->todasConversasGeral) }} novas mensagens
+                                Você tem {{ count($this->msgPendentesGeral()) }} novas mensagens
                             @endif
                         @else
                             Você não tem novas mensagens

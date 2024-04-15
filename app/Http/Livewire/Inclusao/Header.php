@@ -75,6 +75,13 @@ class Header extends Component
         ->get();
     }
 
+    public function msgPendentesGeral()
+    {
+        return ChatConversa::where('receptor', $this->utilizador_id)
+        ->where('estado', 'pendente')
+        ->get();
+    }
+
     public function listarParticipantes()
     {
         $conversas = ChatConversa::where(function ($query) {
