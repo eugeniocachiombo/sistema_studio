@@ -105,9 +105,19 @@ class Perfil extends Component
             "user_id" => $this->utilizador_id,
             "deleted_at" => null,
         ];
-        FotoPerfil::create($dados);
-        $this->emit('alerta', ['mensagem' => 'Foto actualizado com sucesso', 'icon' => 'success']);
+        $foto = FotoPerfil::where("user_id", $this->utilizador_id)->first();
+        $this->inserirFoto($foto, $dados);
         $this->limparCampos();
+    }
+
+    public function inserirFoto($foto, $dados){
+        if ($foto) {
+            FotoPerfil::where("id", $foto->id)->update($dados);
+            $this->emit('alerta', ['mensagem' => 'Foto actualizada com sucesso', 'icon' => 'success']);
+        } else {
+            FotoPerfil::create($dados);
+            $this->emit('alerta', ['mensagem' => 'Foto inserida com sucesso', 'icon' => 'success']);
+        }
     }
 
     public function limparCampos()

@@ -16,12 +16,26 @@
                 <div class="col-xl-4">
                     @php
                         $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
+                        $foto = $this->buscarFotoPerfil($utilizador_id);
                     @endphp
 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                            <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                            <div class="col" style="display: inline-block; width: 120px; height: 120px;">
+                                @if ($foto)
+                                    <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                        style="display: inline-block; width: inherit; height: inherit">
+                                        <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" class="rounded-circle"
+                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
+                                    </a>
+                                @else
+                                    <a href="#" style="display: inline-block; width: inherit; height: inherit">
+                                        <img src="{{ asset('assets/img/img_default.jpg') }}" 
+                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
+                                    </a>
+                                @endif
+                            </div>
                             <h2>{{ session('utilizador') }}</h2>
                             <h3>{{ ucwords($dadosUtilizador->buscarTipoAcesso->tipo) }}</h3>
                             <div class="social-links mt-2">
@@ -116,43 +130,40 @@
 
                                     <form>
                                         <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do perfil
-                                                </label>
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do
+                                                perfil
+                                            </label>
                                             <div class="col-md-8 col-lg-9">
-                                              @php
-                                                  $foto = $this->buscarFotoPerfil($this->utilizador_id);
-                                              @endphp
 
-                                            @if ($foto->caminho_arquivo)
-                                                <a href="{{ url('storage/' . $foto->caminho_arquivo) }}">
-                                                  <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" alt="foto">
-                                                </a>
-                                            @else
-                                                {{--<img src="{{asset("assets/img/profile-img.jpg")}}" alt="foto">--}}
-                                                <i class="bi bi-image"></i>
-                                            @endif
-                                            
+
+                                              <div class="col" style="display: inline-block; width: 120px; height: 120px;">
+                                                @if ($foto)
+                                                    <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                        style="display: inline-block; width: inherit; height: inherit">
+                                                        <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
+                                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
+                                                    </a>
+                                                @else
+                                                    <a href="#" style="display: inline-block; width: inherit; height: inherit">
+                                                        <img src="{{ asset('assets/img/img_default.jpg') }}" 
+                                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
+                                                    </a>
+                                                @endif
+                                            </div>
+
 
                                                 <div class="pt-2">
-                                                  <label for="file-input" class="btn btn-primary btn-sm text-light" title="Actualizar foto de perfil">
-                                                    <i class="bi bi-upload"></i>
-                                                    {{ $nomeArquivo ? $nomeArquivo : '' }}
-                                                </label>
-                                                <input type="file" wire:model="arquivo" name="file" id="file-input" style="display: none;">
-                                                
-                                                <script>
-                                                    document.addEventListener("DOMContentLoaded", function() {
-                                                        const fileInput = document.getElementById('file-input');
-                                                        const uploadIcon = document.querySelector('.bi-upload');
-                                                
-                                                        uploadIcon.addEventListener('click', function() {
-                                                            fileInput.click();
-                                                        });
-                                                    });
-                                                </script>
+                                                    <label for="file-input" class="btn btn-primary btn-sm text-light"
+                                                        title="Actualizar foto de perfil">
+                                                        <i class="bi bi-upload"></i>
+                                                        {{ $nomeArquivo ? $nomeArquivo : '' }}
+                                                        <input type="file" wire:model="arquivo" name="file"
+                                                            id="file-input" style="display: none;">
+                                                    </label>
 
                                                     <a href="#" class="btn btn-danger btn-sm"
-                                                        title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                                        title="Remover a imagem do perfil"><i
+                                                            class="bi bi-trash"></i></a>
                                                 </div>
                                             </div>
                                         </div>
