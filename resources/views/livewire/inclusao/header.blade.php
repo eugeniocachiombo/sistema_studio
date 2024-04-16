@@ -248,7 +248,7 @@
                     @endfor
 
                     <li class="dropdown-footer">
-                        @if (count($this->listaParticipantes) >= 3)
+                        @if (count($this->listaParticipantes) > 3)
                             <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModal">Mostrar todas as
                                 mensagens</a>
                         @endif
