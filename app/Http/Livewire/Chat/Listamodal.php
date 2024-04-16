@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
+use App\Models\Utilizador\FotoPerfil;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -162,5 +163,9 @@ class Listamodal extends Component
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
+    }
+
+    public function buscarFotoPerfil($idUtilizador){
+        return FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
     }
 }

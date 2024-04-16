@@ -9,85 +9,85 @@
         </li>
 
         @if (session('utilizador'))
-                @php
-                    $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
-                    $foto = $this->buscarFotoPerfil($utilizador_id);
-                @endphp
+            @php
+                $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
+                $fotoUtilizador = $this->buscarFotoPerfil($utilizador_id);
+            @endphp
             <!-- Notificacao-->
 
-                @if ($dadosUtilizador->tipo_acesso != 3)
-                    <li class="nav-item dropdown">
-                        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-bell"></i>
-                            <span class="badge bg-primary badge-number">4</span>
-                        </a>
+            @if ($dadosUtilizador->tipo_acesso != 3)
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                            <li class="dropdown-header">
-                                Você tem 4 notificações
-                                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            Você tem 4 notificações
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li class="notification-item">
-                                <i class="bi bi-exclamation-circle text-warning"></i>
-                                <div>
-                                    <h4>Lorem Ipsum</h4>
-                                    <p>Quae dolorem earum veritatis oditseno</p>
-                                    <p>30 min. ago</p>
-                                </div>
-                            </li>
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
+                            <div>
+                                <h4>Lorem Ipsum</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>30 min. ago</p>
+                            </div>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li class="notification-item">
-                                <i class="bi bi-x-circle text-danger"></i>
-                                <div>
-                                    <h4>Atque rerum nesciunt</h4>
-                                    <p>Quae dolorem earum veritatis oditseno</p>
-                                    <p>1 hr. ago</p>
-                                </div>
-                            </li>
+                        <li class="notification-item">
+                            <i class="bi bi-x-circle text-danger"></i>
+                            <div>
+                                <h4>Atque rerum nesciunt</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>1 hr. ago</p>
+                            </div>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li class="notification-item">
-                                <i class="bi bi-check-circle text-success"></i>
-                                <div>
-                                    <h4>Sit rerum fuga</h4>
-                                    <p>Quae dolorem earum veritatis oditseno</p>
-                                    <p>2 hrs. ago</p>
-                                </div>
-                            </li>
+                        <li class="notification-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            <div>
+                                <h4>Sit rerum fuga</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>2 hrs. ago</p>
+                            </div>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li class="notification-item">
-                                <i class="bi bi-info-circle text-primary"></i>
-                                <div>
-                                    <h4>Dicta reprehenderit</h4>
-                                    <p>Quae dolorem earum veritatis oditseno</p>
-                                    <p>4 hrs. ago</p>
-                                </div>
-                            </li>
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4>Dicta reprehenderit</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>4 hrs. ago</p>
+                            </div>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="dropdown-footer">
-                                <a href="#">Ver todas as notificações</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="#">Ver todas as notificações</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
             <!-- FIM Notificacao-->
 
             <!-- Mensagem -->
@@ -115,7 +115,8 @@
                         @else
                             Você não tem novas mensagens
                         @endif
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span class="badge rounded-pill bg-primary p-2 ms-2">Em que podemos ajudar?</span></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
+                                class="badge rounded-pill bg-primary p-2 ms-2">Em que podemos ajudar?</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -140,7 +141,7 @@
                                     $nome = $this->buscarNomeUsuario($idRemente);
                                     $conversa = $this->ultimaMensagem($idRemente);
                                     /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
-                                    $criptIdRemente = Crypt::encrypt($idRemente);*/
+ $criptIdRemente = Crypt::encrypt($idRemente);*/
                                 @endphp
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
@@ -150,15 +151,17 @@
                                         style="border-radius: 50px">
                                         <div class="col-2">
                                             @php
-                                            $foto = $this->buscarFotoPerfil($idRemente);
-                                        @endphp
-                                        @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
-                                                class="rounded-circle me-2" alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                                        @else
-                                                <img src="{{ asset('assets/img/img_default.jpg') }}" 
-                                                class="me-2"  alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                                        @endif
+                                                $foto = $this->buscarFotoPerfil($idRemente);
+                                            @endphp
+                                            @if ($foto)
+                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                    class="rounded-circle me-2" alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                    alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @endif
                                         </div>
 
                                         <div class="col ms-1">
@@ -205,15 +208,17 @@
                                         style="border-radius: 50px">
                                         <div class="col-2">
                                             @php
-                                            $foto = $this->buscarFotoPerfil($idRemente);
-                                        @endphp
-                                        @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
-                                                class="rounded-circle me-2" alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                                        @else
-                                                <img src="{{ asset('assets/img/img_default.jpg') }}" 
-                                                class="me-2"  alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                                        @endif
+                                                $foto = $this->buscarFotoPerfil($idRemente);
+                                            @endphp
+                                            @if ($foto)
+                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                    class="rounded-circle me-2" alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                    alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @endif
                                         </div>
 
                                         <div class="col ms-1">
@@ -250,10 +255,10 @@
 
                                         <div class="col text-center">
                                             @if ($conversa->estado == 'lido')
-                                                    <i class="bi bi-check-circle-fill text-primary"></i>
-                                                @else
-                                                    <i class="bi bi-check text-primary"></i>
-                                                @endif
+                                                <i class="bi bi-check-circle-fill text-primary"></i>
+                                            @else
+                                                <i class="bi bi-check text-primary"></i>
+                                            @endif
                                         </div>
                                     </a>
                                 @endif
@@ -277,20 +282,20 @@
             <li class="nav-item dropdown pe-3 ">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        @if ($foto)
-                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
-                                class="rounded-circle" alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                        @else
-                                <img src="{{ asset('assets/img/img_default.jpg') }}" 
-                                    alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
-                        @endif
+                    @if ($fotoUtilizador)
+                        <img src="{{ url('storage/' . $fotoUtilizador->caminho_arquivo) }}" class="rounded-circle" alt="foto"
+                            style="width: 40px; height: 40px; object-fit: cover;">
+                    @else
+                        <img src="{{ asset('assets/img/img_default.jpg') }}" alt="foto"
+                            style="width: 40px; height: 40px; object-fit: cover;">
+                    @endif
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ session('utilizador') }}</span>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
                         <h6>{{ session('utilizador') }}</h6>
-                        <span>{{ucwords($dadosUtilizador->buscarTipoAcesso->tipo)}}</span>
+                        <span>{{ ucwords($dadosUtilizador->buscarTipoAcesso->tipo) }}</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">

@@ -54,8 +54,18 @@
                                         style="border-radius: 50px">
 
                                         <div class="col-4 text-center mt-2 mb-3 ">
-                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                                class="rounded-circle">
+                                            @php
+                                                $foto = $this->buscarFotoPerfil($idRemente);
+                                            @endphp
+                                            @if ($foto)
+                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                    class="rounded-circle me-2" alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                    alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @endif
                                         </div>
 
                                         <div class="col-6 ">
@@ -102,8 +112,18 @@
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
                                         <div class="col-4 text-center mt-2 mb-3 ">
-                                            <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                                class="rounded-circle">
+                                            @php
+                                                $foto = $this->buscarFotoPerfil($idRemente);
+                                            @endphp
+                                            @if ($foto)
+                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                    class="rounded-circle me-2" alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                    alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                            @endif
                                         </div>
 
                                         <div class="col-6">
