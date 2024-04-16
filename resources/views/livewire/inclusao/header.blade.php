@@ -12,6 +12,7 @@
             <!-- Notificacao-->
                 @php
                     $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
+                    $foto = $this->buscarFotoPerfil($utilizador_id);
                 @endphp
 
                 @if ($dadosUtilizador->tipo_acesso != 3)
@@ -260,7 +261,13 @@
             <li class="nav-item dropdown pe-3 ">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+                        @if ($foto)
+                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
+                                class="rounded-circle" alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
+                        @else
+                                <img src="{{ asset('assets/img/img_default.jpg') }}" 
+                                    alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
+                        @endif
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ session('utilizador') }}</span>
                 </a>
 
