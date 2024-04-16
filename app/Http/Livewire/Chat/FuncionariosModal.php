@@ -20,7 +20,9 @@ class FuncionariosModal extends Component
 
     public function render()
     {
-        $this->listaFuncionarios = User::where("tipo_acesso", "!=", "3")->get();
+        $this->listaFuncionarios = User::where("tipo_acesso", "!=", "3")
+        ->where("id", "!=", $this->utilizador_id)
+        ->get();
         return view('livewire.chat.funcionarios-modal');
     }
 
