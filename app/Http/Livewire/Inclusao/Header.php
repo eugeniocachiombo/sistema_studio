@@ -126,6 +126,11 @@ class Header extends Component
         return User::find($id)->name;
     }
 
+    public function buscarDadosUtilizador($id)
+    {
+        return User::find($id);
+    }
+
     public function formatarData($data)
     {
         $data_hora = new DateTime($data);
