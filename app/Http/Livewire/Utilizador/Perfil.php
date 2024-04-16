@@ -6,14 +6,17 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Perfil extends Component
 {
-    public $utilizador_id; 
+    use WithFileUploads;
+
+    public $utilizador_id;
     public $arquivo = null;
     public $nomeArquivo, $extensaoArquivo, $tamanhoArquivo;
     public $extensoesAceites = [
-        "img" => ["jpg", "jpeg", "png"]
+        "img" => ["jpg", "jpeg", "png"],
     ];
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
 
@@ -21,7 +24,7 @@ class Perfil extends Component
     {
         $this->utilizador_id = Auth::user()->id;
     }
-    
+
     public function index()
     {
         return view('index.utilizador.perfil');
@@ -29,6 +32,7 @@ class Perfil extends Component
 
     public function render()
     {
+        $this->setarDadosArquivo();
         return view('livewire.utilizador.perfil');
     }
 
@@ -43,6 +47,7 @@ class Perfil extends Component
             $this->nomeArquivo = $this->arquivo->getClientOriginalName();
             $this->extensaoArquivo = $this->arquivo->getClientOriginalExtension();
             $this->tamanhoArquivo = round($this->arquivo->getSize() / (1024 * 1024), 2) . " MB";
+            $this->vereificarArquivoExiste();
         }
     }
 
@@ -57,9 +62,9 @@ class Perfil extends Component
                 $this->cadastrarFotoPerfil();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
-                $this->arquivo == null;
+                $this->limparCampos();
             }
-        } 
+        }
     }
 
     public function verificarExtensaoArquivo($extensaoArquivo)
@@ -101,15 +106,24 @@ class Perfil extends Component
             "deleted_at" => null,
         ];
         FotoPerfil::create($dados);
+        $this->emit('alerta', ['mensagem' => 'Foto actualizado com sucesso', 'icon' => 'success']);
         $this->limparCampos();
     }
 
     public function limparCampos()
     {
+        $this->tipoArquivo = null;
+        $this->nomeArquivo = null;
+        $this->extensaoOriginalArquivo = null;
+        $this->nomeOriginalArquivo = null;
         $this->arquivo = null;
         $this->caminhoArquivo = null;
         $this->tipoArquivo = null;
         $this->nomeOriginalArquivo = null;
         $this->extensaoOriginalArquivo = null;
+    }
+
+    public function buscarFotoPerfil($idUtilizador){
+        return FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
     }
 }
