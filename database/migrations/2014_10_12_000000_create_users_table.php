@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class CreateUsersTable extends Migration
 {
@@ -24,6 +27,31 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->foreign('tipo_acesso')->references('id')->on('acessos')->onDelete("cascade");
         });
+
+        User::create([
+            'name' => "Conta Produtor",
+            'email' => "produtor@example.com",
+            'email_verified_at' => now(), 
+            'password' => Hash::make('123'), 
+            'tipo_acesso' => 1,
+            'remember_token' => Str::random(10),
+        ]);
+        User::create([
+            'name' => "Conta Antendente",
+            'email' => "atendente@example.com",
+            'email_verified_at' => now(), 
+            'password' => Hash::make('123'), 
+            'tipo_acesso' => 2,
+            'remember_token' => Str::random(10),
+        ]);
+        User::create([
+            'name' => "Conta Cantor",
+            'email' => "cantor@example.com",
+            'email_verified_at' => now(), 
+            'password' => Hash::make('123'), 
+            'tipo_acesso' => 3,
+            'remember_token' => Str::random(10),
+        ]);
     }
 
     /**
