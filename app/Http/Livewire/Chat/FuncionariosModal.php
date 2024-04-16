@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Livewire\Chat;
+
+use App\Models\Acesso\Acesso;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+
+class FuncionariosModal extends Component
+{
+    public $listaFuncionarios;
+    public $utilizador_id;
+    
+    public function mount()
+    {
+        $this->utilizador_id = Auth::user()->id;
+    }
+
+    public function render()
+    {
+        $this->listaFuncionarios = User::where("tipo_acesso", "!=", "3")->get();
+        return view('livewire.chat.funcionarios-modal');
+    }
+
+    public function buscarTipoAcesso($id){
+        return Acesso::where("id", $id)->first();
+    }
+}

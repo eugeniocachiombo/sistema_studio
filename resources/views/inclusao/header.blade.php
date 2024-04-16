@@ -11,3 +11,4 @@
     @livewire('inclusao.header')
 </header>
 @livewire('chat.listamodal')
+@livewire('chat.funcionarios-modal')
