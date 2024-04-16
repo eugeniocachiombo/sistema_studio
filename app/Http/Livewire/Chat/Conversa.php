@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
+use App\Models\Utilizador\FotoPerfil;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
@@ -328,5 +329,9 @@ class Conversa extends Component
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
+    }
+
+    public function buscarFotoPerfil($idUtilizador){
+        return FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
     }
 }
