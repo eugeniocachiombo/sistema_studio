@@ -60,11 +60,11 @@
                                             @if ($foto)
                                                 <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
-                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
                                             @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
                                                     alt="foto"
-                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                    style="border-radius: 13px; width: 100px; height: 100px; object-fit: cover;">
                                             @endif
                                         </div>
 
@@ -118,11 +118,11 @@
                                             @if ($foto)
                                                 <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
-                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
                                             @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
                                                     alt="foto"
-                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                    style="border-radius: 13px; width: 100px; height: 100px; object-fit: cover;">
                                             @endif
                                         </div>
 

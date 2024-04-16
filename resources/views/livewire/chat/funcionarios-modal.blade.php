@@ -27,8 +27,20 @@
                                     href="{{ route('chat.conversa', [$utilizador_id, $funcionario->id]) }}"
                                     style="border-radius: 50px">
                                     <div class="col-4 text-center mt-2 mb-3 ">
-                                        <img src="{{ asset('assets/img/messages-1.jpg') }}" alt=""
-                                            class="rounded-circle">
+
+                                            @php
+                                                $foto = $this->buscarFotoPerfil($funcionario->id);
+                                            @endphp
+                                            @if ($foto)
+                                                
+                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                    class="rounded-circle me-2" alt="foto"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                    alt="foto" 
+                                                    style="border-radius: 13px;width: 100px; height: 100px; object-fit: cover;">
+                                            @endif
                                     </div>
 
                                     <div class="col-8">
