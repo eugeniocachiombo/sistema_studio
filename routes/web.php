@@ -1,5 +1,7 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckAuth;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
 use App\Http\Livewire\Info\{
     Ajuda,
@@ -16,7 +18,7 @@ use App\Http\Livewire\Utilizador\{
     TerminarSessao,
     PrepararAmbiente
 };
-use App\Http\Middleware\CheckAuth;
+
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
     Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);

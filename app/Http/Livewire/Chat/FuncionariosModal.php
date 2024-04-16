@@ -23,6 +23,11 @@ class FuncionariosModal extends Component
         return view('livewire.chat.funcionarios-modal');
     }
 
+    public function buscarDadosUtilizador($id)
+    {
+        return User::find($id);
+    }
+
     public function buscarTipoAcesso($id){
         return Acesso::where("id", $id)->first();
     }
