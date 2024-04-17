@@ -182,6 +182,16 @@ class Header extends Component
     }
 
     public function buscarFotoPerfil($idUtilizador){
-        return FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
-    }
+        $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
+        if ($foto) {
+           $caminho = '../storage/app/public/' . $foto->caminho_arquivo;
+           if (file_exists($caminho)) {
+               return $foto;
+           } else {
+               return null;
+           }
+        }else{
+           return null;
+        }
+   }
 }
