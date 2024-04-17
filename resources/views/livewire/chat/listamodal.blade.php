@@ -71,7 +71,7 @@
                                         <div class="col-6 ">
                                             <b><h5 class="text-light" style="white-space: nowrap;">{{ $nome }}
                                             </h5></b>
-                                            <p class="text-light" >
+                                            <p class="text-light w-100" >
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -111,6 +111,7 @@
                                         class="bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
+
                                         <div class="col-4 text-center mt-2 mb-3 ">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
@@ -129,7 +130,7 @@
                                         <div class="col-6">
                                             <b><h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}
                                             </h5></b>
-                                            <p class="text-dark pe-2" style="white-space: nowrap;">
+                                            <p class="text-dark pe-2 w-100" style="white-space: nowrap;">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')

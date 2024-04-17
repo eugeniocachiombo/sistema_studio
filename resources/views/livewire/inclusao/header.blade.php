@@ -13,8 +13,8 @@
                 $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
                 $fotoUtilizador = $this->buscarFotoPerfil($utilizador_id);
             @endphp
+            
             <!-- Notificacao-->
-
             @if ($dadosUtilizador->tipo_acesso != 3)
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -138,8 +138,6 @@
                                     $idRemente = $this->listaParticipantes[$i];
                                     $nome = $this->buscarNomeUsuario($idRemente);
                                     $conversa = $this->ultimaMensagem($idRemente);
-                                    /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
- $criptIdRemente = Crypt::encrypt($idRemente);*/
                                 @endphp
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
@@ -162,10 +160,10 @@
                                             @endif
                                         </div>
 
-                                        <div class="col ms-1">
+                                        <div class="col-8 ms-1">
                                             <h4 class="text-light" style="white-space: nowrap;">{{ $nome }}
                                             </h4>
-                                            <p class="text-light">
+                                            <p class="text-light w-100">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -186,7 +184,7 @@
                                                     @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                     {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -195,16 +193,17 @@
                                             </p>
                                         </div>
 
-                                        <div class="col text-light text-center">
+                                        <div class="col-2 text-light text-center">
                                             <span class="badge bg-danger">{{ count($this->msgPendentes()) }}</span>
                                         </div>
                                     </a>
                                 @else
                                     <a id="bgMsgLido"
-                                        class=" bg-white pt-1 d-flex justify-content-center align-items-center"
+                                        class="bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
-                                        <div class="col-2">
+
+                                        <div class="col-2 ">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
@@ -219,10 +218,10 @@
                                             @endif
                                         </div>
 
-                                        <div class="col ms-1">
-                                            <h4 class="text-dark" style="white-space: nowrap;">{{ $nome }}
+                                        <div class="col-8 ms-1 ">
+                                            <h4 class="text-dark " style="white-space: nowrap;">{{ $nome }}
                                             </h4>
-                                            <p class="text-dark">
+                                            <p class="text-dark w-100 " style="width: inherit">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -243,7 +242,7 @@
                                                     @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                      {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -251,7 +250,7 @@
                                             <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
                                         </div>
 
-                                        <div class="col text-center">
+                                        <div class="col-2 text-center ">
                                             @if ($conversa->estado == 'lido')
                                                 <i class="bi bi-check-circle-fill text-primary"></i>
                                             @else
