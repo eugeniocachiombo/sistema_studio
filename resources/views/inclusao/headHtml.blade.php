@@ -30,9 +30,13 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    <!-- Assets js-->
     <script src="{{ asset('assets/js/alerta.js') }}"></script>
     <script src="{{ asset('assets/js/executar_alert.js') }}"></script>
+    <script src="{{ asset('assets/js/executar_alertOpcoes.js') }}"></script>
     <script src="{{ asset('assets/js/atrazar_redirect.js') }}"></script>
+    
     
     @livewireStyles
 </head>

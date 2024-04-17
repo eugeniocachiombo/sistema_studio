@@ -146,4 +146,23 @@ class Perfil extends Component
             return null;
          }
     }
+
+    public function clickBtnEliminarFoto($idUtilizador){
+         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
+         if ($foto) {
+            $caminho = '../storage/app/public/' . $foto->caminho_arquivo;
+            if (file_exists($caminho)) {
+                $this->eliminarFotoPerfil();
+            } else {
+                $this->emit('alerta', ['mensagem' => 'Requer uma foto no perfil', 'icon' => 'error']);
+            }
+         }else{
+            $this->emit('alerta', ['mensagem' => 'Requer uma foto no perfil', 'icon' => 'error']);
+         }
+    }
+
+    public function eliminarFotoPerfil(){
+        FotoPerfil::where("user_id", $this->utilizador_id)->delete();
+        $this->emit('alerta', ['mensagem' => 'Foto eliminada com sucesso', 'icon' => 'success']);
+    }
 }

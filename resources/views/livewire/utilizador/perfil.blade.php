@@ -126,8 +126,6 @@
                                 </div>
 
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-
                                     <form>
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do
@@ -161,7 +159,7 @@
                                                             id="file-input" style="display: none;">
                                                     </label>
 
-                                                    <a href="#" class="btn btn-danger btn-sm"
+                                                    <a href="#" wire:click="clickBtnEliminarFoto({{$utilizador_id}})" class="btn btn-danger btn-sm"
                                                         title="Remover a imagem do perfil"><i
                                                             class="bi bi-trash"></i></a>
                                                 </div>
@@ -363,14 +361,10 @@
                                                 Palavra-passe</button>
                                         </div>
                                     </form>
-
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
