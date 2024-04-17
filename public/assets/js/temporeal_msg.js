@@ -8,7 +8,7 @@ setInterval(function() {
     }
 }, 1000); 
 
-
+/*
 setInterval(function() {
-    Livewire.emit('contarMsgTempoReal');
-}, 1000); 
+    Livewire.emit('headerTempoReal');
+}, 1000); */

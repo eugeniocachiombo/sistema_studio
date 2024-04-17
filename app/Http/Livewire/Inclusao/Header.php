@@ -21,6 +21,8 @@ class Header extends Component
         "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
         "texto" => ["pdf", "doc", "txt"],
     ];
+    public $participantesPendentes;
+    public $listeners = ['headerTempoReal'];
 
     public function mount()
     {
@@ -29,9 +31,14 @@ class Header extends Component
 
     public function render()
     {
+        $this->participantesPendentes = $this->totalParticipantesPendentes();
         $this->todasConversasGeral = $this->listarTodasConversasGeral();
         $this->listaParticipantes = $this->listarParticipantes();
         return view('livewire.inclusao.header'); 
+    }
+
+    public function headerTempoReal(){
+        $this->participantesPendentes = $this->totalParticipantesPendentes();
     }
 
     public function listarTodasConversasGeral()

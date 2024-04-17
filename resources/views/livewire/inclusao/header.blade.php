@@ -92,17 +92,15 @@
 
             <!-- Mensagem -->
             <li class="nav-item dropdown">
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <a id="iconMensagem" class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
-                    @php
-                        $participantesPendentes = $this->totalParticipantesPendentes();
-                    @endphp
                     @if (count($participantesPendentes) > 0)
                         <span class="badge bg-success badge-number">
                             {{ count($participantesPendentes) }}
                         </span>
                     @endif
                 </a>
+                <script src="{{ asset('assets/js/temporeal_receber_msg.js') }}"></script>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
@@ -280,11 +278,10 @@
 
             <!-- Dados utilizador -->
             <li class="nav-item dropdown pe-3 ">
-
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     @if ($fotoUtilizador)
-                        <img src="{{ url('storage/' . $fotoUtilizador->caminho_arquivo) }}" class="rounded-circle" alt="foto"
-                            style="width: 40px; height: 40px; object-fit: cover;">
+                        <img src="{{ url('storage/' . $fotoUtilizador->caminho_arquivo) }}" class="rounded-circle"
+                            alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
                     @else
                         <img src="{{ asset('assets/img/img_default.jpg') }}" alt="foto"
                             style="width: 40px; height: 40px; object-fit: cover;">
