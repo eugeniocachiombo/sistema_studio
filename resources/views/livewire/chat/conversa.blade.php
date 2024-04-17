@@ -82,3 +82,4 @@
 </div>
 </div>
 
+<script src="{{ asset('assets/js/temporeal_conversa.js') }}"></script>
