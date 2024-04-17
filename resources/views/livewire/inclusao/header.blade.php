@@ -100,7 +100,7 @@
                         </span>
                     @endif
                 </a>
-                <script src="{{ asset('assets/js/temporeal_receber_msg.js') }}"></script>
+                <script src="{{ asset('assets/js/temporeal_contar_msg.js') }}"></script>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
