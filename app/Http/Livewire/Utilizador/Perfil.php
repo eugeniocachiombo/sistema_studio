@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Utilizador;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,21 +21,24 @@ class Perfil extends Component
         "img" => ["jpg", "jpeg", "png"],
     ];
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
+    public $passeActual, $passeNova, $passeConfirmacao;
+    public $alertaPasse = array();
 
-    public function mount()
+    public function mount($alertaPasse)
     {
+        $this->alertaPasse =  $alertaPasse;
         $this->utilizador_id = Auth::user()->id;
     }
 
     public function index()
     {
-        return view('index.utilizador.perfil');
+        return view('index.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
     }
 
     public function render()
     {
         $this->setarDadosArquivo();
-        return view('livewire.utilizador.perfil');
+        return view('livewire.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
     }
 
     public function buscarDadosUtilizador($id)
@@ -164,5 +169,30 @@ class Perfil extends Component
     public function eliminarFotoPerfil(){
         FotoPerfil::where("user_id", $this->utilizador_id)->delete();
         $this->emit('alerta', ['mensagem' => 'Foto eliminada com sucesso', 'icon' => 'success']);
+    }
+
+    public function alterarPalavraPasse(Request $request){
+        $utilizador = Auth::user();
+        $this->passeActual = $request->input('passeActual');
+        $this->passeNova = $request->input('passeNova');
+        $this->passeConfirmacao = $request->input('passeConfirmacao');
+        session()->put("alterarPasse", true);
+        $alertaPasse = $this->actualizarPasse($utilizador, $this->passeActual, $this->passeNova, $this->passeConfirmacao);
+        return view('index.utilizador.perfil', ["alertaPasse" => $alertaPasse]);
+    }
+
+    public function actualizarPasse($utilizador, $passeActual, $passeNova, $passeConfirmacao){        
+        if (Hash::check($passeActual, $utilizador->password)) {
+            if($passeNova == $passeActual){
+                return ['mensagem' => 'Palavra-passe Nova deve ser diferente da Antiga', 'icon' => 'error'];
+            }else if($passeNova == $passeConfirmacao){
+                User::where('id', $utilizador->id)->update(['password' => Hash::make($passeNova)]);
+                return ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success'];
+            } else{
+                return ['mensagem' => 'Palavra-passe Nova e a de Confirmação devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5000];
+            }
+        }else{
+            return ['mensagem' => 'Palavra-passe antiga está errada', 'icon' => 'error'];
+        }
     }
 }

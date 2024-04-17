@@ -31,8 +31,8 @@
                                     </a>
                                 @else
                                     <a href="#" style="display: inline-block; width: inherit; height: inherit">
-                                        <img src="{{ asset('assets/img/img_default.jpg') }}" 
-                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
+                                        <img src="{{ asset('assets/img/img_default.jpg') }}" alt="foto"
+                                            style="width: inherit; height: inherit; object-fit: cover;">
                                     </a>
                                 @endif
                             </div>
@@ -134,20 +134,24 @@
                                             <div class="col-md-8 col-lg-9">
 
 
-                                              <div class="col" style="display: inline-block; width: 120px; height: 120px;">
-                                                @if ($foto)
-                                                    <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
-                                                        style="display: inline-block; width: inherit; height: inherit">
-                                                        <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
-                                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
-                                                    </a>
-                                                @else
-                                                    <a href="#" style="display: inline-block; width: inherit; height: inherit">
-                                                        <img src="{{ asset('assets/img/img_default.jpg') }}" 
-                                                            alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
-                                                    </a>
-                                                @endif
-                                            </div>
+                                                <div class="col"
+                                                    style="display: inline-block; width: 120px; height: 120px;">
+                                                    @if ($foto)
+                                                        <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                            style="display: inline-block; width: inherit; height: inherit">
+                                                            <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                                alt="foto"
+                                                                style="width: inherit; height: inherit; object-fit: cover;">
+                                                        </a>
+                                                    @else
+                                                        <a href="#"
+                                                            style="display: inline-block; width: inherit; height: inherit">
+                                                            <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                                alt="foto"
+                                                                style="width: inherit; height: inherit; object-fit: cover;">
+                                                        </a>
+                                                    @endif
+                                                </div>
 
 
                                                 <div class="pt-2">
@@ -159,7 +163,9 @@
                                                             id="file-input" style="display: none;">
                                                     </label>
 
-                                                    <a href="#" wire:click="clickBtnEliminarFoto({{$utilizador_id}})" class="btn btn-danger btn-sm"
+                                                    <a href="#"
+                                                        wire:click="clickBtnEliminarFoto({{ $utilizador_id }})"
+                                                        class="btn btn-danger btn-sm"
                                                         title="Remover a imagem do perfil"><i
                                                             class="bi bi-trash"></i></a>
                                                 </div>
@@ -280,10 +286,7 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-settings">
-
-
                                     <form>
-
                                         <div class="row mb-3">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email
                                                 Notifications</label>
@@ -326,41 +329,43 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
-
-                                    <form>
-
+                                    <form action="/utilizador/alterar_palavra_passe" >
+                                        @csrf
                                         <div class="row mb-3">
-                                            <label for="currentPassword"
+                                            <label for="passeActual"
                                                 class="col-md-4 col-lg-3 col-form-label">Passe Actual</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="currentPassword">
+                                                <input name="passeActual" type="password" class="form-control"
+                                                    wire:model="passeActual" id="passeActual">
                                             </div>
                                         </div>
-
                                         <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova
+                                            <label for="passeNova" class="col-md-4 col-lg-3 col-form-label">Nova
                                                 Passe</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control"
-                                                    id="newPassword">
+                                                <input name="passeNova" type="password" class="form-control"
+                                                    wire:model="passeNova" id="passeNova">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="renewPassword"
+                                            <label for="passeConfirmacao"
                                                 class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Passe</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control"
-                                                    id="renewPassword">
+                                                <input name="passeConfirmacao" type="password" class="form-control"
+                                                    wire:model="passeConfirmacao" id="passeConfirmacao">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Alterar
+                                            <button type="submit" {{--wire:click.prevent="alterarPalavraPasse"--}}
+                                                class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>
                                     </form>
+
+                                    @include('livewire.utilizador.alterar-passe')
+                                    <script src="{{asset('assets/js/parar_livewire_passe.js')}}"></script>
                                 </div>
                             </div>
                         </div>
@@ -370,3 +375,4 @@
         </section>
     </main>
 </div>
+
