@@ -155,7 +155,7 @@ class Perfil extends Component
     public function clickBtnEliminarFoto($idUtilizador){
          $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
          if ($foto) {
-            $caminho = '../storage/app/public/' . $foto->caminho_arquivo;
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
             if (file_exists($caminho)) {
                 $this->eliminarFotoPerfil();
             } else {
