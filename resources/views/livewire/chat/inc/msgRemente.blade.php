@@ -12,14 +12,14 @@
                     <div class="text-start">
                         @switch($item->tipo_arquivo)
                             @case('img')
-                                <a href="{{ url('storage/' . $item->caminho_arquivo) }}">
-                                    <img src="{{ url('storage/' . $item->caminho_arquivo) }}" alt="foto" width="40%">
+                                <a href="{{ asset('assets/' . $item->caminho_arquivo) }}">
+                                    <img src="{{ asset('assets/' . $item->caminho_arquivo) }}" alt="foto" width="40%">
                                 </a>
                             @break
 
                             @case('audio')
                                 <audio controls>
-                                    <source src="{{ url('storage/' . $item->caminho_arquivo) }}" type="audio/mpeg">
+                                    <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mpeg">
                                     Your browser does not support the audio
                                     element.
                                 </audio>
@@ -27,7 +27,7 @@
 
                             @case('texto')
                                 <b>Arquivo:</b> <a
-                                    href="{{ url('storage/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
+                                    href="{{ asset('assets/' . $item->caminho_arquivo) }}">{{ $item->nome_arquivo }}</a>
                                 <br>
                             @break
 

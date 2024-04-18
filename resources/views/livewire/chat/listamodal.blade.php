@@ -43,8 +43,6 @@
                                     $idRemente = $this->listaParticipantes[$i];
                                     $nome = $this->buscarNomeUsuario($idRemente);
                                     $conversa = $this->ultimaMensagem($idRemente);
-                                    /*$criptUtilizador_id = Crypt::encrypt($utilizador_id);
- $criptIdRemente = Crypt::encrypt($idRemente);*/
                                 @endphp
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
@@ -58,7 +56,7 @@
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
                                                     style="width: 100px; height: 100px; object-fit: cover;">
                                             @else
@@ -117,7 +115,7 @@
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
                                                     style="width: 100px; height: 100px; object-fit: cover;">
                                             @else

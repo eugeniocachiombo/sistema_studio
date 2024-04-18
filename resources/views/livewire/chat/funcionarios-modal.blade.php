@@ -33,7 +33,7 @@
                                             @endphp
                                             @if ($foto)
                                                 
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
                                                     style="width: 100px; height: 100px; object-fit: cover;">
                                             @else

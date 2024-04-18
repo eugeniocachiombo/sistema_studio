@@ -24,9 +24,9 @@
 
                             <div class="col" style="display: inline-block; width: 120px; height: 120px;">
                                 @if ($foto)
-                                    <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                    <a href="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                         style="display: inline-block; width: inherit; height: inherit">
-                                        <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" class="rounded-circle"
+                                        <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}" class="rounded-circle"
                                             alt="foto" style="width: inherit; height: inherit; object-fit: cover;">
                                     </a>
                                 @else
@@ -137,9 +137,9 @@
                                                 <div class="col"
                                                     style="display: inline-block; width: 120px; height: 120px;">
                                                     @if ($foto)
-                                                        <a href="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                        <a href="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                             style="display: inline-block; width: inherit; height: inherit">
-                                                            <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                            <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                                 alt="foto"
                                                                 style="width: inherit; height: inherit; object-fit: cover;">
                                                         </a>

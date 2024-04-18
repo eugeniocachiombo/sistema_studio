@@ -78,7 +78,7 @@ class Perfil extends Component
         foreach ($this->extensoesAceites as $chave => $extensao) {
             for ($i = 0; $i < count($extensao); $i++) {
                 if ($extensao[$i] == $extensaoArquivo) {
-                    $caminhoArquivo = $this->arquivo->store("uploads/" . $chave);
+                    $caminhoArquivo = $this->arquivo->store("uploads/" . $chave, "local");
                     break;
                 }
             }
@@ -141,7 +141,7 @@ class Perfil extends Component
     public function buscarFotoPerfil($idUtilizador){
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = storage_path('app/public/' . $foto->caminho_arquivo);
+           $caminho = public_path('assets/' . $foto->caminho_arquivo);
            if (file_exists($caminho)) {
                return $foto;
            } else {

@@ -114,7 +114,7 @@
                             Você não tem novas mensagens
                         @endif
                         <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
-                                class="badge rounded-pill bg-primary p-2 ms-2">Em que podemos ajudar?</span></a>
+                                class="badge rounded-pill bg-primary p-2 ms-2">Precisa de ajudar?</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -150,7 +150,7 @@
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
                                                     style="width: 50px; height: 50px; object-fit: cover;">
                                             @else
@@ -208,7 +208,7 @@
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}"
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                                                     class="rounded-circle me-2" alt="foto"
                                                     style="width: 50px; height: 50px; object-fit: cover;">
                                             @else
@@ -279,7 +279,7 @@
             <li class="nav-item dropdown pe-3 ">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     @if ($fotoUtilizador)
-                        <img src="{{ url('storage/' . $fotoUtilizador->caminho_arquivo) }}" class="rounded-circle"
+                        <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}" class="rounded-circle"
                             alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
                     @else
                         <img src="{{ asset('assets/img/img_default.jpg') }}" alt="foto"

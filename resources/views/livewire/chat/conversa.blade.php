@@ -23,7 +23,7 @@
                                             $foto = $this->buscarFotoPerfil($remente);
                                         @endphp
                                         @if ($foto)
-                                                <img src="{{ url('storage/' . $foto->caminho_arquivo) }}" 
+                                                <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}" 
                                                 class="rounded-circle me-2" alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
                                         @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" 
