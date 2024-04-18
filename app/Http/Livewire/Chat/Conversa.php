@@ -334,7 +334,7 @@ class Conversa extends Component
     public function buscarFotoPerfil($idUtilizador){
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = '../storage/app/public/' . $foto->caminho_arquivo;
+           $caminho = storage_path('app/public/' . $foto->caminho_arquivo);
            if (file_exists($caminho)) {
                return $foto;
            } else {
