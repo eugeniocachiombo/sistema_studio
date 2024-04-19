@@ -18,10 +18,9 @@
                             @break
 
                             @case('audio')
-                                <audio controls>
+                                <audio controls class="col-12">
                                     <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mpeg">
-                                    Your browser does not support the audio
-                                    element.
+                                        Seu navegador não suporta este reprodutor
                                 </audio>
                             @break
 

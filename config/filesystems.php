@@ -33,13 +33,13 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => public_path('assets'),
-            'url' => env('APP_URL').'/public/assets',
+            'url' => env('APP_URL').'',
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => public_path('assets'),
-            'url' => env('APP_URL').'/public/assets',
+            'url' => env('APP_URL').'',
             'visibility' => 'public',
         ],
 
