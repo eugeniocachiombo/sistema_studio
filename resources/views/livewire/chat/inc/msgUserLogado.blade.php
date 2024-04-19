@@ -18,10 +18,17 @@
                             @break
 
                             @case('audio')
-                                <audio controls class="col-12 ">
-                                    <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mpeg">
-                                    Seu navegador não suporta este reprodutor
+                                
+                                <audio id="player" controls>
+                                    <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mp3">
+                                    Your browser does not support the audio element.
                                 </audio>
+
+                                
+                                <script>
+                                    const player = new Plyr('#player');
+                                    
+                                </script>
                             @break
 
                             @case('texto')
@@ -34,18 +41,18 @@
                         @endswitch
                     </div>
 
-                    <div class="" >
+                    <div class="">
                         <div class="d-flex justify-content-end p-2">
-                                <div class=" ps-2 col-12 d-flex justify-content-end align-items-center"
+                            <div class=" ps-2 col-12 d-flex justify-content-end align-items-center"
                                 style="border-radius: 8px">
-                                    @if (Crypt::decrypt($item->mensagem))
-                                        <b>Descrição: &nbsp; </b> {!! nl2br(Crypt::decrypt($item->mensagem)) !!} &nbsp;
-                                    @else 
-                                        <b>Descrição: &nbsp; </b> ------ &nbsp;
-                                    @endif
-                                </div>
-                            
-                            
+                                @if (Crypt::decrypt($item->mensagem))
+                                    <b>Descrição: &nbsp; </b> {!! nl2br(Crypt::decrypt($item->mensagem)) !!} &nbsp;
+                                @else
+                                    <b>Descrição: &nbsp; </b> ------ &nbsp;
+                                @endif
+                            </div>
+
+
                             <div class="col text-end">
                                 <button class="btn btn-danger "
                                     wire:click.prevent='eliminarMensagem({{ $item->id }})'>
@@ -56,11 +63,11 @@
                     </div>
                 </div>
             @else
-            <div class="d-flex align-items-center ">
-                <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{ $item->id }})'>
-                    <i class="bi bi-trash-fill"></i>
-                </button>
-            </div> &nbsp; &nbsp;
+                <div class="d-flex align-items-center ">
+                    <button class="btn btn-danger " wire:click.prevent='eliminarMensagem({{ $item->id }})'>
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div> &nbsp; &nbsp;
 
                 @if (strlen(Crypt::decrypt($item->mensagem)) > 20)
                     <div class=" bg-dark text-light p-3 text-start" style="border-radius: 20px; max-width: 300px;">
