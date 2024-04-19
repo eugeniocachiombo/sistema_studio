@@ -23,7 +23,7 @@
                     <div class="col-12 d-flex flex-column ">
                         @foreach ($listaFuncionarios as $funcionario)
                             <div class="p-3" id="bgMsgGeral">
-                                <a id="bgMsg" class="bg-white pt-1 d-flex justify-content-center align-items-center"
+                                <a id="bgMsg" class="border border-primary bg-white pt-1 d-flex justify-content-center align-items-center"
                                     href="{{ route('chat.conversa', [$utilizador_id, $funcionario->id]) }}"
                                     style="border-radius: 50px">
                                     <div class="col-3 text-center mt-2 mb-3 ms-1 ps-1">
