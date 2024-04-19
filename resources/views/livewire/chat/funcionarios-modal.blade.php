@@ -26,7 +26,7 @@
                                 <a id="bgMsg" class="bg-white pt-1 d-flex justify-content-center align-items-center"
                                     href="{{ route('chat.conversa', [$utilizador_id, $funcionario->id]) }}"
                                     style="border-radius: 50px">
-                                    <div class="col-3 text-center mt-2 mb-3 ps-1">
+                                    <div class="col-3 text-center mt-2 mb-3 ms-1 ps-1">
 
                                             @php
                                                 $foto = $this->buscarFotoPerfil($funcionario->id);
@@ -40,7 +40,7 @@
                                             @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}"
                                                     alt="foto" 
-                                                    style="border-radius: 13px;width: 100px; height: 100px; object-fit: cover;">
+                                                    style="border-radius: 20px;width: 60px; height: 60px; object-fit: cover;">
                                             @endif
                                     </div>
 

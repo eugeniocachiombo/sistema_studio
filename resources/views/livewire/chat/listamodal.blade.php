@@ -46,30 +46,30 @@
                                 @endphp
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
-                                    <a id="bgMsg"
-                                        class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
+                                    <a id="bgMsgPendente"
+                                        class="border border-primary bg-secondary pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
 
-                                        <div class="col-4 text-center mt-2 mb-3 ">
+                                        <div class="col text-center mt-2 mb-3 me-1 ms-1">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
                                                 <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
-                                                    class="rounded-circle me-2" alt="foto"
-                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                                    class="rounded-circle " alt="foto"
+                                                    style="width: 70px; height: 70px; object-fit: cover;">
                                             @else
-                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class=""
                                                     alt="foto"
-                                                    style="border-radius: 13px; width: 100px; height: 100px; object-fit: cover;">
+                                                    style="border-radius: 13px; width: 60px; height: 60px; object-fit: cover;">
                                             @endif
                                         </div>
 
-                                        <div class="col-6 ">
-                                            <b><h5 class="text-light" style="white-space: nowrap;">{{ $nome }}
-                                            </h5></b>
-                                            <p class="text-light w-100" >
+                                        <div class="col-7 ">
+                                            <h4 class="text-light" style="word-wrap: break-word">{{ $nome }}
+                                            </h4>
+                                            <p class="text-light w-100">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -98,37 +98,39 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-2 text-light text-center ">
+                                        <div class="col text-light text-center ">
                                             <h4><span
-                                                    class="badge badge-lg bg-danger">{{ count($this->msgPendentes()) }}</span>
+                                                    class="badge badge-md bg-danger">{{ count($this->msgPendentes()) }}</span>
                                             </h4>
                                         </div>
                                     </a>
                                 @else
-                                    <a id="bgMsg" 
-                                        class="bg-white pt-1 d-flex justify-content-center align-items-center"
+                                    <a id="bgMsg"
+                                        class="border border-primary bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
 
-                                        <div class="col-4 text-center mt-2 mb-3 ">
+                                        <div class="col text-center mt-2 mb-3 me-1 ms-1">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
                                                 <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
-                                                    class="rounded-circle me-2" alt="foto"
-                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                                    class="rounded-circle" alt="foto"
+                                                    style="width: 70px; height: 70px; object-fit: cover;">
                                             @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
                                                     alt="foto"
-                                                    style="border-radius: 13px; width: 100px; height: 100px; object-fit: cover;">
+                                                    style="border-radius: 13px; width: 60px; height: 60px; object-fit: cover;">
                                             @endif
                                         </div>
 
-                                        <div class="col-6">
-                                            <b><h5 class="text-dark" style="white-space: nowrap;">{{ $nome }}
-                                            </h5></b>
-                                            <p class="text-dark pe-2 w-100" style="white-space: nowrap;">
+                                        <div class="col-7">
+                                            <b>
+                                                <h4 class="text-dark" style="word-wrap: break-word">{{ $nome }}
+                                                </h4>
+                                            </b>
+                                            <p class="text-dark w-100" >
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -158,11 +160,11 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-2 text-center">
+                                        <div class="col text-center">
                                             @if ($conversa->estado == 'lido')
-                                                    <i class="bi bi-check-circle-fill text-primary"></i>
-                                                @else
-                                                    <i class="bi bi-check text-primary"></i>
+                                                <i class="bi bi-check-circle-fill text-primary"></i>
+                                            @else
+                                                <i class="bi bi-check text-primary"></i>
                                             @endif
                                         </div>
                                     </a>

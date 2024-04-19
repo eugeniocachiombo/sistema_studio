@@ -13,7 +13,7 @@
                 $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
                 $fotoUtilizador = $this->buscarFotoPerfil($utilizador_id);
             @endphp
-            
+
             <!-- Notificacao-->
             @if ($dadosUtilizador->tipo_acesso != 3)
                 <li class="nav-item dropdown">
@@ -103,21 +103,21 @@
                 <script src="{{ asset('assets/js/temporeal_contar_msg.js') }}"></script>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header d-table d-md-flex">
+                    <li class="dropdown-header d-table">
                         <div>
                             @if (count($this->msgPendentesGeral()) > 0)
-                            @if (count($this->msgPendentesGeral()) == 1)
-                                Você tem {{ count($this->msgPendentesGeral()) }} mensagem não lida
+                                @if (count($this->msgPendentesGeral()) == 1)
+                                    Você tem {{ count($this->msgPendentesGeral()) }} mensagem não lida
+                                @else
+                                    Você tem {{ count($this->msgPendentesGeral()) }} mensagens não lidas
+                                @endif
                             @else
-                                Você tem {{ count($this->msgPendentesGeral()) }} mensagens não lidas
+                                Você não tem novas mensagens
                             @endif
-                        @else
-                            Você não tem novas mensagens
-                        @endif
                         </div>
-                        <div>
+                        <div class="mt-2">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
-                                class="badge rounded-pill bg-primary p-2 ms-2">Em que podemos ajudar?</span></a>
+                                    class="badge rounded-pill bg-primary  p-2 ms-2">Em que podemos ajudar?</span></a>
                         </div>
                     </li>
                     <li>
@@ -146,26 +146,27 @@
 
                                 @if ($conversa->estado == 'pendente' && $conversa->receptor == $utilizador_id)
                                     <a id="bgMsgPendente"
-                                        class="bg-secondary pt-1 d-flex justify-content-center align-items-center"
+                                        class="border border-primary bg-secondary pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
-                                        <div class="col-2">
+                                        <div class="col ">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
                                                 <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
-                                                    class="rounded-circle me-2" alt="foto"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                                    class="rounded-circle " alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
                                             @else
-                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class=""
                                                     alt="foto"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
                                             @endif
                                         </div>
 
-                                        <div class="col-8 ms-1">
-                                            <h4 class="text-light" style="white-space: nowrap;">{{ $nome }}
+                                        <div class="col-7 ">
+                                            <h4 class="text-light" style="word-wrap: break-word">
+                                                {{ $nome }}
                                             </h4>
                                             <p class="text-light w-100">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
@@ -188,7 +189,7 @@
                                                     @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                     {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -197,33 +198,34 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-2 text-light text-center">
+                                        <div class="col text-light text-center">
                                             <span class="badge bg-danger">{{ count($this->msgPendentes()) }}</span>
                                         </div>
                                     </a>
                                 @else
                                     <a id="bgMsgLido"
-                                        class="bg-white pt-1 d-flex justify-content-center align-items-center"
+                                        class="border border-primary bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
 
-                                        <div class="col-2 ">
+                                        <div class="col ">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
                                             @if ($foto)
                                                 <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
-                                                    class="rounded-circle me-2" alt="foto"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                                    class="rounded-circle" alt="foto"
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
                                             @else
-                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class="me-2"
+                                                <img src="{{ asset('assets/img/img_default.jpg') }}" class=""
                                                     alt="foto"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                                    style="width: 40px; height: 40px; object-fit: cover;">
                                             @endif
                                         </div>
 
-                                        <div class="col-8 ms-1 ">
-                                            <h4 class="text-dark " style="white-space: nowrap;">{{ $nome }}
+                                        <div class="col-7  ">
+                                            <h4 class="text-dark " style="word-wrap: break-word">
+                                                {{ $nome }}
                                             </h4>
                                             <p class="text-dark w-100 " style="width: inherit">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
@@ -246,7 +248,7 @@
                                                     @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                      {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -254,7 +256,7 @@
                                             <p class="text-dark">{{ $this->formatarData($conversa->created_at) }}</p>
                                         </div>
 
-                                        <div class="col-2 text-center ">
+                                        <div class="col text-center ">
                                             @if ($conversa->estado == 'lido')
                                                 <i class="bi bi-check-circle-fill text-primary"></i>
                                             @else
