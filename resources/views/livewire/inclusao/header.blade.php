@@ -103,8 +103,9 @@
                 <script src="{{ asset('assets/js/temporeal_contar_msg.js') }}"></script>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        @if (count($this->msgPendentesGeral()) > 0)
+                    <li class="dropdown-header d-table d-md-flex">
+                        <div>
+                            @if (count($this->msgPendentesGeral()) > 0)
                             @if (count($this->msgPendentesGeral()) == 1)
                                 Você tem {{ count($this->msgPendentesGeral()) }} mensagem não lida
                             @else
@@ -113,8 +114,11 @@
                         @else
                             Você não tem novas mensagens
                         @endif
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
-                                class="badge rounded-pill bg-primary p-2 ms-2">Precisa de ajudar?</span></a>
+                        </div>
+                        <div>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
+                                class="badge rounded-pill bg-primary p-2 ms-2">Em que podemos ajudar?</span></a>
+                        </div>
                     </li>
                     <li>
                         <hr class="dropdown-divider">

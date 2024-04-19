@@ -19,16 +19,10 @@
 
                             @case('audio')
                                 
-                                <audio id="player" controls>
+                                <audio class="col-12" controls>
                                     <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mp3">
                                     Your browser does not support the audio element.
                                 </audio>
-
-                                
-                                <script>
-                                    const player = new Plyr('#player');
-                                    
-                                </script>
                             @break
 
                             @case('texto')
