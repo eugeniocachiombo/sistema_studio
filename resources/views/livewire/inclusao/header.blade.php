@@ -155,7 +155,7 @@
                                             @endphp
                                             @if ($foto)
                                                 <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
-                                                    class="rounded-circle " alt="foto"
+                                                    class="rounded-circle" alt="foto"
                                                     style="width: 40px; height: 40px; object-fit: cover;">
                                             @else
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" class=""
