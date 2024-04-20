@@ -33,8 +33,11 @@
                 <hr>
             @endif
         @else
-            <div class="col text-center pt-5  mb-5">
-                <b class="alert alert-danger"><i class="bi bi-info-circle"></i> Não existe conversa com este utilizador</b>
+            <div class="col alert alert-danger text-center mb-5">
+                
+                <b class="d-table d-md-flex justify-content-center align-items-center " >
+                    <div class="h3"><i class="bi bi-info-circle"></i> </div>
+                    <div class="h5 ms-1 me-1">Não existe conversa com este utilizador</div> </b>
             </div>
         @endif
         @include('livewire.chat.inc.upload')
