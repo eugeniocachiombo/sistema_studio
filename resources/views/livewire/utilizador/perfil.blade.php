@@ -329,14 +329,17 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
-                                    <form action="/utilizador/alterar_palavra_passe" >
+                                    <form action="/utilizador/alterar_palavra_passe" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="row mb-3">
                                             <label for="passeActual"
                                                 class="col-md-4 col-lg-3 col-form-label">Passe Actual</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="passeActual" type="password" class="form-control"
-                                                    wire:model="passeActual" id="passeActual">
+                                                    wire:model="passeActual" id="passeActual" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                PAss
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -344,7 +347,7 @@
                                                 Passe</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="passeNova" type="password" class="form-control"
-                                                    wire:model="passeNova" id="passeNova">
+                                                    wire:model="passeNova" id="passeNova" required>
                                             </div>
                                         </div>
 
@@ -353,7 +356,7 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Passe</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="passeConfirmacao" type="password" class="form-control"
-                                                    wire:model="passeConfirmacao" id="passeConfirmacao">
+                                                    wire:model="passeConfirmacao" id="passeConfirmacao" required>
                                             </div>
                                         </div>
 
@@ -366,6 +369,7 @@
 
                                     @include('livewire.utilizador.alterar-passe')
                                     <script src="{{asset('assets/js/parar_livewire_passe.js')}}"></script>
+                                    <script src="{{asset('assets/js/validate_bootstrap.js')}}"></script>
                                 </div>
                             </div>
                         </div>
@@ -375,4 +379,3 @@
         </section>
     </main>
 </div>
-
