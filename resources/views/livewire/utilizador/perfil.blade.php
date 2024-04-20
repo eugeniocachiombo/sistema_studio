@@ -126,14 +126,12 @@
                                 </div>
 
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                                    <form>
+                                    <form action="/utilizador/actualizar_perfil" class="needs-validation" novalidate>
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do
                                                 perfil
                                             </label>
                                             <div class="col-md-8 col-lg-9">
-
-
                                                 <div class="col"
                                                     style="display: inline-block; width: 120px; height: 120px;">
                                                     @if ($foto)
@@ -160,7 +158,7 @@
                                                         <i class="bi bi-upload"></i>
                                                         {{ $nomeArquivo ? $nomeArquivo : '' }}
                                                         <input type="file" wire:model="arquivo" name="file"
-                                                            id="file-input" style="display: none;">
+                                                            id="file-input" style="display: none;" required>
                                                     </label>
 
                                                     <a href="#"

@@ -18,6 +18,5 @@
             timer: tempo ? tempo : 4000
         });
         window.history.pushState({}, '', '/utilizador/perfil');
-       // window.location.replace("/utilizador/perfil");
     </script>
 @endif
