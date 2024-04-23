@@ -64,7 +64,7 @@
         </div>
         <div id="session-ending">
             <div class="spinner-border spinner-border-sm text-dark" role="status"></div> 
-                <b>Inicializando:</b> Por favor Aguarde...
+                <b>Iniciando:</b> Por favor Aguarde...
         </div>
     </div>
 

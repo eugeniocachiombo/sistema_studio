@@ -23,10 +23,12 @@ class Header extends Component
     ];
     public $participantesPendentes;
     public $listeners = ['headerTempoReal'];
+    public $totalMsgActual, $novaMensagem;
 
     public function mount()
     {
         $this->utilizador_id = Auth::user()->id;
+        $this->totalMsgActual = $this->listarMsgRecibidas();
     }
 
     public function render()
@@ -39,6 +41,26 @@ class Header extends Component
 
     public function headerTempoReal(){
         $this->participantesPendentes = $this->totalParticipantesPendentes();
+        $this->alertarNovaMsg();
+    }
+
+    public function alertarNovaMsg(){
+        $this->novaMensagem = $this->listarMsgRecibidas();
+        if (count($this->totalMsgActual) < count($this->novaMensagem)) {
+            $this->emit('alerta', ['mensagem' => 'Você tem uma nova mensagem', 'tempo' => 4000]);
+            $this->totalMsgActual = $this->listarMsgRecibidas();
+        }
+    }
+
+    public function listarMsgRecibidas()
+    {
+        return ChatConversa::where(function ($query) {
+            $query->where('emissor', '!=', $this->utilizador_id)
+                ->where('receptor',  $this->utilizador_id);
+        })
+            ->where('estado', 'pendente')
+            ->distinct()
+            ->get();
     }
 
     public function listarTodasConversasGeral()

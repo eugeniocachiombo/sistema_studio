@@ -111,7 +111,7 @@ class Conversa extends Component
         }
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
-        $this->total_paginas = ceil(count($this->totalPaginas()) / 5);
+        $this->total_paginas = ceil(count($this->totalMsgAmbosUtilizadores()) / 5);
         return DB::select('select * from conversas ' .
             ' where (emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
@@ -119,7 +119,7 @@ class Conversa extends Component
             ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
-    public function totalPaginas()
+    public function totalMsgAmbosUtilizadores()
     {
         return DB::select('select * from conversas ' .
             ' where emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
