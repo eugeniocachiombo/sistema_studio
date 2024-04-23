@@ -309,7 +309,7 @@
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title">Actividades Recentes <span>| {{ $actividadesRecentes ? $actividadesRecentes : 'Todas' }}</span></h5>
+                            <h5 class="card-title">Actividades Recentes <span>| {{ session("paginaActividades") ? session("paginaActividades") : 'Todas' }}</span></h5>
                             <div class="activity">
                                 @forelse ($todasActividadesUtl as $item)
                                     <div class="activity-item d-flex">
@@ -325,8 +325,8 @@
                                 @empty
                                     <p class="fw-bold alert alert-info">Você não tem nenhuma actividade de momento</p>
                                 @endforelse
-
-                                {{ $todasActividadesUtl->links() }}
+                                
+                                @include('livewire.pagina-inicial.btnPaginacaoActividades')
                             </div>
                         </div>
                     </div>
