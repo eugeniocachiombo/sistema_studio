@@ -17,7 +17,7 @@ class TerminarSessao extends Component
         Auth::logout();
         session()->forget("ambientePreparado");
         session()->forget("utilizador");
-        cookie("sessao_iniciada", '', '');
+        cookie("sessao_iniciada", '', 0);
         return view('livewire.utilizador.terminar-sessao');
     }
 }
