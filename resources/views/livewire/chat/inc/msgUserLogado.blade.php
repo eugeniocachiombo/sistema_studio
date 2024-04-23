@@ -18,53 +18,6 @@
                             @break
 
                             @case('audio')
-                                <div class="col-12 ">
-                                    <div class="card-principal bg-dark">
-                                        <div id="waveform" class="mb-3"></div>
-
-                                        <div id="controls" class="d-flex col-6">
-                                            <button id="playButton" class="controlButton"> <i class="bi bi-play-fill" ></i></button>
-                                            <button id="pauseButton" class="controlButton"> <i class="bi bi-pause-fill" ></i></button>
-                                            <div id="volume" class="d-table me-2 text-start">
-                                                <label for="volumeRange"
-                                                    style="color: white; margin-right: 10px;">Volume:</label>
-                                                <input type="range" id="volumeRange" min="0" max="1"
-                                                    step="0.01" value="1">
-                                            </div>
-                                            <a id="downloadButton" class="controlButton d-flex align-items-center" download>Baixar</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script type="module">
-                                    import WaveSurfer from "<?php echo asset('assets/wavesurfer/wavesurfer.js'); ?>";
-                                    var linkAudio = "<?php echo asset('assets/' . $item->caminho_arquivo); ?>";
-
-                                    const wavesurfer = WaveSurfer.create({
-                                        container: '#waveform',
-                                        waveColor: '#FFC0CB',
-                                        progressColor: '#5555FF',
-                                        url: linkAudio,
-                                        barWidth: 2,
-                                        barHeight: 1,
-                                        backend: 'WebAudio',
-                                    })
-
-                                    document.getElementById('downloadButton').setAttribute('href', linkAudio);
-
-                                    document.getElementById('playButton').addEventListener('click', function() {
-                                        wavesurfer.play();
-                                    });
-
-                                    document.getElementById('pauseButton').addEventListener('click', function() {
-                                        wavesurfer.pause();
-                                    });
-
-                                    document.getElementById('volumeRange').addEventListener('input', function() {
-                                        wavesurfer.setVolume(this.value);
-                                    });
-                                </script>
-
                                 <audio class="col-12" controls>
                                     <source src="{{ asset('assets/' . $item->caminho_arquivo) }}" type="audio/mp3">
                                     Your browser does not support the audio element.
