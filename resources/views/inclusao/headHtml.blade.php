@@ -37,9 +37,8 @@
     <script src="{{ asset('assets/js/executar_alertOpcoes.js') }}"></script>
     <script src="{{ asset('assets/js/atrazar_redirect.js') }}"></script>
     
-     <!-- Plyr js-->
-     <link rel="stylesheet" href="{{ asset('assets/plyrjs/plyr.css') }}" />
-        <script src="{{ asset('assets/plyrjs/plyr.js') }}"></script>
+     <!-- Wavesurfer-->
+     <link rel="stylesheet" href="{{ asset('assets/wavesurfer/wavesurfer.css') }}" >
     
     @livewireStyles
 </head>
