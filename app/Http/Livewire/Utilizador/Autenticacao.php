@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Utilizador;
 
 use App\Models\User;
+use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -51,11 +52,20 @@ class Autenticacao extends Component
             $this->lembrarLogin();
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
+            $this->registrarActividade("Autenticação feita com sucesso", "normal", Auth::user()->id);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
         }else{
             $this->emit('alerta', ['mensagem' => 'Erro, Dados inválidos', 'icon' => 'error']);
         }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id){
+        RegistroActividade::create( [
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
     }
 
     public function lembrarLogin(){
