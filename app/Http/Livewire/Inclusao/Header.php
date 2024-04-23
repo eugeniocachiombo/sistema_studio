@@ -48,6 +48,7 @@ class Header extends Component
         $this->novaMensagem = $this->listarMsgRecibidas();
         if (count($this->totalMsgActual) < count($this->novaMensagem)) {
             $this->emit('alerta', ['mensagem' => 'Você tem uma nova mensagem', 'tempo' => 4000]);
+            $this->emit('somReceberMensagem', asset('assets/toques_msg/audio3.mp3'));
             $this->totalMsgActual = $this->listarMsgRecibidas();
         }
     }

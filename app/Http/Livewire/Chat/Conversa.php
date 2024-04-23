@@ -30,8 +30,8 @@ class Conversa extends Component
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     public $ocultarValidate = false, $btnEliminarMsg = false;
-    public $placeholderMsg;
-    public $rowsMessagem;
+    public $placeholderMsg, $rowsMessagem;
+    public $totalMsgActual, $novaMensagem;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -59,6 +59,7 @@ class Conversa extends Component
     {
         $this->utilizador_id = $utilizador;
         $this->remente = $remente;
+        $this->totalMsgActual = $this->listarMsgRecibidas();
     }
 
     public function render()
@@ -98,6 +99,25 @@ class Conversa extends Component
         // com a declaração em javascript no arquivo temporeal_msg.js
         // seu listener public $listeners = ['tempoRealMensagens'];
         // $this->actualizarParaLidoMensagem();
+        $this->alertarNovaMsg();
+    }
+
+    public function alertarNovaMsg(){
+        $this->novaMensagem = $this->listarMsgRecibidas();
+        if (count($this->totalMsgActual) < count($this->novaMensagem)) {
+            $this->emit('alerta', ['mensagem' => 'Você tem uma nova mensagem', 'tempo' => 4000]);
+            $this->emit('somReceberMensagem', asset('assets/toques_msg/audio2.mp3'));
+            $this->totalMsgActual = $this->listarMsgRecibidas();
+        }
+    }
+
+    public function listarMsgRecibidas()
+    {
+        return ChatConversa::where(function ($query) {
+            $query->where('emissor', '!=', $this->utilizador_id)
+                ->where('receptor',  $this->utilizador_id);
+        })
+            ->get();
     }
 
     public function listarTodasConversas()

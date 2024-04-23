@@ -36,6 +36,7 @@
     <script src="{{ asset('assets/js/executar_alert.js') }}"></script>
     <script src="{{ asset('assets/js/executar_alertOpcoes.js') }}"></script>
     <script src="{{ asset('assets/js/atrazar_redirect.js') }}"></script>
+    <script src="{{ asset('assets/js/tocar_audio_msgrecebida.js') }}"></script>
     
      <!-- Wavesurfer-->
      <link rel="stylesheet" href="{{ asset('assets/wavesurfer/wavesurfer.css') }}" >
