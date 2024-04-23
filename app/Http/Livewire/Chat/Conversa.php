@@ -105,7 +105,6 @@ class Conversa extends Component
     public function alertarNovaMsg(){
         $this->novaMensagem = $this->listarMsgRecibidas();
         if (count($this->totalMsgActual) < count($this->novaMensagem)) {
-            $this->emit('alerta', ['mensagem' => 'Você tem uma nova mensagem', 'tempo' => 4000]);
             $this->emit('somReceberMensagem', asset('assets/toques_msg/audio2.mp3'));
             $this->totalMsgActual = $this->listarMsgRecibidas();
         }
@@ -114,7 +113,7 @@ class Conversa extends Component
     public function listarMsgRecibidas()
     {
         return ChatConversa::where(function ($query) {
-            $query->where('emissor', '!=', $this->utilizador_id)
+            $query->where('emissor', $this->remente)
                 ->where('receptor',  $this->utilizador_id);
         })
             ->get();
