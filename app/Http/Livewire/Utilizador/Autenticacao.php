@@ -46,13 +46,21 @@ class Autenticacao extends Component
             'email' => $this->email,
             'password' => $this->palavra_passe,
         ];
+
         if (Auth::attempt($credenciais)) {
+            $this->lembrarLogin();
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
         }else{
             $this->emit('alerta', ['mensagem' => 'Erro, Dados inválidos', 'icon' => 'error']);
+        }
+    }
+
+    public function lembrarLogin(){
+        if($this->lembre_me == true){
+          cookie("sessao_iniciada", true, time()*365);
         }
     }
 
