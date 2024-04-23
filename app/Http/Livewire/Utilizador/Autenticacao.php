@@ -52,10 +52,11 @@ class Autenticacao extends Component
             $this->lembrarLogin();
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
-            $this->registrarActividade("Autenticação feita com sucesso", "normal", Auth::user()->id);
+            $this->registrarActividade(" Autenticou-se no sistema", "normal", Auth::user()->id);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
         }else{
+            $this->registrarTentativaLogin($this->email);
             $this->emit('alerta', ['mensagem' => 'Erro, Dados inválidos', 'icon' => 'error']);
         }
     }
@@ -66,6 +67,13 @@ class Autenticacao extends Component
             "tipo_msg" => $tipo,
             "user_id" => $user_id,
         ]);
+    }
+
+    public function registrarTentativaLogin($email){
+        $utilizador = User::where("email", $email)->first();
+        if($utilizador){
+            $this->registrarActividade("Houve uma tentativa de autenticação no sistema com o seu email", "alerta", $utilizador->id);
+        }
     }
 
     public function lembrarLogin(){

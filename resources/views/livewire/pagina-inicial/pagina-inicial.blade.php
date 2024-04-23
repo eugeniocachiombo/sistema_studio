@@ -29,9 +29,11 @@
                                                         id="" wire:model='gravacao' value="Hoje"> Hoje</a>
                                             </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='gravacao' value="Pendentes"> Pendentes</a></li>
+                                                        id="" wire:model='gravacao' value="Pendentes">
+                                                    Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='gravacao' value="Concluídas"> Concluídas</a></li>
+                                                        id="" wire:model='gravacao' value="Concluídas">
+                                                    Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -73,9 +75,11 @@
                                                         id="" wire:model='mixagem' value="Hoje"> Hoje</a>
                                             </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='mixagem' value="Pendentes"> Pendentes</a></li>
+                                                        id="" wire:model='mixagem' value="Pendentes">
+                                                    Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='mixagem' value="Concluídas"> Concluídas</a></li>
+                                                        id="" wire:model='mixagem' value="Concluídas">
+                                                    Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -112,16 +116,19 @@
 
                                         <form action="" method="get">
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Hoje"> Hoje</a>
+                                                        id="" wire:model='masterizacao' value="Hoje">
+                                                    Hoje</a>
                                             </li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Pendentes"> Pendentes</a></li>
+                                                        id="" wire:model='masterizacao' value="Pendentes">
+                                                    Pendentes</a></li>
                                             <li><a class="dropdown-item"><input type="radio" name=""
-                                                        id="" wire:model='masterizacao' value="Concluídas"> Concluídas</a></li>
+                                                        id="" wire:model='masterizacao' value="Concluídas">
+                                                    Concluídas</a></li>
                                         </form>
                                     </ul>
                                 </div>
-                               
+
                                 <div class="card-body">
                                     <h5 class="card-title">Masterização <span>|
                                             {{ $masterizacao ? $masterizacao : 'Hoje' }}</span></h5>
@@ -219,54 +226,55 @@
                             </div>
                         </div>
 
-                        {{--Clientes--}}
+                        {{-- Clientes --}}
                         @if ($utilizadorLogado->tipo_acesso != 3)
-                        <div class="col-12">
-                            <div class="card card-animated recent-sales overflow-auto">
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filtrar</h6>
-                                        </li>
+                            <div class="col-12">
+                                <div class="card card-animated recent-sales overflow-auto">
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filtrar</h6>
+                                            </li>
 
-                                        <li><a class="dropdown-item" href="#">Hoje</a></li>
-                                        <li><a class="dropdown-item" href="#">Este mês</a></li>
-                                        <li><a class="dropdown-item" href="#">Este ano</a></li>
-                                    </ul>
-                                </div>
+                                            <li><a class="dropdown-item" href="#">Hoje</a></li>
+                                            <li><a class="dropdown-item" href="#">Este mês</a></li>
+                                            <li><a class="dropdown-item" href="#">Este ano</a></li>
+                                        </ul>
+                                    </div>
 
-                                <div class="card-body">
-                                    <h5 class="card-title">Clientes <span>| Hoje</span></h5>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Clientes <span>| Hoje</span></h5>
 
-                                    <table class="table table-borderless datatable">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
+                                        <table class="table table-borderless datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
                                                     <th scope="col">Nome Completo</th>
                                                     <th scope="col">Tipo de Acesso</th>
                                                     <th scope="col">Morada</th>
                                                     <th scope="col">Estado</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($listaClientes as $item)
-                                                <tr>
-                                                    <th scope="row"><a href="#">{{$item->id}}</a></th>
-                                                    <td>{{$item->name}}</td>
-                                                    <td>
-                                                        {{ucwords($item->buscarTipoAcesso->tipo)}}
-                                                    </td>
-                                                    <td>Morada</td>
-                                                    <td><span class="badge bg-success">Approved</span></td>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($listaClientes as $item)
+                                                    <tr>
+                                                        <th scope="row"><a href="#">{{ $item->id }}</a>
+                                                        </th>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>
+                                                            {{ ucwords($item->buscarTipoAcesso->tipo) }}
+                                                        </td>
+                                                        <td>Morada</td>
+                                                        <td><span class="badge bg-success">Approved</span></td>
+                                                    </tr>
                                                 @endforeach
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                     </div>
                 </div>
@@ -282,62 +290,43 @@
                                     <h6>Filtrar</h6>
                                 </li>
 
-                                <li><a class="dropdown-item" href="#">Ver todas</a></li>
+                                <form action="" method="get">
+                                    <li><a class="dropdown-item"><input type="radio" name=""
+                                                id="" wire:model='actividadesRecentes' value="Todas">
+                                                Todas</a>
+                                    </li>
+                                    <li><a class="dropdown-item"><input type="radio" name=""
+                                                id="" wire:model='actividadesRecentes' value="Normal">
+                                                Normal</a></li>
+                                    <li><a class="dropdown-item"><input type="radio" name=""
+                                                id="" wire:model='actividadesRecentes' value="Alerta">
+                                                Alerta</a></li>
+                                    <li><a class="dropdown-item"><input type="radio" name=""
+                                                id="" wire:model='actividadesRecentes' value="Hoje">
+                                                Hoje</a></li>
+                                </form>
                             </ul>
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title">Actividades Recentes <span>| Hoje</span></h5>
+                            <h5 class="card-title">Actividades Recentes <span>| {{ $actividadesRecentes ? $actividadesRecentes : 'Todas' }}</span></h5>
                             <div class="activity">
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">32 min</div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content">
-                                        Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo
-                                            officiis</a> beatae
+                                @forelse ($todasActividadesUtl as $item)
+                                    <div class="activity-item d-flex">
+                                        <div class="activite-label me-2">{{ $this->formatarData($item->created_at) }}
+                                        </div>
+                                        <i class='bi bi-circle-fill activity-badge {{$this->corTexto($item->tipo_msg)}} align-self-start'></i>
+                                        <div class="activity-content">
+                                             <b class="text-primary"> {{$item->tipo_msg == "normal" ? $this->buscarNomeUsuario($item->user_id) : ""}}</b> 
+                                            <hr>
+                                            <b><i>{{ $item->mensagem }}</i></b>
+                                        </div>
                                     </div>
-                                </div>
+                                @empty
+                                    <p class="fw-bold alert alert-info">Você não tem nenhuma actividade de momento</p>
+                                @endforelse
 
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">56 min</div>
-                                    <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                    <div class="activity-content">
-                                        Voluptatem blanditiis blanditiis eveniet
-                                    </div>
-                                </div>
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">2 hrs</div>
-                                    <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                    <div class="activity-content">
-                                        Voluptates corrupti molestias voluptatem
-                                    </div>
-                                </div>
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">1 day</div>
-                                    <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                    <div class="activity-content">
-                                        Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati
-                                            voluptatem</a> tempore
-                                    </div>
-                                </div>
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">2 days</div>
-                                    <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                    <div class="activity-content">
-                                        Est sit eum reiciendis exercitationem
-                                    </div>
-                                </div>
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">4 weeks</div>
-                                    <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                    <div class="activity-content">
-                                        Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                                    </div>
-                                </div>
+                                {{ $todasActividadesUtl->links() }}
                             </div>
                         </div>
                     </div>
