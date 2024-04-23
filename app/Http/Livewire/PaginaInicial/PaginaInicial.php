@@ -4,7 +4,6 @@ namespace App\Http\Livewire\PaginaInicial;
 
 use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
-use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +19,7 @@ class PaginaInicial extends Component
     public $actividadesRecentes;
     public $listaClientes = array();
     protected $todasActividadesUtl;
-    public $pagina_atual,$itens_por_pagina,$offset,$total_itens,$total_paginas;
+    public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
 
     public function mount()
     {
@@ -58,36 +57,36 @@ class PaginaInicial extends Component
         $this->total_itens = 100;
 
         $normal = DB::select('select * from registro_actividades ' .
-        ' where user_id = ' . $this->utilizador_id . 
-        ' and tipo_msg = ' . "'normal'");
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'normal'");
         $alerta = DB::select('select * from registro_actividades ' .
-        ' where user_id = ' . $this->utilizador_id . 
-        ' and tipo_msg = ' . "'alerta'" .
-        ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'alerta'" .
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
         $hoje = RegistroActividade::where("user_id", $this->utilizador_id)
-                    ->whereDate("created_at", date("Y-m-d"))
-                    ->orderby("id", "desc")
-                    ->get();
+            ->whereDate("created_at", date("Y-m-d"))
+            ->orderby("id", "desc")
+            ->get();
 
-        if($this->actividadesRecentes != ""){
+        if ($this->actividadesRecentes != "") {
             session()->put("paginaActividades", $this->actividadesRecentes);
         }
-        
+
         switch (session("paginaActividades")) {
             case 'Normal':
                 $this->total_paginas = ceil(count($normal) / 5);
                 return DB::select('select * from registro_actividades ' .
-            ' where user_id = ' . $this->utilizador_id . 
-            ' and tipo_msg = ' . "'normal'" .
-            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' and tipo_msg = ' . "'normal'" .
+                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
                 break;
 
             case 'Alerta':
                 $this->total_paginas = ceil(count($alerta) / 5);
                 return DB::select('select * from registro_actividades ' .
-            ' where user_id = ' . $this->utilizador_id . 
-            ' and tipo_msg = ' . "'alerta'" .
-            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' and tipo_msg = ' . "'alerta'" .
+                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
                 break;
 
             case 'Hoje':
@@ -99,10 +98,10 @@ class PaginaInicial extends Component
                 break;
 
             default:
-            $this->total_paginas = ceil(count(RegistroActividade::all()) / 5);
-             return DB::select('select * from registro_actividades ' .
-            ' where user_id = ' . $this->utilizador_id . 
-            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                $this->total_paginas = ceil(count(RegistroActividade::all()) / 5);
+                return DB::select('select * from registro_actividades ' .
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
                 break;
         }
 
