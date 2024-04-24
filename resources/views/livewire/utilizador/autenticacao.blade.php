@@ -12,23 +12,22 @@
                                 <div class="card-body">
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Autenticação</h5>
-                                        <p class="text-center text-primary small"><b>Entre com o seu Email e
-                                                Palavra-passe</b></p>
+                                        <p class="text-center text-primary small"><b>Entre com os seus dados</b></p>
                                         <hr>
                                     </div>
 
                                     <form wire:submit.prevent="logar" class="row g-3 needs-validation" novalidate>
                                         <div class="col-12">
-                                            <label for="email" class="form-label">Email:</label>
+                                            <label for="email" class="form-label">Email ou Telefone:</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend"><i class="fas fa-user"></i></span>
-                                                <input type="text" wire:model="email" class="form-control"
+                                                <input type="text" wire:model="email_telefone" class="form-control"
                                                     id="email" required>
                                             </div>
 
                                             <div class="text-danger" style="font-size: 12.5px">
-                                                @error('email')
+                                                @error('email_telefone')
                                                     <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>

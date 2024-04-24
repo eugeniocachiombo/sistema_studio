@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('telefone')->unique()->nullable();
+            $table->bigInteger('telefone')->unique()->nullable();
             $table->unsignedBigInteger('tipo_acesso')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
         User::create([
             'name' => "Conta Produtor",
             'email' => "produtor@example.com",
+            'telefone' => 911911911,
             'email_verified_at' => now(), 
             'password' => Hash::make('123'), 
             'tipo_acesso' => 1,
@@ -40,6 +41,7 @@ class CreateUsersTable extends Migration
         User::create([
             'name' => "Conta Antendente",
             'email' => "atendente@example.com",
+            'telefone' => 922922922,
             'email_verified_at' => now(), 
             'password' => Hash::make('123'), 
             'tipo_acesso' => 2,
@@ -48,6 +50,7 @@ class CreateUsersTable extends Migration
         User::create([
             'name' => "Conta Cantor",
             'email' => "cantor@example.com",
+            'telefone' => 933933933,
             'email_verified_at' => now(), 
             'password' => Hash::make('123'), 
             'tipo_acesso' => 3,
