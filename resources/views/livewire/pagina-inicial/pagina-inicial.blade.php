@@ -309,7 +309,7 @@
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title">Actividades Recentes <span>| {{ session("paginaActividades") ? session("paginaActividades") : 'Todas' }}</span></h5>
+                            <h5 class="card-title">Actividades Recentes <span>| {{ session("paginaActividades") ? session("paginaActividades") : 'Todas' }} </span></h5>
                             <div class="activity">
                                 @forelse ($todasActividadesUtl as $item)
                                     <div class="activity-item d-flex">

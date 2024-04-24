@@ -48,63 +48,79 @@ class PaginaInicial extends Component
     {
         $this->pagina_atual = 0;
         $this->itens_por_pagina = 5;
-        if (isset($_GET['pagina'])) {
-            $this->pagina_atual = $_GET['pagina'];
-        } else {
-            $this->pagina_atual = 1;
-        }
+        isset($_GET['pagina']) ? $this->pagina_atual = $_GET['pagina'] :  $this->pagina_atual = 1;
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
-
-        $normal = DB::select('select * from registro_actividades ' .
-            ' where user_id = ' . $this->utilizador_id .
-            ' and tipo_msg = ' . "'normal'");
-        $alerta = DB::select('select * from registro_actividades ' .
-            ' where user_id = ' . $this->utilizador_id .
-            ' and tipo_msg = ' . "'alerta'" .
-            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
-        $hoje = RegistroActividade::where("user_id", $this->utilizador_id)
-            ->whereDate("created_at", date("Y-m-d"))
-            ->orderby("id", "desc")
-            ->get();
-
-        if ($this->actividadesRecentes != "") {
-            session()->put("paginaActividades", $this->actividadesRecentes);
-        }
+        $this->setSessaoPaginaActividades();
 
         switch (session("paginaActividades")) {
             case 'Normal':
-                $this->total_paginas = ceil(count($normal) / 5);
-                return DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' and tipo_msg = ' . "'normal'" .
-                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                return $this->buscarActividadesTipoNormal();
                 break;
 
             case 'Alerta':
-                $this->total_paginas = ceil(count($alerta) / 5);
-                return DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' and tipo_msg = ' . "'alerta'" .
-                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                return $this->buscarActividadesTipoAlerta();
                 break;
 
             case 'Hoje':
-                $this->total_paginas = ceil(count($hoje) / 5);
-                return RegistroActividade::where("user_id", $this->utilizador_id)
-                    ->whereDate("created_at", date("Y-m-d"))
-                    ->orderby("id", "desc")
-                    ->get();
+                return $this->buscarActividadesRecentesHoje();
                 break;
 
             default:
-                $this->total_paginas = ceil(count(RegistroActividade::all()) / 5);
-                return DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+                return $this->buscarTodasActividadesRecentes();
                 break;
         }
 
+    }
+
+    public function setSessaoPaginaActividades(){
+        if ($this->actividadesRecentes != "") {
+            session()->put("paginaActividades", $this->actividadesRecentes);
+        }
+    }
+
+    public function buscarActividadesTipoNormal()
+    {
+        $normal = DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'normal'");
+        $this->total_paginas = ceil(count($normal) / 5);
+        return DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'normal'" .
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+    }
+
+    public function buscarActividadesTipoAlerta()
+    {
+        $alerta = DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'alerta'");
+        $this->total_paginas = ceil(count($alerta) / 5);
+        return DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' and tipo_msg = ' . "'alerta'" .
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+    }
+
+    public function buscarActividadesRecentesHoje()
+    {
+        $hoje = DB::select('select * from registro_actividades ' .
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' and DATE(created_at) = curdate()');
+                $this->total_paginas = ceil(count($hoje) / 5);
+                return DB::select('select * from registro_actividades ' .
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' and DATE(created_at) = curdate()' .
+                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+    }
+
+    public function buscarTodasActividadesRecentes()
+    {
+        $this->total_paginas = ceil(count(RegistroActividade::all()) / 5);
+                return DB::select('select * from registro_actividades ' .
+                    ' where user_id = ' . $this->utilizador_id .
+                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
     public function buscarNomeUsuario($id)
