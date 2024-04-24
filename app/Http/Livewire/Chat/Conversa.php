@@ -5,11 +5,13 @@ namespace App\Http\Livewire\Chat;
 use App\Models\chat\Conversa as ChatConversa;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\RegistroActividade;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -32,6 +34,7 @@ class Conversa extends Component
     public $ocultarValidate = false, $btnEliminarMsg = false;
     public $placeholderMsg, $rowsMessagem;
     public $totalMsgActual, $novaMensagem;
+    public $infoDispositivo;
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [
@@ -48,9 +51,9 @@ class Conversa extends Component
         $remente = Crypt::decrypt($remente);*/
         $utilizador = $utilizador;
         $remente = $remente;
-        if($utilizador == Auth::user()->id){
+        if ($utilizador == Auth::user()->id) {
             return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
-        }else{
+        } else {
             return redirect()->to("/error");
         }
     }
@@ -60,6 +63,15 @@ class Conversa extends Component
         $this->utilizador_id = $utilizador;
         $this->remente = $remente;
         $this->totalMsgActual = $this->listarMsgRecibidas();
+
+        $this->buscarDadosDispositivo();
+        $nomeUtilizador = $this->buscarNomeUsuario($this->utilizador_id);
+        $nomeRemente = $this->buscarNomeUsuario($this->remente);
+        $this->registrarActividade("<b>
+        <i class='bi bi-check-circle-fill text-success'></i> ".
+        $nomeUtilizador . " Entrou em conversa com " . $nomeRemente .
+        "</b> <hr>" . 
+        $this->infoDispositivo, "normal", Auth::user()->id);
     }
 
     public function render()
@@ -77,13 +89,13 @@ class Conversa extends Component
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->remente)
                 ->where('estado', 'pendente');
-            })
-        ->orWhere(function ($query) {
+        })
+            ->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->remente)
                     ->where('estado', 'pendente');
             })
-        ->get();
+            ->get();
     }
 
     public function ocutarMsgValidate()
@@ -102,7 +114,8 @@ class Conversa extends Component
         $this->alertarNovaMsg();
     }
 
-    public function alertarNovaMsg(){
+    public function alertarNovaMsg()
+    {
         $this->novaMensagem = $this->listarMsgRecibidas();
         if (count($this->totalMsgActual) < count($this->novaMensagem)) {
             $this->emit('somReceberMensagem', asset('assets/toques_msg/audio2.mp3'));
@@ -114,7 +127,7 @@ class Conversa extends Component
     {
         return ChatConversa::where(function ($query) {
             $query->where('emissor', $this->remente)
-                ->where('receptor',  $this->utilizador_id);
+                ->where('receptor', $this->utilizador_id);
         })
             ->get();
     }
@@ -221,15 +234,15 @@ class Conversa extends Component
         $verificarSegundoDel = ChatConversa::where("id", $id)
             ->select("segundoDelete")->first();
 
-        if($verificarPrimeiroDel->primeiroDelete == null){
+        if ($verificarPrimeiroDel->primeiroDelete == null) {
             ChatConversa::where("id", $id)
                 ->update(["primeiroDelete" => $this->utilizador_id]);
-        }elseif($verificarSegundoDel->segundoDelete == null){
+        } elseif ($verificarSegundoDel->segundoDelete == null) {
             ChatConversa::where("id", $id)
-                    ->update([
-                        "segundoDelete" => $this->utilizador_id,
-                        "deleted_at" => Carbon::now()
-                    ]);
+                ->update([
+                    "segundoDelete" => $this->utilizador_id,
+                    "deleted_at" => Carbon::now(),
+                ]);
         }
         $this->emit('alerta', ['mensagem' => 'Eliminado com sucesso', 'icon' => 'success']);
     }
@@ -243,9 +256,9 @@ class Conversa extends Component
     {
         $msgPendentes = $this->msgPendentes();
         foreach ($msgPendentes as $item) {
-            if($item->receptor == $this->utilizador_id){
+            if ($item->receptor == $this->utilizador_id) {
                 ChatConversa::where("id", $item->id)
-                ->update(['estado' => 'lido']);
+                    ->update(['estado' => 'lido']);
             }
         }
     }
@@ -350,17 +363,40 @@ class Conversa extends Component
         return $data_formatada;
     }
 
-    public function buscarFotoPerfil($idUtilizador){
+    public function buscarFotoPerfil($idUtilizador)
+    {
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = public_path('assets/' . $foto->caminho_arquivo);
-           if (file_exists($caminho)) {
-               return $foto;
-           } else {
-               return null;
-           }
-        }else{
-           return null;
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
+            if (file_exists($caminho)) {
+                return $foto;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
-   }
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
 }
