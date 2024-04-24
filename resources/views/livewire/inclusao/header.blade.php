@@ -148,7 +148,7 @@
                                     <a id="bgMsgPendente"
                                         class="border border-primary bg-secondary pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                        style="border-radius: 50px">
+                                        style="border-radius: 50px;">
                                         <div class="col ">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
@@ -165,9 +165,9 @@
                                         </div>
 
                                         <div class="col-7 ">
-                                            <h4 class="text-light" style="word-wrap: break-word">
+                                            <h6 class="text-light" style="word-wrap: break-word">
                                                 {{ $nome }}
-                                            </h4>
+                                            </h6>
                                             <p class="text-light w-100">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
@@ -186,10 +186,10 @@
                                                         @default
                                                     @endswitch
                                                 @else
-                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 15)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 15) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -206,7 +206,7 @@
                                     <a id="bgMsgLido"
                                         class="border border-primary bg-white pt-1 d-flex justify-content-center align-items-center"
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
-                                        style="border-radius: 50px">
+                                        style="border-radius: 50px;">
 
                                         <div class="col ">
                                             @php
@@ -245,10 +245,10 @@
                                                         @default
                                                     @endswitch
                                                 @else
-                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 15)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 15) }}...
                                                     @endif
                                                 @endif
                                             </p>

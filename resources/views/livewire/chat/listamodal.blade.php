@@ -51,7 +51,7 @@
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
 
-                                        <div class="col text-center mt-2 mb-3 me-1 ms-1">
+                                        <div class="col text-center mt-2 mb-2 me-1 ms-1">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
@@ -67,9 +67,8 @@
                                         </div>
 
                                         <div class="col-7 ">
-                                            <h4 class="text-light" style="word-wrap: break-word">{{ $nome }}
-                                            </h4>
-                                            <p class="text-light w-100">
+                                            <b class="text-light">{{ $nome }}</b>
+                                            <p class="text-light mt-3">
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -87,10 +86,10 @@
                                                         @default
                                                     @endswitch
                                                 @else
-                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 15)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 15) }}...
                                                     @endif
                                                 @endif
                                             </p>
@@ -110,7 +109,7 @@
                                         href="{{ route('chat.conversa', [$utilizador_id, $idRemente]) }}"
                                         style="border-radius: 50px">
 
-                                        <div class="col text-center mt-2 mb-3 me-1 ms-1">
+                                        <div class="col text-center mt-2 me-1 ms-1">
                                             @php
                                                 $foto = $this->buscarFotoPerfil($idRemente);
                                             @endphp
@@ -125,12 +124,9 @@
                                             @endif
                                         </div>
 
-                                        <div class="col-7">
-                                            <b>
-                                                <h4 class="text-dark" style="word-wrap: break-word">{{ $nome }}
-                                                </h4>
-                                            </b>
-                                            <p class="text-dark w-100" >
+                                        <div class="col-7 ">
+                                            <b class="text-dark">{{ $nome }}</b>
+                                            <p class="text-dark mt-3" >
                                                 @if ($conversa->caminho_arquivo != '' && $conversa->tipo_arquivo != '')
                                                     @switch($conversa->tipo_arquivo)
                                                         @case('img')
@@ -148,10 +144,10 @@
                                                         @default
                                                     @endswitch
                                                 @else
-                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 25)
+                                                    @if (strlen(Crypt::decrypt($conversa->mensagem)) < 15)
                                                         {{ Crypt::decrypt($conversa->mensagem) }}
                                                     @else
-                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 30) }}...
+                                                        {{ substr(Crypt::decrypt($conversa->mensagem), 0, 15) }}...
                                                     @endif
                                                 @endif
                                             </p>
