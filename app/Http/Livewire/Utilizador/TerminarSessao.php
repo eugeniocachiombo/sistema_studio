@@ -22,7 +22,7 @@ class TerminarSessao extends Component
 
     public function render()
     {
-        $this->registrarActividade("<b>Terminou a sessão no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Terminou a sessão no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         Auth::logout();
         session()->forget("ambientePreparado");
         session()->forget("utilizador");

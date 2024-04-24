@@ -52,8 +52,8 @@ class Autenticacao extends Component
         $versaoPlataforma = $agente->version($plataforma);
         $navegador = $agente->browser();
         $versaoNavegador = $agente->version($navegador);
-        $this->infoDispositivo = "<b class='text-success'>Dispositivo:</b> " . $agente->device() . " <br>".
-        "<b class='text-danger'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>".
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>".
+        "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>".
         "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
     }
 
@@ -70,7 +70,7 @@ class Autenticacao extends Component
             $this->lembrarLogin();
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
-            $this->registrarActividade("<b>Autenticou-se no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Autenticou-se no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
         }else{
@@ -91,7 +91,7 @@ class Autenticacao extends Component
         
         $utilizador = User::where("email", $email)->first();
         if($utilizador){
-            $this->registrarActividade("<b class='text-danger'>Houve uma tentativa de autenticação no sistema com o seu email</b> <hr>" . $this->infoDispositivo, "alerta", $utilizador->id);
+            $this->registrarActividade("<b class='text-danger'><i class='bi bi-info-circle-fill'></i> Houve uma tentativa de autenticação no sistema com o seu email</b> <hr>" . $this->infoDispositivo, "alerta", $utilizador->id);
         }
     }
 
