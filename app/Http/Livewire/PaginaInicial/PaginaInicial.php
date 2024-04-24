@@ -10,15 +10,12 @@ use Livewire\Component;
 
 class PaginaInicial extends Component
 {
-    public $gravacao;
-    public $mixagem;
-    public $masterizacao;
-    public $utilizador_id;
-    public $utilizadorLogado;
+    public $gravacao, $mixagem, $masterizacao;
+    public $utilizador_id, $utilizadorLogado;
     public $actividadesRecentes;
     public $listaClientes = array();
-    protected $todasActividadesUtl;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
+    protected $todasActividadesUtl;
 
     public function mount()
     {
@@ -46,7 +43,7 @@ class PaginaInicial extends Component
     public function buscarTodasActividadesUtl()
     {
         $this->pagina_atual = 0;
-        $this->itens_por_pagina = 5;
+        $this->itens_por_pagina = 4;
         isset($_GET['pagina']) ? $this->pagina_atual = $_GET['pagina'] : $this->pagina_atual = 1;
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
@@ -84,7 +81,7 @@ class PaginaInicial extends Component
         $normal = DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'normal'");
-        $this->total_paginas = ceil(count($normal) / 5);
+        $this->total_paginas = ceil(count($normal) / 4);
         return DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'normal'" .
@@ -131,54 +128,51 @@ class PaginaInicial extends Component
     }
 
     public function formatarData($data)
-{
-    $data_hora = new DateTime($data);
-    $agora = new DateTime('now');
-    $intervalo = $data_hora->diff($agora);
+    {
+        $data_hora = new DateTime($data);
+        $agora = new DateTime('now');
+        $intervalo = $data_hora->diff($agora);
 
-    // Verifica se a data é hoje
-    if ($intervalo->days == 0) {
-        // Se a diferença for inferior a uma hora
-        if ($intervalo->h == 0) {
-            $data_formatada = $intervalo->i . ' min';
-        } else {
-            $data_formatada = $intervalo->h . ' hr';
+        if ($intervalo->days == 0) {
+            if ($intervalo->h == 0) {
+                $data_formatada = $intervalo->i . ' min';
+            } else {
+                $data_formatada = $intervalo->h . ' hr';
+            }
+        } elseif ($intervalo->days == 1) {
+            $data_formatada = 'Ontem às ' . $data_hora->format('H:i');
+        } elseif ($intervalo->days >= 2 && $intervalo->days <= 6) {
+            $dias_semana = array(
+                'Sunday' => 'Domingo',
+                'Monday' => 'Segunda-feira',
+                'Tuesday' => 'Terça-feira',
+                'Wednesday' => 'Quarta-feira',
+                'Thursday' => 'Quinta-feira',
+                'Friday' => 'Sexta-feira',
+                'Saturday' => 'Sábado',
+            );
+            $data_formatada = $data_hora->format('l \à\s H:i');
+            $data_formatada = strtr($data_formatada, $dias_semana);
+        } elseif ($intervalo->days >= 7) {
+            $meses = array(
+                'January' => 'Janeiro',
+                'February' => 'Fevereiro',
+                'March' => 'Março',
+                'April' => 'Abril',
+                'May' => 'Maio',
+                'June' => 'Junho',
+                'July' => 'Julho',
+                'August' => 'Agosto',
+                'September' => 'Setembro',
+                'October' => 'Outubro',
+                'November' => 'Novembro',
+                'December' => 'Dezembro',
+            );
+            $data_formatada = $data_hora->format('d \d\e F \d\e Y');
+            $data_formatada = strtr($data_formatada, $meses);
         }
-    } elseif ($intervalo->days == 1) {
-        $data_formatada = 'Ontem às ' . $data_hora->format('H:i');
-    } elseif ($intervalo->days >= 2 && $intervalo->days <= 6) {
-        $dias_semana = array(
-            'Sunday' => 'Domingo',
-            'Monday' => 'Segunda-feira',
-            'Tuesday' => 'Terça-feira',
-            'Wednesday' => 'Quarta-feira',
-            'Thursday' => 'Quinta-feira',
-            'Friday' => 'Sexta-feira',
-            'Saturday' => 'Sábado',
-        );
-        $data_formatada = $data_hora->format('l \à\s H:i');
-        $data_formatada = strtr($data_formatada, $dias_semana);
-    } elseif ($intervalo->days >= 7) {
-        $meses = array(
-            'January' => 'Janeiro',
-            'February' => 'Fevereiro',
-            'March' => 'Março',
-            'April' => 'Abril',
-            'May' => 'Maio',
-            'June' => 'Junho',
-            'July' => 'Julho',
-            'August' => 'Agosto',
-            'September' => 'Setembro',
-            'October' => 'Outubro',
-            'November' => 'Novembro',
-            'December' => 'Dezembro',
-        );
-        $data_formatada = $data_hora->format('d \d\e F \d\e Y');
-        $data_formatada = strtr($data_formatada, $meses);
+        return $data_formatada;
     }
-    return $data_formatada;
-}
-
 
     public function corTexto($valor)
     {
