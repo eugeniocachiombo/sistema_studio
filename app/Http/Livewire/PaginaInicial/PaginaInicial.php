@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\PaginaInicial;
 
 use App\Models\User;
-use App\Models\Utilizador\RegistroActividade;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -48,7 +47,7 @@ class PaginaInicial extends Component
     {
         $this->pagina_atual = 0;
         $this->itens_por_pagina = 5;
-        isset($_GET['pagina']) ? $this->pagina_atual = $_GET['pagina'] :  $this->pagina_atual = 1;
+        isset($_GET['pagina']) ? $this->pagina_atual = $_GET['pagina'] : $this->pagina_atual = 1;
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
         $this->setSessaoPaginaActividades();
@@ -73,7 +72,8 @@ class PaginaInicial extends Component
 
     }
 
-    public function setSessaoPaginaActividades(){
+    public function setSessaoPaginaActividades()
+    {
         if ($this->actividadesRecentes != "") {
             session()->put("paginaActividades", $this->actividadesRecentes);
         }
@@ -106,21 +106,23 @@ class PaginaInicial extends Component
     public function buscarActividadesRecentesHoje()
     {
         $hoje = DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' and DATE(created_at) = curdate()');
-                $this->total_paginas = ceil(count($hoje) / 5);
-                return DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' and DATE(created_at) = curdate()' .
-                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+            ' where user_id = ' . $this->utilizador_id .
+            ' and DATE(created_at) = curdate()');
+        $this->total_paginas = ceil(count($hoje) / 5);
+        return DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' and DATE(created_at) = curdate()' .
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
     public function buscarTodasActividadesRecentes()
     {
-        $this->total_paginas = ceil(count(RegistroActividade::all()) / 5);
-                return DB::select('select * from registro_actividades ' .
-                    ' where user_id = ' . $this->utilizador_id .
-                    ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+        $todas = DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id);
+        $this->total_paginas = ceil(count($todas) / 5);
+        return DB::select('select * from registro_actividades ' .
+            ' where user_id = ' . $this->utilizador_id .
+            ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
     }
 
     public function buscarNomeUsuario($id)

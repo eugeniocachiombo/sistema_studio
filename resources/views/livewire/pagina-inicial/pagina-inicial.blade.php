@@ -323,7 +323,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <p class="fw-bold alert alert-info">Você não tem nenhuma actividade de momento</p>
+                                    <p class="fw-bold alert alert-info">Nenhuma informação de momento</p>
                                 @endforelse
                                 
                                 @include('livewire.pagina-inicial.btnPaginacaoActividades')
