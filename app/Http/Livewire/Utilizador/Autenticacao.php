@@ -5,14 +5,16 @@ namespace App\Http\Livewire\Utilizador;
 use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Jenssegers\Agent\Agent;
+
 
 class Autenticacao extends Component
 {
     public $email;
     public $palavra_passe;
     public $lembre_me;
+    public $infoDispositivo;
 
     protected $messages = [
         'email.required' => 'O campo é obrigatório',
@@ -24,6 +26,10 @@ class Autenticacao extends Component
         'email' => 'required|email',
         'palavra_passe' => 'required|min:2',
     ];
+
+    public function mount(){
+        $this->buscarDadosDispositivo();
+    }
 
     public function index()
     {
@@ -39,6 +45,18 @@ class Autenticacao extends Component
         return view('livewire.utilizador.autenticacao');
     }
 
+    public function buscarDadosDispositivo(){
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-success'>Dispositivo:</b> " . $agente->device() . " <br>".
+        "<b class='text-danger'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>".
+        "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
     public function logar()
     {
         $this->validate();
@@ -52,7 +70,7 @@ class Autenticacao extends Component
             $this->lembrarLogin();
             $this->limparCampos();
             $this->emit('alerta', ['mensagem' => 'Sucesso', 'icon' => 'success']);
-            $this->registrarActividade(" Autenticou-se no sistema", "normal", Auth::user()->id);
+            $this->registrarActividade("<b>Autenticou-se no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
         }else{
@@ -70,9 +88,10 @@ class Autenticacao extends Component
     }
 
     public function registrarTentativaLogin($email){
+        
         $utilizador = User::where("email", $email)->first();
         if($utilizador){
-            $this->registrarActividade("Houve uma tentativa de autenticação no sistema com o seu email", "alerta", $utilizador->id);
+            $this->registrarActividade("<b class='text-danger'>Houve uma tentativa de autenticação no sistema com o seu email</b> <hr>" . $this->infoDispositivo, "alerta", $utilizador->id);
         }
     }
 

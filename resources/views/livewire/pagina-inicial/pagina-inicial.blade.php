@@ -317,9 +317,9 @@
                                         </div>
                                         <i class='bi bi-circle-fill activity-badge {{$this->corTexto($item->tipo_msg)}} align-self-start'></i>
                                         <div class="activity-content">
-                                             <b class="text-primary"> {{$item->tipo_msg == "normal" ? $this->buscarNomeUsuario($item->user_id) : ""}}</b> 
-                                            <hr>
-                                            <b><i>{{ $item->mensagem }}</i></b>
+                                             <b class="text-primary mb-2"> {{$item->tipo_msg == "normal" ? $this->buscarNomeUsuario($item->user_id) : ""}}</b> 
+                                           <hr>
+                                            <i>{!! nl2br($item->mensagem)!!}</i>
                                         </div>
                                     </div>
                                 @empty

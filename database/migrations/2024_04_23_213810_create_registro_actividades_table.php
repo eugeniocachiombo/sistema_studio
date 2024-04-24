@@ -15,7 +15,7 @@ class CreateRegistroActividadesTable extends Migration
     {
         Schema::create('registro_actividades', function (Blueprint $table) {
             $table->id();
-            $table->string('mensagem')->nullable();
+            $table->text('mensagem')->nullable();
             $table->enum('tipo_msg', ['normal', 'alerta'])->default('normal');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
