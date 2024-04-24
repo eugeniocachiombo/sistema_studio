@@ -27,7 +27,9 @@ class Header extends Component
 
     public function mount()
     {
-        $this->utilizador_id = Auth::user()->id;
+        if (Auth::user()) {
+            $this->utilizador_id = Auth::user()->id;
+        }
         $this->totalMsgActual = $this->listarMsgRecibidas();
     }
 

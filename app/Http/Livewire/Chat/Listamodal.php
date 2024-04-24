@@ -20,7 +20,9 @@ class Listamodal extends Component
 
     public function mount()
     {
-        $this->utilizador_id = Auth::user()->id;
+        if (Auth::user()) {
+            $this->utilizador_id = Auth::user()->id;
+        }
     }
 
     public function render()
