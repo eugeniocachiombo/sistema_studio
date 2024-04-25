@@ -290,36 +290,8 @@
                 </div>
 
 
-                <div class="col-lg-4">
-                    <div class="card card-animated">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                    class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filtrar</h6>
-                                </li>
-
-                                <form action="" method="get">
-                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
-                                                wire:model='actividadesRecentes' value="Todas">
-                                            Todas</a>
-                                    </li>
-                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
-                                                wire:model='actividadesRecentes' value="Normal">
-                                            Normal</a></li>
-                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
-                                                wire:model='actividadesRecentes' value="Alerta">
-                                            Alerta</a></li>
-                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
-                                                wire:model='actividadesRecentes' value="Hoje">
-                                            Hoje</a></li>
-                                </form>
-                            </ul>
-                        </div>
-
-                        @livewire('pagina-inicial.actividades-recentes')
-                    </div>
+                @livewire('pagina-inicial.actividades-recentes')
+                    
 
                     <div class="card card-animated">
                         <div class="filter d-none">
