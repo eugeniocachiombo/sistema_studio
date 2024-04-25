@@ -14,6 +14,7 @@ class ActividadesRecentes extends Component
     public $actividadesRecentes;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
     protected $todasActividadesUtl;
+    public $listeners = ['actividadesRecentesTempoReal'];
 
     public function mount()
     {
@@ -24,6 +25,10 @@ class ActividadesRecentes extends Component
     {
         $this->todasActividadesUtl = $this->buscarTodasActividadesUtl();
         return view('livewire.pagina-inicial.actividades-recentes', ["todasActividadesUtl" => $this->todasActividadesUtl]);
+    }
+
+    public function actividadesRecentesTempoReal(){
+        
     }
 
     public function buscarDadosUtilizador($id)

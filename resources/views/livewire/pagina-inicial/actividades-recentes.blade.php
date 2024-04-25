@@ -52,3 +52,5 @@
     </div>
 </div>
 </div>
+
+<script src="{{ asset('assets/js/temporeal_actividades_recentes.js') }}"></script>
