@@ -8,175 +8,172 @@
                     <span>Painel</span>
                 </a>
             </li>
-        
+            
+            {{--Gravação--}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
+                <a class="nav-link collapsed" data-bs-target="#gravacao-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Components</span><i
+                    <i class="bi bi-mic"></i><span>Gravação</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="gravacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="components-alerts.html">
-                            <i class="bi bi-circle"></i><span>Alerts</span>
+                        <a href="gravacao-alerts.html">
+                            <i class="bi bi-circle"></i><span>Agendar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="components-accordion.html">
-                            <i class="bi bi-circle"></i><span>Accordion</span>
+                        <a href="mixagem-elements.html">
+                            <i class="bi bi-circle"></i><span>Alterar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="components-badges.html">
-                            <i class="bi bi-circle"></i><span>Badges</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-breadcrumbs.html">
-                            <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-buttons.html">
-                            <i class="bi bi-circle"></i><span>Buttons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-cards.html">
-                            <i class="bi bi-circle"></i><span>Cards</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-carousel.html">
-                            <i class="bi bi-circle"></i><span>Carousel</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-list-group.html">
-                            <i class="bi bi-circle"></i><span>List group</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-modal.html">
-                            <i class="bi bi-circle"></i><span>Modal</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tabs.html">
-                            <i class="bi bi-circle"></i><span>Tabs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-pagination.html">
-                            <i class="bi bi-circle"></i><span>Pagination</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-progress.html">
-                            <i class="bi bi-circle"></i><span>Progress</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-spinners.html">
-                            <i class="bi bi-circle"></i><span>Spinners</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tooltips.html">
-                            <i class="bi bi-circle"></i><span>Tooltips</span>
+                        <a href="gravacao-alerts.html">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            {{--Mixagem--}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#mixagem-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-soundwave"></i><span>Mixagem</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="mixagem-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="forms-elements.html">
-                            <i class="bi bi-circle"></i><span>Form Elements</span>
+                        <a href="mixagem-elements.html">
+                            <i class="bi bi-circle"></i><span>Agendar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="forms-layouts.html">
-                            <i class="bi bi-circle"></i><span>Form Layouts</span>
+                        <a href="mixagem-elements.html">
+                            <i class="bi bi-circle"></i><span>Alterar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="forms-editors.html">
-                            <i class="bi bi-circle"></i><span>Form Editors</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="forms-validation.html">
-                            <i class="bi bi-circle"></i><span>Form Validation</span>
+                        <a href="mixagem-elements.html">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            {{--Masterizacao--}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#masterizacao-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-speaker"></i><span>Masterização</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="masterizacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="tables-general.html">
-                            <i class="bi bi-circle"></i><span>General Tables</span>
+                        <a href="masterizacao-elements.html">
+                            <i class="bi bi-circle"></i><span>Agendar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
+                        <a href="masterizacao-elements.html">
+                            <i class="bi bi-circle"></i><span>Alterar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="masterizacao-elements.html">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            {{--Gráficos--}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#graficos-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-bar-chart"></i><span>Gráficos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="graficos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="charts-chartjs.html">
+                        <a href="graficos-chartjs.html">
                             <i class="bi bi-circle"></i><span>Chart.js</span>
                         </a>
                     </li>
                     <li>
-                        <a href="charts-apexcharts.html">
-                            <i class="bi bi-circle"></i><span>ApexCharts</span>
+                        <a href="graficos-apexgraficos.html">
+                            <i class="bi bi-circle"></i><span>Apexgraficos</span>
                         </a>
                     </li>
                     <li>
-                        <a href="charts-echarts.html">
-                            <i class="bi bi-circle"></i><span>ECharts</span>
+                        <a href="graficos-egraficos.html">
+                            <i class="bi bi-circle"></i><span>Egraficos</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            {{--Músicas--}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#musicas-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-music-note-list"></i><span>Músicas</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="musicas-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="icons-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+                        <a href="musicas-bootstrap.html">
+                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="icons-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix Icons</span>
+                        <a href="musicas-remix.html">
+                            <i class="bi bi-circle"></i><span>Remix musicas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="icons-boxicons.html">
-                            <i class="bi bi-circle"></i><span>Boxicons</span>
+                        <a href="musicas-boxmusicas.html">
+                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{--Utilizadores--}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#utilizadores-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="utilizadores-bootstrap.html">
+                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="utilizadores-remix.html">
+                            <i class="bi bi-circle"></i><span>Remix musicas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="utilizadores-boxmusicas.html">
+                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{--Acesso--}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#acessos-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-lock"></i><span>Acessos</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="acessos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="acessos-bootstrap.html">
+                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="acessos-remix.html">
+                            <i class="bi bi-circle"></i><span>Remix musicas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="acessos-boxmusicas.html">
+                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
                         </a>
                     </li>
                 </ul>

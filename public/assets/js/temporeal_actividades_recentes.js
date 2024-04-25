@@ -1,3 +1,8 @@
+const urlParametro = new URLSearchParams(window.location.search);
+const valorPagina = urlParametro.get('pagina');
+
 setInterval(function() {
-    Livewire.emit('actividadesRecentesTempoReal');
+    if(valorPagina == 1 || valorPagina == null){
+        Livewire.emit('actividadesRecentesTempoReal');
+    }
 }, 5000); 

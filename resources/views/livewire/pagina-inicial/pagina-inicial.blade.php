@@ -163,7 +163,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Balanço de Actividades concluídas <span>| Hoje</span></h5>
+                                    <h5 class="card-title">Gráfico de serviços <span>| Hoje</span></h5>
                                     <div id="reportsChart"></div>
 
                                     <script>
