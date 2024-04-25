@@ -10,11 +10,10 @@ class PaginaInicial extends Component
 {
     public $gravacao, $mixagem, $masterizacao;
     public $utilizador_id, $utilizadorLogado;
-    public $listaClientes = array();
+    
 
     public function mount()
     {
-        $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->utilizador_id = Auth::user()->id;
     }
 
