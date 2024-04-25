@@ -163,7 +163,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Actividades concluídas <span>| Hoje</span></h5>
+                                    <h5 class="card-title">Balanço de Actividades concluídas <span>| Hoje</span></h5>
                                     <div id="reportsChart"></div>
 
                                     <script>
@@ -238,9 +238,19 @@
                                                 <h6>Filtrar</h6>
                                             </li>
 
-                                            <li><a class="dropdown-item" href="#">Hoje</a></li>
-                                            <li><a class="dropdown-item" href="#">Este mês</a></li>
-                                            <li><a class="dropdown-item" href="#">Este ano</a></li>
+                                            <li><a class="dropdown-item" href="#">
+                                                <input type="radio" value="Hoje"> Hoje</a></li>
+
+                                            <li><a class="dropdown-item" href="#"><input type="radio" value="este_mes"> Este mês</a></li>
+                                            <li><a class="dropdown-item" href="#"><input type="radio" value="este_ano"> Este ano</a></li>
+                                        
+                                            <li>
+                                                <a class="dropdown-item">
+                                                    <input type="radio" value="data">
+                                                    <label for="">Data:</label>
+                                                    <input type="date">
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -291,44 +301,24 @@
                                 </li>
 
                                 <form action="" method="get">
-                                    <li><a class="dropdown-item"><input type="radio" name=""
-                                                id="" wire:model='actividadesRecentes' value="Todas">
-                                                Todas</a>
+                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
+                                                wire:model='actividadesRecentes' value="Todas">
+                                            Todas</a>
                                     </li>
-                                    <li><a class="dropdown-item"><input type="radio" name=""
-                                                id="" wire:model='actividadesRecentes' value="Normal">
-                                                Normal</a></li>
-                                    <li><a class="dropdown-item"><input type="radio" name=""
-                                                id="" wire:model='actividadesRecentes' value="Alerta">
-                                                Alerta</a></li>
-                                    <li><a class="dropdown-item"><input type="radio" name=""
-                                                id="" wire:model='actividadesRecentes' value="Hoje">
-                                                Hoje</a></li>
+                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
+                                                wire:model='actividadesRecentes' value="Normal">
+                                            Normal</a></li>
+                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
+                                                wire:model='actividadesRecentes' value="Alerta">
+                                            Alerta</a></li>
+                                    <li><a class="dropdown-item"><input type="radio" name="" id=""
+                                                wire:model='actividadesRecentes' value="Hoje">
+                                            Hoje</a></li>
                                 </form>
                             </ul>
                         </div>
 
-                        <div class="card-body">
-                            <h5 class="card-title">Actividades Recentes <span>| {{ session("paginaActividades") ? session("paginaActividades") : 'Todas' }} </span></h5>
-                            <div class="activity">
-                                @forelse ($todasActividadesUtl as $item)
-                                    <div class="activity-item d-flex">
-                                        <div class="activite-label me-2">{{ $this->formatarData($item->created_at) }}
-                                        </div>
-                                        <i class='bi bi-circle-fill activity-badge {{$this->corTexto($item->tipo_msg)}} align-self-start'></i>
-                                        <div class="activity-content">
-                                             <b class="text-primary mb-2"> {{$item->tipo_msg == "normal" ? $this->buscarNomeUsuario($item->user_id) : ""}}</b> 
-                                           <hr>
-                                            <i>{!! nl2br($item->mensagem)!!}</i>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <p class="fw-bold alert alert-info">Nenhuma informação de momento</p>
-                                @endforelse
-                                
-                                @include('livewire.pagina-inicial.btnPaginacaoActividades')
-                            </div>
-                        </div>
+                        @livewire('pagina-inicial.actividades-recentes')
                     </div>
 
                     <div class="card card-animated">
