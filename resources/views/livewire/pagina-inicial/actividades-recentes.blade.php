@@ -30,7 +30,7 @@
     <h5 class="card-title">Actividades Recentes <span>|
             {{ session('paginaActividades') ? session('paginaActividades') : 'Todas' }} </span>
     </h5>
-    <div class="text-muted mb-3">Último acesso: {{$this->buscarUltimoAcesso($utilizador_id)}}</div>
+    <div class="text-muted mb-3" style="font-size: 14px">Último acesso: {{$this->buscarUltimoAcesso($utilizador_id)}}</div>
 
     <div class="activity">
         @forelse ($todasActividadesUtl as $item)
