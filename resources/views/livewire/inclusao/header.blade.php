@@ -116,7 +116,7 @@
                             @endif
                         </div>
                         <div class="mt-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#i<script></script>ollingModalFuncionarios"><span
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModalFuncionarios"><span
                                     class="badge rounded-pill bg-primary  p-2 ms-2">Em que podemos ajudar?</span></a>
                         </div>
                     </li>
@@ -274,7 +274,7 @@
 
                     <li class="dropdown-footer">
                         @if (count($this->listaParticipantes) > 3)
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#i<script></script>ollingModal">Mostrar todas as
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#scrollingModal">Mostrar todas as
                                 mensagens</a>
                         @endif
                     </li>
