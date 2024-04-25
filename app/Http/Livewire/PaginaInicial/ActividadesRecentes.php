@@ -170,6 +170,11 @@ class ActividadesRecentes extends Component
         return $data_formatada;
     }
 
+    public function buscarUltimoAcesso($id){
+         $data = User::find($id)->email_verified_at;
+         return $this->formatarData($data);
+    }
+
     public function corTexto($valor)
     {
         switch ($valor) {

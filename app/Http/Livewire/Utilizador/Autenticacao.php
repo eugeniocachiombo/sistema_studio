@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
 
-
 class Autenticacao extends Component
 {
     public $email_telefone;
