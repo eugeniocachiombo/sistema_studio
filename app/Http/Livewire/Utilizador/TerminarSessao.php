@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Utilizador;
 
+use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class TerminarSessao extends Component
 {
@@ -22,12 +24,20 @@ class TerminarSessao extends Component
 
     public function render()
     {
+        $this->registrarUltimoLogin(Auth::user()->id);
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Terminou a sessão no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         Auth::logout();
         session()->forget("ambientePreparado");
         session()->forget("utilizador");
         cookie("sessao_iniciada", '', 0);
         return view('livewire.utilizador.terminar-sessao');
+    }
+
+    public function registrarUltimoLogin($id){
+        User::where('id', $id)->update([
+            'email_verified_at' => now(), 
+            'remember_token' => Str::random(10),
+        ]);
     }
 
     public function buscarDadosDispositivo(){
