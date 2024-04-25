@@ -10,7 +10,6 @@ class PaginaInicial extends Component
 {
     public $gravacao, $mixagem, $masterizacao;
     public $utilizador_id, $utilizadorLogado;
-    
 
     public function mount()
     {

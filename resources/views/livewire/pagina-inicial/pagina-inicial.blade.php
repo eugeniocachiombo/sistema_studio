@@ -229,33 +229,6 @@
                         {{-- Clientes --}}
                         @if ($utilizadorLogado->tipo_acesso != 3)
                             <div class="col-12">
-                                <div class="card card-animated recent-sales overflow-auto">
-                                    <div class="filter">
-                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                class="bi bi-three-dots"></i></a>
-                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                            <li class="dropdown-header text-start">
-                                                <h6>Filtrar</h6>
-                                            </li>
-
-                                            <li><a class="dropdown-item" href="#">
-                                                    <input type="radio" value="Hoje"> Hoje</a></li>
-
-                                            <li><a class="dropdown-item" href="#"><input type="radio"
-                                                        value="este_mes"> Este mês</a></li>
-                                            <li><a class="dropdown-item" href="#"><input type="radio"
-                                                        value="este_ano"> Este ano</a></li>
-
-                                            <li>
-                                                <a class="dropdown-item">
-                                                    <input type="radio" value="data">
-                                                    <label for="">Data:</label>
-                                                    <input type="date">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
                                     @livewire('pagina-inicial.tb-clientes')
                                 </div>
                             </div>
