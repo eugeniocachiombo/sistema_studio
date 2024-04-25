@@ -1,4 +1,4 @@
-<div class="col-lg-4">
+
     <div class="card card-animated">
         <div class="filter">
             <a class="icon" href="#" data-bs-toggle="dropdown"><i

@@ -239,11 +239,13 @@
                                             </li>
 
                                             <li><a class="dropdown-item" href="#">
-                                                <input type="radio" value="Hoje"> Hoje</a></li>
+                                                    <input type="radio" value="Hoje"> Hoje</a></li>
 
-                                            <li><a class="dropdown-item" href="#"><input type="radio" value="este_mes"> Este mês</a></li>
-                                            <li><a class="dropdown-item" href="#"><input type="radio" value="este_ano"> Este ano</a></li>
-                                        
+                                            <li><a class="dropdown-item" href="#"><input type="radio"
+                                                        value="este_mes"> Este mês</a></li>
+                                            <li><a class="dropdown-item" href="#"><input type="radio"
+                                                        value="este_ano"> Este ano</a></li>
+
                                             <li>
                                                 <a class="dropdown-item">
                                                     <input type="radio" value="data">
@@ -289,87 +291,9 @@
                     </div>
                 </div>
 
-
-                @livewire('pagina-inicial.actividades-recentes')
-                    
-
-                    <div class="card card-animated">
-                        <div class="filter d-none">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                    class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filtrar</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Hoje</a></li>
-                                <li><a class="dropdown-item" href="#">Este mês</a></li>
-                                <li><a class="dropdown-item" href="#">Este ano</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Gráfico Geral</h5>
-
-                            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-                            <script>
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    echarts.init(document.querySelector("#trafficChart")).setOption({
-                                        tooltip: {
-                                            trigger: 'item'
-                                        },
-                                        legend: {
-                                            top: '5%',
-                                            left: 'center'
-                                        },
-                                        series: [{
-                                            name: 'Total de ',
-                                            type: 'pie',
-                                            radius: ['40%', '70%'],
-                                            avoidLabelOverlap: false,
-                                            label: {
-                                                show: false,
-                                                position: 'center'
-                                            },
-                                            emphasis: {
-                                                label: {
-                                                    show: true,
-                                                    fontSize: '18',
-                                                    fontWeight: 'bold'
-                                                }
-                                            },
-                                            labelLine: {
-                                                show: false
-                                            },
-                                            data: [{
-                                                    value: 1048,
-                                                    name: 'Clientes'
-                                                },
-                                                {
-                                                    value: 735,
-                                                    name: 'Gravação'
-                                                },
-                                                {
-                                                    value: 580,
-                                                    name: 'Mixagem'
-                                                },
-                                                {
-                                                    value: 484,
-                                                    name: 'Masterização'
-                                                },
-                                                {
-                                                    value: 300,
-                                                    name: 'Funcionários'
-                                                }
-                                            ]
-                                        }]
-                                    });
-                                });
-                            </script>
-
-                        </div>
-                    </div>
+                <div class="col-lg-4">
+                    @livewire('pagina-inicial.actividades-recentes')
+                    @livewire('pagina-inicial.grafico-geral')
                 </div>
             </div>
         </section>
