@@ -238,7 +238,10 @@
 
                 <div class="col-lg-4">
                     @livewire('pagina-inicial.actividades-recentes')
+
+                    @if ($utilizadorLogado->tipo_acesso != 3)
                     @livewire('pagina-inicial.grafico-geral')
+                    @endif
                 </div>
             </div>
         </section>
