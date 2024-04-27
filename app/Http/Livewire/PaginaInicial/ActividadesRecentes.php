@@ -39,7 +39,7 @@ class ActividadesRecentes extends Component
     public function buscarTodasActividadesUtl()
     {
         $this->pagina_atual = 0;
-        $this->itens_por_pagina = 4;
+        $this->itens_por_pagina = 3;
         isset($_GET['pagina']) ? $this->pagina_atual = $_GET['pagina'] : $this->pagina_atual = 1;
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
@@ -77,7 +77,7 @@ class ActividadesRecentes extends Component
         $normal = DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'normal'");
-        $this->total_paginas = ceil(count($normal) / 4);
+        $this->total_paginas = ceil(count($normal) / 3);
         return DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'normal'" .
@@ -89,7 +89,7 @@ class ActividadesRecentes extends Component
         $alerta = DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'alerta'");
-        $this->total_paginas = ceil(count($alerta) / 5);
+        $this->total_paginas = ceil(count($alerta) / 3);
         return DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and tipo_msg = ' . "'alerta'" .
@@ -101,7 +101,7 @@ class ActividadesRecentes extends Component
         $hoje = DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and DATE(created_at) = curdate()');
-        $this->total_paginas = ceil(count($hoje) / 5);
+        $this->total_paginas = ceil(count($hoje) / 3);
         return DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' and DATE(created_at) = curdate()' .
@@ -112,7 +112,7 @@ class ActividadesRecentes extends Component
     {
         $todas = DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id);
-        $this->total_paginas = ceil(count($todas) / 5);
+        $this->total_paginas = ceil(count($todas) / 3);
         return DB::select('select * from registro_actividades ' .
             ' where user_id = ' . $this->utilizador_id .
             ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);

@@ -1,4 +1,4 @@
-<div class="pagination justify-content-center pt-5">
+<div class="pagination justify-content-center pt-2">
     <div class="col d-flex justify-content-around">
         <div class="pagination-next">
             @if ($pagina_atual > 1 && count($this->todasActividadesUtl) > 0)

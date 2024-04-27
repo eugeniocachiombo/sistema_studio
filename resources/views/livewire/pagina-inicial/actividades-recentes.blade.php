@@ -30,7 +30,7 @@
     <h5 class="card-title">Actividades Recentes <span>|
             {{ session('paginaActividades') ? session('paginaActividades') : 'Todas' }} </span>
     </h5>
-    <div class="text-muted mb-3" style="font-size: 14px">Último acesso: {{$this->buscarUltimoAcesso($utilizador_id)}}</div>
+    
 
     <div class="activity">
         @forelse ($todasActividadesUtl as $item)
@@ -40,16 +40,16 @@
                 <i
                     class='bi bi-circle-fill activity-badge {{ $this->corTexto($item->tipo_msg) }} align-self-start'></i>
                 <div class="activity-content">
-                    <b class="text-primary mb-2">
-                        {{ $item->tipo_msg == 'normal' ? $this->buscarNomeUsuario($item->user_id) : '' }}</b>
-                    <hr>
+                   
                     <i>{!! nl2br($item->mensagem) !!}</i>
                 </div>
             </div>
         @empty
             <p class="fw-bold alert alert-info">Nenhuma informação de momento</p>
         @endforelse
-
+        <hr class="bg-dark" >
+        <div class="text-muted" style="font-size: 14px">Última sessão: {{$this->buscarUltimoAcesso($utilizador_id)}}</div>
+        <hr class="bg-dark">
         @include('livewire.pagina-inicial.btnPaginacaoActividadesRecentes')
     </div>
 </div>
