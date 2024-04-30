@@ -10,7 +10,6 @@ use App\Http\Livewire\Info\{
 use App\Http\Livewire\Chat\{
     Conversa
 };
-
 use App\Http\Livewire\Utilizador\{
     Cadastro,
     Autenticacao,
@@ -18,6 +17,10 @@ use App\Http\Livewire\Utilizador\{
     TerminarSessao,
     PrepararAmbiente
 };
+use App\Http\Livewire\Gravacao\{
+    Agendar
+};
+
 
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
@@ -37,6 +40,11 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
     Route::get('alterar_palavra_passe', [Perfil::class, "alterarPalavraPasse"])->name("alterar_palavra_passe")->middleware(CheckAuth::class);
 });
+
+Route::prefix("gravacao")->name("gravacao.")->group(function(){
+   Route::get('agendar', [Agendar::class, "index"])->name("agendar")->middleware(CheckAuth::class);
+});
+
 
 Route::prefix("chat")->name("chat.")->group(function(){
     Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa")->middleware(CheckAuth::class);
