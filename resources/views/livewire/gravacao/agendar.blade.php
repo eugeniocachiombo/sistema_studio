@@ -162,11 +162,26 @@
 
                             </div>
                         </div>
+                    </div>
 
+                    {{-- Coluna 3 --}}
+                    <div class="col-12">
                         {{-- Dados do Agendamento --}}
+                        
                         <div class="card card-animated p-4 ">
+
                             <div class="col d-table d-md-flex justify-content-between">
                                 <div class="col m-3">
+                                    <div class="row">
+                                        <label class="text-primary fw-bold" for="">Agendamento</label> <br>
+                                    </div>
+                                </div>
+                                </div>
+                           
+                            <div class="col d-table d-md-flex justify-content-between">
+
+                                <div class="col m-3">
+
                                     <div class="row g-3">
                                         <label class="text-primary fw-bold" for="">Título do Audio</label> <br>
                                         <input type="text" name="" id="" class="form-control"
