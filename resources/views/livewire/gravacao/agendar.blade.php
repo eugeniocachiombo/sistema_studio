@@ -167,9 +167,7 @@
                     {{-- Coluna 3 --}}
                     <div class="col-12">
                         {{-- Dados do Agendamento --}}
-                        
-                        <div class="card card-animated p-4 ">
-
+                        <div class="card card-animated">
                             <div class="col d-table d-md-flex justify-content-between">
                                 <div class="col m-3">
                                     <div class="row">
