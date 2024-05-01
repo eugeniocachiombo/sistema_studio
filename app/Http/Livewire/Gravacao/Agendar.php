@@ -16,6 +16,8 @@ class Agendar extends Component
     public $nomeParticipante = null;
     public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null, $dataGravacao = null, $duracaoGravacao = null,
     $participantesEscolhidos = array();
+    protected $participantesFiltrados = array();
+    public $termoPesquisa = '';
 
     protected $messages = [
         "cliente_id.required" => "Campo obrigatório",
@@ -33,12 +35,18 @@ class Agendar extends Component
         return view('index.gravacao.agendar');
     }
 
+    public function mount()
+    {
+        $this->participantesEscolhidos = [];
+    }
+
     public function render()
     {
+        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')->paginate(5);
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->listaParticipantes = Participante::all();
-        return view('livewire.gravacao.agendar');
+        return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
     }
 
     public function criarGrupo()
@@ -64,9 +72,9 @@ class Agendar extends Component
     public function escolherParticipantes($id)
     {
         $dadosPartic = Participante::find($id);
-    
+
         $index = array_search($id, array_column($this->participantesEscolhidos, 'id'));
-    
+
         if ($index === false) {
             $this->participantesEscolhidos[] = [
                 "id" => $dadosPartic->id,
@@ -78,12 +86,12 @@ class Agendar extends Component
             unset($this->participantesEscolhidos[$index]);
         }
     }
-    
-    public function buscarNomeParticipante($id){
-        $dadosPartic = Participante::find($id);
-        return  $dadosPartic->nome;
-    }
 
+    public function buscarNomeParticipante($id)
+    {
+        $dadosPartic = Participante::find($id);
+        return $dadosPartic->nome;
+    }
 
     public function agendarGravacao()
     {

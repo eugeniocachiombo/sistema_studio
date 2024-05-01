@@ -99,7 +99,9 @@
                         <div class="col-12 card card-animated p-4 d-table d-md-flex">
                             <label class="text-primary fw-bold" for="">Lista dos Participantes</label> <br>
                             <div class="col table-responsive">
-                                <table class="table table-hover table-light datatable">
+                                <input type="text" wire:model="termoPesquisa" placeholder="Pesquisar participante...">
+
+                                <table class="table table-hover table-light">
                                     <thead class="">
                                         <tr>
                                             <th>
@@ -121,7 +123,7 @@
                                     </thead>
 
                                     <tbody class="">
-                                        @foreach ($listaParticipantes as $item)
+                                        @foreach ($participantesFiltrados as $item)
                                             @php 
                                                 $ehEscolhido = in_array($item->id, array_column($participantesEscolhidos, 'id')); 
                                             @endphp
@@ -140,6 +142,7 @@
                                     </tbody>
                                     
                                 </table>
+                                {{ $participantesFiltrados->links() }}
 
                                 <p>
                                     Participantes: 
