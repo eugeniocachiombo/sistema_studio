@@ -42,7 +42,7 @@ class Agendar extends Component
 
     public function render()
     {
-        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')->paginate(5);
+        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')->paginate(7);
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->listaParticipantes = Participante::all();
@@ -90,7 +90,7 @@ class Agendar extends Component
     public function buscarNomeParticipante($id)
     {
         $dadosPartic = Participante::find($id);
-        return $dadosPartic->nome;
+        return $dadosPartic ? $dadosPartic->nome : "";
     }
 
     public function agendarGravacao()

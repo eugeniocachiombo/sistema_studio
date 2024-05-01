@@ -99,7 +99,8 @@
                         <div class="col-12 card card-animated p-4 d-table d-md-flex">
                             <label class="text-primary fw-bold" for="">Lista dos Participantes</label> <br>
                             <div class="col table-responsive">
-                                <input type="text" wire:model="termoPesquisa" placeholder="Pesquisar participante...">
+                                <input type="text" class="form-control mb-3" wire:model="termoPesquisa"
+                                    placeholder="Pesquisar participante...">
 
                                 <table class="table table-hover table-light">
                                     <thead class="">
@@ -124,8 +125,11 @@
 
                                     <tbody class="">
                                         @foreach ($participantesFiltrados as $item)
-                                            @php 
-                                                $ehEscolhido = in_array($item->id, array_column($participantesEscolhidos, 'id')); 
+                                            @php
+                                                $ehEscolhido = in_array(
+                                                    $item->id,
+                                                    array_column($participantesEscolhidos, 'id'),
+                                                );
                                             @endphp
                                             @if (!$ehEscolhido)
                                                 <tr>
@@ -134,22 +138,27 @@
                                                     <th class="d-none">{{ $item->created_at }}</th>
                                                     <th class="d-none">{{ $item->updated_at }}</th>
                                                     <th>
-                                                        <input type="checkbox" value="{{ $item->id }}" wire:model="participantesEscolhidos.{{ $item->id }}">
+                                                        <input type="checkbox" value="{{ $item->id }}"
+                                                            wire:model="participantesEscolhidos.{{ $item->id }}">
                                                     </th>
                                                 </tr>
                                             @endif
                                         @endforeach
                                     </tbody>
-                                    
+
                                 </table>
                                 {{ $participantesFiltrados->links() }}
 
+                                <hr>
                                 <p>
-                                    Participantes: 
+                                    <span class="text-primary fw-bold">Participantes: </span>
                                     @foreach ($participantesEscolhidos as $participante)
-                                    {{  $this->buscarNomeParticipante($participante)}}
-                                @endforeach
+                                        <span class="text-primary">
+                                            {{ $this->buscarNomeParticipante($participante) }}
+                                        </span>
+                                    @endforeach
                                 </p>
+                                <hr>
 
                             </div>
                         </div>
