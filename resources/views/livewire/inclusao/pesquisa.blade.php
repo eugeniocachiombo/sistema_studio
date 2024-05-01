@@ -36,6 +36,12 @@
                     route: "{{ route('utilizador.perfil') }}",
                     description: "- Informações do perfil e configurações"
                 },
+                {
+                    label: "Agendamento de Gravação",
+                    value: "Gravação",
+                    route: "{{ route('gravacao.agendar') }}",
+                    description: "- Painel de agendamento de gravações"
+                },
             ];
 
             $("#campoPesquisaLogado").autocomplete({

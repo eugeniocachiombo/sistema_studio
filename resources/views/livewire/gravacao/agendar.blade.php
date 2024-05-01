@@ -99,8 +99,8 @@
                         <div class="col-12 card card-animated p-4 d-table d-md-flex">
                             <label class="text-primary fw-bold" for="">Lista dos Participantes</label> <br>
                             <div class="col table-responsive">
-                                <table class="border border-dark table table-hover table-primary datatable">
-                                    <thead class="border border-dark">
+                                <table class="table table-hover table-light datatable">
+                                    <thead class="">
                                         <tr>
                                             <th>
                                                 Id
@@ -120,34 +120,38 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody class="border border-dark">
+                                    <tbody class="">
                                         @foreach ($listaParticipantes as $item)
-                                            <tr>
-                                                <th>
-                                                    {{ $item->id }}
-                                                </th>
-                                                <th>
-                                                    {{ $item->nome }}
-                                                </th>
-                                                <th class="d-none">
-                                                    {{ $item->created_at }}
-                                                </th>
-                                                <th class="d-none">
-                                                    {{ $item->updated_at }}
-                                                </th>
-                                                <th>
-                                                    <button class="btn btn-primary">
-                                                        Adicionar
-                                                    </button>
-                                                </th>
-                                            </tr>
+                                            @php 
+                                                $ehEscolhido = in_array($item->id, array_column($participantesEscolhidos, 'id')); 
+                                            @endphp
+                                            @if (!$ehEscolhido)
+                                                <tr>
+                                                    <th>{{ $item->id }}</th>
+                                                    <th>{{ $item->nome }}</th>
+                                                    <th class="d-none">{{ $item->created_at }}</th>
+                                                    <th class="d-none">{{ $item->updated_at }}</th>
+                                                    <th>
+                                                        <input type="checkbox" value="{{ $item->id }}" wire:model="participantesEscolhidos.{{ $item->id }}">
+                                                    </th>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
+                                    
                                 </table>
+
+                                <p>
+                                    Participantes: 
+                                    @foreach ($participantesEscolhidos as $participante)
+                                    {{  $this->buscarNomeParticipante($participante)}}
+                                @endforeach
+                                </p>
+
                             </div>
                         </div>
 
-                        {{-- Descrição do Agendamento --}}
+                        {{-- Dados do Agendamento --}}
                         <div class="card card-animated p-4 ">
                             <div class="col d-table d-md-flex justify-content-between">
                                 <div class="col m-3">
@@ -155,11 +159,11 @@
                                         <label class="text-primary fw-bold" for="">Título do Audio</label> <br>
                                         <input type="text" name="" id="" class="form-control"
                                             placeholder="Escreva o título" wire:model="tituloAudio">
-                                        <div class="text-danger" style="font-size: 12.5px">
-                                            @error('tituloAudio')
-                                                <span class="error">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    </div>
+                                    <div class="text-danger" style="font-size: 12.5px">
+                                        @error('tituloAudio')
+                                            <span class="error">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -194,11 +198,12 @@
 
                                 <div class="col m-3">
                                     <label class="text-primary fw-bold" for="">Duração da gravação</label>
-                                    <select class="form-control mt-3" name="" id="">
+                                    <select class="form-control mt-3" wire:model="duracaoGravacao" name=""
+                                        id="">
                                         <option class="d-none">Selecione a duração</option>
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
-                                        @error('dataGravacao')
+                                        @error('duracaoGravacao')
                                             <span class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
