@@ -216,6 +216,7 @@
                                         <br>
                                         <input type="datetime-local" name="" id=""
                                             class="form-control" wire:model="dataGravacao">
+                                            
                                     </div>
                                     <div class="text-danger" style="font-size: 12.5px">
                                         @error('dataGravacao')
@@ -229,6 +230,9 @@
                                     <select class="form-control mt-3" wire:model="duracaoGravacao" name=""
                                         id="">
                                         <option class="d-none">Selecione a duração</option>
+                                        @for ($i = 1; $i <= 10; $i++)
+                                        <option value="{{$i . " hr"}}">{{$i . " hr"}}</option>
+                                        @endfor
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
                                         @error('duracaoGravacao')
