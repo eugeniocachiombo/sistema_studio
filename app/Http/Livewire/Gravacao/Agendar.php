@@ -176,29 +176,29 @@ class Agendar extends Component
     }
 
     public function msgParaRegistroActividade(){
-        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para um cliente </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        /*$nomeCliente = $this->buscarNomeUtilizador($this->cliente_id);
+       
+        $nomeCliente = $this->buscarNomeUtilizador($this->cliente_id);
         $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
 
-        if (!empty($cliente) && !empty($grupo)) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o/a cliente $nomeCliente do grupo $nomeGrupo </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        if (!empty($nomeCliente) && !empty($nomeGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         }elseif ($nomeCliente) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o/a cliente $nomeCliente </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         }
         elseif ($nomeGrupo) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o grupo $nomeGrupo </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        }*/
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }
     }
 
     public function buscarNomeUtilizador($id)
     {
         
-        return $id ? User::find($id)->name : "";
+        return User::find($id);
     }
 
     public function buscarNomeGrupo($id)
     {
-        return $id ? Grupo::find($id)->nome : "";
+        return Grupo::find($id);
     }
 
 }
