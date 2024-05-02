@@ -8,6 +8,9 @@ use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
 use App\Models\Participante\Participante;
 use App\Models\User;
+use App\Models\Utilizador\RegistroActividade;
+use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
 use Livewire\Component;
 
 class Agendar extends Component
@@ -23,6 +26,7 @@ class Agendar extends Component
     protected $participantesFiltrados = array();
     public $termoPesquisa = '';
     public $listaEstilos = array();
+    public $infoDispositivo = null;
 
     protected $messages = [
         "cliente_id.required" => "Campo obrigatório",
@@ -42,6 +46,7 @@ class Agendar extends Component
 
     public function mount()
     {
+        $this->buscarDadosDispositivo();
         $this->participantesEscolhidos = [];
     }
 
@@ -111,13 +116,14 @@ class Agendar extends Component
         ]);
 
         $dados = [
-            "cliente_id" => $this->cliente_id != "null" ? $this->cliente_id : null,
-            "grupo_id" => $this->grupoEscolhido != "null" ? $this->grupoEscolhido : null,
+            "cliente_id" => $this->cliente_id != "valorNulo" ? $this->cliente_id : null,
+            "grupo_id" => $this->grupoEscolhido != "valorNulo" ? $this->grupoEscolhido : null,
             "titulo_audio" => $this->tituloAudio,
             "estilo_audio" => $this->estilo_id,
             "data_gravacao" => $this->dataGravacao,
             "estado_gravacao" => "pendente",
             "duracao" => $this->duracaoGravacao,
+            "responsavel" => Auth::user()->id,
         ];
 
         $gravacao = Gravacao::create($dados);
@@ -128,6 +134,7 @@ class Agendar extends Component
             ]);
         }
         $this->emit('alerta', ['mensagem' => 'Agendamento feito com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+        $this->msgParaRegistroActividade();
         $this->limparCampos();
     }
 
@@ -145,4 +152,53 @@ class Agendar extends Component
         $this->participantesFiltrados = array();
         $this->termoPesquisa = '';
     }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function msgParaRegistroActividade(){
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para um cliente </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        /*$nomeCliente = $this->buscarNomeUtilizador($this->cliente_id);
+        $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
+
+        if (!empty($cliente) && !empty($grupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o/a cliente $nomeCliente do grupo $nomeGrupo </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }elseif ($nomeCliente) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o/a cliente $nomeCliente </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }
+        elseif ($nomeGrupo) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i>Fez um agendamento para o grupo $nomeGrupo </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }*/
+    }
+
+    public function buscarNomeUtilizador($id)
+    {
+        
+        return $id ? User::find($id)->name : "";
+    }
+
+    public function buscarNomeGrupo($id)
+    {
+        return $id ? Grupo::find($id)->nome : "";
+    }
+
 }

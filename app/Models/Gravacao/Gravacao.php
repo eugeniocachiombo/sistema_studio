@@ -16,6 +16,7 @@ class Gravacao extends Model
         "estilo_audio",
         "data_gravacao",
         "estado_gravacao",
-        "duracao"
+        "duracao",
+        "responsavel"
     ];
 }

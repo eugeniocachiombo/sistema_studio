@@ -22,11 +22,13 @@ class CreateGravacaosTable extends Migration
             $table->dateTime('data_gravacao')->nullable();
             $table->enum('estado_gravacao', ['gravado', 'pendente'])->default('pendente');
             $table->string('duracao')->nullable();
+            $table->unsignedBigInteger('responsavel')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('cliente_id')->references('id')->on('users')->onDelete("cascade");
             $table->foreign('grupo_id')->references('id')->on('grupos')->onDelete("cascade");
             $table->foreign('estilo_audio')->references('id')->on('estilos')->onDelete("cascade");
+            $table->foreign('responsavel')->references('id')->on('users')->onDelete("cascade");
         });
     }
 
