@@ -20,7 +20,7 @@
                             <label class="text-primary fw-bold" for="">Cliente</label>
                             <select class="form-control" name="" id="" wire:model="cliente_id">
                                 <option class="d-none" selected>Escolha o cliente</option>
-                                <option class="">Desconhecido</option>
+                                <option value="null">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -28,7 +28,7 @@
                             <div class="text-danger" style="font-size: 12.5px">
                                 @error('cliente_id')
                                     <span class="error">{{ $message }}</span>
-                                @enderror
+                                @enderror 
                             </div>
                         </div>
 
@@ -56,15 +56,15 @@
                                     <select class="form-control mt-3" wire:model="grupoEscolhido" name=""
                                         id="">
                                         <option class="d-none" selected>Selecione o grupo</option>
-                                        <option class="">Desconhecido</option>
+                                        <option value="null">Desconhecido</option>
                                         @foreach ($listaGrupos as $item)
                                             <option value="{{ $item->id }}">{{ $item->nome }}</option>
                                         @endforeach
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
-                                        @error('grupoEscolhido')
+                                       @error('grupoEscolhido')
                                             <span class="error">{{ $message }}</span>
-                                        @enderror
+                                        @enderror 
                                     </div>
                                 </div>
                             </div>

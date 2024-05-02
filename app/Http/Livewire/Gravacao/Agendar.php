@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Gravacao;
 
 use App\Models\Gravacao\Estilo;
+use App\Models\Gravacao\Gravacao;
+use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
 use App\Models\Participante\Participante;
 use App\Models\User;
@@ -13,10 +15,11 @@ class Agendar extends Component
     public $listaClientes = array();
     public $listaGrupos = array();
     public $listaParticipantes = array();
-    public $nomeGrupo = null;
-    public $nomeParticipante = null;
-    public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null, 
+    public $nomeGrupo = null, $nomeParticipante = null;
+
+    public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null,
     $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array();
+
     protected $participantesFiltrados = array();
     public $termoPesquisa = '';
     public $listaEstilos = array();
@@ -106,6 +109,40 @@ class Agendar extends Component
             "dataGravacao" => "required",
             "duracaoGravacao" => "required",
         ]);
-        dd("Agendar Gravação");
+
+        $dados = [
+            "cliente_id" => $this->cliente_id != "null" ? $this->cliente_id : null,
+            "grupo_id" => $this->grupoEscolhido != "null" ? $this->grupoEscolhido : null,
+            "titulo_audio" => $this->tituloAudio,
+            "estilo_audio" => $this->estilo_id,
+            "data_gravacao" => $this->dataGravacao,
+            "estado_gravacao" => "pendente",
+            "duracao" => $this->duracaoGravacao,
+        ];
+
+        $gravacao = Gravacao::create($dados);
+        foreach ($this->participantesEscolhidos as $item) {
+            GravacaoParticipante::create([
+                "gravacao_id" => $gravacao->id,
+                "participante_id" => $item,
+            ]);
+        }
+        $this->emit('alerta', ['mensagem' => 'Agendamento feito com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+        $this->limparCampos();
+    }
+
+    public function limparCampos()
+    {
+        $this->nomeGrupo = null;
+        $this->nomeParticipante = null;
+        $this->cliente_id = null;
+        $this->grupoEscolhido = null;
+        $this->tituloAudio = null;
+        $this->estilo_id = null;
+        $this->dataGravacao = null;
+        $this->duracaoGravacao = null;
+        $this->participantesEscolhidos = array();
+        $this->participantesFiltrados = array();
+        $this->termoPesquisa = '';
     }
 }
