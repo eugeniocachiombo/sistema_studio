@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Gravacao;
 
+use App\Models\Gravacao\Estilo;
 use App\Models\Grupo\Grupo;
 use App\Models\Participante\Participante;
 use App\Models\User;
@@ -14,10 +15,11 @@ class Agendar extends Component
     public $listaParticipantes = array();
     public $nomeGrupo = null;
     public $nomeParticipante = null;
-    public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null, $dataGravacao = null, $duracaoGravacao = null,
-    $participantesEscolhidos = array();
+    public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null, 
+    $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array();
     protected $participantesFiltrados = array();
     public $termoPesquisa = '';
+    public $listaEstilos = array();
 
     protected $messages = [
         "cliente_id.required" => "Campo obrigatório",
@@ -42,6 +44,7 @@ class Agendar extends Component
 
     public function render()
     {
+        $this->listaEstilos = Estilo::all();
         $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')->paginate(7);
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();

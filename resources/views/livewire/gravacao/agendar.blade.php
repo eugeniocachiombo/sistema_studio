@@ -197,6 +197,9 @@
                                     <select class="form-control mt-3" wire:model="estilo_id" name=""
                                         id="">
                                         <option class="d-none">Selecione o estilo</option>
+                                        @foreach ($listaEstilos as $item)
+                                            <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                        @endforeach
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
                                         @error('estilo_id')
