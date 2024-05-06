@@ -56,35 +56,45 @@ class Agendar extends Component
     {
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
-        $this->listaMembrosClientes = User::where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
-            ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
-            ->orderBy("id", "desc")
-            ->limit(5)
-            ->get();
+        $this->listaMembrosClientes = $this->buscarListaParaMembrosDeGrupo();
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
-        $this->listaParticipantes = Participante::all();
+        $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
     }
 
     public function buscarTodosParticipantes()
     {
-        return Participante::where(function ($query) {
-            $query->where('nome', 'like', '%' . $this->termoPesquisa . '%')
-                  ->orWhere('user_id', 'like', '%' . $this->termoPesquisa . '%');
-        })
-        ->where(function ($query) {
-            $query->where('grupo_id', '!=', $this->grupoEscolhido)
-                  ->orWhereNull('grupo_id');
-        })
-        ->where(function ($query) {
-            $query->where('user_id', '!=', $this->cliente_id)
-                  ->orWhereNull('user_id');
-        })
-        ->orderBy("id", "desc")
-        ->limit(9)
-        ->get();
+        if ($this->cliente_id != null || $this->grupoEscolhido != null) {
 
+            return Participante::where(function ($query) {
+                $query->where('nome', 'like', '%' . $this->termoPesquisa . '%')
+                    ->orWhere('user_id', 'like', '%' . $this->termoPesquisa . '%');
+            })
+                ->where(function ($query) {
+                    $query->where('grupo_id', '!=', $this->grupoEscolhido)
+                        ->orWhereNull('grupo_id');
+                })
+                ->where(function ($query) {
+                    $query->where('user_id', '!=', $this->cliente_id)
+                        ->orWhereNull('user_id');
+                })
+                ->orderBy("id", "desc")
+                ->limit(9)
+                ->get();
+        } else {
+            return array();
+        }
+
+    }
+
+    public function buscarListaParaMembrosDeGrupo()
+    {
+        return User::where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
+            ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
+            ->orderBy("id", "desc")
+            ->limit(5)
+            ->get();
     }
 
     public function criarGrupo()
@@ -224,6 +234,14 @@ class Agendar extends Component
     public function buscarUtilizador($id)
     {
         return User::find($id);
+    }
+
+    public function removerGrupoParticipanteJaSelecionado($grupoEscolhido)
+    {
+        $participanteGrupo = Participante::where("grupo_id", $grupoEscolhido)->first();
+        if ($participanteGrupo && array_key_exists($participanteGrupo->id, $this->participantesEscolhidos)) {
+            unset($this->participantesEscolhidos[$participanteGrupo->id]);
+        }
     }
 
     public function buscarNomeGrupo($id)

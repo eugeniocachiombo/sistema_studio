@@ -178,7 +178,7 @@
                                     </thead>
 
                                     <tbody class="">
-                                        @foreach ($participantesFiltrados as $item)
+                                        @forelse ($participantesFiltrados as $item)
                                             @php
                                                 $ehEscolhido = in_array(
                                                     $item->id,
@@ -211,7 +211,13 @@
                                                     </th>
                                                 </tr>
                                             @endif
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td class="bg-primary text-light" colspan="3">
+                                                    Nenhuma informação encontrada
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
 
