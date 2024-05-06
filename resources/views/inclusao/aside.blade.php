@@ -26,7 +26,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="gravacao-alerts.html">
+                        <a href="{{ route('gravacao.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
