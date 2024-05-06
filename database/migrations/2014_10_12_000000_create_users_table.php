@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Participante\Participante;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -47,7 +48,7 @@ class CreateUsersTable extends Migration
             'tipo_acesso' => 2,
             'remember_token' => Str::random(10),
         ]);
-        User::create([
+        $cantor = User::create([
             'name' => "Conta Cantor",
             'email' => "cantor@example.com",
             'telefone' => 933933933,

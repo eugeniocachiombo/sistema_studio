@@ -7,12 +7,11 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class Header extends Component
 {
-    public $utilizador_id = null, $idRemente=null;
+    public $utilizador_id = null, $idRemente = null;
     public $todasConversasGeral = array();
     public $listaParticipantes = array();
     public $todasPendentes = array();
@@ -38,17 +37,19 @@ class Header extends Component
         $this->participantesPendentes = $this->totalParticipantesPendentes();
         $this->todasConversasGeral = $this->listarTodasConversasGeral();
         $this->listaParticipantes = $this->listarParticipantes();
-        return view('livewire.inclusao.header'); 
+        return view('livewire.inclusao.header');
     }
 
-    public function headerTempoReal(){
+    public function headerTempoReal()
+    {
         $this->participantesPendentes = $this->totalParticipantesPendentes();
         $this->alertarNovaMsg();
     }
 
-    public function alertarNovaMsg(){
+    public function alertarNovaMsg()
+    {
         $this->novaMensagem = $this->listarMsgRecibidas();
-        if (count($this->totalMsgActual) < count($this->novaMensagem)) {            
+        if (count($this->totalMsgActual) < count($this->novaMensagem)) {
             $this->emit('alerta', ['mensagem' => 'Você tem uma nova mensagem', 'tempo' => 4000]);
             $this->emit('somReceberMensagem', asset('assets/toques_msg/audio2.mp3'));
             $this->totalMsgActual = $this->listarMsgRecibidas();
@@ -59,7 +60,7 @@ class Header extends Component
     {
         return ChatConversa::where(function ($query) {
             $query->where('emissor', '!=', $this->utilizador_id)
-                ->where('receptor',  $this->utilizador_id);
+                ->where('receptor', $this->utilizador_id);
         })
             ->where('estado', 'pendente')
             ->distinct()
@@ -103,29 +104,29 @@ class Header extends Component
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->idRemente)
                 ->where('estado', 'pendente');
-            })
-        ->orWhere(function ($query) {
+        })
+            ->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->idRemente)
                     ->where('estado', 'pendente');
             })
-        ->get();
+            ->get();
     }
 
     public function msgPendentesGeral()
     {
         return ChatConversa::where('receptor', $this->utilizador_id)
-        ->where('estado', 'pendente')
-        ->get();
+            ->where('estado', 'pendente')
+            ->get();
     }
-    
+
     public function totalParticipantesPendentes()
     {
         return ChatConversa::where('receptor', $this->utilizador_id)
-        ->where('estado', 'pendente')
-        ->select("emissor")
-        ->distinct()
-        ->get();
+            ->where('estado', 'pendente')
+            ->select("emissor")
+            ->distinct()
+            ->get();
     }
 
     public function listarParticipantes()
@@ -206,17 +207,18 @@ class Header extends Component
         return $data_formatada;
     }
 
-    public function buscarFotoPerfil($idUtilizador){
+    public function buscarFotoPerfil($idUtilizador)
+    {
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = public_path('assets/' . $foto->caminho_arquivo);
-           if (file_exists($caminho)) {
-               return $foto;
-           } else {
-               return null;
-           }
-        }else{
-           return null;
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
+            if (file_exists($caminho)) {
+                return $foto;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
-   }
+    }
 }

@@ -19,8 +19,8 @@
                         <div class="card card-animated p-4">
                             <label class="text-primary fw-bold" for="">Cliente</label>
                             <select class="form-control" name="" id="" wire:model="cliente_id">
-                                <option class="d-none" selected >Escolha o cliente</option>
-                                <option value="valorNulo" >Desconhecido</option>
+                                <option class="d-none" selected>Escolha o cliente</option>
+                                <option value="valorNulo">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -28,7 +28,7 @@
                             <div class="text-danger" style="font-size: 12.5px">
                                 @error('cliente_id')
                                     <span class="error">{{ $message }}</span>
-                                @enderror 
+                                @enderror
                             </div>
                         </div>
 
@@ -55,16 +55,76 @@
                                     <label class="text-primary fw-bold" for="">Escolher</label>
                                     <select class="form-control mt-3" wire:model="grupoEscolhido" name=""
                                         id="">
-                                        <option class="d-none" >Selecione o grupo</option>
-                                        <option value="valorNulo" >Desconhecido</option>
+                                        <option class="d-none">Selecione o grupo</option>
+                                        <option value="valorNulo">Desconhecido</option>
                                         @foreach ($listaGrupos as $item)
                                             <option value="{{ $item->id }}">{{ $item->nome }}</option>
                                         @endforeach
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
-                                       @error('grupoEscolhido')
+                                        @error('grupoEscolhido')
                                             <span class="error">{{ $message }}</span>
-                                        @enderror 
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Membros do grupo --}}
+                            <div class="col d-none">
+                                {{-- Lista de membros --}}
+                                <div class="col-12 card card-animated p-4 d-table d-md-flex">
+                                    <label class="text-primary fw-bold" for="">Adicionar Membros ao
+                                        grupo</label> <br>
+                                    <div class="col table-responsive">
+                                        <input type="text" class="form-control mb-3"
+                                            wire:model="termoPesquisaMembros" placeholder="Pesquisar cliente...">
+
+                                        <table class="table table-hover table-light">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>
+                                                        Id
+                                                    </th>
+                                                    <th>
+                                                        Nome
+                                                    </th>
+                                                    <th>
+                                                        Selecionar
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="">
+                                                @foreach ($listaMembrosClientes as $item)
+                                                    <tr>
+                                                        <th>{{ $item->id }}</th>
+                                                        <th>{{ $item->name }}</th>
+                                                        <th>
+                                                            <input type="checkbox" value="{{ $item->id }}"
+                                                                wire:model="clientesEscolhidos.{{ $item->id }}">
+                                                        </th>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+
+                                        </table>
+
+                                        <hr>
+                                        <p>
+                                            <span class="text-primary fw-bold">Membros: </span>
+                                            @foreach ($clientesEscolhidos as $item)
+                                                <span class="text-primary">
+                                                    @php
+                                                        $nomeCliente = $this->buscarUtilizador($item);
+                                                    @endphp
+                                                    @if ($nomeCliente)
+                                                        {{ $nomeCliente->name }}
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        </p>
+                                        <hr>
+
                                     </div>
                                 </div>
                             </div>
@@ -109,13 +169,10 @@
                                                 Id
                                             </th>
                                             <th>
+                                                Foto
+                                            </th>
+                                            <th>
                                                 Nome do Particiapante
-                                            </th>
-                                            <th class="d-none">
-                                                Criado em
-                                            </th>
-                                            <th class="d-none">
-                                                Actualizado
                                             </th>
                                             <th>
                                                 Participação
@@ -134,9 +191,24 @@
                                             @if (!$ehEscolhido)
                                                 <tr>
                                                     <th>{{ $item->id }}</th>
+                                                    <th>
+                                                        @php
+                                                            $fotoUtilizador = $this->buscarFotoPerfil($item->user_id);
+                                                        @endphp
+                                                        @if ($fotoUtilizador)
+                                                            <a
+                                                                href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
+                                                                <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
+                                                                    class="rounded-circle" alt="foto"
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                            </a>
+                                                        @else
+                                                            <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                                alt="foto"
+                                                                style="width: 40px; height: 40px; object-fit: cover;">
+                                                        @endif
+                                                    </th>
                                                     <th>{{ $item->nome }}</th>
-                                                    <th class="d-none">{{ $item->created_at }}</th>
-                                                    <th class="d-none">{{ $item->updated_at }}</th>
                                                     <th>
                                                         <input type="checkbox" value="{{ $item->id }}"
                                                             wire:model="participantesEscolhidos.{{ $item->id }}">
@@ -145,18 +217,23 @@
                                             @endif
                                         @endforeach
                                     </tbody>
-
                                 </table>
-                                {{ $participantesFiltrados->links() }}
 
-                                <hr>
                                 <p>
                                     <span class="text-primary fw-bold">Participantes: </span>
+                                    @php
+                                        $particEscolhidos = '';
+                                    @endphp
+
                                     @foreach ($participantesEscolhidos as $participante)
-                                        <span class="text-primary">
-                                            {{ $this->buscarNomeParticipante($participante) }}
-                                        </span>
+                                        @php
+                                            $particEscolhidos .= $this->buscarNomeParticipante($participante);
+                                        @endphp
                                     @endforeach
+
+                                    <span class="text-dark fw-bold">
+                                        {{ $particEscolhidos = rtrim($particEscolhidos, ', ') }}
+                                    </span>
                                 </p>
                                 <hr>
 
@@ -174,14 +251,15 @@
                                         <label class="text-primary fw-bold" for="">Agendamento</label> <br>
                                     </div>
                                 </div>
-                                </div>
-                           
+                            </div>
+
                             <div class="col d-table d-md-flex justify-content-between">
 
                                 <div class="col m-3">
 
                                     <div class="row g-3">
-                                        <label class="text-primary fw-bold" for="">Título do Audio</label> <br>
+                                        <label class="text-primary fw-bold" for="">Título do Audio</label>
+                                        <br>
                                         <input type="text" name="" id="" class="form-control"
                                             placeholder="Escreva o título" wire:model="tituloAudio">
                                     </div>
@@ -198,7 +276,7 @@
                                         id="">
                                         <option class="d-none">Selecione o estilo</option>
                                         @foreach ($listaEstilos as $item)
-                                            <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                            <option value="{{ $item->id }}">{{ $item->tipo }}</option>
                                         @endforeach
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">
@@ -216,7 +294,7 @@
                                         <br>
                                         <input type="datetime-local" name="" id=""
                                             class="form-control" wire:model="dataGravacao">
-                                            
+
                                     </div>
                                     <div class="text-danger" style="font-size: 12.5px">
                                         @error('dataGravacao')
@@ -231,7 +309,7 @@
                                         id="">
                                         <option class="d-none">Selecione a duração</option>
                                         @for ($i = 1; $i <= 10; $i++)
-                                        <option value="{{$i . " hr"}}">{{$i . " hr"}}</option>
+                                            <option value="{{ $i . ' hr' }}">{{ $i . ' hr' }}</option>
                                         @endfor
                                     </select>
                                     <div class="text-danger" style="font-size: 12.5px">

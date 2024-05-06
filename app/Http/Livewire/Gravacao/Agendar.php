@@ -8,6 +8,7 @@ use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
 use App\Models\Participante\Participante;
 use App\Models\User;
+use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
@@ -21,10 +22,11 @@ class Agendar extends Component
     public $nomeGrupo = null, $nomeParticipante = null;
 
     public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null,
-    $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array();
+    $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array(), 
+    $clientesEscolhidos = array(), $listaMembrosClientes = array();
 
     protected $participantesFiltrados = array();
-    public $termoPesquisa = '';
+    public $termoPesquisa = '', $termoPesquisaMembros = '';
     public $listaEstilos = array();
     public $infoDispositivo = null;
 
@@ -53,7 +55,16 @@ class Agendar extends Component
     public function render()
     {
         $this->listaEstilos = Estilo::all();
-        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')->paginate(7);
+        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')
+        ->orWhere('id', 'like', '%' . $this->termoPesquisa . '%')
+        ->orderBy("id", "desc")
+        ->limit(9)
+        ->get();
+        $this->listaMembrosClientes = User::where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
+        ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
+        ->orderBy("id", "desc")
+        ->limit(5)
+        ->get();
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->listaParticipantes = Participante::all();
@@ -76,7 +87,7 @@ class Agendar extends Component
             "nomeParticipante" => "required",
         ]);
         Participante::create(['nome' => $this->nomeParticipante]);
-        $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
+        $this->emit('alerta', ['mensagem' => 'Registrado com sucesso', 'icon' => 'success']);
         $this->nomeParticipante = null;
     }
 
@@ -101,7 +112,7 @@ class Agendar extends Component
     public function buscarNomeParticipante($id)
     {
         $dadosPartic = Participante::find($id);
-        return $dadosPartic ? $dadosPartic->nome : "";
+        return $dadosPartic ? $dadosPartic->nome . ", " : "";
     }
 
     public function agendarGravacao()
@@ -177,7 +188,7 @@ class Agendar extends Component
 
     public function msgParaRegistroActividade(){
        
-        $nomeCliente = $this->buscarNomeUtilizador($this->cliente_id);
+        $nomeCliente = $this->buscarUtilizador($this->cliente_id);
         $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
 
         if (!empty($nomeCliente) && !empty($nomeGrupo)) {
@@ -190,9 +201,8 @@ class Agendar extends Component
         }
     }
 
-    public function buscarNomeUtilizador($id)
+    public function buscarUtilizador($id)
     {
-        
         return User::find($id);
     }
 
@@ -201,4 +211,18 @@ class Agendar extends Component
         return Grupo::find($id);
     }
 
+    public function buscarFotoPerfil($idUtilizador)
+    {
+        $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
+        if ($foto) {
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
+            if (file_exists($caminho)) {
+                return $foto;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Participante extends Model
 {
     use HasFactory;
-    protected $fillable = ["nome"];
+    protected $fillable = ["nome", "user_id", "grupo_id"];
 }
