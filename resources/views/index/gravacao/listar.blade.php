@@ -1,5 +1,5 @@
 @include('inclusao.headHtml')
-<title>Agendamento de gravação</title>
+<title>Listagem de agendamentos de gravação</title>
 <main>
     @include('inclusao.header')
     @include('inclusao.aside')
