@@ -117,9 +117,16 @@ class Agendar extends Component
         $this->validate([
             "nomeParticipante" => "required",
         ]);
-        Participante::create(['nome' => $this->nomeParticipante]);
-        $this->emit('alerta', ['mensagem' => 'Registrado com sucesso', 'icon' => 'success']);
-        $this->nomeParticipante = null;
+        $particiapante = Participante::where('nome', $this->nomeParticipante . " (Anônimo)");
+
+        if ($particiapante) {
+            $this->emit('alerta', ['mensagem' => 'Este participante já existe', 'icon' => 'warning', 'tempo' => 5000]);
+        } else {
+            Participante::create(['nome' => $this->nomeParticipante . " (Anônimo)"]);
+            $this->emit('alerta', ['mensagem' => 'Registrado com sucesso', 'icon' => 'success']);
+            $this->nomeParticipante = null;
+        }
+
     }
 
     public function escolherParticipantes($id)
@@ -158,8 +165,8 @@ class Agendar extends Component
         ]);
 
         $dados = [
-            "cliente_id" => $this->cliente_id != "valorNulo" ? $this->cliente_id : null,
-            "grupo_id" => $this->grupoEscolhido != "valorNulo" ? $this->grupoEscolhido : null,
+            "cliente_id" => $this->cliente_id != "0" ? $this->cliente_id : null,
+            "grupo_id" => $this->grupoEscolhido != "0" ? $this->grupoEscolhido : null,
             "titulo_audio" => $this->tituloAudio,
             "estilo_audio" => $this->estilo_id,
             "data_gravacao" => $this->dataGravacao,
@@ -168,16 +175,20 @@ class Agendar extends Component
             "responsavel" => Auth::user()->id,
         ];
 
-        $gravacao = Gravacao::create($dados);
-        foreach ($this->participantesEscolhidos as $item) {
-            GravacaoParticipante::create([
-                "gravacao_id" => $gravacao->id,
-                "participante_id" => $item,
-            ]);
+        if ($this->cliente_id != "0" && $this->grupoEscolhido != "0") {
+            $this->emit('alerta', ['mensagem' => 'O agendamento só permite 1 proprietário', 'icon' => 'warning', 'tempo' => 5000]);
+        } else if ($this->cliente_id != null || $this->grupoEscolhido != null) {
+            $gravacao = Gravacao::create($dados);
+            foreach ($this->participantesEscolhidos as $item) {
+                GravacaoParticipante::create([
+                    "gravacao_id" => $gravacao->id,
+                    "participante_id" => $item,
+                ]);
+            }
+            $this->emit('alerta', ['mensagem' => 'Agendamento feito com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+            $this->msgParaRegistroActividade();
+            $this->limparCampos();
         }
-        $this->emit('alerta', ['mensagem' => 'Agendamento feito com sucesso', 'icon' => 'success', 'tempo' => 5000]);
-        $this->msgParaRegistroActividade();
-        $this->limparCampos();
     }
 
     public function limparCampos()
@@ -219,7 +230,6 @@ class Agendar extends Component
 
     public function msgParaRegistroActividade()
     {
-
         $nomeCliente = $this->buscarUtilizador($this->cliente_id);
         $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
 

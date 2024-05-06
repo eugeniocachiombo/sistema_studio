@@ -20,7 +20,7 @@
                             <label class="text-primary fw-bold" for="">Cliente</label>
                             <select class="form-control" name="" id="" wire:model="cliente_id">
                                 <option class="d-none" selected>Escolha o cliente</option>
-                                <option value="valorNulo">Desconhecido</option>
+                                <option value="0">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -56,7 +56,7 @@
                                     <select class="form-control mt-3" wire:model="grupoEscolhido" name=""
                                         id="">
                                         <option class="d-none">Selecione o grupo</option>
-                                        <option value="valorNulo">Desconhecido</option>
+                                        <option value="0">Desconhecido</option>
                                         @foreach ($listaGrupos as $item)
                                             <option value="{{ $item->id }}">{{ $item->nome }}</option>
                                         @endforeach
@@ -77,7 +77,7 @@
                                         grupo</label> <br>
                                     <div class="col table-responsive">
                                         <input type="text" class="form-control mb-3"
-                                            wire:model="termoPesquisaMembros" placeholder="Pesquisar cliente...">
+                                            wire:model="termoPesquisaMembros" placeholder="Pesquisar cliente (id, nome)...">
 
                                         <table class="table table-hover table-light">
                                             <thead class="">
@@ -160,7 +160,7 @@
                             <label class="text-primary fw-bold" for="">Lista dos Participantes</label> <br>
                             <div class="col table-responsive">
                                 <input type="text" class="form-control mb-3" wire:model="termoPesquisa"
-                                    placeholder="Pesquisar participante...">
+                                    placeholder="Pesquisar participante (id ou nome)...">
 
                                 <table class="table table-hover table-light">
                                     <thead class="">
@@ -204,7 +204,9 @@
                                                                 style="width: 40px; height: 40px; object-fit: cover;">
                                                         @endif
                                                     </th>
-                                                    <th>{{ $item->nome }}</th>
+                                                    <th>
+                                                        {{ $item->nome }}
+                                                    </th>
                                                     <th>
                                                         <input type="checkbox" value="{{ $item->id }}"
                                                             wire:model="participantesEscolhidos.{{ $item->id }}">
