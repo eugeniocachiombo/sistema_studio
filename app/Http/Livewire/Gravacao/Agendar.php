@@ -60,6 +60,7 @@ class Agendar extends Component
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
+        $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
         return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
     }
 
@@ -241,6 +242,14 @@ class Agendar extends Component
         $participanteGrupo = Participante::where("grupo_id", $grupoEscolhido)->first();
         if ($participanteGrupo && array_key_exists($participanteGrupo->id, $this->participantesEscolhidos)) {
             unset($this->participantesEscolhidos[$participanteGrupo->id]);
+        }
+    }
+
+    public function removerClienteParticipanteJaSelecionado($clienteEscolhido)
+    {
+        $participanteCliente = Participante::where("user_id", $clienteEscolhido)->first();
+        if ($participanteCliente && array_key_exists($participanteCliente->id, $this->participantesEscolhidos)) {
+            unset($this->participantesEscolhidos[$participanteCliente->id]);
         }
     }
 
