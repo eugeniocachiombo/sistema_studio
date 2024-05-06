@@ -166,16 +166,13 @@
                                     <thead class="">
                                         <tr>
                                             <th>
-                                                Id
-                                            </th>
-                                            <th>
                                                 Foto
                                             </th>
                                             <th>
-                                                Nome do Particiapante
+                                                Participante
                                             </th>
                                             <th>
-                                                Participação
+                                                Selecionar
                                             </th>
                                         </tr>
                                     </thead>
@@ -190,7 +187,6 @@
                                             @endphp
                                             @if (!$ehEscolhido)
                                                 <tr>
-                                                    <th>{{ $item->id }}</th>
                                                     <th>
                                                         @php
                                                             $fotoUtilizador = $this->buscarFotoPerfil($item->user_id);

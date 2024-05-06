@@ -22,7 +22,7 @@ class Agendar extends Component
     public $nomeGrupo = null, $nomeParticipante = null;
 
     public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null,
-    $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array(), 
+    $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array(),
     $clientesEscolhidos = array(), $listaMembrosClientes = array();
 
     protected $participantesFiltrados = array();
@@ -55,20 +55,36 @@ class Agendar extends Component
     public function render()
     {
         $this->listaEstilos = Estilo::all();
-        $participantes = Participante::where('nome', 'like', '%' . $this->termoPesquisa . '%')
-        ->orWhere('id', 'like', '%' . $this->termoPesquisa . '%')
-        ->orderBy("id", "desc")
-        ->limit(9)
-        ->get();
+        $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = User::where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
-        ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
-        ->orderBy("id", "desc")
-        ->limit(5)
-        ->get();
+            ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
+            ->orderBy("id", "desc")
+            ->limit(5)
+            ->get();
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->listaParticipantes = Participante::all();
         return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
+    }
+
+    public function buscarTodosParticipantes()
+    {
+        return Participante::where(function ($query) {
+            $query->where('nome', 'like', '%' . $this->termoPesquisa . '%')
+                  ->orWhere('user_id', 'like', '%' . $this->termoPesquisa . '%');
+        })
+        ->where(function ($query) {
+            $query->where('grupo_id', '!=', $this->grupoEscolhido)
+                  ->orWhereNull('grupo_id');
+        })
+        ->where(function ($query) {
+            $query->where('user_id', '!=', $this->cliente_id)
+                  ->orWhereNull('user_id');
+        })
+        ->orderBy("id", "desc")
+        ->limit(9)
+        ->get();
+
     }
 
     public function criarGrupo()
@@ -76,7 +92,11 @@ class Agendar extends Component
         $this->validate([
             "nomeGrupo" => "required",
         ]);
-        Grupo::create(['nome' => $this->nomeGrupo]);
+        $grupo = Grupo::create(['nome' => $this->nomeGrupo]);
+        Participante::create([
+            'nome' => $grupo->nome . " (Grupo)",
+            'grupo_id' => $grupo->id,
+        ]);
         $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
         $this->nomeGrupo = null;
     }
@@ -186,17 +206,17 @@ class Agendar extends Component
         ]);
     }
 
-    public function msgParaRegistroActividade(){
-       
+    public function msgParaRegistroActividade()
+    {
+
         $nomeCliente = $this->buscarUtilizador($this->cliente_id);
         $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
 
         if (!empty($nomeCliente) && !empty($nomeGrupo)) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        }elseif ($nomeCliente) {
+        } elseif ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        }
-        elseif ($nomeGrupo) {
+        } elseif ($nomeGrupo) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         }
     }
