@@ -80,13 +80,16 @@
                                         grupo</label> <br>
                                     <div class="col table-responsive">
                                         <input type="text" class="form-control mb-3"
-                                            wire:model="termoPesquisaMembros" placeholder="Pesquisar cliente (id, nome)...">
+                                            wire:model="termoPesquisaMembros" placeholder="Pesquisar cliente (id ou nome)...">
 
                                         <table class="table table-hover table-light">
                                             <thead class="">
                                                 <tr>
                                                     <th>
                                                         Id
+                                                    </th>
+                                                    <th>
+                                                        Foto
                                                     </th>
                                                     <th>
                                                         Nome
@@ -101,6 +104,23 @@
                                                 @foreach ($listaMembrosClientes as $item)
                                                     <tr>
                                                         <th>{{ $item->id }}</th>
+                                                        <th>
+                                                            @php
+                                                                $fotoUtilizador = $this->buscarFotoPerfil($item->id);
+                                                            @endphp
+                                                            @if ($fotoUtilizador)
+                                                                <a
+                                                                    href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
+                                                                    <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
+                                                                        class="rounded-circle" alt="foto"
+                                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                                </a>
+                                                            @else
+                                                                <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                                    alt="foto"
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                            @endif
+                                                        </th>
                                                         <th>{{ $item->name }}</th>
                                                         <th>
                                                             <input type="checkbox" value="{{ $item->id }}"
@@ -114,19 +134,26 @@
 
                                         <hr>
                                         <p>
-                                            <span class="text-primary fw-bold">Membros: </span>
+                                            <span class="text-primary fw-bold">Participantes: </span>
+                                            @php
+                                                $clienteEscolhidos = '';
+                                            @endphp
+        
                                             @foreach ($clientesEscolhidos as $item)
-                                                <span class="text-primary">
-                                                    @php
-                                                        $nomeCliente = $this->buscarUtilizador($item);
-                                                    @endphp
-                                                    @if ($nomeCliente)
-                                                        {{ $nomeCliente->name }}
-                                                    @endif
-                                                </span>
+                                                @php
+                                                    $clienteEscolhidos .= $this->buscarNomeCliente($item);
+                                                @endphp
                                             @endforeach
+        
+                                            <span class="text-dark fw-bold">
+                                                {{ $clienteEscolhidos = rtrim($clienteEscolhidos, ', ') }}
+                                            </span>
                                         </p>
                                         <hr>
+
+                                        <button wire:click.prevent="adicionarMembrosAoGrupo" class="btn btn-primary">
+                                            Adicionar Membros
+                                        </button>
 
                                     </div>
                                 </div>

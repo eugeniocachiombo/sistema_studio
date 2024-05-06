@@ -6,6 +6,7 @@ use App\Models\Gravacao\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
+use App\Models\Grupo\GrupoCliente;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
@@ -56,7 +57,7 @@ class Agendar extends Component
     {
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
-        $this->listaMembrosClientes = $this->buscarListaParaMembrosDeGrupo();
+        $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
         $this->listaClientes = User::where("tipo_acesso", 3)->get();
         $this->listaGrupos = Grupo::all();
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
@@ -89,13 +90,16 @@ class Agendar extends Component
 
     }
 
-    public function buscarListaParaMembrosDeGrupo()
+    public function buscarListaParaMembrosParaGrupo()
     {
-        return User::where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
-            ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%')
-            ->orderBy("id", "desc")
-            ->limit(5)
-            ->get();
+        return User::where(function($query) {
+            $query->where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
+                  ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%');
+        })
+        ->where("tipo_acesso", 3)
+        ->orderBy("id", "desc")
+        ->limit(5)
+        ->get();
     }
 
     public function criarGrupo()
@@ -104,7 +108,7 @@ class Agendar extends Component
             "nomeGrupo" => "required",
         ]);
 
-        $grupo = Grupo::where('nome', $this->nomeGrupo);
+        $grupo = Grupo::where('nome', $this->nomeGrupo)->first();
         if ($grupo) {
             $this->emit('alerta', ['mensagem' => 'Este grupo já existe', 'icon' => 'warning', 'tempo' => 4500]);
             $this->nomeGrupo = null;
@@ -114,10 +118,24 @@ class Agendar extends Component
                 'nome' => $grupo->nome . " (Grupo)",
                 'grupo_id' => $grupo->id,
             ]);
+            session()->put("grupo_id", $grupo->id);
             $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
             $this->tbMembrosGrupo = true;
             $this->nomeGrupo = null;
         }
+    }
+
+    public function adicionarMembrosAoGrupo(){
+        foreach ($this->clientesEscolhidos as $item) {
+            GrupoCliente::create([
+                "grupo_id" => session("grupo_id"),
+                "membro" => $item,
+            ]);
+        }
+        session()->forget("grupo_id");
+        $this->emit('alerta', ['mensagem' => 'Membros adicionados com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+        $this->clientesEscolhidos = array();
+        $this->tbMembrosGrupo = false;
     }
 
     public function registarParticipantes()
@@ -259,6 +277,12 @@ class Agendar extends Component
     public function buscarNomeGrupo($id)
     {
         return Grupo::find($id);
+    }
+
+    public function buscarNomeCliente($id)
+    {
+        $dadosPartic = User::find($id);
+        return $dadosPartic ? $dadosPartic->name . ", " : "";
     }
 
     public function buscarFotoPerfil($idUtilizador)
