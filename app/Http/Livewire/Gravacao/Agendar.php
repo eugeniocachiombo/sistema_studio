@@ -28,7 +28,7 @@ class Agendar extends Component
     protected $participantesFiltrados = array();
     public $termoPesquisa = '', $termoPesquisaMembros = '';
     public $listaEstilos = array();
-    public $infoDispositivo = null;
+    public $infoDispositivo = null, $tbMembrosGrupo = false;
 
     protected $messages = [
         "cliente_id.required" => "Campo obrigatório",
@@ -103,13 +103,21 @@ class Agendar extends Component
         $this->validate([
             "nomeGrupo" => "required",
         ]);
-        $grupo = Grupo::create(['nome' => $this->nomeGrupo]);
-        Participante::create([
-            'nome' => $grupo->nome . " (Grupo)",
-            'grupo_id' => $grupo->id,
-        ]);
-        $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
-        $this->nomeGrupo = null;
+
+        $grupo = Grupo::where('nome', $this->nomeGrupo);
+        if ($grupo) {
+            $this->emit('alerta', ['mensagem' => 'Este grupo já existe', 'icon' => 'warning', 'tempo' => 4500]);
+            $this->nomeGrupo = null;
+        } else {
+            $grupo = Grupo::create(['nome' => $this->nomeGrupo]);
+            Participante::create([
+                'nome' => $grupo->nome . " (Grupo)",
+                'grupo_id' => $grupo->id,
+            ]);
+            $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
+            $this->tbMembrosGrupo = true;
+            $this->nomeGrupo = null;
+        }
     }
 
     public function registarParticipantes()
@@ -191,21 +199,6 @@ class Agendar extends Component
         }
     }
 
-    public function limparCampos()
-    {
-        $this->nomeGrupo = null;
-        $this->nomeParticipante = null;
-        $this->cliente_id = null;
-        $this->grupoEscolhido = null;
-        $this->tituloAudio = null;
-        $this->estilo_id = null;
-        $this->dataGravacao = null;
-        $this->duracaoGravacao = null;
-        $this->participantesEscolhidos = array();
-        $this->participantesFiltrados = array();
-        $this->termoPesquisa = '';
-    }
-
     public function buscarDadosDispositivo()
     {
         $agente = new Agent();
@@ -281,5 +274,21 @@ class Agendar extends Component
         } else {
             return null;
         }
+    }
+
+    public function limparCampos()
+    {
+        $this->tbMembrosGrupo = false;
+        $this->nomeGrupo = null;
+        $this->nomeParticipante = null;
+        $this->cliente_id = null;
+        $this->grupoEscolhido = null;
+        $this->tituloAudio = null;
+        $this->estilo_id = null;
+        $this->dataGravacao = null;
+        $this->duracaoGravacao = null;
+        $this->participantesEscolhidos = array();
+        $this->participantesFiltrados = array();
+        $this->termoPesquisa = '';
     }
 }

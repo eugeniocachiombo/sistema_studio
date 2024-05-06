@@ -70,7 +70,10 @@
                             </div>
 
                             {{-- Membros do grupo --}}
-                            <div class="col d-none">
+                            @if ($tbMembrosGrupo)
+                                
+                            
+                            <div class="col ">
                                 {{-- Lista de membros --}}
                                 <div class="col-12 card card-animated p-4 d-table d-md-flex">
                                     <label class="text-primary fw-bold" for="">Adicionar Membros ao
@@ -128,6 +131,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                         {{-- Participante --}}
