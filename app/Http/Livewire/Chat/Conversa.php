@@ -67,8 +67,7 @@ class Conversa extends Component
         $this->buscarDadosDispositivo();
         $nomeUtilizador = $this->buscarNomeUsuario($this->utilizador_id);
         $nomeRemente = $this->buscarNomeUsuario($this->remente);
-        $this->registrarActividade("<b>
-        <i class='bi bi-check-circle-fill text-success'></i> ".
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> ".
         $nomeUtilizador . " Entrou em conversa com " . $nomeRemente .
         "</b> <hr>" . 
         $this->infoDispositivo, "normal", Auth::user()->id);
