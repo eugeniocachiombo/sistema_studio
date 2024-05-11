@@ -14,11 +14,11 @@
             <div class="card card-animated p-4">
                 <div class="col ">
                     <label class="text-primary fw-bold" for="">Lista de Gravações Agendadas</label> <br>
-                    <div class="col table-responsive">
+                    <div class="col table-responsive pt-4">
                         <input type="text" class="form-control mb-3 d-none" wire:model="termoPesquisaMembros"
                             placeholder="Pesquisar cliente (id ou nome)...">
 
-                        <table class="table table-hover table-light">
+                        <table class="table datatablePT table-light table-hover pt-3">
                             <thead class="">
                                 <tr>
                                     <th style="white-space: nowrap">
@@ -93,7 +93,7 @@
                                                     {{ $proprietario }}</div>
                                             </div>
                                         </td>
-                                        <td style="white-space: nowrap">{{ $item->titulo_audio }}</td>
+                                        <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             @php
                                                 $todosParticipantes = $this->buscarParticipantesGravacao($item->id);
@@ -119,3 +119,4 @@
         </section>
     </main>
 </div>
+

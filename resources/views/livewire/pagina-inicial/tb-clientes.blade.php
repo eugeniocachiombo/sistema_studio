@@ -12,7 +12,7 @@
 <div class="card-body">
     <h5 class="card-title">Clientes <span>| Registro de todos clientes</span></h5>
 
-    <table class="table table-borderless datatable table-hover">
+    <table class="table table-borderless datatablePT table-hover">
         <thead>
             <tr>
                 <th scope="col" style="white-space: nowrap">#</th>
