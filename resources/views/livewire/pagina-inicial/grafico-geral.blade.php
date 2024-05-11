@@ -52,7 +52,7 @@
                                 name: 'Clientes'
                             },
                             {
-                                value: 735,
+                                value: '<?php echo count($totalGravacoes) ?>',
                                 name: 'Gravação'
                             },
                             {
