@@ -42,7 +42,8 @@ class Listar extends Component
         return Estilo::find($id);
     }
 
-    public function buscarParticipantesGravacao($id){
+    public function buscarParticipantesGravacao($id)
+    {
         return GravacaoParticipante::where("gravacao_id", $id)->get();
     }
 
@@ -64,17 +65,28 @@ class Listar extends Component
     public function buscarNomeParticipante($id)
     {
         $dadosPartic = Participante::find($id);
-        return $dadosPartic ? $dadosPartic->nome . ", " : "";
+        return $dadosPartic ? $dadosPartic->nome : "";
     }
 
-    public function cortarUltimavirgula($todosParticipantes){
+    public function cortarUltimavirgula($todosParticipantes)
+    {
         $particEscolhidos = '';
-        foreach ($todosParticipantes as $item) {
-            $particEscolhidos .= $this->buscarNomeParticipante($item->participante_id);
-         }
-         $particEscolhidos = str_replace(" (Grupo)", "", $particEscolhidos);
-         $particEscolhidos = str_replace(" (Anônimo)", "", $particEscolhidos);
-        return rtrim($particEscolhidos, ', ');
+        $count = count($todosParticipantes);
+        foreach ($todosParticipantes as $index => $item) {
+            $nomeParticipante = $this->buscarNomeParticipante($item->participante_id);
+
+            if ($index === 0) {
+                $particEscolhidos .= $nomeParticipante;
+            } elseif ($index === $count - 1) {
+                $particEscolhidos .= " e $nomeParticipante";
+            } else {
+                $particEscolhidos .= ", $nomeParticipante";
+            }
+        }
+
+        $particEscolhidos = str_replace(" (Grupo)", "", $particEscolhidos);
+        $particEscolhidos = str_replace(" (Anônimo)", "", $particEscolhidos);
+        return rtrim($particEscolhidos);
     }
 
     public function formatarData($data)

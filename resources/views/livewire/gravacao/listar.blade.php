@@ -15,7 +15,7 @@
                 <div class="col ">
                     <label class="text-primary fw-bold" for="">Lista de Gravações Agendadas</label> <br>
                     <div class="col table-responsive">
-                        <input type="text" class="form-control mb-3" wire:model="termoPesquisaMembros"
+                        <input type="text" class="form-control mb-3 d-none" wire:model="termoPesquisaMembros"
                             placeholder="Pesquisar cliente (id ou nome)...">
 
                         <table class="table table-hover table-light">
@@ -94,7 +94,7 @@
                                             </div>
                                         </td>
                                         <td style="white-space: nowrap">{{ $item->titulo_audio }}</td>
-                                        <td style="white-space: nowrap">
+                                        <td style="min-width: 200px">
                                             @php
                                                 $todosParticipantes = $this->buscarParticipantesGravacao($item->id);
                                                 $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
