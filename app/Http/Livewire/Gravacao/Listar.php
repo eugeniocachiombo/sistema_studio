@@ -72,6 +72,8 @@ class Listar extends Component
         foreach ($todosParticipantes as $item) {
             $particEscolhidos .= $this->buscarNomeParticipante($item->participante_id);
          }
+         $particEscolhidos = str_replace(" (Grupo)", "", $particEscolhidos);
+         $particEscolhidos = str_replace(" (Anônimo)", "", $particEscolhidos);
         return rtrim($particEscolhidos, ', ');
     }
 

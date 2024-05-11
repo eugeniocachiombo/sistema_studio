@@ -143,7 +143,7 @@ class Agendar extends Component
         $this->validate([
             "nomeParticipante" => "required",
         ]);
-        $particiapante = Participante::where('nome', $this->nomeParticipante . " (Anônimo)");
+        $particiapante = Participante::where('nome', $this->nomeParticipante . " (Anônimo)")->first();
 
         if ($particiapante) {
             $this->emit('alerta', ['mensagem' => 'Este participante já existe', 'icon' => 'warning', 'tempo' => 5000]);
