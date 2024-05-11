@@ -70,7 +70,7 @@ class Listar extends Component
     public function cortarUltimavirgula($todosParticipantes){
         $particEscolhidos = '';
         foreach ($todosParticipantes as $item) {
-            $particEscolhidos .= $this->buscarNomeParticipante($item->id);
+            $particEscolhidos .= $this->buscarNomeParticipante($item->participante_id);
          }
         return rtrim($particEscolhidos, ', ');
     }

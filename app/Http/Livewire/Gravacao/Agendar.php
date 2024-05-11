@@ -204,6 +204,7 @@ class Agendar extends Component
         if ($this->cliente_id != "0" && $this->grupoEscolhido != "0") {
             $this->emit('alerta', ['mensagem' => 'O agendamento só permite 1 proprietário', 'icon' => 'warning', 'tempo' => 5000]);
         } else if ($this->cliente_id != null || $this->grupoEscolhido != null) {
+            
             $gravacao = Gravacao::create($dados);
             foreach ($this->participantesEscolhidos as $item) {
                 GravacaoParticipante::create([

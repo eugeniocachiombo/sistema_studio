@@ -100,13 +100,13 @@
                                                 $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
                                             @endphp
 
-                                            {{ $particEscolhidos ? 'Feat. ( ' . $particEscolhidos . ' )' : 'Nenhum' }}
+                                            {{ $particEscolhidos ? 'Feat. ( ' . $particEscolhidos . ' )' : 'Nenhum' }} 
                                         </td>
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $item->data_gravacao }}</td>
-                                        <td style="white-space: nowrap">{{ ucwords($item->estado_gravacao )}}</td>
+                                        <td style="white-space: nowrap">{{ ucwords($item->estado_gravacao)}}</td>
                                         <td style="white-space: nowrap">{{ $item->duracao }}</td>
                                         <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}</td>
                                     </tr>
