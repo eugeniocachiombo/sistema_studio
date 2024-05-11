@@ -30,6 +30,11 @@
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('gravacao.listar') }}">
+                            <i class="bi bi-circle"></i><span>Concluir</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

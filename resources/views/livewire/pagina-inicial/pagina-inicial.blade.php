@@ -149,82 +149,69 @@
 
                         <div class="col-12">
                             <div class="card card-animated">
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filtrar</h6>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Hoje</a></li>
-                                        <li><a class="dropdown-item" href="#">Este mês</a></li>
-                                        <li><a class="dropdown-item" href="#">Este ano</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Gráfico de serviços <span>| Hoje</span></h5>
-                                    <div id="reportsChart"></div>
-
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            new ApexCharts(document.querySelector("#reportsChart"), {
-                                                series: [{
-                                                    name: 'Gravação',
-                                                    data: [31, 40, 28, 51, 42, 82, 56],
-                                                }, {
-                                                    name: 'Mixagem',
-                                                    data: [11, 32, 45, 32, 34, 52, 41]
-                                                }, {
-                                                    name: 'Masterização',
-                                                    data: [15, 11, 32, 18, 9, 24, 11]
-                                                }],
-                                                chart: {
-                                                    height: 350,
-                                                    type: 'area',
-                                                    toolbar: {
-                                                        show: false
-                                                    },
-                                                },
-                                                markers: {
-                                                    size: 4
-                                                },
-                                                colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                                fill: {
-                                                    type: "gradient",
-                                                    gradient: {
-                                                        shadeIntensity: 1,
-                                                        opacityFrom: 0.3,
-                                                        opacityTo: 0.4,
-                                                        stops: [0, 90, 100]
-                                                    }
-                                                },
-                                                dataLabels: {
-                                                    enabled: false
-                                                },
-                                                stroke: {
-                                                    curve: 'smooth',
-                                                    width: 2
-                                                },
-                                                xaxis: {
-                                                    type: 'datetime',
-                                                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z",
-                                                        "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z",
-                                                        "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
-                                                        "2018-09-19T06:30:00.000Z"
-                                                    ]
-                                                },
-                                                tooltip: {
-                                                    x: {
-                                                        format: 'dd/MM/yyyy HH:mm'
-                                                    },
-                                                }
-                                            }).render();
-                                        });
-                                    </script>
-                                </div>
+                              <div class="card-body">
+                                <h5 class="card-title">Gráfico de Serviços</h5>
+                                
+                                <div id="columnChart"></div>
+                  
+                                <script>
+                                  document.addEventListener("DOMContentLoaded", () => {
+                                    new ApexCharts(document.querySelector("#columnChart"), {
+                                      series: [{
+                                        name: 'Gravação',
+                                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 33, 64, 10]
+                                      }, {
+                                        name: 'Mixagem',
+                                        data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 33, 54, 20]
+                                      }, {
+                                        name: 'Masterização',
+                                        data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 53, 64, 20]
+                                      }],
+                                      chart: {
+                                        type: 'bar',
+                                        height: 350
+                                      },
+                                      plotOptions: {
+                                        bar: {
+                                          horizontal: false,
+                                          columnWidth: '55%',
+                                          endingShape: 'rounded'
+                                        },
+                                      },
+                                      dataLabels: {
+                                        enabled: false
+                                      },
+                                      stroke: {
+                                        show: true,
+                                        width: 2,
+                                        colors: ['transparent']
+                                      },
+                                      xaxis: {
+                                        categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dez'],
+                                      },
+                                      yaxis: {
+                                        title: {
+                                          text: ' (feitos)'
+                                        }
+                                      },
+                                      fill: {
+                                        opacity: 1
+                                      },
+                                      tooltip: {
+                                        y: {
+                                          formatter: function(val) {
+                                            return " " + val + " feitas"
+                                          }
+                                        }
+                                      }
+                                    }).render();
+                                  });
+                                </script>
+                                <!-- End Column Chart -->
+                  
+                              </div>
                             </div>
-                        </div>
+                          </div>
 
                         {{-- Clientes --}}
                         @if ($utilizadorLogado->tipo_acesso != 3)
