@@ -1,4 +1,7 @@
-<div class="card card-animated ">
+@php
+    $aumtentarCard = count($todasActividadesUtl) >= 3 ? "min-height: 126.5vh" : "";
+@endphp
+<div class="card card-animated " style="{{$aumtentarCard}}">
     <div class="filter">
         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -28,7 +31,6 @@
         <h5 class="card-title">Actividades Recentes <span>|
                 {{ session('paginaActividades') ? session('paginaActividades') : 'Todas' }} </span>
         </h5>
-
 
         <div class="activity">
             @forelse ($todasActividadesUtl as $item)
