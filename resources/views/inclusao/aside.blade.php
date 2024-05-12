@@ -26,7 +26,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('gravacao.listar') }}">
+                        <a href="{{ route('gravacao.concluir') }}">
                             <i class="bi bi-circle"></i><span>Concluir</span>
                         </a>
                     </li>

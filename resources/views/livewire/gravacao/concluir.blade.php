@@ -5,7 +5,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Gravação</a></li>
-                    <li class="breadcrumb-item active">Listagem</li>
+                    <li class="breadcrumb-item active">Concluir</li>
                 </ol>
             </nav>
         </div>
@@ -13,43 +13,40 @@
         <section class="section contact">
             <div class="card card-animated p-4">
                 <div class="col ">
-                    <label class="text-primary fw-bold" for="">Lista de Gravações Agendadas</label> <br>
+                    <label class="text-primary fw-bold" for="">Concluir de Gravações Agendadas</label> <br>
                     <div class="col table-responsive pt-4">
                         <input type="text" class="form-control mb-3 d-none" wire:model="termoPesquisaMembros"
                             placeholder="Pesquisar cliente (id ou nome)...">
 
-                        <table class="table datatablePT table-light table-hover pt-3">
-                            <thead class="">
+                        <table class="table datatablePT table-hover pt-3">
+                            <thead>
                                 <tr>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Id
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Proprietário
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Título do áudio
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Participação
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estilo
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da gravação
                                     </th>
-                                    <th style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
-                                    <th style="white-space: nowrap">
-                                        Duração
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Concluido
                                     </th>
-                                    <th style="white-space: nowrap">
-                                        Agendado
-                                    </th>
-                                    <th style="white-space: nowrap">
-                                        Editar
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Acção
                                     </th>
                                 </tr>
                             </thead>
@@ -57,7 +54,7 @@
                             <tbody class="">
                                 @foreach ($listaGravacao as $item)
                                     <tr>
-                                        <td style="white-space: nowrap">{{ $item->id }}</td>
+                                        <td class="bg-success text-white" style="white-space: nowrap">{{ $item->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -96,7 +93,7 @@
                                                     {{ $proprietario }}</div>
                                             </div>
                                         </td>
-                                        <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
+                                        <td class="bg-success text-white" style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             @php
                                                 $idGravacao = $item->id;
@@ -106,7 +103,7 @@
 
                                             {{ $particEscolhidos ? 'Feat. ( ' . $particEscolhidos . ' )' : 'Nenhum' }}
                                         </td>
-                                        <td style="white-space: nowrap">
+                                        <td class="bg-success text-white" style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $item->data_gravacao }}</td>
@@ -121,12 +118,28 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td style="white-space: nowrap">{{ $item->duracao }}</td>
-                                        <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}
+
+                                        @if ($item->estado_gravacao == 'gravado')
+                                            <td style="white-space: nowrap">
+                                                {{ $this->formatarData($item->updated_at) }}
+                                            </td>
+                                        @else
+                                            <td style="white-space: nowrap">
+                                                --
+                                            </td>
+                                        @endif
+
+                                        <td style="white-space: nowrap" class="text-center">
+                                            @if ($item->estado_gravacao == 'gravado')
+                                                <i class="bi bi-check text-success display-6 "></i>
+                                            @else
+                                                <button class="btn btn-success"
+                                                    wire:click.prevent="concluirAgendamento({{ $idGravacao }})">
+                                                    Concluir
+                                                </button>
+                                            @endif
                                         </td>
-                                        <td style="white-space: nowrap">
-                                            <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">Editar</a>
-                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
