@@ -48,10 +48,6 @@
                             show: false
                         },
                         data: [{
-                                value: '<?php echo count($totalClientes) ?>',
-                                name: 'Clientes'
-                            },
-                            {
                                 value: '<?php echo count($totalGravacoes) ?>',
                                 name: 'Gravação'
                             },
@@ -62,6 +58,10 @@
                             {
                                 value: '<?php echo count($totalMasterizacao) ?>',
                                 name: 'Masterização'
+                            },
+                            {
+                                value: '<?php echo count($totalClientes) ?>',
+                                name: 'Clientes'
                             },
                             {
                                 value: '<?php echo count($totalFuncionarios) ?>',
