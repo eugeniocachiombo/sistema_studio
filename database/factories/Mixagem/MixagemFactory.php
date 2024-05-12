@@ -18,7 +18,7 @@ class MixagemFactory extends Factory
             "gravacao_id" => $this->faker->numberBetween(3, 10),
             "data_mixagem" => Carbon::now(),
             "estado_mixagem" => $this->faker->randomElement(["pendente", "mixado"]),
-            "duracao" => $this->faker->numberBetween(1, 10) . "hr",
+            "duracao" => $this->faker->numberBetween(1, 10) . " hr",
             "responsavel" => $this->faker->numberBetween(1, 2)
         ];
     }

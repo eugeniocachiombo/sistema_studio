@@ -21,7 +21,7 @@ class GravacaoFactory extends Factory
             "estilo_audio" => $this->faker->numberBetween(1, 3),
             "data_gravacao" => Carbon::now(),
             "estado_gravacao" => $this->faker->randomElement(["pendente", "gravado"]),
-            "duracao" => $this->faker->numberBetween(1, 10) . "hr",
+            "duracao" => $this->faker->numberBetween(1, 10) . " hr",
             "responsavel" => $this->faker->numberBetween(1, 2)
         ];
     }

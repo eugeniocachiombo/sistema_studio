@@ -81,7 +81,7 @@ class CardRegistros extends Component
                 $this->totalMasterizacao = Masterizacao::where("estado_master", "pendente")->get();
                 break;
             case 'Concluidas':
-                $this->totalMasterizacao = Masterizacao::where("estado_master", "mixado")->get();
+                $this->totalMasterizacao = Masterizacao::where("estado_master", "masterizado")->get();
                 break;
             default:
                 $this->totalMasterizacao = Masterizacao::all();

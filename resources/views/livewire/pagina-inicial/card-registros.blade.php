@@ -64,7 +64,7 @@
                                         id="" wire:model='mixagem' value="Pendentes">
                                     Pendentes</a></li>
                             <li><a class="dropdown-item"><input type="radio" name=""
-                                        id="" wire:model='mixagem' value="Concluídas">
+                                        id="" wire:model='mixagem' value="Concluidas">
                                     Concluídas</a></li>
                         </form>
                     </ul>
@@ -109,7 +109,7 @@
                                         id="" wire:model='masterizacao' value="Pendentes">
                                     Pendentes</a></li>
                             <li><a class="dropdown-item"><input type="radio" name=""
-                                        id="" wire:model='masterizacao' value="Concluídas">
+                                        id="" wire:model='masterizacao' value="Concluidas">
                                     Concluídas</a></li>
                         </form>
                     </ul>
