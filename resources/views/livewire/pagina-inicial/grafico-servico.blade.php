@@ -9,13 +9,52 @@
           new ApexCharts(document.querySelector("#columnChart"), {
             series: [{
               name: 'Gravação',
-              data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 33, 64, 10]
-            }, {
+              data: [
+                "<?php echo $this->dadosJaneiro(1)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(2)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(3)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(4)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(5)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(6)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(7)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(8)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(9)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(10)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(11)['gravacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(12)['gravacao'] ?>"
+              ]
+          }, {
               name: 'Mixagem',
-              data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 33, 54, 20]
+              data: [
+                "<?php echo $this->dadosJaneiro(1)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(2)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(3)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(4)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(5)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(6)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(7)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(8)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(9)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(10)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(11)['mixagem'] ?>", 
+                "<?php echo $this->dadosJaneiro(12)['mixagem'] ?>"
+              ]
             }, {
               name: 'Masterização',
-              data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 53, 64, 20]
+              data: [
+                "<?php echo $this->dadosJaneiro(1)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(2)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(3)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(4)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(5)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(6)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(7)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(8)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(9)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(10)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(11)['masterizacao'] ?>", 
+                "<?php echo $this->dadosJaneiro(12)['masterizacao'] ?>"
+              ]
             }],
             chart: {
               type: 'bar',
