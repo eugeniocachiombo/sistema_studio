@@ -13,9 +13,7 @@
         <section class="section dashboard">
             <div class="row">
                 <div class="col-lg-8 ">
-                    <div class="row">
                         @livewire('pagina-inicial.card-registros')
-                    </div>
 
                     @livewire('pagina-inicial.grafico-servico')
                 </div>
