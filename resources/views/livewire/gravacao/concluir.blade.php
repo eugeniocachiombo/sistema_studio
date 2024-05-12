@@ -134,12 +134,11 @@
                                                 <i class="bi bi-check text-success display-6 "></i>
                                             @else
                                                 <button class="btn btn-success"
-                                                    wire:click.prevent="concluirAgendamento({{ $idGravacao }})">
+                                                    wire:click="concluirAgendamento({{ $idGravacao }})">
                                                     Concluir
                                                 </button>
                                             @endif
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
