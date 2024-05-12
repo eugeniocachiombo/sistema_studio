@@ -48,6 +48,9 @@
                                     <th style="white-space: nowrap">
                                         Agendado
                                     </th>
+                                    <th style="white-space: nowrap">
+                                        Editar
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -96,7 +99,8 @@
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             @php
-                                                $todosParticipantes = $this->buscarParticipantesGravacao($item->id);
+                                            $idGravacao = $item->id;
+                                                $todosParticipantes = $this->buscarParticipantesGravacao($idGravacao);
                                                 $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
                                             @endphp
 
@@ -109,6 +113,8 @@
                                         <td style="white-space: nowrap">{{ ucwords($item->estado_gravacao)}}</td>
                                         <td style="white-space: nowrap">{{ $item->duracao }}</td>
                                         <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}</td>
+                                        <td style="white-space: nowrap">
+                                            <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">Editar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

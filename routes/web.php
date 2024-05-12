@@ -19,6 +19,7 @@ use App\Http\Livewire\Utilizador\{
 };
 use App\Http\Livewire\Gravacao\{
     Agendar,
+    Actualizar,
     Listar
 };
 
@@ -44,6 +45,7 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
 
 Route::prefix("gravacao")->name("gravacao.")->group(function(){
    Route::get('agendar', [Agendar::class, "index"])->name("agendar")->middleware(CheckAuth::class);
+   Route::get('actualizar/{idGravacao}', [Actualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
    Route::get('listar', [Listar::class, "index"])->name("listar")->middleware(CheckAuth::class);
 });
 

@@ -21,11 +21,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="mixagem-elements.html">
-                            <i class="bi bi-circle"></i><span>Alterar</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('gravacao.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
