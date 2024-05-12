@@ -13,7 +13,7 @@
         <section class="section dashboard">
             <div class="row">
                 <div class="col-lg-8 ">
-                        @livewire('pagina-inicial.card-registros')
+                    @livewire('pagina-inicial.card-registros')
 
                     @livewire('pagina-inicial.grafico-servico')
                 </div>
@@ -25,11 +25,11 @@
 
             <div class="row">
                 @if ($utilizadorLogado->tipo_acesso != 3)
-                    <div class="col">
+                    <div class="col-lg-4">
                         @livewire('pagina-inicial.grafico-geral')
                     </div>
 
-                    <div class="col">
+                    <div class="col-lg-8">
                         @livewire('pagina-inicial.tb-clientes')
                     </div>
                 @endif
