@@ -35,8 +35,8 @@
                         </div>
                         <div class="ps-3">
                             <h6>{{count($totalGravacao)}}</h6>
-                            <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                class="text-muted small pt-2 ps-1">increase</span>
+                            <span class="text-success small pt-1 fw-bold">{{round($this->buscarPercentagem(count($totalGravacao), $gravacao), 1) . "%"}}</span> <span
+                                class="text-muted small pt-2 ps-1">Porcento</span>
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
                         </div>
                         <div class="ps-3">
                             <h6>{{count($totalMixagem)}}</h6>
-                            <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                class="text-muted small pt-2 ps-1">increase</span>
+                            <span class="text-success small pt-1 fw-bold">{{round($this->buscarPercentagem(count($totalMixagem), $mixagem), 1) . "%"}}</span> <span
+                                class="text-muted small pt-2 ps-1">Porcento</span>
                         </div>
                     </div>
                 </div>
@@ -125,8 +125,8 @@
                         </div>
                         <div class="ps-3">
                             <h6>{{count($totalMasterizacao)}}</h6>
-                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                class="text-muted small pt-2 ps-1">decrease</span>
+                            <span class="text-danger small pt-1 fw-bold">{{round($this->buscarPercentagem(count($totalMasterizacao), $masterizacao), 1) . "%"}}</span> <span
+                                class="text-muted small pt-2 ps-1">Porcento</span>
                         </div>
                     </div>
                 </div>

@@ -88,4 +88,35 @@ class CardRegistros extends Component
                 break;
         }
     }
+
+    public function buscarPercentagem($valor, $estado)
+    {
+        $gravacao = null;
+        $mixagem = null;
+        $masterizacao = null;
+        switch ($estado) {
+            case 'Hoje':
+                $gravacao = Gravacao::where("created_at", Carbon::today())->get()->count();
+                $mixagem = Mixagem::where("created_at", Carbon::today())->get()->count();
+                $masterizacao = Masterizacao::where("created_at", Carbon::today())->get()->count();
+                break;
+            case 'Pendentes':
+                $gravacao = Gravacao::where("estado_gravacao", "pendente")->get()->count();
+                $mixagem = Mixagem::where("estado_mixagem", "pendente")->get()->count();
+                $masterizacao = Masterizacao::where("estado_master", "pendente")->get()->count();
+                break;
+            case 'Concluidas':
+                $gravacao = Gravacao::where("estado_gravacao", "gravado")->get()->count();
+                $mixagem = Mixagem::where("estado_mixagem", "mixado")->get()->count();
+                $masterizacao = Masterizacao::where("estado_master", "masterizado")->get()->count();
+                break;
+            default:
+                $gravacao = Gravacao::all()->count();
+                $mixagem = Mixagem::all()->count();
+                $masterizacao = Masterizacao::all()->count();
+                break;
+        }
+        $somatorio = $gravacao + $mixagem + $masterizacao;
+        return $somatorio > 0 ? ($valor * 100) / $somatorio : 0;
+    }
 }
