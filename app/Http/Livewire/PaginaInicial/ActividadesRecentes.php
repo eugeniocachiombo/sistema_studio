@@ -62,7 +62,6 @@ class ActividadesRecentes extends Component
                 return $this->buscarTodasActividadesRecentes();
                 break;
         }
-
     }
 
     public function setSessaoPaginaActividades()

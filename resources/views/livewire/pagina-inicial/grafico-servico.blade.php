@@ -1,6 +1,6 @@
 <div class="card card-animated">
     <div class="card-body">
-      <h5 class="card-title">Gráfico de Serviços</h5>
+      <h5 class="card-title">Gráfico de Serviços Feitos</h5>
       
       <div id="columnChart"></div>
 

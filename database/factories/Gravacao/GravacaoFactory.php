@@ -22,7 +22,8 @@ class GravacaoFactory extends Factory
             "data_gravacao" => Carbon::now(),
             "estado_gravacao" => $this->faker->randomElement(["pendente", "gravado"]),
             "duracao" => $this->faker->numberBetween(1, 10) . " hr",
-            "responsavel" => $this->faker->numberBetween(1, 2)
+            "responsavel" => $this->faker->numberBetween(1, 2),
+            "updated_at" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28). " 10:30"
         ];
     }
 }

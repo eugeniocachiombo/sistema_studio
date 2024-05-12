@@ -19,7 +19,8 @@ class MasterizacaoFactory extends Factory
             "data_master" => Carbon::now(),
             "estado_master" => $this->faker->randomElement(["pendente", "masterizado"]),
             "duracao" => $this->faker->numberBetween(1, 10) . " hr",
-            "responsavel" => $this->faker->numberBetween(1, 2)
+            "responsavel" => $this->faker->numberBetween(1, 2),
+            "updated_at" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28). " 10:30",
         ];
     }
 }

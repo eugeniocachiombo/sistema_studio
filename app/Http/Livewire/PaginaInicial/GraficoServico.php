@@ -22,13 +22,13 @@ class GraficoServico extends Component
 
         $dados = DB::select("
             SELECT 'Gravacao' AS tipo, COUNT(*) as total FROM gravacaos
-            WHERE YEAR(created_at) = ? AND MONTH(created_at) = ?
+            WHERE YEAR(updated_at) = ? AND MONTH(updated_at) = ? AND estado_gravacao = 'gravado'
             UNION ALL
             SELECT 'Mixagem' AS tipo, COUNT(*) as total FROM mixagems
-            WHERE YEAR(created_at) = ? AND MONTH(created_at) = ?
+            WHERE YEAR(updated_at) = ? AND MONTH(updated_at) = ? AND estado_mixagem = 'mixado'
             UNION ALL
             SELECT 'Masterizacao' AS tipo, COUNT(*) as total FROM masterizacaos
-            WHERE YEAR(created_at) = ? AND MONTH(created_at) = ?
+            WHERE YEAR(updated_at) = ? AND MONTH(updated_at) = ? AND estado_master = 'masterizado'
         ", [$year, $month, $year, $month, $year, $month]);
 
         foreach ($dados as $item) {
