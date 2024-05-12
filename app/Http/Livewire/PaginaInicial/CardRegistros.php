@@ -100,6 +100,37 @@ class CardRegistros extends Component
         }
     }
 
+    public function buscarPercentagem($valor, $estado)
+    {
+        $gravacao = null;
+        $mixagem = null;
+        $masterizacao = null;
+        switch ($estado) {
+            case 'Hoje':
+                $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->count();
+                $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->count();
+                $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->count();
+                break;
+            case 'Pendentes':
+                $gravacao = Gravacao::where("estado_gravacao", "pendente")->get()->count();
+                $mixagem = Mixagem::where("estado_mixagem", "pendente")->get()->count();
+                $masterizacao = Masterizacao::where("estado_master", "pendente")->get()->count();
+                break;
+            case 'Concluidas':
+                $gravacao = Gravacao::where("estado_gravacao", "gravado")->get()->count();
+                $mixagem = Mixagem::where("estado_mixagem", "mixado")->get()->count();
+                $masterizacao = Masterizacao::where("estado_master", "masterizado")->get()->count();
+                break;
+            default:
+                $gravacao = Gravacao::all()->count();
+                $mixagem = Mixagem::all()->count();
+                $masterizacao = Masterizacao::all()->count();
+                break;
+        }
+        $somatorio = $gravacao + $mixagem + $masterizacao;
+        return $somatorio > 0 ? ($valor * 100) / $somatorio : 0;
+    }
+
     public function buscarTotalGravacaoCliente()
     {
         switch ($this->gravacao) {
@@ -184,34 +215,62 @@ class CardRegistros extends Component
         }
     }
 
-    public function buscarPercentagem($valor, $estado)
+    public function buscarPercentagemCliente($valor, $estado)
     {
         $gravacao = null;
         $mixagem = null;
         $masterizacao = null;
         switch ($estado) {
             case 'Hoje':
-                $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->count();
-                $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->count();
-                $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->count();
+                $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())
+                    ->where("cliente_id", $this->utilizadorLogado->id)->get()->count();
+                $mixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->whereDate('mixagems.data_mixagem', Carbon::today())
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)->get()->count();
+                $masterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->whereDate('masterizacaos.data_master', Carbon::today())
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)->get()->count();
                 break;
             case 'Pendentes':
-                $gravacao = Gravacao::where("estado_gravacao", "pendente")->get()->count();
-                $mixagem = Mixagem::where("estado_mixagem", "pendente")->get()->count();
-                $masterizacao = Masterizacao::where("estado_master", "pendente")->get()->count();
+                $gravacao = Gravacao::where("estado_gravacao", "pendente")
+                    ->where("cliente_id", $this->utilizadorLogado->id)
+                    ->get()->count();
+                $mixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where("mixagems.estado_mixagem", "pendente")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
+                $masterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('masterizacaos.estado_master', "pendente")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
                 break;
             case 'Concluidas':
-                $gravacao = Gravacao::where("estado_gravacao", "gravado")->get()->count();
-                $mixagem = Mixagem::where("estado_mixagem", "mixado")->get()->count();
-                $masterizacao = Masterizacao::where("estado_master", "masterizado")->get()->count();
+                $gravacao = Gravacao::where("estado_gravacao", "gravado")->where("cliente_id", $this->utilizadorLogado)->get()->count();
+                $mixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where("mixagems.estado_mixagem", "mixado")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
+                $masterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('masterizacaos.estado_master', "masterizado")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
                 break;
             default:
-                $gravacao = Gravacao::all()->count();
-                $mixagem = Mixagem::all()->count();
-                $masterizacao = Masterizacao::all()->count();
+                $gravacao = Gravacao::where("cliente_id", $this->utilizadorLogado->id)->get()->count();
+                $mixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
+                $masterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get()->count();
                 break;
         }
         $somatorio = $gravacao + $mixagem + $masterizacao;
         return $somatorio > 0 ? ($valor * 100) / $somatorio : 0;
     }
+
 }
