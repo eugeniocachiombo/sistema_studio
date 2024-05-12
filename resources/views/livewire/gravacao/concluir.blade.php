@@ -54,7 +54,7 @@
                             <tbody class="">
                                 @foreach ($listaGravacao as $item)
                                     <tr>
-                                        <td class="bg-success text-white" style="white-space: nowrap">{{ $item->id }}</td>
+                                        <td class="bg-success text-white text-center" style="white-space: nowrap">{{ $item->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -93,7 +93,7 @@
                                                     {{ $proprietario }}</div>
                                             </div>
                                         </td>
-                                        <td class="bg-success text-white" style="min-width: 200px">{{ $item->titulo_audio }}</td>
+                                        <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             @php
                                                 $idGravacao = $item->id;

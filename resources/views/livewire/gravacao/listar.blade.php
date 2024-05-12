@@ -18,37 +18,37 @@
                         <input type="text" class="form-control mb-3 d-none" wire:model="termoPesquisaMembros"
                             placeholder="Pesquisar cliente (id ou nome)...">
 
-                        <table class="table datatablePT table-light table-hover pt-3">
+                        <table class="table datatablePT table-hover pt-3">
                             <thead class="">
                                 <tr>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Id
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Proprietário
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Título do áudio
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Participação
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estilo
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da gravação
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Duração
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Agendado
                                     </th>
-                                    <th style="white-space: nowrap">
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
                                 </tr>
@@ -57,7 +57,7 @@
                             <tbody class="">
                                 @foreach ($listaGravacao as $item)
                                     <tr>
-                                        <td style="white-space: nowrap">{{ $item->id }}</td>
+                                        <td class="bg-primary text-white text-center" style="white-space: nowrap">{{ $item->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -124,8 +124,12 @@
                                         <td style="white-space: nowrap">{{ $item->duracao }}</td>
                                         <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}
                                         </td>
-                                        <td style="white-space: nowrap">
-                                            <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">Editar</a>
+                                        <td class="text-center" style="white-space: nowrap">
+                                            <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">
+                                                <button class="btn btn-success">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
