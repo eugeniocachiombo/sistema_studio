@@ -42,4 +42,6 @@ class GraficoServico extends Component
         }
         return $totais;
     }
+
+    
 }

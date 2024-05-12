@@ -98,3 +98,4 @@
       </script>
     </div>
   </div>
+  <script src="{{ asset('assets/js/temporeal_grafico_servicos.js') }}"></script>

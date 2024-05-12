@@ -56,11 +56,11 @@
                                 name: 'Gravação'
                             },
                             {
-                                value: 580,
+                                value: '<?php echo count($totalMixagem) ?>',
                                 name: 'Mixagem'
                             },
                             {
-                                value: 484,
+                                value: '<?php echo count($totalMasterizacao) ?>',
                                 name: 'Masterização'
                             },
                             {
