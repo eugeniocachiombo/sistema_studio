@@ -145,7 +145,7 @@ class CardRegistros extends Component
                     ->get();
                 break;
             case 'Concluidas':
-                $this->totalGravacao = Gravacao::where("estado_gravacao", "gravado")->where("cliente_id", $this->utilizadorLogado)->get();
+                $this->totalGravacao = Gravacao::where("estado_gravacao", "gravado")->where("cliente_id", $this->utilizadorLogado->id)->get();
                 break;
             default:
                 $this->totalGravacao = Gravacao::where("cliente_id", $this->utilizadorLogado->id)->get();
