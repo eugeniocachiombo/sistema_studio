@@ -49,6 +49,9 @@
                                         Agendado
                                     </th>
                                      <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Responsavel
+                                    </th>
+                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
                                 </tr>
@@ -123,6 +126,9 @@
                                         </td>
                                         <td style="white-space: nowrap">{{ $item->duracao }}</td>
                                         <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}
+                                        </td>
+                                        <td style="white-space: nowrap">
+                                            {{ $this->buscarUtilizador($item->responsavel)->name }}
                                         </td>
                                         <td class="text-center" style="white-space: nowrap">
                                             <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">
