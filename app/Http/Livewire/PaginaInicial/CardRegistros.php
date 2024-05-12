@@ -39,7 +39,7 @@ class CardRegistros extends Component
     {
         switch ($this->gravacao) {
             case 'Hoje':
-                $this->totalGravacao = Gravacao::where("created_at", Carbon::today())->get();
+                $this->totalGravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->get();
                 break;
             case 'Pendentes':
                 $this->totalGravacao = Gravacao::where("estado_gravacao", "pendente")->get();
@@ -57,7 +57,7 @@ class CardRegistros extends Component
     {
         switch ($this->mixagem) {
             case 'Hoje':
-                $this->totalMixagem = Mixagem::where("created_at", Carbon::today())->get();
+                $this->totalMixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->get();
                 break;
             case 'Pendentes':
                 $this->totalMixagem = Mixagem::where("estado_mixagem", "pendente")->get();
@@ -75,7 +75,7 @@ class CardRegistros extends Component
     {
         switch ($this->masterizacao) {
             case 'Hoje':
-                $this->totalMasterizacao = Masterizacao::where("created_at", Carbon::today())->get();
+                $this->totalMasterizacao = Masterizacao::whereDate("data_master", Carbon::today())->get();
                 break;
             case 'Pendentes':
                 $this->totalMasterizacao = Masterizacao::where("estado_master", "pendente")->get();
@@ -96,9 +96,9 @@ class CardRegistros extends Component
         $masterizacao = null;
         switch ($estado) {
             case 'Hoje':
-                $gravacao = Gravacao::where("created_at", Carbon::today())->get()->count();
-                $mixagem = Mixagem::where("created_at", Carbon::today())->get()->count();
-                $masterizacao = Masterizacao::where("created_at", Carbon::today())->get()->count();
+                $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->count();
+                $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->count();
+                $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->count();
                 break;
             case 'Pendentes':
                 $gravacao = Gravacao::where("estado_gravacao", "pendente")->get()->count();
