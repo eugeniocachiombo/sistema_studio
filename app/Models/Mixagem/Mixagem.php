@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Mixagem extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "gravacao_id",
+        "data_mixagem",
+        "estado_mixagem",
+        "duracao",
+        "responsavel"
+    ];
 }

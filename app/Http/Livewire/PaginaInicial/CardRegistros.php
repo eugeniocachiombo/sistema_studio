@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\PaginaInicial;
 
 use App\Models\Gravacao\Gravacao;
+use App\Models\Masterizacao\Masterizacao;
+use App\Models\Mixagem\Mixagem;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +24,8 @@ class CardRegistros extends Component
     public function render()
     {
         $this->buscarTotalGravacao();
+        $this->buscarTotalMixagem();
+        $this->buscarTotalMasterizacao();
         $this->utilizadorLogado = $this->buscarDadosUtilizador($this->utilizador_id);
         return view('livewire.pagina-inicial.card-registros');
     }
@@ -31,7 +35,8 @@ class CardRegistros extends Component
         return User::find($id);
     }
 
-    public function buscarTotalGravacao(){
+    public function buscarTotalGravacao()
+    {
         switch ($this->gravacao) {
             case 'Hoje':
                 $this->totalGravacao = Gravacao::where("created_at", Carbon::today())->get();
@@ -44,6 +49,42 @@ class CardRegistros extends Component
                 break;
             default:
                 $this->totalGravacao = Gravacao::all();
+                break;
+        }
+    }
+
+    public function buscarTotalMixagem()
+    {
+        switch ($this->mixagem) {
+            case 'Hoje':
+                $this->totalMixagem = Mixagem::where("created_at", Carbon::today())->get();
+                break;
+            case 'Pendentes':
+                $this->totalMixagem = Mixagem::where("estado_mixagem", "pendente")->get();
+                break;
+            case 'Concluidas':
+                $this->totalMixagem = Mixagem::where("estado_mixagem", "mixado")->get();
+                break;
+            default:
+                $this->totalMixagem = Mixagem::all();
+                break;
+        }
+    }
+
+    public function buscarTotalMasterizacao()
+    {
+        switch ($this->masterizacao) {
+            case 'Hoje':
+                $this->totalMasterizacao = Masterizacao::where("created_at", Carbon::today())->get();
+                break;
+            case 'Pendentes':
+                $this->totalMasterizacao = Masterizacao::where("estado_master", "pendente")->get();
+                break;
+            case 'Concluidas':
+                $this->totalMasterizacao = Masterizacao::where("estado_master", "mixado")->get();
+                break;
+            default:
+                $this->totalMasterizacao = Masterizacao::all();
                 break;
         }
     }
