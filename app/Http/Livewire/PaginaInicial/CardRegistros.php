@@ -19,15 +19,26 @@ class CardRegistros extends Component
     public function mount()
     {
         $this->utilizador_id = Auth::user()->id;
+        $this->utilizadorLogado = $this->buscarDadosUtilizador($this->utilizador_id);
     }
 
     public function render()
     {
-        $this->buscarTotalGravacao();
-        $this->buscarTotalMixagem();
-        $this->buscarTotalMasterizacao();
-        $this->utilizadorLogado = $this->buscarDadosUtilizador($this->utilizador_id);
+        $this->verificarSeClienteOuFunc();
         return view('livewire.pagina-inicial.card-registros');
+    }
+
+    public function verificarSeClienteOuFunc()
+    {
+        if ($this->utilizadorLogado->tipo_acesso == 3) {
+            $this->buscarTotalGravacaoCliente();
+            $this->buscarTotalMixagemCliente();
+            $this->buscarTotalMasterizacaoCliente();
+        } else {
+            $this->buscarTotalGravacao();
+            $this->buscarTotalMixagem();
+            $this->buscarTotalMasterizacao();
+        }
     }
 
     public function buscarDadosUtilizador($id)
@@ -85,6 +96,90 @@ class CardRegistros extends Component
                 break;
             default:
                 $this->totalMasterizacao = Masterizacao::all();
+                break;
+        }
+    }
+
+    public function buscarTotalGravacaoCliente()
+    {
+        switch ($this->gravacao) {
+            case 'Hoje':
+                $this->totalGravacao = Gravacao::whereDate("data_gravacao", Carbon::today())
+                    ->where("cliente_id", $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Pendentes':
+                $this->totalGravacao = Gravacao::where("estado_gravacao", "pendente")
+                    ->where("cliente_id", $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Concluidas':
+                $this->totalGravacao = Gravacao::where("estado_gravacao", "gravado")->where("cliente_id", $this->utilizadorLogado)->get();
+                break;
+            default:
+                $this->totalGravacao = Gravacao::where("cliente_id", $this->utilizadorLogado->id)->get();
+                break;
+        }
+    }
+
+    public function buscarTotalMixagemCliente()
+    {
+        switch ($this->mixagem) {
+            case 'Hoje':
+                $this->totalMixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->whereDate('mixagems.data_mixagem', Carbon::today())
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Pendentes':
+                $this->totalMixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where("mixagems.estado_mixagem", "pendente")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Concluidas':
+                $this->totalMixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where("mixagems.estado_mixagem", "mixado")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            default:
+                $this->totalMixagem = Mixagem::join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+        }
+    }
+
+    public function buscarTotalMasterizacaoCliente()
+    {
+        switch ($this->masterizacao) {
+            case 'Hoje':
+                $this->totalMasterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->whereDate('masterizacaos.data_master', Carbon::today())
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Pendentes':
+                $this->totalMasterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('masterizacaos.estado_master', "pendente")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            case 'Concluidas':
+                $this->totalMasterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('masterizacaos.estado_master', "masterizado")
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
+                break;
+            default:
+                $this->totalMasterizacao = Masterizacao::join('mixagems', 'masterizacaos.mixagem_id', '=', 'mixagems.id')
+                    ->join('gravacaos', 'mixagems.gravacao_id', '=', 'gravacaos.id')
+                    ->where('gravacaos.cliente_id', $this->utilizadorLogado->id)
+                    ->get();
                 break;
         }
     }
