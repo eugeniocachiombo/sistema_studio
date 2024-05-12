@@ -12,14 +12,28 @@
 
         <section class="section dashboard">
             <div class="row">
-                @livewire('pagina-inicial.card-registros')
+                <div class="col-lg-8 ">
+                    <div class="row">
+                        @livewire('pagina-inicial.card-registros')
+                    </div>
+
+                    @livewire('pagina-inicial.grafico-servico')
+                </div>
+
+                <div class="col-lg-4 ">
+                    @livewire('pagina-inicial.actividades-recentes')
+                </div>
             </div>
 
-            <div class="col-lg-4">
-                @livewire('pagina-inicial.actividades-recentes')
-
+            <div class="row">
                 @if ($utilizadorLogado->tipo_acesso != 3)
-                    @livewire('pagina-inicial.grafico-geral')
+                    <div class="col">
+                        @livewire('pagina-inicial.grafico-geral')
+                    </div>
+
+                    <div class="col">
+                        @livewire('pagina-inicial.tb-clientes')
+                    </div>
                 @endif
             </div>
         </section>
