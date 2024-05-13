@@ -5,7 +5,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Mixagem</a></li>
-                    <li class="breadcrumb-item active">Agendamento</li>
+                    <li class="breadcrumb-item active">Actualizar Agendamento</li>
                 </ol>
             </nav>
         </div>
@@ -18,7 +18,7 @@
                         {{-- Cliente --}}
                         <div class="card card-animated p-4">
                             <label class="text-primary fw-bold" for="">Gravação</label>
-                            <select class="form-control mt-3" wire:model="gravacao_id" name="" id="">
+                            <select class="form-control mt-3" wire:model="gravacao_id" name="" id="" disabled>
                                 <option class="d-none">Selecione o estilo</option>
                                 @foreach ($listaGravacoes as $item)
                                     <option value="{{ $item->id }}">
@@ -76,7 +76,7 @@
 
                                         <div class="col m-3">
                                             <label class="text-primary fw-bold" for="">Duração da
-                                                mixagem</label>
+                                                gravação</label>
                                             <select class="form-control " wire:model="duracaoMixagem" name=""
                                                 id="">
                                                 <option class="d-none">Selecione a duração</option>
@@ -97,14 +97,12 @@
                                 <div class="row">
                                     <div class="col ">
                                         <div class="col mb-3 ms-3">
-                                            <button wire:click.prevent="agendarMixagem" class="btn btn-primary">
-                                                Agendar Mixagem
+                                            <button wire:click.prevent="actualizarMixagem" class="btn btn-primary">
+                                                Actualizar
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
