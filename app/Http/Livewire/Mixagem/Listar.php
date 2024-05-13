@@ -27,6 +27,7 @@ class Listar extends Component
             ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
             ->where("gravacaos.estado_gravacao", "gravado")
             ->whereNotNull("mixagems.id")
+            ->distinct()
             ->get();
         return view('livewire.mixagem.listar');
     }
