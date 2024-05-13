@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Inclusao;
 
 use App\Models\chat\Conversa as ChatConversa;
+use App\Models\Gravacao\Gravacao;
+use App\Models\Masterizacao\Masterizacao;
+use App\Models\Mixagem\Mixagem;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use DateTime;

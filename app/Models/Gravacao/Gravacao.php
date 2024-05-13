@@ -2,6 +2,7 @@
 
 namespace App\Models\Gravacao;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,4 +20,8 @@ class Gravacao extends Model
         "duracao",
         "responsavel"
     ];
+
+    public function buscarCliente(){
+        return $this->belongsTo(User::class, "cliente_id", "id");
+    }
 }
