@@ -86,13 +86,6 @@ Route::get("/seed", function () {
     return "Informações faker inseridos na Base de dados";
 });
 
-Route::get("/seed_grafico", function () {
-    \App\Models\Gravacao\Gravacao::factory(rand(1, 5))->create();
-    \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
-    \App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
-    return "Informações faker inseridos na Base de dados";
-});
-
 Route::get("/truncate", function () {
     DB::statement('SET FOREIGN_KEY_CHECKS=0');
     DB::statement("truncate gravacaos");
