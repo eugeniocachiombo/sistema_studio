@@ -37,7 +37,14 @@ class Agendar extends Component
 
     public function render()
     {
-        $this->listaGravacoes = Gravacao::where("estado_gravacao", "gravado")->get();
+        $this->listaGravacoes = Gravacao::select("gravacaos.*")
+            ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
+            ->where("gravacaos.estado_gravacao", "gravado")
+            ->where(function ($query) {
+                $query->whereNull("mixagems.id");
+            })
+            //->distinct()
+            ->get();
         return view('livewire.mixagem.agendar');
     }
 
@@ -140,7 +147,6 @@ class Agendar extends Component
 
     public function limparCampos()
     {
-        $this->infoDispositivo = null;
         $this->gravacao_id = null;
         $this->dataMixagem = null;
         $this->duracaoMixagem = null;

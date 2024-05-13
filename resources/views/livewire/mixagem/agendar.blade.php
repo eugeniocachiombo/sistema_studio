@@ -30,7 +30,7 @@
                                             $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
                                         @endphp
 
-                                        {{ $proprietario . ' - ' . $item->titulo_audio }}
+                                        {{  $proprietario . ' - ' . $item->titulo_audio }}
                                         {{ $particEscolhidos ? 'feat. ( ' . $particEscolhidos . ' )' : '' }}
                                     </option>
                                 @endforeach
