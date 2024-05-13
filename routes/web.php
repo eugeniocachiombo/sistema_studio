@@ -71,6 +71,11 @@ Route::prefix("masterizacao")->name("masterizacao.")->group(function () {
 Route::get("/", function () {return redirect()->route("utilizador.autenticacao");});
 Route::fallback(function () {return view("index.erro_de_pagina.pagina-de-erro");});
 
+Route::get("/migrate", function () {
+    Artisan::call('migrate');
+    return "Base de dados emigrado";
+});
+
 Route::get("/seed", function () {
     \App\Models\User::factory(20)->create();
     \App\Models\chat\Conversa::factory(rand(5, 20))->create();
@@ -84,11 +89,6 @@ Route::get("/seed_grafico", function () {
     \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
     \App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
     return "Informações faker inseridos na Base de dados";
-});
-
-Route::get("/migrate", function () {
-    Artisan::call('migrate');
-    return "Base de dados emigrado";
 });
 
 Route::get("/truncate", function () {
