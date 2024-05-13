@@ -31,7 +31,7 @@
                                         @endphp
 
                                         {{  $proprietario . ' - ' . $item->titulo_audio }}
-                                        {{ $particEscolhidos ? 'feat. ( ' . $particEscolhidos . ' )' : '' }}
+                                        {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : '' }}
                                     </option>
                                 @endforeach
                             </select>

@@ -107,7 +107,7 @@
                                                 $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
                                             @endphp
 
-                                            {{ $particEscolhidos ? 'Feat. ( ' . $particEscolhidos . ' )' : 'Nenhum' }}
+                                            {{ $particEscolhidos ? ' ( Feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
                                         </td>
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
