@@ -1,22 +1,15 @@
 <?php
 
 use App\Http\Livewire\Chat\Conversa;
-
 use App\Http\Livewire\Gravacao\Actualizar;
-
 use App\Http\Livewire\Gravacao\Agendar;
-
 use App\Http\Livewire\Gravacao\Concluir;
-
 use App\Http\Livewire\Gravacao\Listar;
-
 use App\Http\Livewire\Info\Ajuda;
-
 use App\Http\Livewire\Info\Contacto;
+
 use App\Http\Livewire\Masterizacao\Actualizar as ActualizarMasterizacao;
-
 use App\Http\Livewire\Masterizacao\Agendar as AgendarMasterizacao;
-
 use App\Http\Livewire\Masterizacao\Concluir as ConcluirMasterizacao;
 use App\Http\Livewire\Masterizacao\Listar as ListarMasterizacao;
 use App\Http\Livewire\Mixagem\Actualizar as ActualizarMixagem;
@@ -78,14 +71,18 @@ Route::prefix("masterizacao")->name("masterizacao.")->group(function () {
 Route::get("/", function () {return redirect()->route("utilizador.autenticacao");});
 Route::fallback(function () {return view("index.erro_de_pagina.pagina-de-erro");});
 
-
 Route::get("/seed", function () {
     \App\Models\User::factory(20)->create();
     \App\Models\chat\Conversa::factory(rand(5, 20))->create();
     \App\Models\Participante\Participante::factory(rand(1, 10))->create();
     \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
-    //\App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
-    //\App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
+    return "Informações faker inseridos na Base de dados";
+});
+
+Route::get("/seed_grafico", function () {
+    \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
+    \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
+    \App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
     return "Informações faker inseridos na Base de dados";
 });
 
