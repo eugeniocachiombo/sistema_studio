@@ -94,6 +94,7 @@ class Concluir extends Component
             "estado_gravacao" => "gravado"
         ]);
         $this->emit('alerta', ['mensagem' => 'Agendamento concluido com sucesso', 'icon' => 'success']);
+        $this->emit('atrazar_redirect', ['caminho' => '/gravacao/concluir', 'tempo' => 2500]);
     }
 
     public function formatarData($data)
