@@ -271,11 +271,11 @@ class Actualizar extends Component
         $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
 
         if (!empty($nomeCliente) && !empty($nomeGrupo)) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeCliente) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o/a cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         }
     }
 
