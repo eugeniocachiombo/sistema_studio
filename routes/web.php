@@ -23,15 +23,18 @@ use App\Http\Livewire\Gravacao\{
     Listar,
     Concluir
 };
-
 use App\Http\Livewire\Mixagem\{
     Agendar as AgendarMixagem,
     Actualizar as ActualizarMixagem,
     Listar as ListarMixagem,
     Concluir as ConcluirMixagem
 };
-
-
+use App\Http\Livewire\Masterizacao\{
+    Agendar as AgendarMasterizacao,
+    Actualizar as ActualizarMasterizacao,
+    Listar as ListarMasterizacao,
+    Concluir as ConcluirMasterizacao
+};
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
     Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);
@@ -64,9 +67,16 @@ Route::prefix("gravacao")->name("gravacao.")->group(function(){
 
 Route::prefix("mixagem")->name("mixagem.")->group(function(){
    Route::get('agendar', [AgendarMixagem::class, "index"])->name("agendar")->middleware(CheckAuth::class);
-   Route::get('actualizar/{idGravacao}', [ActualizarMixagem::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
+   Route::get('actualizar/{idMixagem}', [ActualizarMixagem::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
    Route::get('listar', [ListarMixagem::class, "index"])->name("listar")->middleware(CheckAuth::class);
    Route::get('concluir', [ConcluirMixagem::class, "index"])->name("concluir")->middleware(CheckAuth::class);
+});
+
+Route::prefix("masterizacao")->name("masterizacao.")->group(function(){
+   Route::get('agendar', [AgendarMasterizacao::class, "index"])->name("agendar")->middleware(CheckAuth::class);
+   Route::get('actualizar/{idMasterizacao}', [ActualizarMasterizacao::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
+   Route::get('listar', [ListarMasterizacao::class, "index"])->name("listar")->middleware(CheckAuth::class);
+   Route::get('concluir', [ConcluirMasterizacao::class, "index"])->name("concluir")->middleware(CheckAuth::class);
 });
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });

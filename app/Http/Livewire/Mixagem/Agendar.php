@@ -43,7 +43,6 @@ class Agendar extends Component
             ->where(function ($query) {
                 $query->whereNull("mixagems.id");
             })
-            //->distinct()
             ->get();
         return view('livewire.mixagem.agendar');
     }

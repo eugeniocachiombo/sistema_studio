@@ -65,18 +65,18 @@
                 </a>
                 <ul id="masterizacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="masterizacao-elements.html">
+                        <a href="{{ route('masterizacao.agendar') }}">
                             <i class="bi bi-circle"></i><span>Agendar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="masterizacao-elements.html">
-                            <i class="bi bi-circle"></i><span>Alterar</span>
+                        <a href="{{ route('masterizacao.listar') }}">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="masterizacao-elements.html">
-                            <i class="bi bi-circle"></i><span>Listar</span>
+                        <a href="{{ route('masterizacao.concluir') }}">
+                            <i class="bi bi-circle"></i><span>Concluir</span>
                         </a>
                     </li>
                 </ul>
