@@ -123,9 +123,9 @@ class Agendar extends Component
             "duracaoMasterizacao" => "required",
         ]);
 
-        $mixagem = Mixagem::find($this->gravacao_id);
+        $mixagem = Mixagem::where("gravacao_id",$this->gravacao_id)->first();
         $dados = [
-            "mixagem_id" => $mixagem->gravacao_id,
+            "mixagem_id" => $mixagem->id,
             "data_master" => $this->dataMasterizacao,
             "estado_master" => "pendente",
             "duracao" => $this->duracaoMasterizacao,

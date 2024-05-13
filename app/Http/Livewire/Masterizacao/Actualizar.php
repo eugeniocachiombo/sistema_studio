@@ -133,7 +133,7 @@ class Actualizar extends Component
             "duracaoMasterizacao" => "required",
         ]);
 
-        $mixagem = Mixagem::find($this->gravacao_id);
+        $mixagem = Mixagem::where("gravacao_id",$this->gravacao_id)->first();
         $dados = [
             "mixagem_id" => $mixagem->id,
             "data_master" => $this->dataMasterizacao,
