@@ -9,12 +9,20 @@ use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\RegistroActividade;
+use Jenssegers\Agent\Agent;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Concluir extends Component
 {
     public $listaGravacoes = array();
+    public $infoDispositivo;
+
+    public function mount(){
+        $this->buscarDadosDispositivo();
+    }
 
     public function index()
     {
@@ -98,8 +106,52 @@ class Concluir extends Component
         Mixagem::where("id", $idMixagem)->update([
             "estado_mixagem" => "mixado"
         ]);
+        $mixagem = Mixagem::find($idMixagem);
+        $gravacao = Gravacao::find($mixagem->gravacao_id);
+        $this->msgParaRegistroActividade($gravacao->cliente_id, $gravacao->grupo_id);
         $this->emit('alerta', ['mensagem' => 'Agendamento concluido com sucesso', 'icon' => 'success']);
         $this->emit('atrazar_redirect', ['caminho' => '/mixagem/concluir', 'tempo' => 2500]);
+    }
+
+    public function msgParaRegistroActividade($cliente_id, $grupo_id)
+    {
+        $nomeCliente = $this->buscarUtilizador($cliente_id);
+        $nomeGrupo = $this->buscarNomeGrupo($grupo_id);
+
+        if (!empty($nomeCliente) && !empty($nomeGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de mixagem para cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        } elseif ($nomeCliente) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de mixagem para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        } elseif ($nomeGrupo) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de mixagem para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function buscarNomeGrupo($id)
+    {
+        return Grupo::find($id);
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
     }
 
     public function formatarData($data)
