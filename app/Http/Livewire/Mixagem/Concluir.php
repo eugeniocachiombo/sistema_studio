@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Mixagem;
 
+use App\Models\Gravacao\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
@@ -38,6 +39,11 @@ class Concluir extends Component
             ->distinct()
             ->get();
         return view('livewire.mixagem.concluir');
+    }
+
+    public function buscarEstilos($id)
+    {
+        return Estilo::find($id);
     }
 
     public function buscarUtilizador($id)

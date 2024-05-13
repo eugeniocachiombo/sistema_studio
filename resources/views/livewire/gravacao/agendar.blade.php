@@ -357,7 +357,7 @@
                             <div class="col d-table d-md-flex justify-content-between">
                                 <div class="col m-3">
                                     <button wire:click.prevent="agendarGravacao" class="btn btn-primary">
-                                        Agendar Gravação
+                                        Agendar
                                     </button>
                                 </div>
                             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Masterizacao;
 
+use App\Models\Gravacao\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
@@ -119,7 +120,12 @@ class Concluir extends Component
         $gravacao = Gravacao::find($mixagem->gravacao_id);
         $this->msgParaRegistroActividade($gravacao->cliente_id, $gravacao->grupo_id);
         $this->emit('alerta', ['mensagem' => 'Agendamento concluido com sucesso', 'icon' => 'success']);
-        $this->emit('atrazar_redirect', ['caminho' => '/mixagem/concluir', 'tempo' => 2500]);
+        $this->emit('atrazar_redirect', ['caminho' => '/masterizacao/concluir', 'tempo' => 2500]);
+    }
+
+    public function buscarEstilos($id)
+    {
+        return Estilo::find($id);
     }
 
     public function msgParaRegistroActividade($cliente_id, $grupo_id)

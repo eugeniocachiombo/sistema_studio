@@ -98,7 +98,7 @@
                                     <div class="col ">
                                         <div class="col mb-3 ms-3">
                                             <button wire:click.prevent="agendarMixagem" class="btn btn-primary">
-                                                Agendar Mixagem
+                                                Agendar
                                             </button>
                                         </div>
                                     </div>

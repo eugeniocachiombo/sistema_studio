@@ -105,7 +105,7 @@
                                         </td>
                                         <td style="white-space: nowrap">{{ $dadosMasterizacao->data_master }}</td>
                                         <td style="white-space: nowrap">
-                                            @if ($dadosMasterizacao->estado_mixagem == 'mixado')
+                                            @if ($dadosMasterizacao->estado_master == 'masterizado')
                                                 <span class="badge bg-success text-light ">
                                                     {{ ucwords($dadosMasterizacao->estado_master) }}
                                                 </span>

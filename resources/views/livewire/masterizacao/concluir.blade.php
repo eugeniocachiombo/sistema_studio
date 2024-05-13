@@ -1,10 +1,10 @@
 <div>
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Masterizacao</h1>
+            <h1>Masterização</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Masterizacao</a></li>
+                    <li class="breadcrumb-item"><a href="#">Masterização</a></li>
                     <li class="breadcrumb-item active">Concluir</li>
                 </ol>
             </nav>
@@ -34,6 +34,9 @@
                                         Participação
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Estilo
+                                    </th>
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da Masterizacao
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
@@ -60,7 +63,7 @@
                                         $dadosMasterizacao = $this->buscarDadosMasterizacao($dadosMixagem->id);
                                     @endphp
                                     <tr>
-                                        <td class="bg-primary text-white text-center" style="white-space: nowrap">
+                                        <td class="bg-success text-white text-center" style="white-space: nowrap">
                                             {{ $item->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
@@ -96,6 +99,9 @@
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
+                                        </td>
+                                        <td class="bg-success text-white" style="white-space: nowrap">
+                                            {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $dadosMasterizacao->data_master }}</td>
                                         <td style="white-space: nowrap">

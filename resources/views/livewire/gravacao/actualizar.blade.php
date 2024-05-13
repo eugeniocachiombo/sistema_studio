@@ -358,7 +358,7 @@
                                 <div class="col d-table d-md-flex justify-content-between">
                                     <div class="col m-3">
                                         <button wire:click.prevent="actualizarAgendamento" class="btn btn-primary">
-                                            Actualizar Agendamento
+                                            Actualizar 
                                         </button>
                                     </div>
                                 </div>
