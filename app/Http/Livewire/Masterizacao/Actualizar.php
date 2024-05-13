@@ -74,9 +74,9 @@ class Actualizar extends Component
         $nomeCliente = $this->buscarUtilizador($cliente_id);
         $nomeGrupo = $this->buscarGrupo($grupo_id) ? $this->buscarGrupo($grupo_id)->name : "";
         if ($nomeCliente) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez uma actualização no agendamento de mixagem para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez uma actualização no agendamento de masterização para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez uma actualização no agendamento de mixagem para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez uma actualização no agendamento de masterização para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         }
     }
 

@@ -5,7 +5,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Mixagem</a></li>
-                    <li class="breadcrumb-item active">Listagem</li>
+                    <li class="breadcrumb-item active">Concluir</li>
                 </ol>
             </nav>
         </div>
