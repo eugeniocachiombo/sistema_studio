@@ -24,6 +24,13 @@ use App\Http\Livewire\Gravacao\{
     Concluir
 };
 
+use App\Http\Livewire\Mixagem\{
+    Agendar as AgendarMixagem,
+    Actualizar as ActualizarMixagem,
+    Listar as ListarMixagem,
+    Concluir as ConcluirMixagem
+};
+
 
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function(){
@@ -44,6 +51,10 @@ Route::prefix("utilizador")->name("utilizador.")->group(function(){
     Route::get('alterar_palavra_passe', [Perfil::class, "alterarPalavraPasse"])->name("alterar_palavra_passe")->middleware(CheckAuth::class);
 });
 
+Route::prefix("chat")->name("chat.")->group(function(){
+    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa")->middleware(CheckAuth::class);
+});
+
 Route::prefix("gravacao")->name("gravacao.")->group(function(){
    Route::get('agendar', [Agendar::class, "index"])->name("agendar")->middleware(CheckAuth::class);
    Route::get('actualizar/{idGravacao}', [Actualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
@@ -51,8 +62,11 @@ Route::prefix("gravacao")->name("gravacao.")->group(function(){
    Route::get('concluir', [Concluir::class, "index"])->name("concluir")->middleware(CheckAuth::class);
 });
 
-Route::prefix("chat")->name("chat.")->group(function(){
-    Route::get('conversa/{utilizador}/{remente}', [Conversa::class, "index"])->name("conversa")->middleware(CheckAuth::class);
+Route::prefix("mixagem")->name("mixagem.")->group(function(){
+   Route::get('agendar', [AgendarMixagem::class, "index"])->name("agendar")->middleware(CheckAuth::class);
+   Route::get('actualizar/{idGravacao}', [ActualizarMixagem::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
+   Route::get('listar', [ListarMixagem::class, "index"])->name("listar")->middleware(CheckAuth::class);
+   Route::get('concluir', [ConcluirMixagem::class, "index"])->name("concluir")->middleware(CheckAuth::class);
 });
 
 Route::get("/", function (){ return redirect()->route("utilizador.autenticacao"); });

@@ -40,18 +40,18 @@
                 </a>
                 <ul id="mixagem-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="mixagem-elements.html">
+                        <a href="{{ route('mixagem.agendar') }}">
                             <i class="bi bi-circle"></i><span>Agendar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="mixagem-elements.html">
-                            <i class="bi bi-circle"></i><span>Alterar</span>
+                        <a href="{{ route('mixagem.listar') }}">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="mixagem-elements.html">
-                            <i class="bi bi-circle"></i><span>Listar</span>
+                        <a href="{{ route('mixagem.concluir') }}">
+                            <i class="bi bi-circle"></i><span>Concluir</span>
                         </a>
                     </li>
                 </ul>
