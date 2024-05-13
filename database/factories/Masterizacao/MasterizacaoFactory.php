@@ -4,9 +4,12 @@ namespace Database\Factories\Masterizacao;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Jenssegers\Agent\Agent;
+use App\Models\Utilizador\RegistroActividade;
 
 class MasterizacaoFactory extends Factory
 {
+    public $infoDispositivo;
     /**
      * Define the model's default state.
      *
@@ -14,6 +17,9 @@ class MasterizacaoFactory extends Factory
      */
     public function definition()
     {
+        $this->buscarDadosDispositivo();
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento faker de masterização </b> <hr>" . $this->infoDispositivo, "normal", rand(1,2));
+        
         return [
             "mixagem_id" => $this->buscarIDMixagem(),
             "data_master" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28). " 10:30",
@@ -55,5 +61,27 @@ class MasterizacaoFactory extends Factory
         $indiceMixagem = $qtdMixagens > 0 ? rand(0, ($qtdMixagens - 1)) : 0;
         $mixagem_id = $arrayIDsMixagens[$indiceMixagem];
         return $mixagem_id;
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
     }
 }

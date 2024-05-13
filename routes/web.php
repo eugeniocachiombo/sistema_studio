@@ -77,12 +77,7 @@ Route::get("/migrate", function () {
 });
 
 Route::get("/seed", function () {
-    \App\Models\User::factory(20)->create();
-    \App\Models\chat\Conversa::factory(rand(5, 20))->create();
-    \App\Models\Participante\Participante::factory(rand(1, 10))->create();
-    \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
-    \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
-    \App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
+    \Database\Seeders\DatabaseSeeder::run();
     return "Informações faker inseridos na Base de dados";
 });
 

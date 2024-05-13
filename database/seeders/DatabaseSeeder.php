@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public static function run()
     {
         \App\Models\User::factory(20)->create();
         \App\Models\chat\Conversa::factory(rand(5, 20))->create();
