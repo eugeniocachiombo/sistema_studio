@@ -76,6 +76,7 @@ Route::get("/migrate", function () {
     return "Base de dados emigrado";
 });
 
+
 Route::get("/seed", function () {
     \Database\Seeders\DatabaseSeeder::run();
     return "Informações faker inseridos na Base de dados";
