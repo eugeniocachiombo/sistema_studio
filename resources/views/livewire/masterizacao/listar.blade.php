@@ -13,7 +13,7 @@
         <section class="section contact">
             <div class="card card-animated p-4">
                 <div class="col ">
-                    <label class="text-primary fw-bold" for="">Lista de Mixagens Agendadas</label> <br>
+                    <label class="text-primary fw-bold" for="">Lista de Masterizações Agendadas</label> <br>
                     <div class="col table-responsive pt-4">
                         <input type="text" class="form-control mb-3 d-none" wire:model="termoPesquisaMembros"
                             placeholder="Pesquisar cliente (id ou nome)...">
