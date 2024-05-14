@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
     public static function run()
     {
         \App\Models\User::factory(20)->create();
-        \App\Models\chat\Conversa::factory(rand(5, 20))->create();
-        \App\Models\Participante\Participante::factory(rand(1, 10))->create();
+        \App\Models\Utilizador\Pessoa::factory(rand(5, 20))->create();
+        \App\Models\Participante\Participante::factory(count(\App\Models\User::all()))->create();
+        \App\Models\chat\Conversa::factory(rand(5, 100))->create();
         \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
         \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();
         \App\Models\Masterizacao\Masterizacao::factory(rand(5, 20))->create();
-        \App\Models\Utilizador\Pessoa::factory(rand(5, 20))->create();
     }
 }

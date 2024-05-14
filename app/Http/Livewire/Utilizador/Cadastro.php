@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Utilizador;
 
+use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
 use App\Models\Utilizador\RegistroActividade;
@@ -120,6 +121,7 @@ class Cadastro extends Component
             "user_id" => $user->id,
         ];
         $pessoa = Pessoa::create($dadosPessoa);
+        Participante::create(['nome' => $user->name]);
         $this->msgRegistroActividades($pessoa, $user);
         $this->emit('alerta', ['mensagem' => 'Conta criada com sucesso', 'icon' => 'success']);
         $this->emit('atrazar_redirect', ['caminho' => '/utilizador/autenticacao', 'tempo' => 2500]);

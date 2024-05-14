@@ -26,12 +26,6 @@ class CreateParticipantesTable extends Migration
             $table->foreign('grupo_id')->references('id')->on('grupos')->onDelete("cascade");
         
         });
-
-        $cantor = User::find(3);
-        Participante::create([
-            'nome' => $cantor->name,
-            'user_id' => $cantor->id
-        ]);
     }
 
     /**
