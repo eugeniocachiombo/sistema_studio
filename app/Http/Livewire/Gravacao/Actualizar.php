@@ -230,6 +230,7 @@ class Actualizar extends Component
         $horaInserida = date("H", strtotime($this->dataGravacao));
         $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
         ->where("estado_gravacao", "pendente")
+        ->where("id", "!=", $this->idGravacao)
         ->orderBy("created_at", "desc")
         ->first();
         if ($gravacao) {

@@ -154,6 +154,7 @@ class Actualizar extends Component
 
         $mixagem = Mixagem::whereDate("data_mixagem", $dataInserida)
         ->where("estado_mixagem", "!=", "mixado")
+        ->where("id", "!=", $this->idMixagem)
         ->orderBy("created_at", "desc")
         ->first();
 
