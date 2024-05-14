@@ -19,7 +19,7 @@
                         <div class="card card-animated p-4">
                             <label class="text-primary fw-bold" for="">Mixagem</label>
                             <select class="form-control mt-3" wire:model="gravacao_id" name="" id="">
-                                <option class="d-none">Selecione o estilo</option>
+                                <option class="d-none">Selecione a mixagem</option>
                                 @foreach ($listaGravacoes as $item)
                                     <option value="{{ $item->id }}">
                                         @php

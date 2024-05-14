@@ -11,11 +11,11 @@ class ConversaFactory extends Factory
     
     public function definition()
     {
-        $emissor = $this->faker->numberBetween(1, 10);
-        $receptor = $this->faker->numberBetween(1, 10);
+        $emissor = $this->buscarIDEmissor();
+        $receptor = $this->buscarIDReceptor();
         
         while ($receptor === $emissor) {
-            $receptor = $this->faker->numberBetween(1, 10);
+            $receptor = $this->buscarIDReceptor();
         }
         
         return [
@@ -24,5 +24,31 @@ class ConversaFactory extends Factory
             "estado" => "Pendente",
             "mensagem" => Crypt::encrypt($this->faker->text)
         ];
+    }
+
+    public function buscarIDEmissor()
+    {
+        $user = \App\Models\User::all();
+        $arrayIDsUsers = array();
+        foreach ($user as $item) {
+            array_push($arrayIDsUsers, $item->id);
+        }
+        $qtdUsers = count($user);
+        $indiceUser = $qtdUsers > 0 ? rand(0, ($qtdUsers - 1)) : 0;
+        $user_id = $arrayIDsUsers[$indiceUser];
+        return $user_id;
+    }
+
+    public function buscarIDReceptor()
+    {
+        $user = \App\Models\User::all();
+        $arrayIDsUsers = array();
+        foreach ($user as $item) {
+            array_push($arrayIDsUsers, $item->id);
+        }
+        $qtdUsers = count($user);
+        $indiceUser = $qtdUsers > 0 ? rand(0, ($qtdUsers - 1)) : 0;
+        $user_id = $arrayIDsUsers[$indiceUser];
+        return $user_id;
     }
 }
