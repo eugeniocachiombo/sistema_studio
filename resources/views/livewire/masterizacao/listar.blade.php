@@ -103,7 +103,7 @@
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $dadosMasterizacao->data_master }}</td>
+                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_master) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($dadosMasterizacao->estado_master == 'masterizado')
                                                 <span class="badge bg-success text-light ">

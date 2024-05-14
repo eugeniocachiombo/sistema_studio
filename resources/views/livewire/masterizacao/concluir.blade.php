@@ -103,7 +103,7 @@
                                         <td class="bg-success text-white" style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $dadosMasterizacao->data_master }}</td>
+                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_master) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($dadosMasterizacao->estado_master == 'masterizado')
                                                 <span class="badge bg-success text-light ">

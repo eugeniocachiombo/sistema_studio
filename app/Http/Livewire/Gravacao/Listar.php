@@ -133,6 +133,6 @@ class Listar extends Component
 
     public function formatarDataNormal($data){
         $formato = new DateTime($data);
-        return $formato->format('d-m-Y H:i:s');
+        return $formato->format('d-m-Y H:i');
     }
 }
