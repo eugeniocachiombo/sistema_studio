@@ -29,9 +29,9 @@ class UserFactory extends Factory
     }
 
     public function buscarTelefoneAleatorio(){
-        $telefone = "9".rand(11111111, 99999999);
+        $telefone = "9".rand(1, 5).rand(1111111, 9999999);
         while (User::where("telefone", $telefone)->first()) {
-            $telefone = "9".rand(12345678, 12345678);
+            $telefone = "9".rand(1, 5).rand(1111111, 9999999);
         }
         return $telefone;
     }

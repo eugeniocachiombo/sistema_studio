@@ -17,7 +17,7 @@
             <tr>
                 <th scope="col" style="white-space: nowrap">#</th>
                 <th scope="col" style="white-space: nowrap">Nome Completo</th>
-                <th scope="col" style="white-space: nowrap">Acesso</th>
+                <th scope="col" style="white-space: nowrap">Telefone</th>
                 <th scope="col" style="white-space: nowrap">Morada</th>
                 <th scope="col" style="white-space: nowrap">Registrado</th>
                 <th scope="col" style="white-space: nowrap">Estado</th>
@@ -30,7 +30,7 @@
                     </th>
                     <td style="white-space: nowrap"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}" class="text-dark">{{ $item->name }}</a></td>
                     <td>
-                        {{ ucwords($item->buscarTipoAcesso->tipo) }}
+                        {{ $item->telefone }}
                     </td>
                     <td>Morada</td>
                     <td>{{ $this->formatarData($item->created_at) }}</td>
