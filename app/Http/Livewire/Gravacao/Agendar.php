@@ -210,6 +210,7 @@ class Agendar extends Component
         $horaInserida = date("H", strtotime($this->dataGravacao));
         $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
         ->where("estado_gravacao", "!=", "gravado")
+        ->orderBy("created_at", "desc")
         ->first();
         if ($gravacao) {
             $dataDB = date("Y-m-d", strtotime($gravacao->data_gravacao));

@@ -9,6 +9,7 @@ use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -128,7 +129,64 @@ class Actualizar extends Component
             "dataMixagem" => "required",
             "duracaoMixagem" => "required",
         ]);
+        $this->verificarData();
+    }
 
+    public function verificarData()
+    {
+        $compararHoje = $this->verificarMaiorDataHojeDataInserida();
+        if ($compararHoje) {
+            $this->verificarExistenciaDataNoSistema();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'A data de agendamento deve ser maior que a data actual', 'icon' => 'warning', 'tempo' => 5000]);
+        }
+    }
+
+    public function verificarExistenciaDataNoSistema()
+    {
+        $dataInserida = date("Y-m-d", strtotime($this->dataMixagem));
+        $horaInserida = date("H", strtotime($this->dataMixagem));
+
+        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
+        ->where("estado_gravacao", "!=", "gravado")
+        ->orderBy("created_at", "desc")
+        ->first();
+
+        $mixagem = Mixagem::whereDate("data_mixagem", $dataInserida)
+        ->where("estado_mixagem", "!=", "mixado")
+        ->orderBy("created_at", "desc")
+        ->first();
+
+        if ($gravacao || $mixagem) {
+
+            $dataGravacaoDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
+            $horaGravacaoDB = $gravacao ? date("H", strtotime($gravacao->data_gravacao)) : 0;
+            $duracaoGravacaoDB = $gravacao ? (int)trim($gravacao->duracao, " hr") : 0;
+            $cargaGravacaoDB = $horaGravacaoDB + $duracaoGravacaoDB;
+
+            $dataMixagemDB = $mixagem ? date("Y-m-d", strtotime($mixagem->data_mixagem)) : 0;
+            $horaMixagemDB = $mixagem ? date("H", strtotime($mixagem->data_mixagem)) : 0;
+            $duracaoMixagemDB = $mixagem ? (int)trim($mixagem->duracao, " hr") : 0;
+            $cargaMixagemDB = $horaMixagemDB + $duracaoMixagemDB;
+
+            if ($horaInserida > $cargaGravacaoDB && $horaInserida > $cargaMixagemDB) {
+                $this->inserirNaBD();
+            } else {
+                $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
+            }
+        } else {
+            $this->inserirNaBD();
+        }
+    }
+
+    public function verificarMaiorDataHojeDataInserida()
+    {
+        $dataTimeActual = new DateTime(date("Y-m-d H:i:s"));
+        $dataTimeInserido = new DateTime($this->dataMixagem);
+        return $dataTimeInserido > $dataTimeActual;
+    }
+
+    public function inserirNaBD(){
         $dados = [
             "gravacao_id" => $this->gravacao_id,
             "data_mixagem" => $this->dataMixagem,

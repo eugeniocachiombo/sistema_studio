@@ -66,7 +66,7 @@
                                     @endphp
                                     <tr>
                                         <td class="bg-primary text-white text-center" style="white-space: nowrap">
-                                            {{ $item->id }}</td>
+                                            {{ $dadosMixagem->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -102,7 +102,7 @@
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_mixagem) }}</td>
+                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($dadosMixagem->data_mixagem) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($dadosMixagem->estado_mixagem == 'mixado')
                                                 <span class="badge bg-success text-light ">

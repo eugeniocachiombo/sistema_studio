@@ -63,7 +63,7 @@
                                     @endphp
                                     <tr>
                                         <td class="bg-success text-white text-center" style="white-space: nowrap">
-                                            {{ $item->id }}</td>
+                                            {{ $dadosMixagem->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -102,7 +102,7 @@
                                         <td class="bg-success text-white" style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_mixagem) }}</td>
+                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($dadosMixagem->data_mixagem) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($dadosMixagem->estado_mixagem == 'mixado')
                                                 <span class="badge bg-success text-light ">
