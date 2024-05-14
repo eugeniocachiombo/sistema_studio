@@ -21,13 +21,13 @@
                                             <div class="row g-3">
                                                 <div class="col-12 col-md-6">
                                                     <label for="nome" class="form-label">Nome</label>
-                                                    <input type="text" name="nome" class="form-control"
+                                                    <input type="text" name="nome" class="form-control border "
                                                         wire:model="nome" required>
                                                 </div>
 
                                                 <div class="col-12 col-md-6">
                                                     <label for="sobrenome" class="form-label">Sobrenome</label>
-                                                    <input type="text" name="sobrenome" class="form-control"
+                                                    <input type="text" name="sobrenome" class="form-control border "
                                                         wire:model="sobrenome" required>
                                                 </div>
                                             </div>
@@ -38,7 +38,7 @@
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email" class="form-control" id="email"
+                                                <input type="email" name="email" class="form-control border " id="email"
                                                     required>
 
                                             </div>
@@ -49,7 +49,7 @@
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend">AO +244</span>
-                                                <input type="number" minlength="9" maxlength="9" name="telefone" class="form-control" id="telefone" wire:model="'telefone'"
+                                                <input type="number" minlength="9" maxlength="9" name="telefone" class="form-control border " id="telefone" wire:model="'telefone'"
                                                     required>
 
                                             </div>
@@ -60,7 +60,7 @@
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend"><i class="fas fa-key"></i></span>
-                                                <input type="password" name="passe" class="form-control"
+                                                <input type="password" name="passe" class="form-control border "
                                                     wire:model="passe" required>
                                             </div>
                                         </div>
@@ -68,7 +68,7 @@
                                         <div class="col-12">
                                             <label for="nascimento" class="form-label">Data de nascimento</label>
                                             <div class="input-group has-validation">
-                                                <input type="date" name="nascimento" class="form-control"
+                                                <input type="date" name="nascimento" class="form-control border "
                                                     wire:model="nascimento" required>
                                             </div>
                                         </div>
