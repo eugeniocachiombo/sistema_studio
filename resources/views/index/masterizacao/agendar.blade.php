@@ -1,5 +1,5 @@
 @include('inclusao.headHtml')
-<title>Agendamento de masterização</title>
+<title>Agendamento de mixagem</title>
 <main>
     @include('inclusao.header')
     @include('inclusao.aside')

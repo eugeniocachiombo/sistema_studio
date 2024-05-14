@@ -1,6 +1,6 @@
 <div>
     <main id="main" class="main">
-        <div class="pagetitle">
+         <div class="pagetitle">
             <h1>Masterização</h1>
             <nav>
                 <ol class="breadcrumb">
@@ -8,9 +8,9 @@
                     <li class="breadcrumb-item active">Agendamento</li>
                 </ol>
             </nav>
-        </div>
+        </div> 
 
-        <section class="section contact">
+         <section class="section contact">
             <form>
                 <div class="row gy-4">
                     {{-- Coluna 1 --}}
@@ -107,6 +107,6 @@
                         </div>
                     </div>
             </form>
-        </section>
-    </main>
+        </section>  
+    </main> 
 </div>
