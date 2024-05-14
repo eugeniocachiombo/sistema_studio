@@ -40,6 +40,7 @@
     
      <!-- Wavesurfer-->
      <link rel="stylesheet" href="{{ asset('assets/wavesurfer/wavesurfer.css') }}" >
+     
     @livewireStyles
 </head>
 

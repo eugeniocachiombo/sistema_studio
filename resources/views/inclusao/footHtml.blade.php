@@ -14,7 +14,6 @@
 
 <!--Data Table em portugês -->
 <link rel="stylesheet" type="text/css" href="{{asset("assets/datatablePT/dataTable.css")}}">
-<script src="{{asset("assets/datatablePT/jquery.js")}}"></script>
 <script src="{{asset("assets/datatablePT/dataTable.js")}}"></script>
 
 <script>
