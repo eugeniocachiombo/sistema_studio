@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Utilizador;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
 use App\Models\Utilizador\RegistroActividade;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
@@ -14,6 +15,8 @@ class Cadastro extends Component
 {
     public $nome, $sobrenome, $email, $nomeArtistico, $telefone, $passe, $nascimento, $genero, $aceitarTermos;
     public $infoDispositivo;
+    public $dataPermissao;
+    
 
     protected $rules = [
         'nome' => 'required|regex:/^[^0-9]*$/',
@@ -22,7 +25,7 @@ class Cadastro extends Component
         'email' => 'required|email',
         'telefone' => 'required|integer|digits:9',
         'passe' => 'required|min:6',
-        'nascimento' => 'required',
+        'nascimento' => 'required|date|after_or_equal:1999-04-01|before_or_equal:2014-05-14',
         'genero' => 'required',
         'aceitarTermos' => 'required',
     ];
@@ -47,6 +50,9 @@ class Cadastro extends Component
         'passe.min' => 'Digite uma senha com pelo menos 6 caracteres',
 
         'nascimento.required' => 'Campo obrigatório',
+        'nascimento.after_or_equal' => 'Data de nascimento inválido',
+        'nascimento.before_or_equal' => 'Que seja nascido pelo menos em 2014',
+
         'genero.required' => 'O gênero é obrigatório',
         'aceitarTermos.required' => 'Você deve concordar com as políticas',
     ];
@@ -67,13 +73,34 @@ class Cadastro extends Component
 
     public function render()
     {
+        $this->dataPermissao = Date("Y") - 7;
         return view('livewire.utilizador.cadastro');
     }
 
     public function cadastrar()
     {
         $this->validate();
+        $emailVerificado = $this->verificarEmail($this->email);
+        $telefoneVerificado = $this->verificarTelefone($this->telefone);
 
+        if($emailVerificado){
+            $this->emit('alerta', ['mensagem' => 'Este email já existe no sistema', 'icon' => 'warning', 'tempo' => 4500]);
+        } else if($telefoneVerificado){
+            $this->emit('alerta', ['mensagem' => 'Este telefone já existe no sistema', 'icon' => 'warning', 'tempo' => 4500]);
+        }else{
+            $this->inserirNaBD();
+        }
+    }
+
+    public function verificarEmail($email){
+        return User::where("email", $email)->first();
+    }
+
+    public function verificarTelefone($telefone){
+        return User::where("telefone", $telefone)->first();
+    }
+
+    public function inserirNaBD(){
         $dadosUser = [
             'name' => $this->nomeArtistico,
             'email' => $this->email,
@@ -100,7 +127,6 @@ class Cadastro extends Component
 
     public function msgRegistroActividades($pessoa, $user){
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Registrou-se no sistema </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
-
         if ($pessoa->genero == "M") {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> <h3>Seja Bem-vindo $user->name </h3> </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
         } else {
