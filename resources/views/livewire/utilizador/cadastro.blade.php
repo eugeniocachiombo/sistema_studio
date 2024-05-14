@@ -16,20 +16,41 @@
                                         <hr>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate>
+                                    <form class="row g-3 needs-validation" wire:submit.prevent="cadastrar" novalidate>
                                         <div class="col ">
                                             <div class="row g-3">
                                                 <div class="col-12 col-md-6">
                                                     <label for="nome" class="form-label">Nome</label>
                                                     <input type="text" name="nome" class="form-control border "
                                                         wire:model="nome" required>
+                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                        @error('nome')
+                                                            <span class="error">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-12 col-md-6">
                                                     <label for="sobrenome" class="form-label">Sobrenome</label>
                                                     <input type="text" name="sobrenome" class="form-control border "
                                                         wire:model="sobrenome" required>
+                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                        @error('sobrenome')
+                                                            <span class="error">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="nomeArtistico" class="form-label">Nome Artístico</label>
+                                            <input type="text" name="nomeArtistico" class="form-control border "
+                                                wire:model="nomeArtistico" required>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('nomeArtistico')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -38,9 +59,13 @@
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email" class="form-control border " id="email"
-                                                    required>
-
+                                                <input type="email" name="email" class="form-control border "
+                                                    id="email" required wire:model="email">
+                                            </div>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('email')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -49,9 +74,14 @@
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend">AO +244</span>
-                                                <input type="number" minlength="9" maxlength="9" name="telefone" class="form-control border " id="telefone" wire:model="'telefone'"
+                                                <input type="text" minlength="9" maxlength="9" name="telefone"
+                                                    class="form-control border " id="telefone" wire:model="telefone"
                                                     required>
-
+                                            </div>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('telefone')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -63,6 +93,11 @@
                                                 <input type="password" name="passe" class="form-control border "
                                                     wire:model="passe" required>
                                             </div>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('passe')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
 
                                         <div class="col-12">
@@ -71,10 +106,16 @@
                                                 <input type="date" name="nascimento" class="form-control border "
                                                     wire:model="nascimento" required>
                                             </div>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('nascimento')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
 
-                                        <div class="col-12 pt-2" style="background: rgb(212, 212, 212); border-radius: 10px">
-                                            <label for="genero" class="form-label">Gênero </label> 
+                                        <div class="col-12 pt-2 "
+                                            style="background: rgb(212, 212, 212); border-radius: 10px">
+                                            <label for="genero" class="form-label">Gênero </label>
                                             <div class="col-sm-10 d-flex justify-content-around pb-3">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
@@ -92,15 +133,27 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+
+                                        <div class="col-12 text-danger pb-2" style="font-size: 12.5px">
+                                            @error('genero')
+                                                <span class="error">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
                                         <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" name="aceitarTermos" type="checkbox"
                                                     value="" wire:model="aceitarTermos" required>
-                                                <label class="form-check-label" for="aceitarTermos">Eu aceito e concordo
+                                                <label class="form-check-label" for="aceitarTermos">Eu aceito e
+                                                    concordo
                                                     com as <a href="#"> políticas do sistema</a></label>
-
+                                            </div>
+                                            <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                @error('aceitarTermos')
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-12">

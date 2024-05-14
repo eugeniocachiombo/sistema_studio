@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             'email' => "produtor@example.com",
             'telefone' => 911911911,
             'email_verified_at' => now(), 
-            'password' => Hash::make('123'), 
+            'password' => Hash::make('123456'), 
             'tipo_acesso' => 1,
             'remember_token' => Str::random(10),
         ]);
@@ -44,7 +44,7 @@ class CreateUsersTable extends Migration
             'email' => "atendente@example.com",
             'telefone' => 922922922,
             'email_verified_at' => now(), 
-            'password' => Hash::make('123'), 
+            'password' => Hash::make('123456'), 
             'tipo_acesso' => 2,
             'remember_token' => Str::random(10),
         ]);
@@ -53,7 +53,7 @@ class CreateUsersTable extends Migration
             'email' => "cantor@example.com",
             'telefone' => 933933933,
             'email_verified_at' => now(), 
-            'password' => Hash::make('123'), 
+            'password' => Hash::make('123456'), 
             'tipo_acesso' => 3,
             'remember_token' => Str::random(10),
         ]);

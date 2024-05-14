@@ -17,14 +17,14 @@ class Autenticacao extends Component
 
     protected $messages = [
         'email_telefone.required' => 'O campo é obrigatório',
-        'email_telefone.min' => 'O seu email ou telefone deve conter no mínimo 9 caracteres',
+        'email_telefone.min' => 'O seu email ou telefone deve conter no mínimo 9 dígitos',
         'palavra_passe.required' => 'O campo é obrigatório',
-        'palavra_passe.min' => 'Digite uma senha acima de 2 caracteres',
+        'palavra_passe.min' => 'Digite uma senha com pelo menos 6 dígitos',
     ];
 
     protected $rules = [
         'email_telefone' => 'required|min:9',
-        'palavra_passe' => 'required|min:3',
+        'palavra_passe' => 'required|min:6',
     ];
 
     public function mount()
