@@ -12,7 +12,7 @@
 
         <section class="section contact">
             <form>
-                <div class="row gy-4 d-table d-md-flex">
+                <div class="row gy-4">
                     {{-- Coluna 1 --}}
                     <div class="col">
                         {{-- Cliente --}}
