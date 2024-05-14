@@ -17,7 +17,6 @@ class Cadastro extends Component
     public $nome = null, $sobrenome = null, $email = null, $nomeArtistico = null, $telefone = null, $passe = null,
     $nascimento = null, $genero = null, $aceitarTermos = false;
     public $infoDispositivo = null;
-    public $dataPermissao;
 
     protected $rules = [
         'nome' => 'required|regex:/^[^0-9]*$/',
@@ -26,7 +25,7 @@ class Cadastro extends Component
         'email' => 'required|email',
         'telefone' => 'required|integer|digits:9',
         'passe' => 'required|min:6',
-        'nascimento' => 'required|date|after_or_equal:1999-04-01|before_or_equal:2014-05-14',
+        'nascimento' => 'required|date|after_or_equal:1960-04-01',
         'genero' => 'required',
         'aceitarTermos' => 'accepted',
     ];
@@ -52,7 +51,6 @@ class Cadastro extends Component
 
         'nascimento.required' => 'Campo obrigatório',
         'nascimento.after_or_equal' => 'Data de nascimento inválido',
-        'nascimento.before_or_equal' => 'Que seja nascido pelo menos em 2014',
 
         'genero.required' => 'O gênero é obrigatório',
         'aceitarTermos.accepted' => 'Você deve concordar com as políticas e segurança',
@@ -74,7 +72,6 @@ class Cadastro extends Component
 
     public function render()
     {
-        $this->dataPermissao = Date("Y") - 7;
         return view('livewire.utilizador.cadastro');
     }
 
@@ -89,7 +86,9 @@ class Cadastro extends Component
         } else if ($telefoneVerificado) {
             $this->emit('alerta', ['mensagem' => 'Este telefone já existe no sistema', 'icon' => 'warning', 'tempo' => 4500]);
         } else {
-            $this->inserirNaBD();
+            $dataNascimento = date("Y", strtotime($this->nascimento));
+            $dataPermissao = date("Y") - 10;
+            $dataNascimento <= $dataPermissao ? $this->inserirNaBD() : $this->emit('alerta', ['mensagem' => 'Que seja nascido pelo menos em '.$dataPermissao, 'icon' => 'warning', 'tempo' => 4500]);
         }
     }
 
