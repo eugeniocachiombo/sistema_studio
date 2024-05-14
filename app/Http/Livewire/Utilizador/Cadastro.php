@@ -14,10 +14,10 @@ use Livewire\Component;
 
 class Cadastro extends Component
 {
-    public $nome, $sobrenome, $email, $nomeArtistico, $telefone, $passe, $nascimento, $genero, $aceitarTermos;
-    public $infoDispositivo;
+    public $nome = null, $sobrenome = null, $email = null, $nomeArtistico = null, $telefone = null, $passe = null,
+    $nascimento = null, $genero = null, $aceitarTermos = false;
+    public $infoDispositivo = null;
     public $dataPermissao;
-    
 
     protected $rules = [
         'nome' => 'required|regex:/^[^0-9]*$/',
@@ -28,7 +28,7 @@ class Cadastro extends Component
         'passe' => 'required|min:6',
         'nascimento' => 'required|date|after_or_equal:1999-04-01|before_or_equal:2014-05-14',
         'genero' => 'required',
-        'aceitarTermos' => 'required',
+        'aceitarTermos' => 'accepted',
     ];
 
     protected $messages = [
@@ -55,7 +55,7 @@ class Cadastro extends Component
         'nascimento.before_or_equal' => 'Que seja nascido pelo menos em 2014',
 
         'genero.required' => 'O gênero é obrigatório',
-        'aceitarTermos.required' => 'Você deve concordar com as políticas',
+        'aceitarTermos.accepted' => 'Você deve concordar com as políticas e segurança',
     ];
 
     public function mount()
@@ -84,24 +84,27 @@ class Cadastro extends Component
         $emailVerificado = $this->verificarEmail($this->email);
         $telefoneVerificado = $this->verificarTelefone($this->telefone);
 
-        if($emailVerificado){
+        if ($emailVerificado) {
             $this->emit('alerta', ['mensagem' => 'Este email já existe no sistema', 'icon' => 'warning', 'tempo' => 4500]);
-        } else if($telefoneVerificado){
+        } else if ($telefoneVerificado) {
             $this->emit('alerta', ['mensagem' => 'Este telefone já existe no sistema', 'icon' => 'warning', 'tempo' => 4500]);
-        }else{
+        } else {
             $this->inserirNaBD();
         }
     }
 
-    public function verificarEmail($email){
+    public function verificarEmail($email)
+    {
         return User::where("email", $email)->first();
     }
 
-    public function verificarTelefone($telefone){
+    public function verificarTelefone($telefone)
+    {
         return User::where("telefone", $telefone)->first();
     }
 
-    public function inserirNaBD(){
+    public function inserirNaBD()
+    {
         $dadosUser = [
             'name' => $this->nomeArtistico,
             'email' => $this->email,
@@ -124,10 +127,12 @@ class Cadastro extends Component
         Participante::create(['nome' => $user->name]);
         $this->msgRegistroActividades($pessoa, $user);
         $this->emit('alerta', ['mensagem' => 'Conta criada com sucesso', 'icon' => 'success']);
+        $this->limparCampos();
         $this->emit('atrazar_redirect', ['caminho' => '/utilizador/autenticacao', 'tempo' => 2500]);
     }
 
-    public function msgRegistroActividades($pessoa, $user){
+    public function msgRegistroActividades($pessoa, $user)
+    {
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Registrou-se no sistema </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
         if ($pessoa->genero == "M") {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> <h3>Seja Bem-vindo $user->name </h3> </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
@@ -156,5 +161,19 @@ class Cadastro extends Component
         $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
             "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
             "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function limparCampos()
+    {
+        $this->nome = null;
+        $this->sobrenome = null;
+        $this->email = null;
+        $this->nomeArtistico = null;
+        $this->telefone = null;
+        $this->passe = null;
+        $this->nascimento = null;
+        $this->genero = null;
+        $this->aceitarTermos = false;
+        $this->infoDispositivo = null;
     }
 }

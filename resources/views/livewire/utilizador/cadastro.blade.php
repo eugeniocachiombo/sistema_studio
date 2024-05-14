@@ -22,7 +22,7 @@
                                                 <div class="col-12 col-md-6">
                                                     <label for="nome" class="form-label">Nome</label>
                                                     <input type="text" name="nome" class="form-control border "
-                                                        wire:model="nome" required>
+                                                        wire:model="nome" required placeholder="Seu nome">
                                                     <div class="text-danger pt-2" style="font-size: 12.5px">
                                                         @error('nome')
                                                             <span class="error">{{ $message }}</span>
@@ -33,7 +33,7 @@
                                                 <div class="col-12 col-md-6">
                                                     <label for="sobrenome" class="form-label">Sobrenome</label>
                                                     <input type="text" name="sobrenome" class="form-control border "
-                                                        wire:model="sobrenome" required>
+                                                        wire:model="sobrenome" required placeholder="Seu sobrenome">
                                                     <div class="text-danger pt-2" style="font-size: 12.5px">
                                                         @error('sobrenome')
                                                             <span class="error">{{ $message }}</span>
@@ -46,7 +46,7 @@
                                         <div class="col-12">
                                             <label for="nomeArtistico" class="form-label">Nome Artístico</label>
                                             <input type="text" name="nomeArtistico" class="form-control border "
-                                                wire:model="nomeArtistico" required>
+                                                wire:model="nomeArtistico" required placeholder="Seu nome artístico">
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('nomeArtistico')
                                                     <span class="error">{{ $message }}</span>
@@ -60,7 +60,7 @@
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend">@</span>
                                                 <input type="email" name="email" class="form-control border "
-                                                    id="email" required wire:model="email">
+                                                    id="email" required wire:model="email" placeholder="nome@exemplo.com">
                                             </div>
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('email')
@@ -76,7 +76,7 @@
                                                     id="inputGroupPrepend">AO +244</span>
                                                 <input type="text" minlength="9" maxlength="9" name="telefone"
                                                     class="form-control border " id="telefone" wire:model="telefone"
-                                                    required>
+                                                    required placeholder="9xxxxxxxx">
                                             </div>
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('telefone')
@@ -91,7 +91,7 @@
                                                 <span class="input-group-text bg-white text-primary"
                                                     id="inputGroupPrepend"><i class="fas fa-key"></i></span>
                                                 <input type="password" name="passe" class="form-control border "
-                                                    wire:model="passe" required>
+                                                    wire:model="passe" required placeholder="******">
                                             </div>
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('passe')
@@ -104,7 +104,7 @@
                                             <label for="nascimento" class="form-label">Data de nascimento</label>
                                             <div class="input-group has-validation">
                                                 <input type="date" name="nascimento" class="form-control border "
-                                                    wire:model="nascimento" required>
+                                                    wire:model="nascimento" required placeholder="00/00/0000">
                                             </div>
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('nascimento')
@@ -145,10 +145,10 @@
                                         <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" name="aceitarTermos" type="checkbox"
-                                                    value="" wire:model="aceitarTermos" required>
+                                                     wire:model="aceitarTermos" required id="aceitarTermos">
                                                 <label class="form-check-label" for="aceitarTermos">Eu aceito e
                                                     concordo
-                                                    com as <a href="#"> políticas do sistema</a></label>
+                                                    com as <span class="text-primary"> políticas e segurança</span></label>
                                             </div>
                                             <div class="text-danger pt-2" style="font-size: 12.5px">
                                                 @error('aceitarTermos')
