@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,28 @@ class CreatePessoasTable extends Migration
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
         });
+
+        Pessoa::create([
+            "nome" => "Conta",
+            "sobrenome" => "Produtor",
+            "genero" => "M",
+            "nascimento" => "1999-04-24",
+            "user_id" => 1
+        ]);
+        Pessoa::create([
+            "nome" => "Conta",
+            "sobrenome" => "Atendente",
+            "genero" => "F",
+            "nascimento" => "1999-04-24",
+            "user_id" => 2
+        ]);
+        Pessoa::create([
+            "nome" => "Conta",
+            "sobrenome" => "Cantor",
+            "genero" => "M",
+            "nascimento" => "1999-04-24",
+            "user_id" => 3
+        ]);
     }
 
     /**

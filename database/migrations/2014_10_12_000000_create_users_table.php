@@ -2,6 +2,7 @@
 
 use App\Models\Participante\Participante;
 use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class CreateUsersTable extends Migration
         });
 
         User::create([
-            'name' => "Conta Produtor",
+            'name' => "Super Producer",
             'email' => "produtor@example.com",
             'telefone' => 911911911,
             'email_verified_at' => now(), 
@@ -39,8 +40,9 @@ class CreateUsersTable extends Migration
             'tipo_acesso' => 1,
             'remember_token' => Str::random(10),
         ]);
+        
         User::create([
-            'name' => "Conta Antendente",
+            'name' => "Responsavel Antendente",
             'email' => "atendente@example.com",
             'telefone' => 922922922,
             'email_verified_at' => now(), 
@@ -48,8 +50,9 @@ class CreateUsersTable extends Migration
             'tipo_acesso' => 2,
             'remember_token' => Str::random(10),
         ]);
-        $cantor = User::create([
-            'name' => "Conta Cantor",
+
+        User::create([
+            'name' => "Fredy Snuff Cantor",
             'email' => "cantor@example.com",
             'telefone' => 933933933,
             'email_verified_at' => now(), 
