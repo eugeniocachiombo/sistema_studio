@@ -40,7 +40,55 @@
                     label: "Agendamento de Gravação",
                     value: "Gravação",
                     route: "{{ route('gravacao.agendar') }}",
-                    description: "- Painel de agendamento de gravações"
+                    description: "- Página de agendamento de gravações"
+                },
+                {
+                    label: "Listagem de Gravação",
+                    value: "Gravação",
+                    route: "{{ route('gravacao.listar') }}",
+                    description: "- Página de listagem de gravações"
+                },
+                {
+                    label: "Concluir Gravação",
+                    value: "Gravação",
+                    route: "{{ route('gravacao.concluir') }}",
+                    description: "- Página de conclusão de gravações"
+                },
+                {
+                    label: "Agendamento de Mixagem",
+                    value: "Mixagem",
+                    route: "{{ route('mixagem.agendar') }}",
+                    description: "- Página de agendamento de mixagens"
+                },
+                {
+                    label: "Listagem de Mixagem",
+                    value: "Mixagem",
+                    route: "{{ route('mixagem.listar') }}",
+                    description: "- Página de listagem de mixagens"
+                },
+                {
+                    label: "Concluir Mixagem",
+                    value: "Mixagem",
+                    route: "{{ route('mixagem.concluir') }}",
+                    description: "- Página de conclusão de mixagens"
+                },
+                {
+                    label: "Agendamento de Masterização",
+                    value: "Masterização",
+                    route: "{{ route('masterizacao.agendar') }}",
+                    description: "- Página de agendamento de masterizações"
+                },
+                {
+                    label: "Listagem de Masterização",
+                    value: "Masterização",
+                    route: "{{ route('masterizacao.listar') }}",
+                    description: "- Página de listagem de masterizações"
+                },
+                {
+                    label: "Concluir Masterização",
+                    value: "Masterização",
+                    route: "{{ route('masterizacao.concluir') }}",
+                    description: "- Página de conclusão de masterizações"
                 },
             ];
 
@@ -99,7 +147,6 @@
         }
     });
 </script>
-
 
 @if (session('utilizador'))
     <div class="search-bar">
