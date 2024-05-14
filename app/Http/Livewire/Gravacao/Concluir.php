@@ -189,4 +189,9 @@ class Concluir extends Component
         }
         return $data_formatada;
     }
+
+    public function formatarDataNormal($data){
+        $formato = new DateTime($data);
+        return $formato->format('d-m-Y H:i:s');
+    }
 }

@@ -106,7 +106,7 @@
                                         <td class="bg-success text-white" style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $item->data_gravacao }}</td>
+                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_gravacao) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($item->estado_gravacao == 'gravado')
                                                 <span class="badge bg-success text-light ">
