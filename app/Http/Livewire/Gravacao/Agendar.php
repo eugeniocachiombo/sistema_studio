@@ -11,6 +11,7 @@ use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -92,14 +93,14 @@ class Agendar extends Component
 
     public function buscarListaParaMembrosParaGrupo()
     {
-        return User::where(function($query) {
+        return User::where(function ($query) {
             $query->where('name', 'like', '%' . $this->termoPesquisaMembros . '%')
-                  ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%');
+                ->orWhere('id', 'like', '%' . $this->termoPesquisaMembros . '%');
         })
-        ->where("tipo_acesso", 3)
-        ->orderBy("id", "desc")
-        ->limit(5)
-        ->get();
+            ->where("tipo_acesso", 3)
+            ->orderBy("id", "desc")
+            ->limit(5)
+            ->get();
     }
 
     public function criarGrupo()
@@ -125,7 +126,8 @@ class Agendar extends Component
         }
     }
 
-    public function adicionarMembrosAoGrupo(){
+    public function adicionarMembrosAoGrupo()
+    {
         foreach ($this->clientesEscolhidos as $item) {
             GrupoCliente::create([
                 "grupo_id" => session("grupo_id"),
@@ -189,7 +191,48 @@ class Agendar extends Component
             "dataGravacao" => "required",
             "duracaoGravacao" => "required",
         ]);
+        $this->verificarData();
+    }
 
+    public function verificarData()
+    {
+        $compararHoje = $this->verificarMaiorDataHojeDataInserida();
+        if ($compararHoje) {
+            $this->verificarExistenciaDataNoSistema();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'A data de agendamento deve ser maior que a data actual', 'icon' => 'warning', 'tempo' => 5000]);
+        }
+    }
+
+    public function verificarExistenciaDataNoSistema()
+    {
+        $dataInserida = date("Y-m-d", strtotime($this->dataGravacao));
+        $horaInserida = date("H", strtotime($this->dataGravacao));
+        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)->first();
+        if ($gravacao) {
+            $dataDB = date("Y-m-d", strtotime($gravacao->data_gravacao));
+            $horaDB = date("H", strtotime($gravacao->data_gravacao));
+            $duracaoDB = (int)trim($gravacao->duracao, " hr");
+            $cargaDB = $horaDB + $duracaoDB;
+            if ($horaInserida > $cargaDB) {
+                $this->inserirNaBD();
+            } else {
+                $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
+            }
+        } else {
+            $this->inserirNaBD();
+        }
+    }
+
+    public function verificarMaiorDataHojeDataInserida()
+    {
+        $dataTimeActual = new DateTime(date("Y-m-d H:i:s"));
+        $dataTimeInserido = new DateTime($this->dataGravacao);
+        return $dataTimeInserido > $dataTimeActual;
+    }
+
+    public function inserirNaBD()
+    {
         $dados = [
             "cliente_id" => $this->cliente_id != "0" ? $this->cliente_id : null,
             "grupo_id" => $this->grupoEscolhido != "0" ? $this->grupoEscolhido : null,
@@ -204,7 +247,6 @@ class Agendar extends Component
         if ($this->cliente_id != "0" && $this->grupoEscolhido != "0") {
             $this->emit('alerta', ['mensagem' => 'O agendamento só permite 1 proprietário', 'icon' => 'warning', 'tempo' => 5000]);
         } else if ($this->cliente_id != null || $this->grupoEscolhido != null) {
-            
             $gravacao = Gravacao::create($dados);
             foreach ($this->participantesEscolhidos as $item) {
                 GravacaoParticipante::create([

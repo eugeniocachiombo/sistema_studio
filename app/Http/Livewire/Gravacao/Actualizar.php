@@ -12,6 +12,7 @@ use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -210,7 +211,47 @@ class Actualizar extends Component
             "dataGravacao" => "required",
             "duracaoGravacao" => "required",
         ]);
+        $this->verificarData();
+    }
 
+    public function verificarData()
+    {
+        $compararHoje = $this->verificarMaiorDataHojeDataInserida();
+        if ($compararHoje) {
+            $this->verificarExistenciaDataNoSistema();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'A data de agendamento deve ser maior que a data actual', 'icon' => 'warning', 'tempo' => 5000]);
+        }
+    }
+
+    public function verificarExistenciaDataNoSistema()
+    {
+        $dataInserida = date("Y-m-d", strtotime($this->dataGravacao));
+        $horaInserida = date("H", strtotime($this->dataGravacao));
+        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)->first();
+        if ($gravacao) {
+            $dataDB = date("Y-m-d", strtotime($gravacao->data_gravacao));
+            $horaDB = date("H", strtotime($gravacao->data_gravacao));
+            $duracaoDB = (int)trim($gravacao->duracao, " hr");
+            $cargaDB = $horaDB + $duracaoDB;
+            if ($horaInserida > $cargaDB) {
+                $this->inserirNaBD();
+            } else {
+                $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
+            }
+        } else {
+            $this->inserirNaBD();
+        }
+    }
+
+    public function verificarMaiorDataHojeDataInserida()
+    {
+        $dataTimeActual = new DateTime(date("Y-m-d H:i:s"));
+        $dataTimeInserido = new DateTime($this->dataGravacao);
+        return $dataTimeInserido > $dataTimeActual;
+    }
+
+    public function inserirNaBD(){
         $dados = [
             "cliente_id" => $this->cliente_id != "0" ? $this->cliente_id : null,
             "grupo_id" => $this->grupoEscolhido != "0" ? $this->grupoEscolhido : null,
