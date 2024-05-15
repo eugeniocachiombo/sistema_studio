@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Utilizador;
 
+use App\Models\Acesso\Acesso;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\Pessoa;
+use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -26,7 +29,7 @@ class Perfil extends Component
 
     public function mount($alertaPasse)
     {
-        $this->alertaPasse =  $alertaPasse;
+        $this->alertaPasse = $alertaPasse;
         $this->utilizador_id = Auth::user()->id;
     }
 
@@ -44,6 +47,16 @@ class Perfil extends Component
     public function buscarDadosUtilizador($id)
     {
         return User::find($id);
+    }
+
+    public function buscarDadosPessoal($idUtilizador)
+    {
+        return Pessoa::where("user_id", $idUtilizador)->first();
+    }
+
+    public function buscarTipoAcesso($id)
+    {
+        return Acesso::find($id);
     }
 
     public function setarDadosArquivo()
@@ -115,7 +128,8 @@ class Perfil extends Component
         $this->limparCampos();
     }
 
-    public function inserirFoto($foto, $dados){
+    public function inserirFoto($foto, $dados)
+    {
         if ($foto) {
             FotoPerfil::where("id", $foto->id)->update($dados);
             $this->emit('alerta', ['mensagem' => 'Foto actualizada com sucesso', 'icon' => 'success']);
@@ -138,40 +152,44 @@ class Perfil extends Component
         $this->extensaoOriginalArquivo = null;
     }
 
-    public function buscarFotoPerfil($idUtilizador){
+    public function buscarFotoPerfil($idUtilizador)
+    {
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = public_path('assets/' . $foto->caminho_arquivo);
-           if (file_exists($caminho)) {
-               return $foto;
-           } else {
-               return null;
-           }
-        }else{
-           return null;
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
+            if (file_exists($caminho)) {
+                return $foto;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
-   }
+    }
 
-    public function clickBtnEliminarFoto($idUtilizador){
-         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
-         if ($foto) {
+    public function clickBtnEliminarFoto($idUtilizador)
+    {
+        $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
+        if ($foto) {
             $caminho = public_path('assets/' . $foto->caminho_arquivo);
             if (file_exists($caminho)) {
                 $this->eliminarFotoPerfil();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Requer uma foto no perfil', 'icon' => 'error']);
             }
-         }else{
+        } else {
             $this->emit('alerta', ['mensagem' => 'Requer uma foto no perfil', 'icon' => 'error']);
-         }
+        }
     }
 
-    public function eliminarFotoPerfil(){
+    public function eliminarFotoPerfil()
+    {
         FotoPerfil::where("user_id", $this->utilizador_id)->delete();
         $this->emit('alerta', ['mensagem' => 'Foto eliminada com sucesso', 'icon' => 'success']);
     }
 
-    public function alterarPalavraPasse(Request $request){
+    public function alterarPalavraPasse(Request $request)
+    {
         $utilizador = Auth::user();
         $this->passeActual = $request->input('passeActual');
         $this->passeNova = $request->input('passeNova');
@@ -181,18 +199,30 @@ class Perfil extends Component
         return view('index.utilizador.perfil', ["alertaPasse" => $alertaPasse]);
     }
 
-    public function actualizarPasse($utilizador, $passeActual, $passeNova, $passeConfirmacao){        
+    public function actualizarPasse($utilizador, $passeActual, $passeNova, $passeConfirmacao)
+    {
         if (Hash::check($passeActual, $utilizador->password)) {
-            if($passeNova == $passeActual){
+            if ($passeNova == $passeActual) {
                 return ['mensagem' => 'Palavra-passe Nova deve ser diferente da Antiga', 'icon' => 'error'];
-            }else if($passeNova == $passeConfirmacao){
+            } else if ($passeNova == $passeConfirmacao) {
                 User::where('id', $utilizador->id)->update(['password' => Hash::make($passeNova)]);
                 return ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success'];
-            } else{
+            } else {
                 return ['mensagem' => 'Palavra-passe Nova e a de Confirmação devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5000];
             }
-        }else{
+        } else {
             return ['mensagem' => 'Palavra-passe antiga está errada', 'icon' => 'error'];
         }
     }
+
+    public function buscarNascimento($data)
+    {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
+        $data_objeto = new DateTime($data);
+        $data_formatada = $data_objeto->format('d \d\e F \d\e Y');
+        $data_formatada = mb_convert_case($data_formatada, MB_CASE_TITLE, "UTF-8");
+        return $data_formatada;
+    }
+
+    
 }

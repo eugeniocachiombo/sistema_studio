@@ -78,53 +78,70 @@
 
                             </ul>
                             <div class="tab-content pt-2">
+                                @php
+                                    $utilizador = $this->buscarDadosUtilizador($utilizador_id);
+                                    $dadosPessoal = $this->buscarDadosPessoal($utilizador->id);
+                                    $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
+                                    $nascimento = $this->buscarNascimento($dadosPessoal->nascimento);
+                                @endphp
 
+                                {{--Visão Geral--}}
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">About</h5>
-                                    <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores
-                                        cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt
-                                        iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea
-                                        saepe at unde.</p>
+                                    <h5 class="card-title">Acerca</h5>
+                                    <p class="small fst-italic">Sem informações</p>
 
-                                    <h5 class="card-title">Profile Details</h5>
+                                    <h5 class="card-title">Detalhes do Perfil</h5>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                        <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                        <div class="col-lg-3 col-md-4 label ">Nome Completo</div>
+                                        <div class="col-lg-9 col-md-8">{{ucwords($dadosPessoal->nome)}} {{ucwords($dadosPessoal->sobrenome)}}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Company</div>
-                                        <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                        <div class="col-lg-3 col-md-4 label">Nome Artístico</div>
+                                        <div class="col-lg-9 col-md-8">{{ucwords($utilizador->name)}}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Job</div>
-                                        <div class="col-lg-9 col-md-8">Web Designer</div>
+                                        <div class="col-lg-3 col-md-4 label">Gênero</div>
+                                        <div class="col-lg-9 col-md-8">{{$dadosPessoal->genero == 'M' ? 'Masculino' : 'Femenino'}}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Country</div>
-                                        <div class="col-lg-9 col-md-8">USA</div>
+                                        <div class="col-lg-3 col-md-4 label">Nascimento</div>
+                                        <div class="col-lg-9 col-md-8">{{$nascimento}}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                        <div class="col-lg-3 col-md-4 label">Telefone</div>
+                                        <div class="col-lg-9 col-md-8">(+244) {{$utilizador->telefone}}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                        <div class="col-lg-9 col-md-8">{{$utilizador->email}}</div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Acesso</div>
+                                        <div class="col-lg-9 col-md-8">{{ucwords($acesso->tipo)}}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Nacionalidade</div>
+                                        <div class="col-lg-9 col-md-8">USA não definido</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Endereço</div>
+                                        <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022 não definido</div>
+                                    </div>
+
+                                    
 
                                 </div>
 
+                                 {{--Editar Perfil--}}
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                                     <form action="/utilizador/actualizar_perfil" class="needs-validation" novalidate>
                                         <div class="row mb-3">
@@ -283,6 +300,7 @@
 
                                 </div>
 
+                                 {{--Configurações--}}
                                 <div class="tab-pane fade pt-3" id="profile-settings">
                                     <form>
                                         <div class="row mb-3">
@@ -326,6 +344,7 @@
 
                                 </div>
 
+                                 {{--Palavra-Passe Configurações--}}
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
                                     <form action="/utilizador/alterar_palavra_passe" class="needs-validation" novalidate>
                                         @csrf
