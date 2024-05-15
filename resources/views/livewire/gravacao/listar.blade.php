@@ -42,6 +42,13 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
+
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Concluido
+                                    </th>
+                                    @endif
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Duração
                                     </th>
@@ -49,7 +56,7 @@
                                         Agendado
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Responsavel
+                                        Responsável
                                     </th>
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
                                     <th class="bg-primary text-white" style="white-space: nowrap">
@@ -133,6 +140,18 @@
                                                 </span>
                                             @endif
                                         </td>
+
+                                        @if ( $this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                            <td style="white-space: nowrap">
+                                                @if ($item->estado_gravacao == 'gravado')
+                                                {{ $this->formatarData($item->updated_at) }}
+                                                @else
+                                                    --
+                                                @endif
+                                                
+                                            </td>
+                                        @endif
+
                                         <td style="white-space: nowrap">{{ $item->duracao }}</td>
                                         <td style="white-space: nowrap">{{ $this->formatarData($item->created_at) }}
                                         </td>

@@ -39,17 +39,26 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da Masterização
                                     </th>
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
+
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Concluido
+                                        </th>
+                                    @endif
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Duração
                                     </th>
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Agendado
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Responsavel
+                                        Responsável
                                     </th>
 
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
@@ -112,15 +121,20 @@
                                                     {{ $proprietario }}</div>
                                             </div>
                                         </td>
+
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
+
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
                                         </td>
+
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
+
                                         <td style="white-space: nowrap">
                                             {{ $this->formatarDataNormal($dadosMasterizacao->data_master) }}</td>
+
                                         <td style="white-space: nowrap">
                                             @if ($dadosMasterizacao->estado_master == 'masterizado')
                                                 <span class="badge bg-success text-light ">
@@ -132,6 +146,18 @@
                                                 </span>
                                             @endif
                                         </td>
+
+                                        @if ( $this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                            <td style="white-space: nowrap">
+                                                @if ($dadosMasterizacao->estado_master == 'masterizado')
+                                                {{ $this->formatarData($dadosMasterizacao->updated_at) }}
+                                                @else
+                                                    --
+                                                @endif
+                                                
+                                            </td>
+                                        @endif
+
                                         <td style="white-space: nowrap">{{ $dadosMasterizacao->duracao }}</td>
                                         <td style="white-space: nowrap">
                                             {{ $this->formatarData($dadosMasterizacao->created_at) }}

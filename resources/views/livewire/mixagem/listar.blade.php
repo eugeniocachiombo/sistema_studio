@@ -42,20 +42,31 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
+
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Concluido
+                                        </th>
+                                    @endif
+                                    
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Duração
                                     </th>
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Agendado
                                     </th>
+
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Responsavel
                                     </th>
+
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
                                     @endif
+
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                         <th class="bg-primary text-white" style="white-space: nowrap">
                                             Cancelar
@@ -129,6 +140,17 @@
                                                 </span>
                                             @endif
                                         </td>
+
+                                        @if ( $this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                            <td style="white-space: nowrap">
+                                                @if ($dadosMixagem->estado_mixagem == 'mixado')
+                                                {{ $this->formatarData($dadosMixagem->updated_at) }}
+                                                @else
+                                                    --
+                                                @endif
+                                            </td>
+                                        @endif
+
                                         <td style="white-space: nowrap">{{ $dadosMixagem->duracao }}</td>
                                         <td style="white-space: nowrap">
                                             {{ $this->formatarData($dadosMixagem->created_at) }}
