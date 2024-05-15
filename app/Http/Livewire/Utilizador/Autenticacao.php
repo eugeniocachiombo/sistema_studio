@@ -72,6 +72,7 @@ class Autenticacao extends Component
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Autenticou-se no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->emit('atrazar_redirect', ['caminho' => '/utilizador/preparar_ambiente', 'tempo' => 2500]);
             session()->put("utilizador", Auth::user()->name);
+            session()->put("tipo_acesso", Auth::user()->tipo_acesso);
         } else {
             $this->registrarTentativaLogin($this->email_telefone);
             $this->emit('alerta', ['mensagem' => 'Erro, Dados inválidos', 'icon' => 'error']);

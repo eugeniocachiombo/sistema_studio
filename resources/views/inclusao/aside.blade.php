@@ -15,21 +15,29 @@
                     <i class="bi bi-mic"></i><span>Gravação</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="gravacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ route('gravacao.agendar') }}">
-                            <i class="bi bi-circle"></i><span>Agendar</span>
-                        </a>
-                    </li>
+
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('gravacao.agendar') }}">
+                                <i class="bi bi-circle"></i><span>Agendar</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li>
                         <a href="{{ route('gravacao.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('gravacao.concluir') }}">
-                            <i class="bi bi-circle"></i><span>Concluir</span>
-                        </a>
-                    </li>
+
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('gravacao.concluir') }}">
+                                <i class="bi bi-circle"></i><span>Concluir</span>
+                            </a>
+                        </li>
+                    @endif
+
                 </ul>
             </li>
 
@@ -39,21 +47,27 @@
                     <i class="bi bi-soundwave"></i><span>Mixagem</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="mixagem-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ route('mixagem.agendar') }}">
-                            <i class="bi bi-circle"></i><span>Agendar</span>
-                        </a>
-                    </li>
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('mixagem.agendar') }}">
+                                <i class="bi bi-circle"></i><span>Agendar</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li>
                         <a href="{{ route('mixagem.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('mixagem.concluir') }}">
-                            <i class="bi bi-circle"></i><span>Concluir</span>
-                        </a>
-                    </li>
+
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('mixagem.concluir') }}">
+                                <i class="bi bi-circle"></i><span>Concluir</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
 
@@ -64,21 +78,27 @@
                     <i class="bi bi-speaker"></i><span>Masterização</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="masterizacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ route('masterizacao.agendar') }}">
-                            <i class="bi bi-circle"></i><span>Agendar</span>
-                        </a>
-                    </li>
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('masterizacao.agendar') }}">
+                                <i class="bi bi-circle"></i><span>Agendar</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li>
                         <a href="{{ route('masterizacao.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('masterizacao.concluir') }}">
-                            <i class="bi bi-circle"></i><span>Concluir</span>
-                        </a>
-                    </li>
+
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('masterizacao.concluir') }}">
+                                <i class="bi bi-circle"></i><span>Concluir</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
 
