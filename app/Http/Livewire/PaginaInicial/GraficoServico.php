@@ -34,30 +34,58 @@ class GraficoServico extends Component
             $cliente_id = 3;
 
             $dados = DB::select("
-    SELECT 'Gravacao' AS tipo, COUNT(*) as total
-    FROM gravacaos
-    WHERE YEAR(gravacaos.updated_at) = ?
-        AND MONTH(gravacaos.updated_at) = ?
-        AND gravacaos.estado_gravacao = 'gravado'
-        AND gravacaos.cliente_id = ?
-    UNION ALL
-    SELECT 'Mixagem' AS tipo, COUNT(*) as total
-    FROM mixagems
-    INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
-    WHERE YEAR(mixagems.updated_at) = ?
-        AND MONTH(mixagems.updated_at) = ?
-        AND mixagems.estado_mixagem = 'mixado'
-        AND gravacaos.cliente_id = ?
-    UNION ALL
-    SELECT 'Masterizacao' AS tipo, COUNT(*) as total
-    FROM masterizacaos
-    INNER JOIN mixagems ON masterizacaos.mixagem_id = mixagems.id
-    INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
-    WHERE YEAR(masterizacaos.updated_at) = ?
-        AND MONTH(masterizacaos.updated_at) = ?
-        AND masterizacaos.estado_master = 'masterizado'
-        AND gravacaos.cliente_id = ?
-", [$year, $month, $cliente_id, $year, $month, $cliente_id, $year, $month, $cliente_id]);
+                SELECT 'Gravacao' AS tipo, COUNT(*) as total
+                FROM gravacaos
+                WHERE YEAR(gravacaos.updated_at) = ?
+                    AND MONTH(gravacaos.updated_at) = ?
+                    AND gravacaos.estado_gravacao = 'gravado'
+                    AND gravacaos.cliente_id = ?
+                UNION ALL
+                SELECT 'Mixagem' AS tipo, COUNT(*) as total
+                FROM mixagems
+                INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
+                WHERE YEAR(mixagems.updated_at) = ?
+                    AND MONTH(mixagems.updated_at) = ?
+                    AND mixagems.estado_mixagem = 'mixado'
+                    AND gravacaos.cliente_id = ?
+                UNION ALL
+                SELECT 'Masterizacao' AS tipo, COUNT(*) as total
+                FROM masterizacaos
+                INNER JOIN mixagems ON masterizacaos.mixagem_id = mixagems.id
+                INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
+                WHERE YEAR(masterizacaos.updated_at) = ?
+                    AND MONTH(masterizacaos.updated_at) = ?
+                    AND masterizacaos.estado_master = 'masterizado'
+                    AND gravacaos.cliente_id = ?
+            ", [$year, $month, $cliente_id, $year, $month, $cliente_id, $year, $month, $cliente_id]);
+
+        } else if ($this->utilizadorLogado->tipo_acesso == 2) {
+
+            $dados = DB::select("
+                SELECT 'Gravacao' AS tipo, COUNT(*) as total
+                FROM gravacaos
+                WHERE YEAR(gravacaos.updated_at) = ?
+                    AND MONTH(gravacaos.updated_at) = ?
+                    AND gravacaos.estado_gravacao = 'gravado'
+                    AND gravacaos.responsavel = ?
+                UNION ALL
+                SELECT 'Mixagem' AS tipo, COUNT(*) as total
+                FROM mixagems
+                INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
+                WHERE YEAR(mixagems.updated_at) = ?
+                    AND MONTH(mixagems.updated_at) = ?
+                    AND mixagems.estado_mixagem = 'mixado'
+                    AND gravacaos.responsavel = ?
+                UNION ALL
+                SELECT 'Masterizacao' AS tipo, COUNT(*) as total
+                FROM masterizacaos
+                INNER JOIN mixagems ON masterizacaos.mixagem_id = mixagems.id
+                INNER JOIN gravacaos ON mixagems.gravacao_id = gravacaos.id
+                WHERE YEAR(masterizacaos.updated_at) = ?
+                    AND MONTH(masterizacaos.updated_at) = ?
+                    AND masterizacaos.estado_master = 'masterizado'
+                    AND gravacaos.responsavel = ?
+            ", [$year, $month, $this->utilizador_id, $year, $month, $this->utilizador_id, $year, $month, $this->utilizador_id]);
 
         } else {
             $dados = DB::select("
@@ -69,7 +97,7 @@ class GraficoServico extends Component
             UNION ALL
             SELECT 'Masterizacao' AS tipo, COUNT(*) as total FROM masterizacaos
             WHERE YEAR(updated_at) = ? AND MONTH(updated_at) = ? AND estado_master = 'masterizado'
-        ", [$year, $month, $year, $month, $year, $month]);
+            ", [$year, $month, $year, $month, $year, $month]);
         }
 
         foreach ($dados as $item) {

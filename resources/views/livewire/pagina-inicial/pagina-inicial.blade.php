@@ -29,11 +29,15 @@
                         <div class="col-lg-4">
                             @livewire('pagina-inicial.grafico-geral')
                         </div>
-                    @endif
 
-                    <div class="col-lg-8">
-                        @livewire('pagina-inicial.tb-clientes')
-                    </div>
+                        <div class="col-lg-8">
+                            @livewire('pagina-inicial.tb-clientes')
+                        </div>
+                    @else
+                        <div class="col-12">
+                            @livewire('pagina-inicial.tb-clientes')
+                        </div>
+                    @endif
                 @endif
             </div>
         </section>
