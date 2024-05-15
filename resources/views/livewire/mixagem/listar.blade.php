@@ -51,9 +51,11 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Responsavel
                                     </th>
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
+                                    @endif
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                         <th class="bg-primary text-white" style="white-space: nowrap">
                                             Cancelar
@@ -134,6 +136,7 @@
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarUtilizador($dadosMixagem->responsavel)->name }}
                                         </td>
+                                        @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
                                         <td class="text-center" style="white-space: nowrap">
                                             <a href="{{ route('mixagem.actualizar', [$dadosMixagem->id]) }}">
                                                 <button class="btn btn-success">
@@ -141,6 +144,7 @@
                                                 </button>
                                             </a>
                                         </td>
+                                        @endif
                                         @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                             <td class="text-center" style="white-space: nowrap">
                                                 <button class="btn btn-danger"

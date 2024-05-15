@@ -51,9 +51,13 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Responsavel
                                     </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Editar
-                                    </th>
+
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Editar
+                                        </th>
+                                    @endif
+
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                         <th class="bg-primary text-white" style="white-space: nowrap">
                                             Cancelar
@@ -135,13 +139,16 @@
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarUtilizador($dadosMasterizacao->responsavel)->name }}
                                         </td>
-                                        <td class="text-center" style="white-space: nowrap">
-                                            <a href="{{ route('masterizacao.actualizar', [$dadosMasterizacao->id]) }}">
-                                                <button class="btn btn-success">
-                                                    <i class="bi bi-pen"></i>
-                                                </button>
-                                            </a>
-                                        </td>
+                                        @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
+                                            <td class="text-center" style="white-space: nowrap">
+                                                <a
+                                                    href="{{ route('masterizacao.actualizar', [$dadosMasterizacao->id]) }}">
+                                                    <button class="btn btn-success">
+                                                        <i class="bi bi-pen"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        @endif
                                         @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                             <td class="text-center" style="white-space: nowrap">
                                                 <button class="btn btn-danger"
