@@ -24,13 +24,46 @@ class Perfil extends Component
         "img" => ["jpg", "jpeg", "png"],
     ];
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
-    public $passeActual, $passeNova, $passeConfirmacao;
+    public $passeActual = null, $passeNova = null, $passeConfirmacao = null;
     public $alertaPasse = array();
+
+    public $nome = null, $sobrenome = null, $sobre = null, $nomeArtistico = null, $genero = null, $nascimento = null, $telefone = null,
+    $email = null, $nacionalidade = null, $provincia = null, $endereco = null,
+    $twitter = null, $facebook = null, $instagram = null, $linkedin = null;
+
+    public $tabVisaoGeral, $tabConteudoVisaoGeral;
+    public $tabEditarPerfil, $tabConteudoEditarPerfil;
+    public $tabEditarPasse, $tabConteudoEditarPasse;
+
+    protected $messages = [
+        'nome.required' => 'Campo obrigatório',
+        'nome.regex' => 'O seu nome não deve conter números',
+
+        'sobrenome.required' => 'Campo obrigatório',
+        'sobrenome.regex' => 'O seu sobrenome não deve conter números',
+
+        'nomeArtistico.required' => 'Campo obrigatório',
+
+        'email.required' => 'Campo obrigatório',
+        'email.email' => 'O campo deve conter um endereço de e-mail válido',
+
+        'telefone.required' => 'Campo obrigatório',
+        'telefone.digits' => 'O seu telefone deve conter apenas 9 dígitos',
+        'telefone.integer' => 'O seu telefone deve conter apenas números',
+
+        'nascimento.required' => 'Campo obrigatório',
+        'nascimento.after_or_equal' => 'Data de nascimento inválido',
+
+        'genero.required' => 'O gênero é obrigatório',
+    ];
 
     public function mount($alertaPasse)
     {
+        $this->tabVisaoGeral = "active";
+        $this->tabConteudoVisaoGeral = "show active";
         $this->alertaPasse = $alertaPasse;
         $this->utilizador_id = Auth::user()->id;
+        $this->setarDadosInicialmente();
     }
 
     public function index()
@@ -40,8 +73,60 @@ class Perfil extends Component
 
     public function render()
     {
+        $this->manipularTab();
         $this->setarDadosArquivo();
         return view('livewire.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
+    }
+
+    public function manipularTab()
+    {
+        if (
+            $this->nome != null || $this->sobrenome != null || $this->sobre != null || $this->nomeArtistico != null ||
+            $this->genero != null || $this->nascimento != null || $this->telefone != null ||
+            $this->email != null || $this->nacionalidade != null || $this->provincia != null || $this->endereco != null ||
+            $this->twitter != null || $this->facebook != null || $this->instagram != null || $this->linkedin != null
+        ) {
+            $this->tabEditarPerfil = "active";
+            $this->tabConteudoEditarPerfil = "show active";
+            $this->tabVisaoGeral = "";
+            $this->tabConteudoVisaoGeral = "";
+            $this->tabEditarPasse = "";
+            $this->tabConteudoEditarPasse = ""; 
+        } else if($this->passeActual = null || $this->passeNova = null || $this->passeConfirmacao = null){
+            $this->tabEditarPerfil = "";
+            $this->tabConteudoEditarPerfil = "";
+            $this->tabVisaoGeral = "";
+            $this->tabConteudoVisaoGeral = "";
+            $this->tabEditarPasse = "active";
+            $this->tabConteudoEditarPasse = "show active"; 
+        } else{
+            $this->tabVisaoGeral = "active";
+            $this->tabConteudoVisaoGeral = "show active";
+        }
+    }
+
+    public function setarDadosInicialmente()
+    {
+        $utilizador = $this->buscarDadosUtilizador($this->utilizador_id);
+        $dadosPessoal = $this->buscarDadosPessoal($utilizador->id);
+        $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
+        $nascimento = $this->buscarNascimento($dadosPessoal->nascimento);
+
+        $this->nome = ucwords($dadosPessoal->nome);
+        $this->sobrenome = ucwords($dadosPessoal->sobrenome);
+        $this->sobre = $dadosPessoal->sobre != null ? $dadosPessoal->sobre : '';
+        $this->nomeArtistico = ucwords($utilizador->name);
+        $this->genero = $dadosPessoal->genero;
+        $this->nascimento = $dadosPessoal->nascimento;
+        $this->telefone = $utilizador->telefone;
+        $this->email = $utilizador->email;
+        $this->nacionalidade = $dadosPessoal->nacionalidade != null ? ucwords($dadosPessoal->nacionalidade) : '';
+        $this->provincia = $dadosPessoal->provincia != null ? ucwords($dadosPessoal->provincia) : '';
+        $this->endereco = $dadosPessoal->endereco != null ? ucwords($dadosPessoal->endereco) : '';
+        $this->twitter = $dadosPessoal->twitter != null ? $dadosPessoal->twitter : 'https://twitter.com/#';
+        $this->facebook = $dadosPessoal->facebook != null ? $dadosPessoal->facebook : 'https://facebook.com/#';
+        $this->instagram = $dadosPessoal->instagram != null ? $dadosPessoal->instagram : 'https://facebook.com/#';
+        $this->linkedin = $dadosPessoal->linkedin != null ? $dadosPessoal->linkedin : 'https://linkedin.com/#';
     }
 
     public function buscarDadosUtilizador($id)
@@ -215,6 +300,45 @@ class Perfil extends Component
         }
     }
 
+    public function actualizarDadosPerfil(Request $request)
+    {
+        $this->validate([
+            'nome' => 'required|regex:/^[^0-9]*$/',
+            'sobrenome' => 'required|regex:/^[^0-9]*$/',
+            'nomeArtistico' => 'required',
+            'email' => 'required|email',
+            'telefone' => 'required|integer|digits:9',
+            'nascimento' => 'required|date|after_or_equal:1960-04-01',
+            'genero' => 'required',
+        ]);
+
+        $dadosUser = [
+            'name' => $this->nomeArtistico,
+            'email' => $this->email,
+            'telefone' => $this->telefone,
+        ];
+
+        User::where('id', $this->utilizador_id)->update($dadosUser);
+
+        $dadosPessoa = [
+            "nome" => $this->nome,
+            "sobrenome" => $this->sobrenome,
+            "sobre" => $this->sobre,
+            "genero" => $this->genero,
+            "nascimento" => $this->nascimento,
+            "nacionalidade" => $this->nacionalidade,
+            "user_id" => $this->utilizador_id,
+            "provincia" => $this->provincia,
+            "endereco" => $this->endereco,
+            "twitter" => $this->twitter,
+            "facebook" => $this->facebook,
+            "instagram" => $this->instagram,
+            "linkedin" => $this->linkedin,
+        ];
+        Pessoa::where('user_id', $this->utilizador_id)->update($dadosPessoa);
+        $this->emit('alerta', ['mensagem' => 'Dados actualizados com sucesso', 'icon' => 'success']);
+    }
+
     public function buscarNascimento($data)
     {
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
@@ -224,5 +348,4 @@ class Perfil extends Component
         return $data_formatada;
     }
 
-    
 }

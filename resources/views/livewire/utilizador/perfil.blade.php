@@ -58,12 +58,12 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab"
+                                    <button class="nav-link {{$tabVisaoGeral}}" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Visão Geral</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar
+                                    <button class="nav-link {{$tabEditarPerfil}}" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar
                                         Perfil</button>
                                 </li>
 
@@ -73,7 +73,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
+                                    <button class="nav-link {{$tabEditarPasse}}" data-bs-toggle="tab"
                                         data-bs-target="#profile-change-password">Alterar Palavra-passe</button>
                                 </li>
 
@@ -88,7 +88,7 @@
 
                             <div class="tab-content pt-2">
                                 {{-- Visão Geral --}}
-                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <div class="tab-pane fade {{$tabConteudoVisaoGeral}} profile-overview" id="profile-overview">
                                     <h5 class="card-title">Sobre</h5>
                                     <p class="small fst-italic">
                                         {{ $dadosPessoal->sobre != null ? $dadosPessoal->sobre : 'Sem informação' }}</p>
@@ -161,8 +161,8 @@
                                 </div>
 
                                 {{-- Editar Perfil --}}
-                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                                    <form action="/utilizador/actualizar_perfil" class="needs-validation" novalidate>
+                                <div class="tab-pane fade {{$tabConteudoEditarPerfil}} profile-edit pt-3" id="profile-edit">
+                                    <form class="needs-validation" >
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do
                                                 perfil
@@ -211,7 +211,7 @@
                                                 Nome</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="nome" type="text" class="form-control"
-                                                    id="nome" value="{{ ucwords($dadosPessoal->nome) }}">
+                                                    id="nome" wire:model="nome">
                                             </div>
                                         </div>
 
@@ -220,7 +220,7 @@
                                                 Sobrenome</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="sobrenome" type="text" class="form-control"
-                                                    id="sobrenome" value="{{ ucwords($dadosPessoal->sobrenome) }}">
+                                                    id="sobrenome" wire:model="sobrenome"  >
                                             </div>
                                         </div>
 
@@ -228,7 +228,7 @@
                                             <label for="sobre"
                                                 class="col-md-4 col-lg-3 col-form-label">Sobre</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <textarea name="sobre" class="form-control" id="sobre" style="height: 100px">{{ $dadosPessoal->sobre != null ? $dadosPessoal->sobre : '' }}</textarea>
+                                                <textarea wire:model="sobre" name="sobre" class="form-control" id="sobre" style="height: 100px"></textarea>
                                             </div>
                                         </div>
 
@@ -237,7 +237,7 @@
                                                 Artístico</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="nomeArtistico" type="text" class="form-control"
-                                                    id="nomeArtistico" value="{{ ucwords($utilizador->name) }}">
+                                                    id="nomeArtistico" wire:model="nomeArtistico" >
                                             </div>
                                         </div>
 
@@ -245,15 +245,10 @@
                                             <label for="genero"
                                                 class="col-md-4 col-lg-3 col-form-label">Gênero</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <select name="genero" type="text" class="form-control"
+                                                <select wire:model="genero" name="genero" type="text" class="form-control"
                                                     id="genero">
-                                                    @if ($dadosPessoal->genero == 'M')
                                                         <option value="M" selected>Masculino</option>
                                                         <option value="F">Femenino</option>
-                                                    @else
-                                                        <option value="M">Masculino</option>
-                                                        <option value="F" selected>Femenino</option>
-                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -262,8 +257,8 @@
                                             <label for="nascimento"
                                                 class="col-md-4 col-lg-3 col-form-label">Nascimento</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="nascimento" type="date" class="form-control"
-                                                    id="nascimento" value="{{ $dadosPessoal->nascimento }}">
+                                                <input wire:model="nascimento" name="nascimento" type="date" class="form-control"
+                                                    id="nascimento"  >
                                             </div>
                                         </div>
 
@@ -271,8 +266,8 @@
                                             <label for="telefone"
                                                 class="col-md-4 col-lg-3 col-form-label">Telefone</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telefone" type="text" class="form-control"
-                                                    id="telefone" value="(+244) {{ $utilizador->telefone }}">
+                                                <input wire:model="telefone" name="telefone" type="text" class="form-control"
+                                                    id="telefone" >
                                             </div>
                                         </div>
 
@@ -280,8 +275,8 @@
                                             <label for="email"
                                                 class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control"
-                                                    id="email" value="{{ $utilizador->email }}">
+                                                <input wire:model="email" name="email" type="email" class="form-control"
+                                                    id="email" >
                                             </div>
                                         </div>
 
@@ -289,8 +284,8 @@
                                             <label for="nacionalidade"
                                                 class="col-md-4 col-lg-3 col-form-label">Nacionalidade</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="nacionalidade" type="text" class="form-control"
-                                                    id="nacionalidade" value="{{ $dadosPessoal->nacionalidade != null ? ucwords($dadosPessoal->nacionalidade) : '' }}">
+                                                <input wire:model="nacionalidade" name="nacionalidade" type="text" class="form-control"
+                                                    id="nacionalidade">
                                             </div>
                                         </div>
 
@@ -298,8 +293,8 @@
                                             <label for="provincia"
                                                 class="col-md-4 col-lg-3 col-form-label">Província</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="provincia" type="text" class="form-control"
-                                                    id="provincia" value="{{ $dadosPessoal->provincia != null ? ucwords($dadosPessoal->provincia) : '' }}">
+                                                <input wire:model="provincia" name="provincia" type="text" class="form-control"
+                                                    id="provincia">
                                             </div>
                                         </div>
 
@@ -307,16 +302,16 @@
                                             <label for="endereco"
                                                 class="col-md-4 col-lg-3 col-form-label">Endereço</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="endereco" type="text" class="form-control"
-                                                    id="endereco" value="{{ $dadosPessoal->endereco != null ? ucwords($dadosPessoal->endereco) : '' }}">
+                                                <input wire:model="endereco" name="endereco" type="text" class="form-control"
+                                                    id="endereco">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="twitter" class="col-md-4 col-lg-3 col-form-label">Twitter</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control"
-                                                    id="twitter" value="{{ $dadosPessoal->twitter != null ? $dadosPessoal->twitter : 'https://twitter.com/#' }}">
+                                                <input wire:model="twitter" name="twitter" type="text" class="form-control"
+                                                    id="twitter" >
                                             </div>
                                         </div>
 
@@ -324,8 +319,8 @@
                                             <label for="facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
                                                 </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control"
-                                                    id="facebook" value="{{ $dadosPessoal->facebook != null ? $dadosPessoal->facebook : 'https://facebook.com/#' }}">
+                                                <input wire:model="facebook" name="facebook" type="text" class="form-control"
+                                                    id="facebook" >
                                             </div>
                                         </div>
 
@@ -333,8 +328,8 @@
                                             <label for="instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
                                                 </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control"
-                                                    id="instagram" value="{{ $dadosPessoal->instagram != null ? $dadosPessoal->instagram : 'https://facebook.com/#' }}">
+                                                <input wire:model="instagram" name="instagram" type="text" class="form-control"
+                                                    id="instagram" >
                                             </div>
                                         </div>
 
@@ -342,16 +337,15 @@
                                             <label for="linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
                                                 </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control"
-                                                    id="linkedin" value="{{ $dadosPessoal->linkedin != null ? $dadosPessoal->linkedin : 'https://linkedin.com/#' }}">
+                                                <input wire:model="linkedin" name="linkedin" type="text" class="form-control"
+                                                    id="linkedin">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                            <button wire:click="actualizarDadosPerfil" type="submit" class="btn btn-primary">Actualizar</button>
                                         </div>
                                     </form>
-
                                 </div>
 
                                 {{-- Configurações --}}
@@ -397,21 +391,16 @@
                                     </form>
 
                                 </div>
-
+                                
                                 {{-- Palavra-Passe Configurações --}}
-                                <div class="tab-pane fade pt-3" id="profile-change-password">
-                                    <form action="/utilizador/alterar_palavra_passe" class="needs-validation"
-                                        novalidate>
-                                        @csrf
+                                <div class="tab-pane fade pt-3 {{$tabConteudoEditarPasse}}" id="profile-change-password">
+                                    <form >
                                         <div class="row mb-3">
                                             <label for="passeActual" class="col-md-4 col-lg-3 col-form-label">Passe
                                                 Actual</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="passeActual" type="password" class="form-control"
                                                     wire:model="passeActual" id="passeActual" required>
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                PAss
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -433,7 +422,7 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" {{-- wire:click.prevent="alterarPalavraPasse" --}}
+                                            <button type="submit" 
                                                 class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>

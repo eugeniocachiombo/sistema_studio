@@ -26,7 +26,7 @@ class CreatePessoasTable extends Migration
             $table->string('provincia')->nullable();
             $table->string('municipio')->nullable();
             $table->string('endereco')->nullable();
-            $table->string('twiter')->nullable();
+            $table->string('twitter')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('linkedin')->nullable();

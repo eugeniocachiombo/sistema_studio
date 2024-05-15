@@ -19,7 +19,7 @@ class Pessoa extends Model
         "provincia",
         "municipio",
         "endereco",
-        "twiter",
+        "twitter",
         "facebook",
         "instagram ",
         "linkedin "

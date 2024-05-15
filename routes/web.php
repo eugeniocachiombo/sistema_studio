@@ -40,7 +40,6 @@ Route::prefix("utilizador")->name("utilizador.")->group(function () {
     Route::get('perfil', [Perfil::class, "index"])->name("perfil")->middleware(CheckAuth::class);
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao")->middleware(CheckAuth::class);
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
-    Route::get('alterar_palavra_passe', [Perfil::class, "alterarPalavraPasse"])->name("alterar_palavra_passe")->middleware(CheckAuth::class);
 });
 
 Route::prefix("chat")->name("chat.")->group(function () {
