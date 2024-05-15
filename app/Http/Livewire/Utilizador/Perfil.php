@@ -92,7 +92,7 @@ class Perfil extends Component
             $this->tabConteudoVisaoGeral = "";
             $this->tabEditarPasse = "";
             $this->tabConteudoEditarPasse = ""; 
-        } else if($this->passeActual = null || $this->passeNova = null || $this->passeConfirmacao = null){
+        } else if($this->passeActual != null || $this->passeNova != null || $this->passeConfirmacao != null){
             $this->tabEditarPerfil = "";
             $this->tabConteudoEditarPerfil = "";
             $this->tabVisaoGeral = "";
@@ -273,15 +273,12 @@ class Perfil extends Component
         $this->emit('alerta', ['mensagem' => 'Foto eliminada com sucesso', 'icon' => 'success']);
     }
 
-    public function alterarPalavraPasse(Request $request)
+    public function alterarPalavraPasse()
     {
+        dd("Feito");
         $utilizador = Auth::user();
-        $this->passeActual = $request->input('passeActual');
-        $this->passeNova = $request->input('passeNova');
-        $this->passeConfirmacao = $request->input('passeConfirmacao');
         session()->put("alterarPasse", true);
         $alertaPasse = $this->actualizarPasse($utilizador, $this->passeActual, $this->passeNova, $this->passeConfirmacao);
-        return view('index.utilizador.perfil', ["alertaPasse" => $alertaPasse]);
     }
 
     public function actualizarPasse($utilizador, $passeActual, $passeNova, $passeConfirmacao)
@@ -300,7 +297,7 @@ class Perfil extends Component
         }
     }
 
-    public function actualizarDadosPerfil(Request $request)
+    public function actualizarDadosPerfil()
     {
         $this->validate([
             'nome' => 'required|regex:/^[^0-9]*$/',

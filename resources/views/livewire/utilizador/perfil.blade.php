@@ -399,7 +399,7 @@
                                             <label for="passeActual" class="col-md-4 col-lg-3 col-form-label">Passe
                                                 Actual</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="passeActual" type="password" class="form-control"
+                                                <input  type="password" class="form-control"
                                                     wire:model="passeActual" id="passeActual" required>
                                             </div>
                                         </div>
@@ -407,7 +407,7 @@
                                             <label for="passeNova" class="col-md-4 col-lg-3 col-form-label">Nova
                                                 Passe</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="passeNova" type="password" class="form-control"
+                                                <input  type="password" class="form-control"
                                                     wire:model="passeNova" id="passeNova" required>
                                             </div>
                                         </div>
@@ -416,21 +416,17 @@
                                             <label for="passeConfirmacao"
                                                 class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Passe</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="passeConfirmacao" type="password" class="form-control"
+                                                <input type="password" class="form-control"
                                                     wire:model="passeConfirmacao" id="passeConfirmacao" required>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" 
+                                            <button type="submit" wire:click.prevent="alterarPalavraPasse"
                                                 class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>
                                     </form>
-
-                                    @include('livewire.utilizador.alterar-passe')
-                                    <script src="{{ asset('assets/js/parar_livewire_passe.js') }}"></script>
-                                    <script src="{{ asset('assets/js/validate_bootstrap.js') }}"></script>
                                 </div>
                             </div>
                         </div>
