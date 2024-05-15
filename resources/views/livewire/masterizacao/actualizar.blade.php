@@ -80,7 +80,7 @@
                                             <select class="form-control " wire:model="duracaoMasterizacao" name=""
                                                 id="">
                                                 <option class="d-none">Selecione a duração</option>
-                                                @for ($i = 1; $i <= 10; $i++)
+                                                @for ($i = 1; $i <= 4; $i++)
                                                     <option value="{{ $i . ' hr' }}">{{ $i . ' hr' }}</option>
                                                 @endfor
                                             </select>
