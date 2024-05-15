@@ -24,7 +24,10 @@ class Actualizar extends Component
 
     protected $messages = [
         "gravacao_id.required" => "Campo obrigatório",
+
         "dataMasterizacao.required" => "Campo obrigatório",
+        "dataMasterizacao.regex" => "Só é possível agendar das 08:00 até 18:00",
+        
         "duracaoMasterizacao.required" => "Campo obrigatório",
     ];
 
@@ -140,7 +143,7 @@ class Actualizar extends Component
     {
         $this->validate([
             "gravacao_id" => "required",
-            "dataMasterizacao" => "required",
+            "dataMasterizacao" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
             "duracaoMasterizacao" => "required",
         ]);
         $this->verificarData();

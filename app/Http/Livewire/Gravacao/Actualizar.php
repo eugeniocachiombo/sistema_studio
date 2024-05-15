@@ -44,7 +44,10 @@ class Actualizar extends Component
         "grupoEscolhido.required" => "Campo obrigatório",
         "tituloAudio.required" => "Campo obrigatório",
         "estilo_id.required" => "Campo obrigatório",
+
         "dataGravacao.required" => "Campo obrigatório",
+        "dataGravacao.regex" => "Só é possível agendar das 08:00 até 18:00",
+
         "duracaoGravacao.required" => "Campo obrigatório",
         "nomeGrupo.required" => "Escreva o nome do grupo",
         "nomeParticipante.required" => "Escreva o nome do participante",
@@ -210,7 +213,7 @@ class Actualizar extends Component
             "grupoEscolhido" => "required",
             "tituloAudio" => "required",
             "estilo_id" => "required",
-            "dataGravacao" => "required",
+            "dataGravacao" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
             "duracaoGravacao" => "required",
         ]);
         $this->verificarData();

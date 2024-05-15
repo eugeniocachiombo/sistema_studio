@@ -27,6 +27,7 @@ class Agendar extends Component
     protected $messages = [
         "gravacao_id.required" => "Campo obrigatório",
         "dataMixagem.required" => "Campo obrigatório",
+        "dataMixagem.regex" => "Só é possível agendar das 08:00 até 18:00",
         "duracaoMixagem.required" => "Campo obrigatório",
     ];
 
@@ -160,7 +161,7 @@ class Agendar extends Component
     {
        $this->validate([
             "gravacao_id" => "required",
-            "dataMixagem" => "required",
+            "dataMixagem" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
             "duracaoMixagem" => "required",
         ]);
         $this->verificarData();
