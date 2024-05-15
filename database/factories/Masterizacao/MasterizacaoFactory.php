@@ -22,7 +22,7 @@ class MasterizacaoFactory extends Factory
         
         return [
             "mixagem_id" => $this->buscarIDMixagem(),
-            "data_master" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28). " 10:30",
+            "data_master" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28) . " ". rand(8, 18) . ":" . rand(0, 45),
             "estado_master" => $this->faker->randomElement(["pendente", "masterizado"]),
             "duracao" => $this->faker->numberBetween(1, 10) . " hr",
             "responsavel" => $this->faker->numberBetween(1, 2),
