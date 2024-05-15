@@ -51,6 +51,9 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Cancelar
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -126,6 +129,12 @@
                                                 <i class="bi bi-pen"></i>
                                             </button>
                                             </a>
+                                        </td>
+                                        <td class="text-center" style="white-space: nowrap">
+                                            <button class="btn btn-danger"
+                                                wire:click.prevent="cancelarAgendamento({{ $dadosMixagem->id }})">
+                                                <i class="bi bi-dash-circle"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
