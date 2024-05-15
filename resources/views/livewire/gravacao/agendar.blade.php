@@ -327,7 +327,7 @@
                                     <div class="row g-3">
                                         <label class="text-primary fw-bold" for="">Data da gravação</label>
                                         <br>
-                                        <input type="datetime-local" name="" id=""
+                                        <input type="datetime-local" min="{{$dataMin}}"
                                             class="form-control" wire:model="dataGravacao">
 
                                     </div>

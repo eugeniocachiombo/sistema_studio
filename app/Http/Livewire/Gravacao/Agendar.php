@@ -7,10 +7,13 @@ use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
 use App\Models\Grupo\GrupoCliente;
+use App\Models\Masterizacao\Masterizacao;
+use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
@@ -22,6 +25,7 @@ class Agendar extends Component
     public $listaGrupos = array();
     public $listaParticipantes = array();
     public $nomeGrupo = null, $nomeParticipante = null;
+    public $dataMin, $dataMax;
 
     public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null,
     $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array(),
@@ -50,6 +54,7 @@ class Agendar extends Component
 
     public function mount()
     {
+        $this->dataMinimaAgendamento();
         $this->buscarDadosDispositivo();
         $this->participantesEscolhidos = [];
     }
@@ -64,6 +69,23 @@ class Agendar extends Component
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
         return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
+    }
+
+    public function dataMinimaAgendamento()
+    {
+        $gravacao = Gravacao::max("data_gravacao");
+        $mixagem = Mixagem::max("data_mixagem");
+        $masterizacao = Masterizacao::max("data_master");
+        $maiorData = max($gravacao, $mixagem, $masterizacao);
+
+        if ($maiorData) {
+            $maiorHora = date('H', strtotime($maiorData));
+            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($maiorHora + 1) . ":00";
+            $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+        } else {
+            $dataAgenda = Carbon::now();
+            $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+        }
     }
 
     public function buscarTodosParticipantes()
@@ -196,26 +218,16 @@ class Agendar extends Component
 
     public function verificarData()
     {
-        $compararHoje = $this->verificarMaiorDataHojeDataInserida();
-        if ($compararHoje) {
-            $this->verificarExistenciaDataNoSistema();
-        } else {
-            $this->emit('alerta', ['mensagem' => 'A data de agendamento deve ser maior que a data actual', 'icon' => 'warning', 'tempo' => 5000]);
-        }
-    }
-
-    public function verificarExistenciaDataNoSistema()
-    {
         $dataInserida = date("Y-m-d", strtotime($this->dataGravacao));
         $horaInserida = date("H", strtotime($this->dataGravacao));
         $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
-        ->where("estado_gravacao", "!=", "gravado")
-        ->orderBy("created_at", "desc")
-        ->first();
+            ->where("estado_gravacao", "!=", "gravado")
+            ->orderBy("created_at", "desc")
+            ->first();
         if ($gravacao) {
             $dataDB = date("Y-m-d", strtotime($gravacao->data_gravacao));
             $horaDB = date("H", strtotime($gravacao->data_gravacao));
-            $duracaoDB = (int)trim($gravacao->duracao, " hr");
+            $duracaoDB = (int) trim($gravacao->duracao, " hr");
             $cargaDB = $horaDB + $duracaoDB;
             if ($horaInserida > $cargaDB) {
                 $this->inserirNaBD();
@@ -225,13 +237,6 @@ class Agendar extends Component
         } else {
             $this->inserirNaBD();
         }
-    }
-
-    public function verificarMaiorDataHojeDataInserida()
-    {
-        $dataTimeActual = new DateTime(date("Y-m-d H:i:s"));
-        $dataTimeInserido = new DateTime($this->dataGravacao);
-        return $dataTimeInserido > $dataTimeActual;
     }
 
     public function inserirNaBD()
@@ -293,7 +298,7 @@ class Agendar extends Component
 
         if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de gravação para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        }  elseif ($nomeCliente) {
+        } elseif ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de gravação para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de gravação para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);

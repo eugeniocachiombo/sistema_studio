@@ -138,16 +138,6 @@ class Agendar extends Component
 
     public function verificarData()
     {
-        $compararHoje = $this->verificarMaiorDataHojeDataInserida();
-        if ($compararHoje) {
-            $this->verificarExistenciaDataNoSistema();
-        } else {
-            $this->emit('alerta', ['mensagem' => 'A data de agendamento deve ser maior que a data actual', 'icon' => 'warning', 'tempo' => 5000]);
-        }
-    }
-
-    public function verificarExistenciaDataNoSistema()
-    {
         $dataInserida = date("Y-m-d", strtotime($this->dataMasterizacao));
         $horaInserida = date("H", strtotime($this->dataMasterizacao));
 
@@ -191,13 +181,6 @@ class Agendar extends Component
         } else {
                $this->inserirNaBD();
         }
-    }
-
-    public function verificarMaiorDataHojeDataInserida()
-    {
-        $dataTimeActual = new DateTime(date("Y-m-d H:i:s"));
-        $dataTimeInserido = new DateTime($this->dataMasterizacao);
-        return $dataTimeInserido > $dataTimeActual;
     }
 
     public function inserirNaBD(){
