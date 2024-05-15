@@ -63,7 +63,7 @@
                                                 <label class="text-primary fw-bold" for="">Data da
                                                     mixagem</label>
                                                 <br>
-                                                <input type="datetime-local" name="" id=""
+                                                <input type="datetime-local" min="{{$dataMin}}" name="" id=""
                                                     class="form-control" wire:model="dataMixagem">
 
                                            

@@ -329,7 +329,6 @@
                                         <br>
                                         <input type="datetime-local" min="{{$dataMin}}"
                                             class="form-control" wire:model="dataGravacao">
-
                                     </div>
                                     <div class="text-danger" style="font-size: 12.5px">
                                         @error('dataGravacao')

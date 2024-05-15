@@ -14,7 +14,6 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -41,7 +40,10 @@ class Agendar extends Component
         "grupoEscolhido.required" => "Campo obrigatório",
         "tituloAudio.required" => "Campo obrigatório",
         "estilo_id.required" => "Campo obrigatório",
+
         "dataGravacao.required" => "Campo obrigatório",
+        "dataGravacao.regex" => "Só é possível agendar das 08:00 até 18:00",
+
         "duracaoGravacao.required" => "Campo obrigatório",
         "nomeGrupo.required" => "Escreva o nome do grupo",
         "nomeParticipante.required" => "Escreva o nome do participante",
@@ -54,13 +56,13 @@ class Agendar extends Component
 
     public function mount()
     {
-        $this->dataMinimaAgendamento();
         $this->buscarDadosDispositivo();
         $this->participantesEscolhidos = [];
     }
 
     public function render()
     {
+        $this->dataMinimaAgendamento();
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
@@ -73,14 +75,25 @@ class Agendar extends Component
 
     public function dataMinimaAgendamento()
     {
+        $maiorEntidade = array();
         $gravacao = Gravacao::max("data_gravacao");
         $mixagem = Mixagem::max("data_mixagem");
         $masterizacao = Masterizacao::max("data_master");
         $maiorData = max($gravacao, $mixagem, $masterizacao);
 
-        if ($maiorData) {
-            $maiorHora = date('H', strtotime($maiorData));
-            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($maiorHora + 1) . ":00";
+        if (!empty($maiorData)) {
+            if ($maiorData == $gravacao) {
+                $maiorEntidade = Gravacao::where("data_gravacao", $maiorData)->first();
+            } else if ($maiorData == $mixagem) {
+                $maiorEntidade = Mixagem::where("data_mixagem", $maiorData)->first();
+            } else if ($maiorData == $masterizacao) {
+                $maiorEntidade = Masterizacao::where("data_master", $maiorData)->first();
+            }
+
+            $duracao = (int) trim($maiorEntidade->duracao, " hr");
+            $maiorHora = (int) date('H', strtotime($maiorData));
+            $horaAgenda = $maiorHora + $duracao;
+            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda + 1) . ":00";
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
         } else {
             $dataAgenda = Carbon::now();
@@ -210,7 +223,7 @@ class Agendar extends Component
             "grupoEscolhido" => "required",
             "tituloAudio" => "required",
             "estilo_id" => "required",
-            "dataGravacao" => "required",
+            "dataGravacao" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
             "duracaoGravacao" => "required",
         ]);
         $this->verificarData();
@@ -232,7 +245,7 @@ class Agendar extends Component
             if ($horaInserida > $cargaDB) {
                 $this->inserirNaBD();
             } else {
-                $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
+                $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo neste horário', 'icon' => 'warning', 'tempo' => 5000]);
             }
         } else {
             $this->inserirNaBD();
