@@ -394,7 +394,7 @@
                                 
                                 {{-- Palavra-Passe Configurações --}}
                                 <div class="tab-pane fade pt-3 {{$tabConteudoEditarPasse}}" id="profile-change-password">
-                                    <form >
+                                    <form class="needs-validation">
                                         <div class="row mb-3">
                                             <label for="passeActual" class="col-md-4 col-lg-3 col-form-label">Passe
                                                 Actual</label>
@@ -422,7 +422,7 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" wire:click.prevent="alterarPalavraPasse"
+                                            <button type="submit" wire:submit.prevent="alterarPalavraPasse"
                                                 class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>

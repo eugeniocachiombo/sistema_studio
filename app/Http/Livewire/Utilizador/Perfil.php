@@ -73,36 +73,32 @@ class Perfil extends Component
 
     public function render()
     {
-        $this->manipularTab();
         $this->setarDadosArquivo();
         return view('livewire.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
     }
 
-    public function manipularTab()
-    {
-        if (
-            $this->nome != null || $this->sobrenome != null || $this->sobre != null || $this->nomeArtistico != null ||
-            $this->genero != null || $this->nascimento != null || $this->telefone != null ||
-            $this->email != null || $this->nacionalidade != null || $this->provincia != null || $this->endereco != null ||
-            $this->twitter != null || $this->facebook != null || $this->instagram != null || $this->linkedin != null
-        ) {
-            $this->tabEditarPerfil = "active";
-            $this->tabConteudoEditarPerfil = "show active";
-            $this->tabVisaoGeral = "";
-            $this->tabConteudoVisaoGeral = "";
-            $this->tabEditarPasse = "";
-            $this->tabConteudoEditarPasse = ""; 
-        } else if($this->passeActual != null || $this->passeNova != null || $this->passeConfirmacao != null){
+    public function updated(){
+        if($this->passeActual != null || $this->passeNova != null || $this->passeConfirmacao != null){
             $this->tabEditarPerfil = "";
             $this->tabConteudoEditarPerfil = "";
             $this->tabVisaoGeral = "";
             $this->tabConteudoVisaoGeral = "";
             $this->tabEditarPasse = "active";
             $this->tabConteudoEditarPasse = "show active"; 
-        } else{
-            $this->tabVisaoGeral = "active";
-            $this->tabConteudoVisaoGeral = "show active";
-        }
+        } else if (
+            $this->passeActual == null && $this->passeNova == null && $this->passeConfirmacao == null &&
+            $this->nome != null || $this->sobrenome != null || $this->sobre != null || $this->nomeArtistico != null ||
+            $this->genero != null || $this->nascimento != null || $this->telefone != null ||
+            $this->email != null || $this->nacionalidade != null || $this->provincia != null || $this->endereco != null ||
+            $this->twitter != null || $this->facebook != null || $this->instagram != null || $this->linkedin != null 
+            ) {
+            $this->tabEditarPerfil = "active";
+            $this->tabConteudoEditarPerfil = "show active";
+            $this->tabVisaoGeral = "";
+            $this->tabConteudoVisaoGeral = "";
+            $this->tabEditarPasse = "";
+            $this->tabConteudoEditarPasse = ""; 
+        } 
     }
 
     public function setarDadosInicialmente()
