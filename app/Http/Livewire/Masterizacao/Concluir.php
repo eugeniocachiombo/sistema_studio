@@ -6,6 +6,7 @@ use App\Models\Gravacao\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
+use App\Models\Grupo\GrupoCliente;
 use App\Models\Masterizacao\Masterizacao;
 use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
@@ -131,10 +132,11 @@ class Concluir extends Component
     public function msgParaRegistroActividade($cliente_id, $grupo_id)
     {
         $nomeCliente = $this->buscarUtilizador($cliente_id);
-        $nomeGrupo = $this->buscarNomeGrupo($grupo_id);
+        $nomeGrupo = $this->buscarGrupo($grupo_id);
+        $mebroEmGrupo = $this->buscarGrupoCliente($cliente_id);
 
-        if (!empty($nomeCliente) && !empty($nomeGrupo)) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de masterização para cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de masterização para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Concluiu um agendamento de masterização para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
@@ -149,6 +151,11 @@ class Concluir extends Component
             "tipo_msg" => $tipo,
             "user_id" => $user_id,
         ]);
+    }
+
+    public function buscarGrupoCliente($cliente_id)
+    {
+        return GrupoCliente::where("membro", $cliente_id)->first();
     }
 
     public function buscarNomeGrupo($id)

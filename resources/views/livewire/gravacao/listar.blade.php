@@ -21,38 +21,41 @@
                         <table class="table datatablePT table-hover pt-3">
                             <thead class="">
                                 <tr>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Id
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Proprietário
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Título do áudio
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Participação
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estilo
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da gravação
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estado
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Duração
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Agendado
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Responsavel
                                     </th>
-                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
+                                    </th>
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Cancelar
                                     </th>
                                 </tr>
                             </thead>
@@ -60,7 +63,8 @@
                             <tbody class="">
                                 @foreach ($listaGravacao as $item)
                                     <tr>
-                                        <td class="bg-primary text-white text-center" style="white-space: nowrap">{{ $item->id }}</td>
+                                        <td class="bg-primary text-white text-center" style="white-space: nowrap">
+                                            {{ $item->id }}</td>
                                         <td style="white-space: nowrap">
                                             <div class="d-flex">
                                                 <div>
@@ -112,7 +116,8 @@
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_gravacao) }}</td>
+                                        <td style="white-space: nowrap">
+                                            {{ $this->formatarDataNormal($item->data_gravacao) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($item->estado_gravacao == 'gravado')
                                                 <span class="badge bg-success text-light ">
@@ -133,9 +138,15 @@
                                         <td class="text-center" style="white-space: nowrap">
                                             <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">
                                                 <button class="btn btn-success">
-                                                <i class="bi bi-pen"></i>
-                                            </button>
+                                                    <i class="bi bi-pen"></i>
+                                                </button>
                                             </a>
+                                        </td>
+                                        <td class="text-center" style="white-space: nowrap">
+                                            <button class="btn btn-danger"
+                                                wire:click.prevent="cancelarAgendamento({{ $idGravacao }})">
+                                                <i class="bi bi-dash-circle"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
