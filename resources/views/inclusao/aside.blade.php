@@ -30,7 +30,7 @@
                         </a>
                     </li>
 
-                    @if (session('tipo_acesso') != 3)
+                    @if (session('tipo_acesso') < 2)
                         <li>
                             <a href="{{ route('gravacao.concluir') }}">
                                 <i class="bi bi-circle"></i><span>Concluir</span>
@@ -61,7 +61,7 @@
                         </a>
                     </li>
 
-                    @if (session('tipo_acesso') != 3)
+                    @if (session('tipo_acesso') < 2)
                         <li>
                             <a href="{{ route('mixagem.concluir') }}">
                                 <i class="bi bi-circle"></i><span>Concluir</span>
@@ -92,7 +92,7 @@
                         </a>
                     </li>
 
-                    @if (session('tipo_acesso') != 3)
+                    @if (session('tipo_acesso') < 2)
                         <li>
                             <a href="{{ route('masterizacao.concluir') }}">
                                 <i class="bi bi-circle"></i><span>Concluir</span>

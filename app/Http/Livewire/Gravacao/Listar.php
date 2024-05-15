@@ -27,7 +27,6 @@ class Listar extends Component
         $this->buscarDadosDispositivo();
     }
 
-
     public function index()
     {
         return view('index.gravacao.listar');
@@ -35,8 +34,16 @@ class Listar extends Component
 
     public function render()
     {
-        $this->listaGravacao = Gravacao::all();
+        $this->buscarDadosListagem();
         return view('livewire.gravacao.listar');
+    }
+
+    public function buscarDadosListagem(){
+        if (Auth::user()->tipo_acesso == 3) {
+            $this->listaGravacao = Gravacao::where("cliente_id", $this->idUtilizadorLogado)->get();
+        } else {
+            $this->listaGravacao = Gravacao::all();
+        }
     }
 
     public function cancelarAgendamento($idGravacao){

@@ -34,13 +34,27 @@ class Listar extends Component
 
     public function render()
     {
-        $this->listaGravacoes = Gravacao::select("gravacaos.*")
+        $this->buscarDadosListagem();
+        return view('livewire.mixagem.listar');
+    }
+
+    public function buscarDadosListagem(){
+        if (Auth::user()->tipo_acesso == 3) {
+            $this->listaGravacoes = Gravacao::select("gravacaos.*")
+            ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
+            ->where("gravacaos.estado_gravacao", "gravado")
+            ->where("gravacaos.cliente_id", $this->idUtilizadorLogado)
+            ->whereNotNull("mixagems.id")
+            ->distinct()
+            ->get();
+        } else {
+            $this->listaGravacoes = Gravacao::select("gravacaos.*")
             ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
             ->where("gravacaos.estado_gravacao", "gravado")
             ->whereNotNull("mixagems.id")
             ->distinct()
             ->get();
-        return view('livewire.mixagem.listar');
+        }
     }
 
     public function cancelarAgendamento($idMixagem){

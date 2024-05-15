@@ -35,7 +35,23 @@ class Listar extends Component
 
     public function render()
     {
-        $this->listaGravacoes = Gravacao::select("gravacaos.*")
+        $this->buscarDadosListagem();
+        return view('livewire.masterizacao.listar');
+    }
+
+    public function buscarDadosListagem(){
+        if (Auth::user()->tipo_acesso == 3) {
+            $this->listaGravacoes = Gravacao::select("gravacaos.*")
+            ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
+            ->leftJoin('masterizacaos', 'mixagems.id', '=', 'masterizacaos.mixagem_id')
+            ->where("gravacaos.estado_gravacao", "gravado")
+            ->where("mixagems.estado_mixagem", "mixado")
+            ->where("cliente_id", $this->idUtilizadorLogado)
+            ->whereNotNull("masterizacaos.mixagem_id")
+            ->distinct()
+            ->get();
+        } else {
+            $this->listaGravacoes = Gravacao::select("gravacaos.*")
             ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
             ->leftJoin('masterizacaos', 'mixagems.id', '=', 'masterizacaos.mixagem_id')
             ->where("gravacaos.estado_gravacao", "gravado")
@@ -43,7 +59,7 @@ class Listar extends Component
             ->whereNotNull("masterizacaos.mixagem_id")
             ->distinct()
             ->get();
-        return view('livewire.masterizacao.listar');
+        }
     }
     
     public function cancelarAgendamento($idMasterizacao){
