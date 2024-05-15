@@ -80,8 +80,8 @@ class Actualizar extends Component
 
     public function setarInicialmenteDadosGravacao(){
         $this->dadosActualGravacao = Gravacao::where("id", $this->idGravacao)->first();
-        $this->cliente_id = $this->dadosActualGravacao->cliente_id != null ? $this->dadosActualGravacao->cliente_id : "0";
-        $this->grupoEscolhido = $this->dadosActualGravacao->grupo_id != null ? $this->dadosActualGravacao->grupo_id : "0";
+        $this->cliente_id = $this->dadosActualGravacao->cliente_id != null ? $this->dadosActualGravacao->cliente_id : null;
+        $this->grupoEscolhido = $this->dadosActualGravacao->grupo_id != null ? $this->dadosActualGravacao->grupo_id : null;
         $this->tituloAudio = $this->dadosActualGravacao->titulo_audio != null ? $this->dadosActualGravacao->titulo_audio : "";
         $this->estilo_id = $this->dadosActualGravacao->estilo_audio != null ? $this->dadosActualGravacao->estilo_audio : "";
         $this->dataGravacao = $this->dadosActualGravacao->data_gravacao != null ? $this->dadosActualGravacao->data_gravacao : "";
@@ -209,8 +209,6 @@ class Actualizar extends Component
     public function actualizarAgendamento()
     {
         $this->validate([
-            "cliente_id" => "required",
-            "grupoEscolhido" => "required",
             "tituloAudio" => "required",
             "estilo_id" => "required",
             "dataGravacao" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
@@ -245,8 +243,8 @@ class Actualizar extends Component
 
     public function inserirNaBD(){
         $dados = [
-            "cliente_id" => $this->cliente_id != "0" ? $this->cliente_id : null,
-            "grupo_id" => $this->grupoEscolhido != "0" ? $this->grupoEscolhido : null,
+            "cliente_id" => $this->cliente_id != null ? $this->cliente_id : null,
+            "grupo_id" => $this->grupoEscolhido != null ? $this->grupoEscolhido : null,
             "titulo_audio" => $this->tituloAudio,
             "estilo_audio" => $this->estilo_id,
             "data_gravacao" => $this->dataGravacao,
@@ -255,8 +253,10 @@ class Actualizar extends Component
             "responsavel" => Auth::user()->id,
         ];
 
-        if ($this->cliente_id != "0" && $this->grupoEscolhido != "0") {
-            $this->emit('alerta', ['mensagem' => 'O agendamento só permite 1 proprietário', 'icon' => 'warning', 'tempo' => 5000]);
+        if ($this->cliente_id == null && $this->grupoEscolhido == null) {
+            $this->emit('alerta', ['mensagem' => 'Selecione 1 proprietário (Grupo ou Cliente) ', 'icon' => 'warning', 'tempo' => 5000]);
+        }else if ($this->cliente_id != null && $this->grupoEscolhido != null) {
+            $this->emit('alerta', ['mensagem' => 'Só é permitido 1 proprietário (Grupo ou Cliente)', 'icon' => 'warning', 'tempo' => 5000]);
         } else if ($this->cliente_id != null || $this->grupoEscolhido != null) {
             
             $gravacao = Gravacao::where("id", $this->idGravacao)->update($dados);

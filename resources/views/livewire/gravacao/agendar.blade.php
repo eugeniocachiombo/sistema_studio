@@ -19,8 +19,8 @@
                         <div class="card card-animated p-4">
                             <label class="text-primary fw-bold" for="">Cliente</label>
                             <select class="form-control" name="" id="" wire:model="cliente_id">
-                                <option class="d-none" selected>Escolha o cliente</option>
-                                <option value="0">Desconhecido</option>
+                                <option value="" class="d-none" selected>Escolha o cliente</option>
+                                <option value="">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -55,8 +55,8 @@
                                     <label class="text-primary fw-bold" for="">Escolher</label>
                                     <select class="form-control mt-3" wire:model="grupoEscolhido" name=""
                                         id="">
-                                        <option class="d-none">Selecione o grupo</option>
-                                        <option value="0">Desconhecido</option>
+                                        <option value="" class="d-none">Selecione o grupo</option>
+                                        <option value="">Desconhecido</option>
                                         @foreach ($listaGrupos as $item)
                                             <option value="{{ $item->id }}">{{ $item->nome }}</option>
                                         @endforeach
