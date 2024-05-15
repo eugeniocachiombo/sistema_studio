@@ -54,9 +54,11 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Cancelar
-                                    </th>
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Cancelar
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -142,12 +144,15 @@
                                                 </button>
                                             </a>
                                         </td>
-                                        <td class="text-center" style="white-space: nowrap">
-                                            <button class="btn btn-danger"
-                                                wire:click.prevent="cancelarAgendamento({{ $idGravacao }})">
-                                                <i class="bi bi-dash-circle"></i>
-                                            </button>
-                                        </td>
+
+                                        @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
+                                            <td class="text-center" style="white-space: nowrap">
+                                                <button class="btn btn-danger"
+                                                    wire:click.prevent="cancelarAgendamento({{ $idGravacao }})">
+                                                    <i class="bi bi-dash-circle"></i>
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

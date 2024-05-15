@@ -54,9 +54,11 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Cancelar
-                                    </th>
+                                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Cancelar
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -77,10 +79,10 @@
                                             <div class="d-flex">
                                                 <div>
                                                     @if ($item->cliente_id)
-                                                    @php
-                                                        $proprietario = $cliente->name;
-                                                        $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
-                                                    @endphp
+                                                        @php
+                                                            $proprietario = $cliente->name;
+                                                            $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
+                                                        @endphp
                                                         @if ($fotoUtilizador)
                                                             <a
                                                                 href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
@@ -95,7 +97,8 @@
                                                         @endif
                                                     @elseif($item->grupo_id)
                                                         @php
-                                                            $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            $proprietario =
+                                                                $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
                                                         @endphp
                                                     @endif
 
@@ -111,7 +114,8 @@
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
-                                        <td style="white-space: nowrap">{{ $this->formatarDataNormal($dadosMixagem->data_mixagem) }}</td>
+                                        <td style="white-space: nowrap">
+                                            {{ $this->formatarDataNormal($dadosMixagem->data_mixagem) }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($dadosMixagem->estado_mixagem == 'mixado')
                                                 <span class="badge bg-success text-light ">
@@ -124,7 +128,8 @@
                                             @endif
                                         </td>
                                         <td style="white-space: nowrap">{{ $dadosMixagem->duracao }}</td>
-                                        <td style="white-space: nowrap">{{ $this->formatarData($dadosMixagem->created_at) }}
+                                        <td style="white-space: nowrap">
+                                            {{ $this->formatarData($dadosMixagem->created_at) }}
                                         </td>
                                         <td style="white-space: nowrap">
                                             {{ $this->buscarUtilizador($dadosMixagem->responsavel)->name }}
@@ -132,16 +137,18 @@
                                         <td class="text-center" style="white-space: nowrap">
                                             <a href="{{ route('mixagem.actualizar', [$dadosMixagem->id]) }}">
                                                 <button class="btn btn-success">
-                                                <i class="bi bi-pen"></i>
-                                            </button>
+                                                    <i class="bi bi-pen"></i>
+                                                </button>
                                             </a>
                                         </td>
-                                        <td class="text-center" style="white-space: nowrap">
-                                            <button class="btn btn-danger"
-                                                wire:click.prevent="cancelarAgendamento({{ $dadosMixagem->id }})">
-                                                <i class="bi bi-dash-circle"></i>
-                                            </button>
-                                        </td>
+                                        @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
+                                            <td class="text-center" style="white-space: nowrap">
+                                                <button class="btn btn-danger"
+                                                    wire:click.prevent="cancelarAgendamento({{ $dadosMixagem->id }})">
+                                                    <i class="bi bi-dash-circle"></i>
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

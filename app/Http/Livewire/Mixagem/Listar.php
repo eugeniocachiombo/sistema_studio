@@ -20,9 +20,10 @@ use Livewire\Component;
 class Listar extends Component
 {
     public $listaGravacoes = array();
-    public $infoDispositivo;
+    public $infoDispositivo, $idUtilizadorLogado;
 
     public function mount(){
+        $this->idUtilizadorLogado = Auth::user()->id;
         $this->buscarDadosDispositivo();
     }
 

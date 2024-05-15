@@ -20,8 +20,10 @@ class Listar extends Component
 {
     public $listaGravacao = array();
     public $infoDispositivo;
+    public $idUtilizadorLogado;
 
     public function mount(){
+        $this->idUtilizadorLogado = Auth::user()->id;
         $this->buscarDadosDispositivo();
     }
 
