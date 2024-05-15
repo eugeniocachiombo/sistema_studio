@@ -62,7 +62,6 @@ class Actualizar extends Component
 
     public function render()
     {
-        
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
@@ -313,11 +312,12 @@ class Actualizar extends Component
     public function msgParaRegistroActividade()
     {
         $nomeCliente = $this->buscarUtilizador($this->cliente_id);
-        $nomeGrupo = $this->buscarNomeGrupo($this->grupoEscolhido);
+        $nomeGrupo = $this->buscarGrupo($this->grupoEscolhido);
+        $mebroEmGrupo = $this->buscarGrupoCliente($this->cliente_id);
 
-        if (!empty($nomeCliente) && !empty($nomeGrupo)) {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para cliente $nomeCliente->name do grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        } elseif ($nomeCliente) {
+        if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }  elseif ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um agendamento de gravação para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
@@ -327,6 +327,16 @@ class Actualizar extends Component
     public function buscarUtilizador($id)
     {
         return User::find($id);
+    }
+
+    public function buscarGrupo($id)
+    {
+        return Grupo::find($id);
+    }
+
+    public function buscarGrupoCliente($cliente_id)
+    {
+        return GrupoCliente::where("membro", $cliente_id)->first();
     }
 
     public function removerGrupoParticipanteJaSelecionado($grupoEscolhido)

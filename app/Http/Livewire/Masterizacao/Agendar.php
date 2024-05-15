@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Masterizacao;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
+use App\Models\Grupo\GrupoCliente;
 use App\Models\Masterizacao\Masterizacao;
 use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
@@ -50,21 +51,15 @@ class Agendar extends Component
         return view('livewire.masterizacao.agendar');
     }
 
-    public function buscarUtilizador($id)
-    {
-        return User::find($id);
-    }
-
-    public function buscarGrupo($id)
-    {
-        return Grupo::find($id);
-    }
-
     public function msgParaRegistroActividade($cliente_id, $grupo_id)
     {
         $nomeCliente = $this->buscarUtilizador($cliente_id);
-        $nomeGrupo = $this->buscarGrupo($grupo_id) ? $this->buscarGrupo($grupo_id)->name : "";
-        if ($nomeCliente) {
+        $nomeGrupo = $this->buscarGrupo($grupo_id);
+        $mebroEmGrupo = $this->buscarGrupoCliente($cliente_id);
+
+        if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de masterização para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }else if ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de masterização para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de masterização para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
@@ -82,6 +77,21 @@ class Agendar extends Component
         $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
             "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
             "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function buscarGrupoCliente($cliente_id)
+    {
+        return GrupoCliente::where("membro", $cliente_id)->first();
+    }
+
+    public function buscarUtilizador($id)
+    {
+        return User::find($id);
+    }
+
+    public function buscarGrupo($id)
+    {
+        return Grupo::find($id);
     }
 
     public function buscarParticipantesGravacao($id)
