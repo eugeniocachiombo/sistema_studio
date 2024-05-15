@@ -25,9 +25,11 @@
 
             <div class="row">
                 @if ($utilizadorLogado->tipo_acesso != 3)
-                    <div class="col-lg-4">
-                        @livewire('pagina-inicial.grafico-geral')
-                    </div>
+                    @if ($utilizadorLogado->tipo_acesso == 1)
+                        <div class="col-lg-4">
+                            @livewire('pagina-inicial.grafico-geral')
+                        </div>
+                    @endif
 
                     <div class="col-lg-8">
                         @livewire('pagina-inicial.tb-clientes')
