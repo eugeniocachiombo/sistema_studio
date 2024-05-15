@@ -242,6 +242,27 @@ class Agendar extends Component
         ]);
     }
 
+    public function verRegistroAgendamento()
+    {
+        $gravacao = Gravacao::max("data_gravacao");
+        $mixagem = Mixagem::max("data_mixagem");
+        $masterizacao = Masterizacao::max("data_master");
+        $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
+
+        $this->emit('alerta', [
+            'icon' => "warning",
+            'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
+            'btn' => true,
+            'tempo' => 100000,
+            'position' => 'center',
+        ]);
+    }
+
+    public function formatarDataNormal($data){
+        $formato = new DateTime($data);
+        return $formato->format('d-m-Y H:i');
+    }
+
     public function limparCampos()
     {
         $this->gravacao_id = null;

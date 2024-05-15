@@ -100,6 +100,10 @@
                                             <button wire:click.prevent="actualizarMixagem" class="btn btn-primary">
                                                 Actualizar
                                             </button>
+
+                                            <button wire:click.prevent="verRegistroAgendamento" type="button" class="btn btn-success">
+                                                Ver Registro
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

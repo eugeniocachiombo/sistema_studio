@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -265,7 +266,7 @@ class Agendar extends Component
 
         if ($this->cliente_id == null && $this->grupoEscolhido == null) {
             $this->emit('alerta', ['mensagem' => 'Selecione 1 proprietário (Grupo ou Cliente) ', 'icon' => 'warning', 'tempo' => 5000]);
-        }else if ($this->cliente_id != null && $this->grupoEscolhido != null) {
+        } else if ($this->cliente_id != null && $this->grupoEscolhido != null) {
             $this->emit('alerta', ['mensagem' => 'Só é permitido 1 proprietário (Grupo ou Cliente)', 'icon' => 'warning', 'tempo' => 5000]);
         } else if ($this->cliente_id != null || $this->grupoEscolhido != null) {
             $gravacao = Gravacao::create($dados);
@@ -389,5 +390,26 @@ class Agendar extends Component
         $this->participantesEscolhidos = array();
         $this->participantesFiltrados = array();
         $this->termoPesquisa = '';
+    }
+
+    public function verRegistroAgendamento()
+    {
+        $gravacao = Gravacao::max("data_gravacao");
+        $mixagem = Mixagem::max("data_mixagem");
+        $masterizacao = Masterizacao::max("data_master");
+        $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
+
+        $this->emit('alerta', [
+            'icon' => "warning",
+            'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
+            'btn' => true,
+            'tempo' => 100000,
+            'position' => 'center',
+        ]);
+    }
+
+    public function formatarDataNormal($data){
+        $formato = new DateTime($data);
+        return $formato->format('d-m-Y H:i');
     }
 }

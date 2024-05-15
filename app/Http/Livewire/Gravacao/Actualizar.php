@@ -27,7 +27,7 @@ class Actualizar extends Component
     public $listaClientes = array();
     public $listaGrupos = array();
     public $listaParticipantes = array();
-    public $nomeGrupo = null, $nomeParticipante = null;
+    public $nomeGrupo = null, $nomeParticipante = null, $dataMin;
 
     public $cliente_id = null, $grupoEscolhido = null, $tituloAudio = null, $estilo_id = null,
     $dataGravacao = null, $duracaoGravacao = null, $participantesEscolhidos = array(),
@@ -68,6 +68,7 @@ class Actualizar extends Component
 
     public function render()
     {
+        $this->dataMinimaAgendamento();
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
@@ -76,6 +77,34 @@ class Actualizar extends Component
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
         return view('livewire.gravacao.actualizar', ["participantesFiltrados" => $participantes]);
+    }
+
+    public function dataMinimaAgendamento()
+    {
+        $maiorEntidade = array();
+        $gravacao = Gravacao::max("data_gravacao");
+        $mixagem = Mixagem::max("data_mixagem");
+        $masterizacao = Masterizacao::max("data_master");
+        $maiorData = max($gravacao, $mixagem, $masterizacao);
+
+        if (!empty($maiorData)) {
+            if ($maiorData == $gravacao) {
+                $maiorEntidade = Gravacao::where("data_gravacao", $maiorData)->first();
+            } else if ($maiorData == $mixagem) {
+                $maiorEntidade = Mixagem::where("data_mixagem", $maiorData)->first();
+            } else if ($maiorData == $masterizacao) {
+                $maiorEntidade = Masterizacao::where("data_master", $maiorData)->first();
+            }
+
+            $duracao = (int) trim($maiorEntidade->duracao, " hr");
+            $maiorHora = (int) date('H', strtotime($maiorData));
+            $horaAgenda = $maiorHora + $duracao;
+            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda + 1) . ":00";
+            $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+        } else {
+            $dataAgenda = Carbon::now();
+            $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+        }
     }
 
     public function setarInicialmenteDadosGravacao(){
@@ -368,6 +397,27 @@ class Actualizar extends Component
         } else {
             return null;
         }
+    }
+
+    public function verRegistroAgendamento()
+    {
+        $gravacao = Gravacao::max("data_gravacao");
+        $mixagem = Mixagem::max("data_mixagem");
+        $masterizacao = Masterizacao::max("data_master");
+        $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
+
+        $this->emit('alerta', [
+            'icon' => "warning",
+            'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
+            'btn' => true,
+            'tempo' => 100000,
+            'position' => 'center',
+        ]);
+    }
+
+    public function formatarDataNormal($data){
+        $formato = new DateTime($data);
+        return $formato->format('d-m-Y H:i');
     }
 
     public function limparCampos()

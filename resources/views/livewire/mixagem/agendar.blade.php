@@ -100,6 +100,10 @@
                                             <button wire:click.prevent="agendarMixagem" class="btn btn-primary">
                                                 Agendar
                                             </button>
+
+                                            <button wire:click.prevent="verRegistroAgendamento" type="button" class="btn btn-success">
+                                                Ver Registro
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
