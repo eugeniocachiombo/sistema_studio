@@ -5,17 +5,26 @@ namespace App\Http\Livewire\Masterizacao;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
+use App\Models\Grupo\GrupoCliente;
 use App\Models\Masterizacao\Masterizacao;
 use App\Models\Mixagem\Mixagem;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\RegistroActividade;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
 use Livewire\Component;
 
 class Listar extends Component
 {
     public $listaGravacoes = array();
+    public $infoDispositivo;
+
+    public function mount(){
+        $this->buscarDadosDispositivo();
+    }
 
     public function index()
     {
@@ -33,6 +42,58 @@ class Listar extends Component
             ->distinct()
             ->get();
         return view('livewire.masterizacao.listar');
+    }
+    
+    public function cancelarAgendamento($idMasterizacao){
+        $masterizacao = Masterizacao::find($idMasterizacao);
+        $mixagem = Mixagem::find($masterizacao->mixagem_id);
+        $gravacao = Gravacao::find($mixagem->gravacao_id);
+        $masterizacao->delete();
+        $this->msgParaRegistroActividade($gravacao->cliente_id, $gravacao->grupo_id);
+        $this->emit('alerta', ['mensagem' => 'Agendamento cancelado com sucesso', 'icon' => 'success']);
+        $this->emit('atrazar_redirect', ['caminho' => '/masterizacao/listar', 'tempo' => 2500]);
+    }
+
+    public function msgParaRegistroActividade($cliente_id, $grupo_id)
+    {
+        $nomeCliente = $this->buscarUtilizador($cliente_id);
+        $nomeGrupo = $this->buscarGrupo($grupo_id);
+        $mebroEmGrupo = $this->buscarGrupoCliente($cliente_id);
+
+        if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Cancelou um agendamento de masterização para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        } elseif ($nomeCliente) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Cancelou um agendamento de masterização para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        } elseif ($nomeGrupo) {
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Cancelou um agendamento de masterização para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function buscarGrupoCliente($cliente_id)
+    {
+        return GrupoCliente::where("membro", $cliente_id)->first();
     }
 
     public function buscarUtilizador($id)
