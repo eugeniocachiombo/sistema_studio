@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Mixagem;
 
+use App\Models\Gravacao\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;
@@ -100,6 +101,11 @@ class Listar extends Component
     public function buscarGrupo($id)
     {
         return Grupo::find($id);
+    }
+
+    public function buscarEstilos($id)
+    {
+        return Estilo::find($id);
     }
 
     public function buscarParticipantesGravacao($id)

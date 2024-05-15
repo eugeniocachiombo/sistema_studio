@@ -34,6 +34,9 @@
                                         Participação
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Estilo
+                                    </th>
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da Mixagem
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
@@ -104,6 +107,9 @@
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
+                                        </td>
+                                        <td style="white-space: nowrap">
+                                            {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $this->formatarDataNormal($dadosMixagem->data_mixagem) }}</td>
                                         <td style="white-space: nowrap">
