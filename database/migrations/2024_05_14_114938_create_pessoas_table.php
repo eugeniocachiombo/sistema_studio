@@ -21,6 +21,15 @@ class CreatePessoasTable extends Migration
             $table->enum('genero', ['M', 'F'])->default('M');
             $table->date('nascimento')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->text('sobre')->nullable();
+            $table->string('nacionalidade')->nullable();
+            $table->string('provincia')->nullable();
+            $table->string('municipio')->nullable();
+            $table->string('endereco')->nullable();
+            $table->string('twiter')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('linkedin')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
