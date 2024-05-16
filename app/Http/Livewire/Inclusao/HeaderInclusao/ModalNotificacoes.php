@@ -16,6 +16,7 @@ class ModalNotificacoes extends Component
     public function render()
     {
         $this->verRegistroAgendamento();
+        $this->verRegistroSeguinte();
         return view('livewire.inclusao.header-inclusao.modal-notificacoes');
     }
 
@@ -41,7 +42,7 @@ class ModalNotificacoes extends Component
             } else if ($maiorData == $masterizacao) {
                 $this->tipoAgendamento = "Masterização";
                 $this->agendaEmProrocesso = $this->buscarComMaiorDataMasterizacao($maiorData);
-                $masterizacao = Mixagem::where("data_master", $maiorData)->first();
+                $masterizacao = Masterizacao::where("data_master", $maiorData)->first();
                 $this->data = $maiorData;
                 $this->agendado = $this->agendaEmProrocesso->created_at;
             }
@@ -56,24 +57,27 @@ class ModalNotificacoes extends Component
         }
     }
 
-    public function buscarComMaiorDataGravacao($maiorData){
+    public function buscarComMaiorDataGravacao($maiorData)
+    {
         return Gravacao::where("data_gravacao", $maiorData)->first();
     }
 
-    public function buscarComMaiorDataMixagem($maiorData){
+    public function buscarComMaiorDataMixagem($maiorData)
+    {
         return Gravacao::select("gravacaos.*")
-        ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
-        ->where("mixagems.data_mixagem", $maiorData)
-        ->distinct()
-        ->first();
+            ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
+            ->where("mixagems.data_mixagem", $maiorData)
+            ->distinct()
+            ->first();
     }
 
-    public function buscarComMaiorDataMasterizacao($maiorData){
+    public function buscarComMaiorDataMasterizacao($maiorData)
+    {
         return Gravacao::select("gravacaos.*")
-        ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
-        ->leftJoin('masterizacaos', 'mixagems.id', '=', 'masterizacaos.mixagem_id')
-        ->where("data_master", $maiorData)
-        ->first();
+            ->leftJoin('mixagems', 'gravacaos.id', '=', 'mixagems.gravacao_id')
+            ->leftJoin('masterizacaos', 'mixagems.id', '=', 'masterizacaos.mixagem_id')
+            ->where("data_master", $maiorData)
+            ->first();
     }
 
     public function formatarData($data)
