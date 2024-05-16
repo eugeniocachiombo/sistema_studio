@@ -55,6 +55,13 @@ class Perfil extends Component
         'nascimento.after_or_equal' => 'Data de nascimento inválido',
 
         'genero.required' => 'O gênero é obrigatório',
+
+        'passeActual.required' => 'O campo é obrigatório',
+        'passeActual.min' => 'Digite uma senha com pelo menos 6 dígitos',
+        'passeNova.required' => 'O campo é obrigatório',
+        'passeNova.min' => 'Digite uma senha com pelo menos 6 dígitos',
+        'passeConfirmacao.required' => 'O campo é obrigatório',
+        'passeConfirmacao.min' => 'Digite uma senha com pelo menos 6 dígitos',
     ];
 
     public function mount($alertaPasse)
@@ -220,19 +227,6 @@ class Perfil extends Component
         }
     }
 
-    public function limparCampos()
-    {
-        $this->tipoArquivo = null;
-        $this->nomeArquivo = null;
-        $this->extensaoOriginalArquivo = null;
-        $this->nomeOriginalArquivo = null;
-        $this->arquivo = null;
-        $this->caminhoArquivo = null;
-        $this->tipoArquivo = null;
-        $this->nomeOriginalArquivo = null;
-        $this->extensaoOriginalArquivo = null;
-    }
-
     public function buscarFotoPerfil($idUtilizador)
     {
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
@@ -271,25 +265,30 @@ class Perfil extends Component
 
     public function alterarPalavraPasse()
     {
-        dd("Feito");
+        $this->validate([
+            'passeActual' => 'required|min:6',
+            'passeNova' => 'required|min:6',
+            'passeConfirmacao' => 'required|min:6',
+        ]);
         $utilizador = Auth::user();
         session()->put("alterarPasse", true);
-        $alertaPasse = $this->actualizarPasse($utilizador, $this->passeActual, $this->passeNova, $this->passeConfirmacao);
+        $this->actualizarPasse($utilizador, $this->passeActual, $this->passeNova, $this->passeConfirmacao);
     }
 
     public function actualizarPasse($utilizador, $passeActual, $passeNova, $passeConfirmacao)
     {
         if (Hash::check($passeActual, $utilizador->password)) {
             if ($passeNova == $passeActual) {
-                return ['mensagem' => 'Palavra-passe Nova deve ser diferente da Antiga', 'icon' => 'error'];
+                $this->emit('alerta', ['mensagem' => 'Palavra-passe \'Nova\' deve ser diferente da \'Antiga\'', 'icon' => 'error', 'tempo' => 4500]);
             } else if ($passeNova == $passeConfirmacao) {
                 User::where('id', $utilizador->id)->update(['password' => Hash::make($passeNova)]);
-                return ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success'];
+                $this->emit('alerta', ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success']);
+                $this->limparCampos();
             } else {
-                return ['mensagem' => 'Palavra-passe Nova e a de Confirmação devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5000];
+                $this->emit('alerta', ['mensagem' => 'Palavra-passe \'Nova\' e a de \'Confirmação\' devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5000]);
             }
         } else {
-            return ['mensagem' => 'Palavra-passe antiga está errada', 'icon' => 'error'];
+            $this->emit('alerta', ['mensagem' => 'Palavra-passe actual está errada', 'icon' => 'error', 'tempo' => 4500]);
         }
     }
 
@@ -340,5 +339,19 @@ class Perfil extends Component
         $data_formatada = mb_convert_case($data_formatada, MB_CASE_TITLE, "UTF-8");
         return $data_formatada;
     }
-
+    public function limparCampos()
+    {
+        $this->passeActual = null;
+        $this->passeNova = null;
+        $this->passeConfirmacao = null;
+        $this->tipoArquivo = null;
+        $this->nomeArquivo = null;
+        $this->extensaoOriginalArquivo = null;
+        $this->nomeOriginalArquivo = null;
+        $this->arquivo = null;
+        $this->caminhoArquivo = null;
+        $this->tipoArquivo = null;
+        $this->nomeOriginalArquivo = null;
+        $this->extensaoOriginalArquivo = null;
+    }
 }

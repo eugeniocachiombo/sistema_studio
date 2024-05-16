@@ -66,12 +66,7 @@
                                     <button class="nav-link {{$tabEditarPerfil}}" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar
                                         Perfil</button>
                                 </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-settings">Configurações</button>
-                                </li>
-
+                                
                                 <li class="nav-item">
                                     <button class="nav-link {{$tabEditarPasse}}" data-bs-toggle="tab"
                                         data-bs-target="#profile-change-password">Alterar Palavra-passe</button>
@@ -347,68 +342,35 @@
                                         </div>
                                     </form>
                                 </div>
-
-                                {{-- Configurações --}}
-                                <div class="tab-pane fade pt-3" id="profile-settings">
-                                    <form>
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email
-                                                Notifications</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="changesMade"
-                                                        checked>
-                                                    <label class="form-check-label" for="changesMade">
-                                                        Changes made to your account
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="newProducts"
-                                                        checked>
-                                                    <label class="form-check-label" for="newProducts">
-                                                        Information on new products and services
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="proOffers">
-                                                    <label class="form-check-label" for="proOffers">
-                                                        Marketing and promo offers
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="securityNotify" checked disabled>
-                                                    <label class="form-check-label" for="securityNotify">
-                                                        Security alerts
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </form>
-
-                                </div>
                                 
                                 {{-- Palavra-Passe Configurações --}}
                                 <div class="tab-pane fade pt-3 {{$tabConteudoEditarPasse}}" id="profile-change-password">
-                                    <form class="needs-validation">
+                                    <form wire:submit.prevent="alterarPalavraPasse">
                                         <div class="row mb-3">
                                             <label for="passeActual" class="col-md-4 col-lg-3 col-form-label">Passe
                                                 Actual</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input  type="password" class="form-control"
-                                                    wire:model="passeActual" id="passeActual" required>
+                                                    wire:model="passeActual" id="passeActual" >
+                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                        @error('passeActual')
+                                                            <span class="error">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                             </div>
                                         </div>
+
                                         <div class="row mb-3">
                                             <label for="passeNova" class="col-md-4 col-lg-3 col-form-label">Nova
                                                 Passe</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input  type="password" class="form-control"
-                                                    wire:model="passeNova" id="passeNova" required>
+                                                    wire:model="passeNova" id="passeNova" >
+                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                        @error('passeNova')
+                                                            <span class="error">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                             </div>
                                         </div>
 
@@ -417,12 +379,17 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Passe</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input type="password" class="form-control"
-                                                    wire:model="passeConfirmacao" id="passeConfirmacao" required>
+                                                    wire:model="passeConfirmacao" id="passeConfirmacao" >
+                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                        @error('passeConfirmacao')
+                                                            <span class="error">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" wire:submit.prevent="alterarPalavraPasse"
+                                            <button type="submit" 
                                                 class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>
