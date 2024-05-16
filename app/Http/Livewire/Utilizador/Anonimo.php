@@ -48,9 +48,28 @@ class Anonimo extends Component
 
     public function buscarNascimento($data)
     {
-        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
+        $meses = array(
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        );
+    
         $data_objeto = new DateTime($data);
-        $data_formatada = $data_objeto->format('d \d\e F \d\e Y');
+        $dia = $data_objeto->format('d');
+        $mes_num = $data_objeto->format('m');
+        $mes = $meses[$mes_num];
+        $ano = $data_objeto->format('Y');
+        
+        $data_formatada = "$dia de $mes de $ano";
         $data_formatada = mb_convert_case($data_formatada, MB_CASE_TITLE, "UTF-8");
         return $data_formatada;
     }

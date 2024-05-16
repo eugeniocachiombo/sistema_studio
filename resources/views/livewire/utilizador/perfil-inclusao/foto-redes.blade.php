@@ -15,7 +15,7 @@
                 </a>
             @endif
         </div>
-        <h2>{{ $utilizador->name  }}</h2>
+        <h3><b>{{ $utilizador->name }}</b></h3>
         <h3>{{ ucwords($utilizador->buscarTipoAcesso->tipo) }}</h3>
         <div class="social-links mt-2">
             <a href="{{ $dadosPessoais->twitter != null ? $dadosPessoais->twitter : "#" }}" class="twitter"><i class="bi bi-twitter"></i></a>

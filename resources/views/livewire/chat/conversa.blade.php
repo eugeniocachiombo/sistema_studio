@@ -18,7 +18,7 @@
                         <div class="card card-animated p-4">
                             <caption>
                                 <h4>  <b class="text-primary">
-                                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                    <a href="{{route('utilizador.anonimo', $remente)}}">
                                         @php
                                             $foto = $this->buscarFotoPerfil($remente);
                                         @endphp
@@ -29,8 +29,9 @@
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" 
                                                 class="me-2"  alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
                                         @endif
-                                        {{ $this->buscarNomeUsuario($remente) }}</b>
+                                        {{ $this->buscarNomeUsuario($remente) }}
                                     </a>
+                                </b>
                                 </h4>
                             </caption>
                             <hr>

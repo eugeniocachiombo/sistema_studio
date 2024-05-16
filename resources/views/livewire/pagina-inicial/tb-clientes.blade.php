@@ -25,9 +25,9 @@
         <tbody>
             @foreach ($listaClientes as $item)
                 <tr>
-                    <th class="text-center" scope="row"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}">{{ $item->id }}</a>
+                    <th class="text-center" scope="row"><a href="{{route('utilizador.anonimo', $item->id)}}">{{ $item->id }}</a>
                     </th>
-                    <td class="text-center" style="white-space: nowrap"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}" class="text-dark">{{ $item->name }}</a></td>
+                    <td class="text-center" style="white-space: nowrap"><a href="{{route('utilizador.anonimo', $item->id)}}" class="text-dark">{{ $item->name }}</a></td>
                     <td class="text-center">
                         {{ $item->telefone }}
                     </td>

@@ -1,10 +1,17 @@
 <div>
+    @php
+        $utilizador = $this->buscarDadosUtilizador($utilizador_id);
+        $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
+        $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
+        $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
+        $foto = $this->buscarFotoPerfil($utilizador_id);
+    @endphp
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Perfil</h1>
+            <h1>Perfil do {{ucwords($acesso->tipo)}}</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Utilizador</li>
+                    <li class="breadcrumb-item">{{ucwords($acesso->tipo)}}</li>
                     <li class="breadcrumb-item active">Perfil</li>
                 </ol>
             </nav>
@@ -13,14 +20,6 @@
         <section class="section profile">
             <div class="row">
                 <div class="col-xl-4">
-                    @php
-                        $utilizador = $this->buscarDadosUtilizador($utilizador_id);
-                        $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
-                        $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
-                        $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
-                        $foto = $this->buscarFotoPerfil($utilizador_id);
-                    @endphp
-
                     @include('livewire.utilizador.perfil-inclusao.foto-redes')
                 </div>
 
