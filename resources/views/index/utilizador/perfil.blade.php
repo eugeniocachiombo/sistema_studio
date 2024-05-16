@@ -3,7 +3,7 @@
 <main>
     @include('inclusao.header')
     @include('inclusao.aside')
-    @livewire('utilizador.perfil', ["alertaPasse" => $alertaPasse])
+    @livewire('utilizador.perfil')
     @include('inclusao.footer')
 </main>
 @include('inclusao.footHtml')

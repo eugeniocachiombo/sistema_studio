@@ -6,10 +6,12 @@ use App\Models\Acesso\Acesso;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RegistroActividade;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Jenssegers\Agent\Agent;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -25,7 +27,6 @@ class Perfil extends Component
     ];
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $passeActual = null, $passeNova = null, $passeConfirmacao = null;
-    public $alertaPasse = array();
 
     public $nome = null, $sobrenome = null, $sobre = null, $nomeArtistico = null, $genero = null, $nascimento = null, $telefone = null,
     $email = null, $nacionalidade = null, $provincia = null, $municipio = null, $endereco = null,
@@ -34,6 +35,7 @@ class Perfil extends Component
     public $tabVisaoGeral, $tabConteudoVisaoGeral;
     public $tabEditarPerfil, $tabConteudoEditarPerfil;
     public $tabEditarPasse, $tabConteudoEditarPasse;
+    public $infoDispositivo;
 
     protected $messages = [
         'nome.required' => 'Campo obrigatório',
@@ -64,24 +66,24 @@ class Perfil extends Component
         'passeConfirmacao.min' => 'Digite uma senha com pelo menos 6 dígitos',
     ];
 
-    public function mount($alertaPasse)
+    public function mount()
     {
         $this->tabVisaoGeral = "active";
         $this->tabConteudoVisaoGeral = "show active";
-        $this->alertaPasse = $alertaPasse;
         $this->utilizador_id = Auth::user()->id;
         $this->setarDadosInicialmente();
+        $this->buscarDadosDispositivo();
     }
 
     public function index()
     {
-        return view('index.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
+        return view('index.utilizador.perfil');
     }
 
     public function render()
     {
         $this->setarDadosArquivo();
-        return view('livewire.utilizador.perfil', ["alertaPasse" => $this->alertaPasse]);
+        return view('livewire.utilizador.perfil');
     }
 
     public function updated(){
@@ -284,6 +286,7 @@ class Perfil extends Component
             } else if ($passeNova == $passeConfirmacao) {
                 User::where('id', $utilizador->id)->update(['password' => Hash::make($passeNova)]);
                 $this->emit('alerta', ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success']);
+                $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Alterou a palavra-passe </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
                 $this->limparCampos();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Palavra-passe \'Nova\' e a de \'Confirmação\' devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5000]);
@@ -331,6 +334,7 @@ class Perfil extends Component
         ];
         Pessoa::where('user_id', $this->utilizador_id)->update($dadosPessoa);
         $this->emit('alerta', ['mensagem' => 'Dados actualizados com sucesso', 'icon' => 'success']);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou seus dados </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
     }
 
     public function buscarNascimento($data)
@@ -341,6 +345,29 @@ class Perfil extends Component
         $data_formatada = mb_convert_case($data_formatada, MB_CASE_TITLE, "UTF-8");
         return $data_formatada;
     }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+    
     public function limparCampos()
     {
         $this->passeActual = null;
