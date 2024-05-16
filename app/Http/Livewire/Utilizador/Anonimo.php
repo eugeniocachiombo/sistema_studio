@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\Pessoa;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Anonimo extends Component
@@ -23,7 +24,11 @@ class Anonimo extends Component
 
     public function index($id)
     {
-        return view('index.utilizador.anonimo', ["id" => $id]);
+        if (Auth::user()->id == $id) {
+            return redirect()->route('utilizador.perfil');
+        } else {
+            return view('index.utilizador.anonimo', ["id" => $id]);
+        }
     }
 
     public function render()
@@ -60,15 +65,15 @@ class Anonimo extends Component
             '09' => 'Setembro',
             '10' => 'Outubro',
             '11' => 'Novembro',
-            '12' => 'Dezembro'
+            '12' => 'Dezembro',
         );
-    
+
         $data_objeto = new DateTime($data);
         $dia = $data_objeto->format('d');
         $mes_num = $data_objeto->format('m');
         $mes = $meses[$mes_num];
         $ano = $data_objeto->format('Y');
-        
+
         $data_formatada = "$dia de $mes de $ano";
         $data_formatada = mb_convert_case($data_formatada, MB_CASE_TITLE, "UTF-8");
         return $data_formatada;
