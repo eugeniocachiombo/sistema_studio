@@ -50,7 +50,7 @@ class ModalNotificacoes extends Component
             $maiorHora = (int) date('H', strtotime($maiorData));
             $horaAgenda = $maiorHora + $duracao;
             $this->fimAgendaEmProcesso = date($horaAgenda + 1) . ":00";
-            $this->data = date('H:i',$horaAgenda);
+            $this->data = date('H:i', strtotime($this->data));
         } else {
             $this->agendaEmProrocesso = null;
         }
