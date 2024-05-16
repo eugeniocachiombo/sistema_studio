@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Livewire\Chat\Conversa;
 use App\Http\Livewire\Gravacao\Actualizar;
 use App\Http\Livewire\Gravacao\Agendar;
 use App\Http\Livewire\Gravacao\Concluir;
 use App\Http\Livewire\Gravacao\Listar;
+
 use App\Http\Livewire\Info\Ajuda;
 use App\Http\Livewire\Info\Contacto;
 
@@ -12,18 +12,25 @@ use App\Http\Livewire\Masterizacao\Actualizar as ActualizarMasterizacao;
 use App\Http\Livewire\Masterizacao\Agendar as AgendarMasterizacao;
 use App\Http\Livewire\Masterizacao\Concluir as ConcluirMasterizacao;
 use App\Http\Livewire\Masterizacao\Listar as ListarMasterizacao;
+
 use App\Http\Livewire\Mixagem\Actualizar as ActualizarMixagem;
 use App\Http\Livewire\Mixagem\Agendar as AgendarMixagem;
 use App\Http\Livewire\Mixagem\Concluir as ConcluirMixagem;
+use App\Http\Livewire\Mixagem\Listar as ListarMixagem;
 
-use App\Http\Livewire\Mixagem\Listar as ListarMixagem;use App\Http\Livewire\PaginaInicial\PaginaInicial;
+use App\Http\Livewire\Utilizador\Anonimo;
 use App\Http\Livewire\Utilizador\Autenticacao;
 use App\Http\Livewire\Utilizador\Cadastro;
-
 use App\Http\Livewire\Utilizador\Perfil;
 use App\Http\Livewire\Utilizador\PrepararAmbiente;
-use App\Http\Livewire\Utilizador\TerminarSessao;use App\Http\Middleware\CheckAuth;
-use Illuminate\Support\Facades\Artisan;use Illuminate\Support\Facades\DB;use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Utilizador\TerminarSessao;
+
+use App\Http\Middleware\CheckAuth;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Chat\Conversa;
+use App\Http\Livewire\PaginaInicial\PaginaInicial;
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function () {
     Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);
@@ -40,6 +47,7 @@ Route::prefix("utilizador")->name("utilizador.")->group(function () {
     Route::get('perfil', [Perfil::class, "index"])->name("perfil")->middleware(CheckAuth::class);
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao")->middleware(CheckAuth::class);
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
+    Route::get('anonimo/{id}', [Anonimo::class, "index"])->name("anonimo")->middleware(CheckAuth::class);
 });
 
 Route::prefix("chat")->name("chat.")->group(function () {
