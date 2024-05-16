@@ -28,7 +28,7 @@ class Perfil extends Component
     public $alertaPasse = array();
 
     public $nome = null, $sobrenome = null, $sobre = null, $nomeArtistico = null, $genero = null, $nascimento = null, $telefone = null,
-    $email = null, $nacionalidade = null, $provincia = null, $endereco = null,
+    $email = null, $nacionalidade = null, $provincia = null, $municipio = null, $endereco = null,
     $twitter = null, $facebook = null, $instagram = null, $linkedin = null;
 
     public $tabVisaoGeral, $tabConteudoVisaoGeral;
@@ -111,25 +111,26 @@ class Perfil extends Component
     public function setarDadosInicialmente()
     {
         $utilizador = $this->buscarDadosUtilizador($this->utilizador_id);
-        $dadosPessoal = $this->buscarDadosPessoal($utilizador->id);
+        $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
         $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
-        $nascimento = $this->buscarNascimento($dadosPessoal->nascimento);
+        $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
 
-        $this->nome = ucwords($dadosPessoal->nome);
-        $this->sobrenome = ucwords($dadosPessoal->sobrenome);
-        $this->sobre = $dadosPessoal->sobre != null ? $dadosPessoal->sobre : '';
+        $this->nome = ucwords($dadosPessoais->nome);
+        $this->sobrenome = ucwords($dadosPessoais->sobrenome);
+        $this->sobre = $dadosPessoais->sobre != null ? $dadosPessoais->sobre : '';
         $this->nomeArtistico = ucwords($utilizador->name);
-        $this->genero = $dadosPessoal->genero;
-        $this->nascimento = $dadosPessoal->nascimento;
+        $this->genero = $dadosPessoais->genero;
+        $this->nascimento = $dadosPessoais->nascimento;
         $this->telefone = $utilizador->telefone;
         $this->email = $utilizador->email;
-        $this->nacionalidade = $dadosPessoal->nacionalidade != null ? ucwords($dadosPessoal->nacionalidade) : '';
-        $this->provincia = $dadosPessoal->provincia != null ? ucwords($dadosPessoal->provincia) : '';
-        $this->endereco = $dadosPessoal->endereco != null ? ucwords($dadosPessoal->endereco) : '';
-        $this->twitter = $dadosPessoal->twitter != null ? $dadosPessoal->twitter : 'https://twitter.com/#';
-        $this->facebook = $dadosPessoal->facebook != null ? $dadosPessoal->facebook : 'https://facebook.com/#';
-        $this->instagram = $dadosPessoal->instagram != null ? $dadosPessoal->instagram : 'https://facebook.com/#';
-        $this->linkedin = $dadosPessoal->linkedin != null ? $dadosPessoal->linkedin : 'https://linkedin.com/#';
+        $this->nacionalidade = $dadosPessoais->nacionalidade != null ? ucwords($dadosPessoais->nacionalidade) : '';
+        $this->provincia = $dadosPessoais->provincia != null ? ucwords($dadosPessoais->provincia) : '';
+        $this->municipio = $dadosPessoais->municipio != null ? ucwords($dadosPessoais->municipio) : '';
+        $this->endereco = $dadosPessoais->endereco != null ? ucwords($dadosPessoais->endereco) : '';
+        $this->twitter = $dadosPessoais->twitter != null ? $dadosPessoais->twitter : 'https://twitter.com/#';
+        $this->facebook = $dadosPessoais->facebook != null ? $dadosPessoais->facebook : 'https://facebook.com/#';
+        $this->instagram = $dadosPessoais->instagram != null ? $dadosPessoais->instagram : 'https://instagram.com/#';
+        $this->linkedin = $dadosPessoais->linkedin != null ? $dadosPessoais->linkedin : 'https://linkedin.com/#';
     }
 
     public function buscarDadosUtilizador($id)
@@ -137,7 +138,7 @@ class Perfil extends Component
         return User::find($id);
     }
 
-    public function buscarDadosPessoal($idUtilizador)
+    public function buscarDadosPessoais($idUtilizador)
     {
         return Pessoa::where("user_id", $idUtilizador)->first();
     }
@@ -321,6 +322,7 @@ class Perfil extends Component
             "nacionalidade" => $this->nacionalidade,
             "user_id" => $this->utilizador_id,
             "provincia" => $this->provincia,
+            "municipio" => $this->municipio,
             "endereco" => $this->endereco,
             "twitter" => $this->twitter,
             "facebook" => $this->facebook,

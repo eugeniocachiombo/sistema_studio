@@ -15,7 +15,10 @@
             <div class="row">
                 <div class="col-xl-4">
                     @php
-                        $dadosUtilizador = $this->buscarDadosUtilizador($utilizador_id);
+                        $utilizador = $this->buscarDadosUtilizador($utilizador_id);
+                        $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
+                        $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
+                        $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
                         $foto = $this->buscarFotoPerfil($utilizador_id);
                     @endphp
 
@@ -37,13 +40,13 @@
                                     </a>
                                 @endif
                             </div>
-                            <h2>{{ session('utilizador') }}</h2>
-                            <h3>{{ ucwords($dadosUtilizador->buscarTipoAcesso->tipo) }}</h3>
+                            <h2>{{ $utilizador->name  }}</h2>
+                            <h3>{{ ucwords($utilizador->buscarTipoAcesso->tipo) }}</h3>
                             <div class="social-links mt-2">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                <a href="{{ $dadosPessoais->twitter != null ? $dadosPessoais->twitter : "#" }}" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="{{ $dadosPessoais->facebook != null ? $dadosPessoais->facebook : "#" }}" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="{{ $dadosPessoais->instagram != null ? $dadosPessoais->instagram : "#" }}" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="{{ $dadosPessoais->linkedin != null ? $dadosPessoais->linkedin : "#" }}" class="linkedin"><i class="bi bi-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -58,42 +61,37 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link {{$tabVisaoGeral}}" data-bs-toggle="tab"
+                                    <button class="nav-link {{ $tabVisaoGeral }}" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Visão Geral</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link {{$tabEditarPerfil}}" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar
+                                    <button class="nav-link {{ $tabEditarPerfil }}" data-bs-toggle="tab"
+                                        data-bs-target="#profile-edit">Editar
                                         Perfil</button>
                                 </li>
-                                
+
                                 <li class="nav-item">
-                                    <button class="nav-link {{$tabEditarPasse}}" data-bs-toggle="tab"
+                                    <button class="nav-link {{ $tabEditarPasse }}" data-bs-toggle="tab"
                                         data-bs-target="#profile-change-password">Alterar Palavra-passe</button>
                                 </li>
 
                             </ul>
 
-                            @php
-                                $utilizador = $this->buscarDadosUtilizador($utilizador_id);
-                                $dadosPessoal = $this->buscarDadosPessoal($utilizador->id);
-                                $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
-                                $nascimento = $this->buscarNascimento($dadosPessoal->nascimento);
-                            @endphp
-
                             <div class="tab-content pt-2">
                                 {{-- Visão Geral --}}
-                                <div class="tab-pane fade {{$tabConteudoVisaoGeral}} profile-overview" id="profile-overview">
+                                <div class="tab-pane fade {{ $tabConteudoVisaoGeral }} profile-overview"
+                                    id="profile-overview">
                                     <h5 class="card-title">Sobre</h5>
                                     <p class="small fst-italic">
-                                        {{ $dadosPessoal->sobre != null ? $dadosPessoal->sobre : 'Sem informação' }}</p>
+                                        {{ $dadosPessoais->sobre != null ? $dadosPessoais->sobre : 'Sem informação' }}</p>
 
                                     <h5 class="card-title">Detalhes do Perfil</h5>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Nome Completo</div>
-                                        <div class="col-lg-9 col-md-8">{{ ucwords($dadosPessoal->nome) }}
-                                            {{ ucwords($dadosPessoal->sobrenome) }}</div>
+                                        <div class="col-lg-9 col-md-8">{{ ucwords($dadosPessoais->nome) }}
+                                            {{ ucwords($dadosPessoais->sobrenome) }}</div>
                                     </div>
 
                                     <div class="row">
@@ -104,7 +102,7 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Gênero</div>
                                         <div class="col-lg-9 col-md-8">
-                                            {{ $dadosPessoal->genero == 'M' ? 'Masculino' : 'Femenino' }}</div>
+                                            {{ $dadosPessoais->genero == 'M' ? 'Masculino' : 'Femenino' }}</div>
                                     </div>
 
                                     <div class="row">
@@ -130,24 +128,24 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Nacionalidade</div>
                                         <div class="col-lg-9 col-md-8">
-                                            {{ $dadosPessoal->nacionalidade != null ? ucwords($dadosPessoal->nacionalidade) : 'Sem informação' }}
+                                            {{ $dadosPessoais->nacionalidade != null ? ucwords($dadosPessoais->nacionalidade) : 'Sem informação' }}
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Endereço</div>
+                                        <div class="col-lg-3 col-md-4 label">Morada</div>
                                         @php
                                             $provincia =
-                                                $dadosPessoal->provincia != null
-                                                    ? ucwords($dadosPessoal->provincia)
+                                                $dadosPessoais->provincia != null
+                                                    ? ucwords($dadosPessoais->provincia)
                                                     : 'Sem informação';
                                             $municipio =
-                                                $dadosPessoal->municipio != null
-                                                    ? ucwords($dadosPessoal->municipio)
+                                                $dadosPessoais->municipio != null
+                                                    ? ucwords($dadosPessoais->municipio)
                                                     : 'Sem informação';
                                             $endereco =
-                                                $dadosPessoal->endereco != null
-                                                    ? ucwords($dadosPessoal->endereco)
+                                                $dadosPessoais->endereco != null
+                                                    ? ucwords($dadosPessoais->endereco)
                                                     : 'Sem informação';
                                         @endphp
                                         <div class="col-lg-9 col-md-8">{{ $provincia }}, {{ $municipio }},
@@ -156,8 +154,9 @@
                                 </div>
 
                                 {{-- Editar Perfil --}}
-                                <div class="tab-pane fade {{$tabConteudoEditarPerfil}} profile-edit pt-3" id="profile-edit">
-                                    <form class="needs-validation" >
+                                <div class="tab-pane fade {{ $tabConteudoEditarPerfil }} profile-edit pt-3"
+                                    id="profile-edit">
+                                    <form class="needs-validation">
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem do
                                                 perfil
@@ -207,6 +206,11 @@
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="nome" type="text" class="form-control"
                                                     id="nome" wire:model="nome">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('nome')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -215,7 +219,12 @@
                                                 Sobrenome</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="sobrenome" type="text" class="form-control"
-                                                    id="sobrenome" wire:model="sobrenome"  >
+                                                    id="sobrenome" wire:model="sobrenome">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('sobrenome')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -232,7 +241,12 @@
                                                 Artístico</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="nomeArtistico" type="text" class="form-control"
-                                                    id="nomeArtistico" wire:model="nomeArtistico" >
+                                                    id="nomeArtistico" wire:model="nomeArtistico">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('nomeArtistico')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -240,10 +254,10 @@
                                             <label for="genero"
                                                 class="col-md-4 col-lg-3 col-form-label">Gênero</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <select wire:model="genero" name="genero" type="text" class="form-control"
-                                                    id="genero">
-                                                        <option value="M" selected>Masculino</option>
-                                                        <option value="F">Femenino</option>
+                                                <select wire:model="genero" name="genero" type="text"
+                                                    class="form-control" id="genero">
+                                                    <option value="M" selected>Masculino</option>
+                                                    <option value="F">Femenino</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -252,8 +266,13 @@
                                             <label for="nascimento"
                                                 class="col-md-4 col-lg-3 col-form-label">Nascimento</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="nascimento" name="nascimento" type="date" class="form-control"
-                                                    id="nascimento"  >
+                                                <input wire:model="nascimento" name="nascimento" type="date"
+                                                    class="form-control" id="nascimento">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('nascimento')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -261,8 +280,13 @@
                                             <label for="telefone"
                                                 class="col-md-4 col-lg-3 col-form-label">Telefone</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="telefone" name="telefone" type="text" class="form-control"
-                                                    id="telefone" >
+                                                <input wire:model="telefone" name="telefone" type="text"
+                                                    class="form-control" id="telefone">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('telefone')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -270,8 +294,13 @@
                                             <label for="email"
                                                 class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="email" name="email" type="email" class="form-control"
-                                                    id="email" >
+                                                <input wire:model="email" name="email" type="email"
+                                                    class="form-control" id="email">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('email')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -279,8 +308,8 @@
                                             <label for="nacionalidade"
                                                 class="col-md-4 col-lg-3 col-form-label">Nacionalidade</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="nacionalidade" name="nacionalidade" type="text" class="form-control"
-                                                    id="nacionalidade">
+                                                <input wire:model="nacionalidade" name="nacionalidade" type="text"
+                                                    class="form-control" id="nacionalidade">
                                             </div>
                                         </div>
 
@@ -288,8 +317,17 @@
                                             <label for="provincia"
                                                 class="col-md-4 col-lg-3 col-form-label">Província</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="provincia" name="provincia" type="text" class="form-control"
-                                                    id="provincia">
+                                                <input wire:model="provincia" name="provincia" type="text"
+                                                    class="form-control" id="provincia">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="municipio"
+                                                class="col-md-4 col-lg-3 col-form-label">Município</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input wire:model="municipio" name="municipio" type="text"
+                                                    class="form-control" id="municipio">
                                             </div>
                                         </div>
 
@@ -297,66 +335,69 @@
                                             <label for="endereco"
                                                 class="col-md-4 col-lg-3 col-form-label">Endereço</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="endereco" name="endereco" type="text" class="form-control"
-                                                    id="endereco">
+                                                <input wire:model="endereco" name="endereco" type="text"
+                                                    class="form-control" id="endereco">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="twitter" class="col-md-4 col-lg-3 col-form-label">Twitter</label>
+                                            <label for="twitter"
+                                                class="col-md-4 col-lg-3 col-form-label">Twitter</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="twitter" name="twitter" type="text" class="form-control"
-                                                    id="twitter" >
+                                                <input wire:model="twitter" name="twitter" type="text"
+                                                    class="form-control" id="twitter">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
-                                                </label>
+                                            </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="facebook" name="facebook" type="text" class="form-control"
-                                                    id="facebook" >
+                                                <input wire:model="facebook" name="facebook" type="text"
+                                                    class="form-control" id="facebook">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
-                                                </label>
+                                            </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="instagram" name="instagram" type="text" class="form-control"
-                                                    id="instagram" >
+                                                <input wire:model="instagram" name="instagram" type="text"
+                                                    class="form-control" id="instagram">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
-                                                </label>
+                                            </label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input wire:model="linkedin" name="linkedin" type="text" class="form-control"
-                                                    id="linkedin">
+                                                <input wire:model="linkedin" name="linkedin" type="text"
+                                                    class="form-control" id="linkedin">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button wire:click="actualizarDadosPerfil" type="submit" class="btn btn-primary">Actualizar</button>
+                                            <button wire:click="actualizarDadosPerfil" type="submit"
+                                                class="btn btn-primary">Actualizar</button>
                                         </div>
                                     </form>
                                 </div>
-                                
+
                                 {{-- Palavra-Passe Configurações --}}
-                                <div class="tab-pane fade pt-3 {{$tabConteudoEditarPasse}}" id="profile-change-password">
+                                <div class="tab-pane fade pt-3 {{ $tabConteudoEditarPasse }}"
+                                    id="profile-change-password">
                                     <form wire:submit.prevent="alterarPalavraPasse">
                                         <div class="row mb-3">
                                             <label for="passeActual" class="col-md-4 col-lg-3 col-form-label">Passe
                                                 Actual</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input  type="password" class="form-control"
-                                                    wire:model="passeActual" id="passeActual" >
-                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
-                                                        @error('passeActual')
-                                                            <span class="error">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
+                                                <input type="password" class="form-control" wire:model="passeActual"
+                                                    id="passeActual">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('passeActual')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -364,13 +405,13 @@
                                             <label for="passeNova" class="col-md-4 col-lg-3 col-form-label">Nova
                                                 Passe</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input  type="password" class="form-control"
-                                                    wire:model="passeNova" id="passeNova" >
-                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
-                                                        @error('passeNova')
-                                                            <span class="error">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
+                                                <input type="password" class="form-control" wire:model="passeNova"
+                                                    id="passeNova">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('passeNova')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -379,18 +420,17 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Passe</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input type="password" class="form-control"
-                                                    wire:model="passeConfirmacao" id="passeConfirmacao" >
-                                                    <div class="text-danger pt-2" style="font-size: 12.5px">
-                                                        @error('passeConfirmacao')
-                                                            <span class="error">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
+                                                    wire:model="passeConfirmacao" id="passeConfirmacao">
+                                                <div class="text-danger pt-2" style="font-size: 12.5px">
+                                                    @error('passeConfirmacao')
+                                                        <span class="error">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" 
-                                                class="btn btn-primary">Alterar
+                                            <button type="submit" class="btn btn-primary">Alterar
                                                 Palavra-passe</button>
                                         </div>
                                     </form>
