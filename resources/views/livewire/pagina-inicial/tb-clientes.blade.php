@@ -15,26 +15,29 @@
     <table class="table table-borderless datatablePT table-hover">
         <thead>
             <tr>
-                <th scope="col" style="white-space: nowrap">#</th>
-                <th scope="col" style="white-space: nowrap">Nome Completo</th>
-                <th scope="col" style="white-space: nowrap">Telefone</th>
-                <th scope="col" style="white-space: nowrap">Morada</th>
-                <th scope="col" style="white-space: nowrap">Registrado</th>
-                <th scope="col" style="white-space: nowrap">Estado</th>
+                <th scope="col" class="text-center" style="white-space: nowrap">#</th>
+                <th scope="col" class="text-center" style="white-space: nowrap">Nome Completo</th>
+                <th scope="col" class="text-center" style="white-space: nowrap">Telefone</th>
+                <th scope="col" class="text-center" style="white-space: nowrap">Morada</th>
+                <th scope="col" class="text-center" style="white-space: nowrap">Registrado</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($listaClientes as $item)
                 <tr>
-                    <th scope="row"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}">{{ $item->id }}</a>
+                    <th class="text-center" scope="row"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}">{{ $item->id }}</a>
                     </th>
-                    <td style="white-space: nowrap"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}" class="text-dark">{{ $item->name }}</a></td>
-                    <td>
+                    <td class="text-center" style="white-space: nowrap"><a href="{{route('chat.conversa', [$utilizador_id, $item->id])}}" class="text-dark">{{ $item->name }}</a></td>
+                    <td class="text-center">
                         {{ $item->telefone }}
                     </td>
-                    <td>Morada</td>
-                    <td>{{ $this->formatarData($item->created_at) }}</td>
-                    <td><span class="badge bg-success">Approved</span></td>
+                    <td class="text-center">
+                        @php
+                            $dadosPessoais = $this->buscarDadosPessoais($item->id);
+                        @endphp
+                        {{$dadosPessoais->municipio != null? $dadosPessoais->municipio : "--"}} {{$dadosPessoais->endereco != null? $dadosPessoais->endereco : "--"}}
+                    </td>
+                    <td class="text-center">{{ $this->formatarData($item->created_at) }}</td>
                 </tr>
             @endforeach
         </tbody>

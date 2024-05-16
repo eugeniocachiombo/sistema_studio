@@ -102,30 +102,6 @@
                 </ul>
             </li>
 
-            {{-- Gráficos --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#graficos-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Gráficos</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="graficos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="graficos-chartjs.html">
-                            <i class="bi bi-circle"></i><span>Chart.js</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="graficos-apexgraficos.html">
-                            <i class="bi bi-circle"></i><span>Apexgraficos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="graficos-egraficos.html">
-                            <i class="bi bi-circle"></i><span>Egraficos</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
             {{-- Músicas --}}
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#musicas-nav" data-bs-toggle="collapse" href="#">

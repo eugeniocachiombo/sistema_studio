@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\PaginaInicial;
 
 use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -59,5 +60,10 @@ class TbClientes extends Component
             $data_formatada = strtr($data_formatada, $meses);
         }
         return $data_formatada;
+    }
+
+    public function buscarDadosPessoais($idUtilizador)
+    {
+        return Pessoa::where("user_id", $idUtilizador)->first();
     }
 }
