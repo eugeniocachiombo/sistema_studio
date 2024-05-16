@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Acesso\Acesso;
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +48,9 @@ class User extends Authenticatable
 
     public function buscarTipoAcesso(){
         return $this->belongsTo(Acesso::class, "tipo_acesso", "id");
+    }
+
+    public function buscarDadosPessoais(){
+        return $this->belongsTo(Pessoa::class, "id", "user_id");
     }
 }

@@ -19,7 +19,7 @@ class TbClientes extends Component
         $this->listaClientes = User::where("tipo_acesso", 3)->orderby("id", "desc")->get();
         return view('livewire.pagina-inicial.tb-clientes');
     }
-
+    
     public function formatarData($data)
     {
         $data_hora = new DateTime($data);
