@@ -17,6 +17,7 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        date_default_timezone_set('Africa/Luanda');
         if (!Auth::check()) {
             return redirect()->route('utilizador.autenticacao');
         }
