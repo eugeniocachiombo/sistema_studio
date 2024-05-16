@@ -56,6 +56,5 @@
                 <span>Terminar Sessão</span>
             </a>
         </li>
-
     </ul>
 </li>
