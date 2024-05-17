@@ -357,9 +357,11 @@
                                 </div>
                                 <div class="col d-table d-md-flex justify-content-between">
                                     <div class="col m-3">
+                                        @if (date('H') > '07' && date('H') <= '18')
                                         <button wire:click.prevent="actualizarAgendamento" class="btn btn-primary">
                                             Actualizar 
                                         </button>
+                                        @endif
 
                                         <button wire:click.prevent="verRegistroAgendamento" type="button" class="btn btn-success">
                                             Ver Registro

@@ -46,12 +46,17 @@ class ModalNotificacoes extends Component
                 $this->agendado = $this->agendaEmProrocesso->created_at;
             }
 
-            $duracao = (int) trim($this->agendaEmProrocesso->duracao, " hr");
-            $maiorHora = (int) date('H', strtotime($maiorData));
-            $horaAgenda = $maiorHora + $duracao;
-            $this->fimAgendaEmProcesso = date($horaAgenda + 1) . ":00";
-            $this->data = date('H:i', strtotime($this->data));
-            session()->put("agendamentoEmProcesso", "existe");
+            if (date("H:i") > $this->fimAgendaEmProcesso) {
+                $this->agendaEmProrocesso = null;
+                session()->forget("agendamentoEmProcesso");
+            } else {
+                $duracao = (int) trim($this->agendaEmProrocesso->duracao, " hr");
+                $maiorHora = (int) date('H', strtotime($maiorData));
+                $horaAgenda = $maiorHora + $duracao;
+                $this->fimAgendaEmProcesso = date($horaAgenda + 1) . ":00";
+                $this->data = date('H:i', strtotime($this->data));
+                session()->put("agendamentoEmProcesso", "existe");
+            }
         } else {
             session()->forget("agendamentoEmProcesso");
             $this->agendaEmProrocesso = null;
