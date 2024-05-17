@@ -23,7 +23,9 @@
                                         <br>
                                         <span class="text-dark"><b>Término:</b> {{ $fimAgendaEmProcesso }}</span>
                                     </div>
-                                @endif
+                                    @else
+                                    <b>Nenhum agendamento em processo</b>
+                                    @endif
                             </li>
                         </ul>
                     </div>

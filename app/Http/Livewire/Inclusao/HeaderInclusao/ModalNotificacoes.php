@@ -16,7 +16,6 @@ class ModalNotificacoes extends Component
     public function render()
     {
         $this->verRegistroAgendamento();
-        $this->verRegistroSeguinte();
         return view('livewire.inclusao.header-inclusao.modal-notificacoes');
     }
 
@@ -52,7 +51,9 @@ class ModalNotificacoes extends Component
             $horaAgenda = $maiorHora + $duracao;
             $this->fimAgendaEmProcesso = date($horaAgenda + 1) . ":00";
             $this->data = date('H:i', strtotime($this->data));
+            session()->put("agendamentoEmProcesso", "existe");
         } else {
+            session()->forget("agendamentoEmProcesso");
             $this->agendaEmProrocesso = null;
         }
     }
