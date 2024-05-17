@@ -47,9 +47,9 @@ class Contacto extends Component
             "email" => $this->email
         ];
         try {
-            Mail::send('email.email', $dados, function ($message) {
+            Mail::send('email.view-do-email', $dados, function ($message) {
                 $message->from($this->email, $this->nome);
-                $message->to('eugeniocachiombo@gmail.com', 'Jeum Cachiombo');
+                $message->to('jeumsuporte@gmail.com', 'Jeum Suporte');
                 $message->subject($this->assunto);
             });
             $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
