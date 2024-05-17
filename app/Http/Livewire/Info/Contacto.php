@@ -46,13 +46,18 @@ class Contacto extends Component
             "nome" => $this->nome,
             "email" => $this->email
         ];
-        Mail::send('email.email', $dados, function ($message) {
-            $message->from($this->email, $this->nome);
-            $message->to('eugeniocachiombo@gmail.com', 'Eugénio Cachiombo');
-            $message->subject($this->assunto);
-        });
-        $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
-        $this->limparCampos();
+        try {
+            Mail::send('email.email', $dados, function ($message) {
+                $message->from($this->email, $this->nome);
+                $message->to('eugeniocachiombo@gmail.com', 'Jeum Cachiombo');
+                $message->subject($this->assunto);
+            });
+            $this->emit('alerta', ['mensagem' => 'Mensagem enviada', 'icon' => 'success']);
+            $this->limparCampos();
+        } catch (\Throwable $th) {
+            $this->emit('alerta', ['mensagem' => 'Mensagem não enviada, certifique a conexão de internet', 'icon' => 'error', 'tempo' => 6000]);
+        }
+        
     }
 
     public function limparCampos()
