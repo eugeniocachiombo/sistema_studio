@@ -123,7 +123,7 @@ class Cadastro extends Component
             "user_id" => $user->id,
         ];
         $pessoa = Pessoa::create($dadosPessoa);
-        Participante::create(['nome' => $user->name]);
+        Participante::create(['nome' => $user->name, 'user_id' => $user->id]);
         $this->msgRegistroActividades($pessoa, $user);
         $this->emit('alerta', ['mensagem' => 'Conta criada com sucesso', 'icon' => 'success']);
         $this->limparCampos();
@@ -134,9 +134,9 @@ class Cadastro extends Component
     {
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Registrou-se no sistema </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
         if ($pessoa->genero == "M") {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> <h3>Seja Bem-vindo $user->name </h3> </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Seja Bem-vindo $user->name   </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
         } else {
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> <h3>Seja Bem-vinda $user->name </h3> </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Seja Bem-vinda $user->name   </b> <hr>" . $this->infoDispositivo, "normal", $user->id);
         }
     }
 

@@ -105,12 +105,11 @@ class Agendar extends Component
     public function buscarTodosParticipantes()
     {
         if ($this->cliente_id != null || $this->grupoEscolhido != null) {
-
             return Participante::where(function ($query) {
                 $query->where('nome', 'like', '%' . $this->termoPesquisa . '%')
                     ->orWhere('user_id', 'like', '%' . $this->termoPesquisa . '%');
             })
-                ->where(function ($query) {
+               ->where(function ($query) {
                     $query->where('grupo_id', '!=', $this->grupoEscolhido)
                         ->orWhereNull('grupo_id');
                 })
@@ -196,9 +195,7 @@ class Agendar extends Component
     public function escolherParticipantes($id)
     {
         $dadosPartic = Participante::find($id);
-
         $index = array_search($id, array_column($this->participantesEscolhidos, 'id'));
-
         if ($index === false) {
             $this->participantesEscolhidos[] = [
                 "id" => $dadosPartic->id,
