@@ -2,6 +2,7 @@
 
 namespace Database\Factories\chat;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,10 @@ class ConversaFactory extends Factory
         
         while ($receptor === $emissor) {
             $receptor = $this->buscarIDReceptor();
+        }
+
+        while ($emissor >= 3 && $receptor >= 3) {
+            $receptor = rand(1, 2);
         }
         
         return [

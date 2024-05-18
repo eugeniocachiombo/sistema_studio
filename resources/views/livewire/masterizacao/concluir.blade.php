@@ -62,6 +62,7 @@
                                         $dadosMixagem = $this->buscarDadosMixagem($idGravacao);
                                         $dadosMasterizacao = $this->buscarDadosMasterizacao($dadosMixagem->id);
                                     @endphp
+
                                     <tr>
                                         <td class="bg-success text-white text-center" style="white-space: nowrap">
                                             {{ $dadosMasterizacao->id }}</td>

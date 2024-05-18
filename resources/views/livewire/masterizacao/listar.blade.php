@@ -76,6 +76,7 @@
                             </thead>
 
                             <tbody class="">
+                                
                                 @foreach ($listaGravacoes as $item)
                                     @php
                                         $proprietario = '';
@@ -86,6 +87,7 @@
                                         $dadosMixagem = $this->buscarDadosMixagem($idGravacao);
                                         $dadosMasterizacao = $this->buscarDadosMasterizacao($dadosMixagem->id);
                                     @endphp
+                                    
                                     <tr>
                                         <td class="bg-primary text-white text-center" style="white-space: nowrap">
                                             {{ $dadosMasterizacao->id }}</td>

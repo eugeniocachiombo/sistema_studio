@@ -132,7 +132,7 @@
                     <i class="bi bi-music-note-list"></i><span>Estilos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="estilos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    @if (session('tipo_acesso') == 3)
+                    @if (session('tipo_acesso') == 1)
                     <li>
                         <a href="{{ route('estilos.adicionar') }}">
                             <i class="bi bi-circle"></i><span>Adicionar</span>
