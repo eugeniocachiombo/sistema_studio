@@ -118,7 +118,7 @@
                     @endif
 
                     <li>
-                        <a href="{{ route('masterizacao.listar') }}">
+                        <a href="{{ route('grupo.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
