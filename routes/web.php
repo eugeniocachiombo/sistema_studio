@@ -104,6 +104,7 @@ Route::get("/truncate", function () {
     DB::statement("truncate conversas");
     DB::statement("truncate registro_actividades");
     DB::statement("truncate participantes");
+    DB::statement("truncate codigo_confirmacaos");
     DB::statement('SET FOREIGN_KEY_CHECKS=1');
-    return "Base de dados limpado (gravações, mixagens, masterizações, conversas, registro_actividades, participantes)";
+    return "Base de dados limpado (gravações, mixagens, masterizações, conversas, registro_actividades, participantes, codigo_confirmacaos)";
 });

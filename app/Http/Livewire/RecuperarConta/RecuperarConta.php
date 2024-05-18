@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\RecuperarConta;
 
+use App\Models\RecuperarConta\CodigoConfirmacao;
 use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,7 @@ class RecuperarConta extends Component
     public function pesquisarEmailTelefone()
     {
         $this->validate([
-            'email_telefone' => 'required|min:9'
+            'email_telefone' => 'required|min:9',
         ]);
         $this->habilitarPasse = false;
         $this->credenciais = $this->verificarLoginEmailTel($this->email_telefone);
@@ -65,19 +66,38 @@ class RecuperarConta extends Component
         $this->validate([
             'codigoConfirmacao' => 'required|min:4|max:4',
         ]);
-         //  $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Autenticou-se no sistema</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        dd($this->codigoConfirmacao);
+
+        $confirmado = CodigoConfirmacao::where("user_id", $this->credenciais->id)
+            ->where("codigo", $this->codigoConfirmacao)
+            ->first();
+
+        if ($confirmado) {
+            dd("Código aceite");
+            CodigoConfirmacao::where("id", $confirmado->id)->delete();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'Código errado', 'icon' => 'error', 'tempo' => 5500]);
+        }
     }
 
-    public function confirmarUtilizador(){
+    public function confirmarUtilizador()
+    {
+        $digitos = array(rand(0, 9), rand(0, 9), rand(0, 9), rand(0, 9));
         $dados = array(
+            "digitos" => $digitos,
             "msg" => "Este é o seu código de confirmação:",
             "assunto" => "Código de confirmação",
             "nome" => $this->credenciais->name,
-            "email" => $this->credenciais->email
+            "email" => $this->credenciais->email,
         );
 
+        $codigoUnico = $digitos[0] . $digitos[1] . $digitos[2] . $digitos[3];
+        CodigoConfirmacao::create([
+            'user_id' => $this->credenciais->id,
+            'codigo' => $codigoUnico,
+        ]);
+
         try {
+            
             Mail::send('email.confirmar-recuperacao', $dados, function ($message) {
                 $message->from('jeumsuporte@gmail.com', 'Jeum Suporte');
                 $message->to($this->credenciais->email, $this->credenciais->name);
