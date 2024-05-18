@@ -62,6 +62,10 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Editar
                                     </th>
+
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Eliminar
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -108,7 +112,7 @@
                                         </td>
 
                                         <td style="white-space: nowrap">
-                                            {{ $this->formatarDataNormal( $item->buscarDadosPessoais->nascimento)}}
+                                            {{ $this->buscarNascimento( $item->buscarDadosPessoais->nascimento)}}
                                         </td>
 
                                         <td style="white-space: nowrap">
@@ -137,6 +141,13 @@
                                                     <i class="bi bi-pen"></i>
                                                 </button>
                                             </a>
+                                        </td>
+
+                                        <td class="text-center" style="white-space: nowrap">
+                                                <button class="btn btn-danger"
+                                                    wire:click.prevent="eliminarUtilizador({{ $item->id }})">
+                                                    <i class="bi bi-dash-circle"></i>
+                                                </button>
                                         </td>
                                     </tr>
                                 @endforeach
