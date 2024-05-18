@@ -22,7 +22,7 @@
                                 <option value="" class="d-none" selected>Escolha o cliente</option>
                                 <option value="">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">Id: {{ $item->id }}  Nome: {{ $item->name }}</option>
                                 @endforeach
                             </select>
                             <div class="text-danger" style="font-size: 12.5px">

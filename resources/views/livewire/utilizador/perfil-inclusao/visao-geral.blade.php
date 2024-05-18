@@ -5,6 +5,12 @@
 
     <h5 class="card-title">Detalhes do Perfil</h5>
 
+    @if (\Illuminate\Support\Facades\Auth::user()->id == $utilizador->id)
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label ">Identificador: {{ $dadosPessoais->id }}</div>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-3 col-md-4 label ">Nome Completo</div>
         <div class="col-lg-9 col-md-8">{{ ucwords($dadosPessoais->nome) }}
