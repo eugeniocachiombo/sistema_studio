@@ -24,10 +24,10 @@ class CreateEstilosTable extends Migration
             $table->foreign('responsavel')->references('id')->on('users')->onDelete("cascade");
         });
 
-        Estilo::create(["tipo" => "Kizomba"]);
-        Estilo::create(["tipo" => "Semba"]);
-        Estilo::create(["tipo" => "Kuduro"]);
-        Estilo::create(["tipo" => "African Vibers"]);
+        Estilo::create(["tipo" => "Kizomba", "preco" => 17000]);
+        Estilo::create(["tipo" => "Semba", "preco" => 15000]);
+        Estilo::create(["tipo" => "Kuduro", "preco" => 10000]);
+        Estilo::create(["tipo" => "African Vibers", "preco" => 12000]);
     }
 
     /**

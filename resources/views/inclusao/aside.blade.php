@@ -126,17 +126,20 @@
             </li>
 
             {{-- Estilos --}}
-            @if (session('tipo_acesso') == 1)
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#estilos-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-music-note-list"></i><span>Estilos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="estilos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    @if (session('tipo_acesso') == 3)
                     <li>
                         <a href="{{ route('estilos.adicionar') }}">
                             <i class="bi bi-circle"></i><span>Adicionar</span>
                         </a>
                     </li>
+                    @endif
+
                     <li>
                         <a href="{{ route('estilos.listar') }}">
                             <i class="bi bi-circle"></i><span>Listar</span>
@@ -144,7 +147,6 @@
                     </li>
                 </ul>
             </li>
-            @endif
 
             {{-- Utilizadores --}}
             @if (session('tipo_acesso') == 1)
