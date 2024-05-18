@@ -50,16 +50,6 @@ class CreateUsersTable extends Migration
             'tipo_acesso' => 2,
             'remember_token' => Str::random(10),
         ]);
-
-        User::create([
-            'name' => "Fredy Snuff Cantor",
-            'email' => "cantor@example.com",
-            'telefone' => 933933933,
-            'email_verified_at' => now(), 
-            'password' => Hash::make('123456'), 
-            'tipo_acesso' => 3,
-            'remember_token' => Str::random(10),
-        ]);
     }
 
     /**

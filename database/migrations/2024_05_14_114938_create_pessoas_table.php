@@ -49,13 +49,6 @@ class CreatePessoasTable extends Migration
             "nascimento" => "1999-04-24",
             "user_id" => 2
         ]);
-        Pessoa::create([
-            "nome" => "Conta",
-            "sobrenome" => "Cantor",
-            "genero" => "M",
-            "nascimento" => "1999-04-24",
-            "user_id" => 3
-        ]);
     }
 
     /**
