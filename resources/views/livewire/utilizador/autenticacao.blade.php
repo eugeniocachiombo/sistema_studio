@@ -73,6 +73,9 @@
                                                 <a href="{{route("utilizador.cadastro")}}"><b>Criar
                                                         uma conta</b></a>
                                             </p>
+                                            <p class="small mb-0">Esqueceu a palavra-passe?
+                                                <a href="{{route("recuperar_conta.")}}"><b>Recuperar conta</b></a>
+                                            </p>
                                         </div>
                                     </form>
 

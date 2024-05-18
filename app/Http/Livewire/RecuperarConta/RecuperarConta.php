@@ -101,6 +101,8 @@ class RecuperarConta extends Component
 
         if ($confirmado) {
             $this->habilitarCampoPasse = true;
+            $this->codigoConfirmacao = null;
+            $this->habilitarCampoConfirmacao = false;
             CodigoConfirmacao::where("id", $confirmado->id)->delete();
         } else {
             $this->emit('alerta', ['mensagem' => 'Código errado', 'icon' => 'error', 'tempo' => 5500]);
@@ -110,10 +112,11 @@ class RecuperarConta extends Component
 
     public function confirmarUtilizador()
     {
+        $nomeRemente = $this->credenciais->name;
         $digitos = array(rand(0, 9), rand(0, 9), rand(0, 9), rand(0, 9));
         $dados = array(
             "digitos" => $digitos,
-            "msg" => "Este é o seu código de confirmação:",
+            "msg" => "Olá $nomeRemente o seu código de confirmação é este:",
             "assunto" => "Código de confirmação",
             "nome" => $this->credenciais->name,
             "email" => $this->credenciais->email,
@@ -193,6 +196,7 @@ class RecuperarConta extends Component
 
     public function limparCampos()
     {
+        $this->codigoConfirmacao = null;
         $this->email_telefone = null;
         $this->habilitarNomeUtilizador = false;
         $this->habilitarCampoPasse = false;
