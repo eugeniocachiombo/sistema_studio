@@ -125,14 +125,14 @@ class Perfil extends Component
         $this->nascimento = $dadosPessoais->nascimento;
         $this->telefone = $utilizador->telefone;
         $this->email = $utilizador->email;
-        $this->nacionalidade = $dadosPessoais->nacionalidade != null ? ucwords($dadosPessoais->nacionalidade) : '';
-        $this->provincia = $dadosPessoais->provincia != null ? ucwords($dadosPessoais->provincia) : '';
-        $this->municipio = $dadosPessoais->municipio != null ? ucwords($dadosPessoais->municipio) : '';
-        $this->endereco = $dadosPessoais->endereco != null ? ucwords($dadosPessoais->endereco) : '';
-        $this->twitter = $dadosPessoais->twitter != null ? $dadosPessoais->twitter : 'https://twitter.com/#';
-        $this->facebook = $dadosPessoais->facebook != null ? $dadosPessoais->facebook : 'https://facebook.com/#';
-        $this->instagram = $dadosPessoais->instagram != null ? $dadosPessoais->instagram : 'https://instagram.com/#';
-        $this->linkedin = $dadosPessoais->linkedin != null ? $dadosPessoais->linkedin : 'https://linkedin.com/#';
+        $this->nacionalidade = ucwords($dadosPessoais->nacionalidade) ;
+        $this->provincia =  ucwords($dadosPessoais->provincia) ;
+        $this->municipio =  ucwords($dadosPessoais->municipio) ;
+        $this->endereco =  ucwords($dadosPessoais->endereco);
+        $this->twitter = $dadosPessoais->twitter;
+        $this->facebook =  $dadosPessoais->facebook;
+        $this->instagram =  $dadosPessoais->instagram;
+        $this->linkedin = $dadosPessoais->linkedin;
     }
 
     public function buscarDadosUtilizador($id)

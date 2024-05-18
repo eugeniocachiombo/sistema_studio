@@ -26,10 +26,10 @@ class CreatePessoasTable extends Migration
             $table->string('provincia')->nullable()->default("Sem informação");
             $table->string('municipio')->nullable()->default("Sem informação");
             $table->string('endereco')->nullable()->default("Sem informação");
-            $table->string('twitter')->nullable()->default("Sem informação");
-            $table->string('facebook')->nullable()->default("Sem informação");
-            $table->string('instagram')->nullable()->default("Sem informação");
-            $table->string('linkedin')->nullable()->default("Sem informação");
+            $table->string('twitter')->nullable()->default("https://twitter.com/#");
+            $table->string('facebook')->nullable()->default("https://facebook.com/#");
+            $table->string('instagram')->nullable()->default("https://instagram.com/#");
+            $table->string('linkedin')->nullable()->default("https://linkedin.com/#");
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
