@@ -156,6 +156,7 @@ class Agendar extends Component
             ]);
             session()->put("grupo_id", $grupo->id);
             $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou o grupo ". Grupo::find($grupo->id)->nome ."  ao sistema </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->tbMembrosGrupo = true;
             $this->nomeGrupo = null;
         }
@@ -163,14 +164,16 @@ class Agendar extends Component
 
     public function adicionarMembrosAoGrupo()
     {
+        $grupo_id = session("grupo_id");
+        session()->forget("grupo_id");
         foreach ($this->clientesEscolhidos as $item) {
             GrupoCliente::create([
-                "grupo_id" => session("grupo_id"),
+                "grupo_id" => $grupo_id,
                 "membro" => $item,
             ]);
         }
-        session()->forget("grupo_id");
         $this->emit('alerta', ['mensagem' => 'Membros adicionados com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou membros ao grupo ". Grupo::find($grupo_id)->nome ." </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         $this->clientesEscolhidos = array();
         $this->tbMembrosGrupo = false;
     }

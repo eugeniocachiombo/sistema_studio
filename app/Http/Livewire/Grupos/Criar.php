@@ -63,7 +63,7 @@ class Criar extends Component
         session()->forget("grupo_id");
         foreach ($this->clientesEscolhidos as $item) {
             GrupoCliente::create([
-                "grupo_id" => session("grupo_id"),
+                "grupo_id" => $grupo_id,
                 "membro" => $item,
             ]);
         }
