@@ -60,7 +60,7 @@
                                     </th>
 
                                     <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Editar
+                                        Alterar Acesso
                                     </th>
 
                                     <th class="bg-primary text-white" style="white-space: nowrap">
