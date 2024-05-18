@@ -33,6 +33,8 @@ use App\Http\Livewire\Chat\Conversa;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
 use App\Http\Livewire\RecuperarConta\RecuperarConta;
 use App\Http\Livewire\Utilizador\ActualizarAcesso;
+use App\Http\Livewire\Utilizador\ListaAtendentes;
+use App\Http\Livewire\Utilizador\ListaClientes;
 use App\Http\Livewire\Utilizador\ListaTodos;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
@@ -58,6 +60,8 @@ Route::prefix("utilizador")->name("utilizador.")->group(function () {
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
     Route::get('anonimo/{id}', [Anonimo::class, "index"])->name("anonimo")->middleware(CheckAuth::class);
     Route::get('listagem/todos', [ListaTodos::class, "index"])->name("listagem.todos")->middleware(CheckAuth::class);
+    Route::get('listagem/clientes', [ListaClientes::class, "index"])->name("listagem.clientes")->middleware(CheckAuth::class);
+    Route::get('listagem/atendentes', [ListaAtendentes::class, "index"])->name("listagem.atendentes")->middleware(CheckAuth::class);
     Route::get('actualizar_acesso/{id}', [ActualizarAcesso::class, "index"])->name("actualizar_acesso")->middleware(CheckAuth::class);
 });
 
@@ -107,8 +111,7 @@ Route::get("/truncate", function () {
     DB::statement("truncate masterizacaos");
     DB::statement("truncate conversas");
     DB::statement("truncate registro_actividades");
-    DB::statement("truncate participantes");
     DB::statement("truncate codigo_confirmacaos");
     DB::statement('SET FOREIGN_KEY_CHECKS=1');
-    return "Base de dados limpado (gravações, mixagens, masterizações, conversas, registro_actividades, participantes, codigo_confirmacaos)";
+    return "Base de dados limpado (gravações, mixagens, masterizações, conversas, registro_actividades, codigo_confirmacaos)";
 });

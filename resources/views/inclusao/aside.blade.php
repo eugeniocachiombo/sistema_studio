@@ -166,13 +166,13 @@
                     </a>
                     <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="utilizadores-bootstrap.html">
+                            <a href="{{route('utilizador.listagem.clientes')}}">
                                 <i class="bi bi-circle"></i><span>Clientes</span>
                             </a>
                         </li>
                         <li>
-                            <a href="utilizadores-remix.html">
-                                <i class="bi bi-circle"></i><span>Antendentes</span>
+                            <a href="{{route('utilizador.listagem.atendentes')}}">
+                                <i class="bi bi-circle"></i><span>Atendentes</span>
                             </a>
                         </li>
                         <li>
