@@ -106,13 +106,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#grupo-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-users"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-people"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="grupo-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    @if (session('tipo_acesso') != 3)
+                    @if (session('tipo_acesso') < 3)
                         <li>
-                            <a href="{{ route('masterizacao.agendar') }}">
-                                <i class="bi bi-circle"></i><span>Agendar</span>
+                            <a href="{{ route('grupo.criar') }}">
+                                <i class="bi bi-circle"></i><span>Criar</span>
                             </a>
                         </li>
                     @endif
@@ -122,14 +122,6 @@
                             <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
-
-                    @if (session('tipo_acesso') < 2)
-                        <li>
-                            <a href="{{ route('masterizacao.concluir') }}">
-                                <i class="bi bi-circle"></i><span>Concluir</span>
-                            </a>
-                        </li>
-                    @endif
                 </ul>
             </li>
 
@@ -162,7 +154,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#utilizadores-nav" data-bs-toggle="collapse"
                         href="#">
-                        <i class="bi bi-people"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-person"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -190,7 +182,7 @@
                     href="#">
                     <i class="bi bi-lock"></i><span>Acessos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="acessos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="acessos-nav" class="nav-content collapse d-none" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="acessos-bootstrap.html">
                             <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
