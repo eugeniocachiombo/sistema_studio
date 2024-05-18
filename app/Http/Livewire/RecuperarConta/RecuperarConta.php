@@ -6,6 +6,7 @@ use App\Models\RecuperarConta\CodigoConfirmacao;
 use App\Models\User;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -13,8 +14,9 @@ use Livewire\Component;
 class RecuperarConta extends Component
 {
     public $infoDispositivo, $email_telefone, $credenciais;
-    public $habilitarPasse = false, $habilitarCampoConfirmacao = false;
+    public $habilitarNomeUtilizador = false, $habilitarCampoConfirmacao = false, $habilitarCampoPasse = false;
     public $codigoConfirmacao;
+    public $passeNova, $passeConfirmacao;
 
     protected $messages = [
         'email_telefone.required' => 'O campo é obrigatório',
@@ -22,6 +24,10 @@ class RecuperarConta extends Component
         'codigoConfirmacao.required' => 'O campo é obrigatório',
         'codigoConfirmacao.min' => 'O seu código deve conter no mínimo 4 dígitos',
         'codigoConfirmacao.max' => 'O seu código deve conter no máximo 4 dígitos',
+        'passeNova.required' => 'O campo é obrigatório',
+        'passeNova.min' => 'Digite uma senha com pelo menos 6 dígitos',
+        'passeConfirmacao.required' => 'O campo é obrigatório',
+        'passeConfirmacao.min' => 'Digite uma senha com pelo menos 6 dígitos',
     ];
 
     public function mount()
@@ -42,17 +48,39 @@ class RecuperarConta extends Component
         return view('livewire.recuperar-conta.recuperar-conta');
     }
 
+    public function alterarPalavraPasse()
+    {
+        $this->validate([
+            'passeNova' => 'required|min:6',
+            'passeConfirmacao' => 'required|min:6',
+        ]);
+        $utilizador = User::find($this->credenciais->id);
+        $this->actualizarPasse($utilizador, $this->passeNova, $this->passeConfirmacao);
+    }
+
+    public function actualizarPasse($utilizador, $passeNova, $passeConfirmacao)
+    {
+        if ($passeNova == $passeConfirmacao) {
+            User::where('id', $utilizador->id)->update(['password' => Hash::make($passeNova)]);
+            $this->emit('alerta', ['mensagem' => 'Palavra-passe alterada com sucesso', 'icon' => 'success']);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Alterou a palavra-passe </b> <hr>" . $this->infoDispositivo, "normal", $this->credenciais->id);
+            $this->limparCampos();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'Palavra-passe \'Nova\' e a de \'Confirmação\' devem ser as mesmas', 'icon' => 'warning', 'tempo' => 5500]);
+        }
+    }
+
     public function pesquisarEmailTelefone()
     {
         $this->validate([
             'email_telefone' => 'required|min:9',
         ]);
-        $this->habilitarPasse = false;
+        $this->habilitarNomeUtilizador = false;
         $this->credenciais = $this->verificarLoginEmailTel($this->email_telefone);
 
         if ($this->credenciais) {
             $this->email_telefone = null;
-            $this->habilitarPasse = true;
+            $this->habilitarNomeUtilizador = true;
         } else {
             $this->email_telefone = null;
             $this->limparCampos();
@@ -72,10 +100,11 @@ class RecuperarConta extends Component
             ->first();
 
         if ($confirmado) {
-            dd("Código aceite");
+            $this->habilitarCampoPasse = true;
             CodigoConfirmacao::where("id", $confirmado->id)->delete();
         } else {
             $this->emit('alerta', ['mensagem' => 'Código errado', 'icon' => 'error', 'tempo' => 5500]);
+            $this->habilitarCampoPasse = false;
         }
     }
 
@@ -97,7 +126,7 @@ class RecuperarConta extends Component
         ]);
 
         try {
-            
+
             Mail::send('email.confirmar-recuperacao', $dados, function ($message) {
                 $message->from('jeumsuporte@gmail.com', 'Jeum Suporte');
                 $message->to($this->credenciais->email, $this->credenciais->name);
@@ -165,8 +194,11 @@ class RecuperarConta extends Component
     public function limparCampos()
     {
         $this->email_telefone = null;
-        $this->habilitarPasse = false;
+        $this->habilitarNomeUtilizador = false;
+        $this->habilitarCampoPasse = false;
         $this->habilitarCampoConfirmacao = false;
         $this->credenciais = array();
+        $this->passeNova = null;
+        $this->passeConfirmacao = null;
     }
 }

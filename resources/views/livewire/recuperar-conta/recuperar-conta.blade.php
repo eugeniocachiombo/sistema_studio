@@ -47,7 +47,7 @@
                 </div>
             </form>
 
-            @if ($habilitarPasse == true)
+            @if ($habilitarNomeUtilizador == true)
                 <div class="row gy-4 ">
                     <div class="col">
                         <div class="card card-animated p-4">
@@ -83,8 +83,8 @@
                         <div class="card card-animated p-4">
                             <div class="col-8 col-md-4">
                                 <label class="text-primary fw-bold" for="">Código de confirmação</label>
-                                <input type="text" maxlength="4" name="" id="" class="form-control mt-2"
-                                    wire:model="codigoConfirmacao" placeholder="*****">
+                                <input type="text" maxlength="4" name="" id=""
+                                    class="form-control mt-2" wire:model="codigoConfirmacao" placeholder="*****">
 
                                 <div class="text-danger" style="font-size: 12.5px">
                                     @error('codigoConfirmacao')
@@ -108,6 +108,62 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($habilitarCampoPasse == true)
+                <div class="row gy-4 ">
+                    <div class="col">
+                        <div class="card card-animated p-4">
+                            <form>
+                                <div class="row mb-3">
+                                    <div>
+                                        <label for="passeNova" class="col-md-4 col-lg-3 col-form-label">Nova
+                                            Passe</label>
+                                    </div>
+                                    <div class="col-8 col-md-4">
+                                        <input type="password" class="form-control" wire:model="passeNova"
+                                            id="passeNova" placeholder="Digite a nova passe">
+                                        <div class="text-danger pt-2" style="font-size: 12.5px">
+                                            @error('passeNova')
+                                                <span class="error">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div>
+                                        <label for="passeConfirmacao" class="col-md-4 col-lg-3 col-form-label">Confirmar
+                                        </label>
+                                    </div>
+                                    <div class="col-8 col-md-4">
+                                        <input type="password" class="form-control" wire:model="passeConfirmacao"
+                                            id="passeConfirmacao" placeholder="Digite novamente a passe">
+                                        <div class="text-danger pt-2" style="font-size: 12.5px">
+                                            @error('passeConfirmacao')
+                                                <span class="error">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-left">
+                                    <span class="text-primary" style="font-size: 20px" wire:loading
+                                        wire:target='alterarPalavraPasse'>
+                                        <span class="spinner-border spinner-border-sm"></span>
+                                        Processando...
+                                    </span>
+
+                                    <button wire:loading.attr='disabled' wire:loading.remove
+                                        wire:target='alterarPalavraPasse' wire:click.prevent="alterarPalavraPasse"
+                                         class="btn btn-primary">
+                                        Alterar
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
