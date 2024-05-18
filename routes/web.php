@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Chat\Conversa;
+use App\Http\Livewire\Grupos\Actualizar as GruposActualizar;
 use App\Http\Livewire\Grupos\Criar;
 use App\Http\Livewire\Grupos\Listar as GruposListar;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
@@ -80,7 +81,7 @@ Route::prefix("gravacao")->name("gravacao.")->group(function () {
 
 Route::prefix("grupo")->name("grupo.")->group(function () {
     Route::get('criar', [Criar::class, "index"])->name("criar")->middleware(CheckAuth::class);
-    Route::get('actualizar/{idGrupo}', [Actualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
+    Route::get('actualizar/{idGrupo}', [GruposActualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
     Route::get('listar', [GruposListar::class, "index"])->name("listar")->middleware(CheckAuth::class);
 });
 
