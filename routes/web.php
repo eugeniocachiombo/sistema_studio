@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Chat\Conversa;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
 use App\Http\Livewire\RecuperarConta\RecuperarConta;
+use App\Http\Livewire\Utilizador\ActualizarAcesso;
+use App\Http\Livewire\Utilizador\ListaTodos;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
 
@@ -55,6 +57,8 @@ Route::prefix("utilizador")->name("utilizador.")->group(function () {
     Route::get('terminar_sessao', [TerminarSessao::class, "index"])->name("terminar_sessao")->middleware(CheckAuth::class);
     Route::get('preparar_ambiente', [PrepararAmbiente::class, "index"])->name("preparar_ambiente");
     Route::get('anonimo/{id}', [Anonimo::class, "index"])->name("anonimo")->middleware(CheckAuth::class);
+    Route::get('listagem/todos', [ListaTodos::class, "index"])->name("listagem.todos")->middleware(CheckAuth::class);
+    Route::get('actualizar_acesso/{id}', [ActualizarAcesso::class, "index"])->name("actualizar_acesso")->middleware(CheckAuth::class);
 });
 
 Route::prefix("chat")->name("chat.")->group(function () {

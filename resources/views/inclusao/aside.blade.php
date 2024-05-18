@@ -102,6 +102,37 @@
                 </ul>
             </li>
 
+            {{-- Grupos --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#grupo-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-users"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="grupo-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    @if (session('tipo_acesso') != 3)
+                        <li>
+                            <a href="{{ route('masterizacao.agendar') }}">
+                                <i class="bi bi-circle"></i><span>Agendar</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    <li>
+                        <a href="{{ route('masterizacao.listar') }}">
+                            <i class="bi bi-circle"></i><span>Listar</span>
+                        </a>
+                    </li>
+
+                    @if (session('tipo_acesso') < 2)
+                        <li>
+                            <a href="{{ route('masterizacao.concluir') }}">
+                                <i class="bi bi-circle"></i><span>Concluir</span>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+
             {{-- Músicas --}}
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#musicas-nav" data-bs-toggle="collapse" href="#">
@@ -127,29 +158,31 @@
             </li>
 
             {{-- Utilizadores --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#utilizadores-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-people"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="utilizadores-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="utilizadores-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix musicas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="utilizadores-boxmusicas.html">
-                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @if (session('tipo_acesso') == 1)
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#utilizadores-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="bi bi-people"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="utilizadores-bootstrap.html">
+                                <i class="bi bi-circle"></i><span>Clientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="utilizadores-remix.html">
+                                <i class="bi bi-circle"></i><span>Antendentes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('utilizador.listagem.todos')}}">
+                                <i class="bi bi-circle"></i><span>Todos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             {{-- Acesso --}}
             <li class="nav-item">
