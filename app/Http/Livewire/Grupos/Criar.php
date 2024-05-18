@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Grupos;
 
+use App\Models\Gravacao\Estilo;
 use App\Models\Grupo\Grupo;
 use App\Models\Grupo\GrupoCliente;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
 
@@ -19,6 +21,8 @@ class Criar extends Component
     public $listaMembrosClientes = array();
     public $termoPesquisaMembros;
     public $clientesEscolhidos = array();
+    public $estilo_id;
+    public $listaEstilos;
 
     protected $messages = [
         "cliente_id.required" => "Campo obrigatório",
@@ -47,13 +51,8 @@ class Criar extends Component
     
     public function render()
     {
-        
-        //$participantes = $this->buscarTodosParticipantes();
+        $this->listaEstilos = Estilo::all();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
-       // $this->listaClientes = User::where("tipo_acesso", 3)->get();
-        //$this->listaGrupos = Grupo::all();
-       // $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
-       // $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
         return view('livewire.grupos.criar');
     }
     
@@ -87,6 +86,7 @@ class Criar extends Component
     {
         $this->validate([
             "nomeGrupo" => "required",
+            "estilo_id" => "required"
         ]);
 
         $grupo = Grupo::where('nome', $this->nomeGrupo)->first();
@@ -94,7 +94,11 @@ class Criar extends Component
             $this->emit('alerta', ['mensagem' => 'Este grupo já existe', 'icon' => 'warning', 'tempo' => 4500]);
             $this->nomeGrupo = null;
         } else {
-            $grupo = Grupo::create(['nome' => $this->nomeGrupo]);
+            $grupo = Grupo::create([
+                'nome' => $this->nomeGrupo,
+                'estilo_grupo' => $this->estilo_id,
+                'responsavel' => Auth::user()->id,
+            ]);
             Participante::create([
                 'nome' => $grupo->nome . " (Grupo)",
                 'grupo_id' => $grupo->id,
@@ -148,6 +152,12 @@ class Criar extends Component
         $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
             "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
             "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
+    }
+
+    public function eliminarUtilizador($id){
+        User::find($id)->delete();
+        $this->emit('alerta', ['mensagem' => 'Utilizador eliminado do sistema', 'icon' => 'success', 'tempo' => 5000]);
+        $this->emit('atrazar_redirect', ['caminho' => '/utilizador/listagem/todos', 'tempo' => 2500]);
     }
 
     public function limparCampos()

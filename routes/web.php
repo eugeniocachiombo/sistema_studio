@@ -123,3 +123,10 @@ Route::get("/truncate", function () {
     DB::statement('SET FOREIGN_KEY_CHECKS=1');
     return "Base de dados limpado (gravações, mixagens, masterizações, conversas, registro_actividades, codigo_confirmacaos)";
 });
+
+Route::get("/drop", function () {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    Artisan::call('migrate:reset');
+    DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    return "Base de dados limpeza total";
+});

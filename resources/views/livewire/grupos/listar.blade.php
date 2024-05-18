@@ -65,6 +65,22 @@
 
                                             {{ $mebrosEscolhidos ? '' . $mebrosEscolhidos . '' : 'Nenhum' }}
                                         </td>
+                                        <td>{{$item->buscarEstilo ? $item->buscarEstilo->tipo : "--"}}</td>
+                                        <td>{{$item->buscarResponsavel ? $item->buscarResponsavel->name : "--"}}</td>
+                                        <td class="text-center" style="white-space: nowrap">
+                                            <a href="{{ route('grupo.actualizar', [$item->id]) }}">
+                                                <button class="btn btn-success">
+                                                    <i class="bi bi-pen"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+
+                                        <td class="text-center" style="white-space: nowrap">
+                                                <button class="btn btn-danger"
+                                                    wire:click.prevent="eliminarGrupo({{ $item->id }})">
+                                                    <i class="bi bi-dash-circle"></i>
+                                                </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
