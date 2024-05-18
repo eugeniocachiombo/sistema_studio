@@ -28,11 +28,11 @@ class GravacaoFactory extends Factory
             "grupo_id" => null,
             "titulo_audio" => $this->faker->word,
             "estilo_audio" => $this->faker->numberBetween(1, 3),
-            "data_gravacao" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28) . " ". rand(8, 18) . ":" . rand(0, 45),
+            "data_gravacao" => Carbon::now()->year ."-". rand(1, 5) ."-". rand(1, 28) . " ". rand(8, 18) . ":" . rand(0, 45),
             "estado_gravacao" => $this->faker->randomElement(["pendente", "gravado"]),
             "duracao" => $this->faker->numberBetween(1, 10) . " hr",
             "responsavel" => $this->faker->numberBetween(1, 2),
-            "updated_at" => Carbon::now()->year ."-". rand(1, 12) ."-". rand(1, 28). " 10:30"
+            "updated_at" => Carbon::now()->year ."-". rand(1, 5) ."-". rand(1, 28). " 10:30"
         ];
     }
 
@@ -44,7 +44,7 @@ class GravacaoFactory extends Factory
                     "nome" => $this->faker->word,
                     "sobrenome" => $this->faker->word,
                     "genero" => 'M',
-                    "nascimento" => rand(1990, 2002)."-". rand(1, 12) ."-". rand(1, 28),
+                    "nascimento" => rand(1990, 2002)."-". rand(1, 5) ."-". rand(1, 28),
                     "user_id" => $item->id
                 ]);
             }
