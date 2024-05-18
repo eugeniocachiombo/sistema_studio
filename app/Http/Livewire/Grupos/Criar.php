@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Grupos;
 
-use App\Models\Gravacao\Estilo;
+use App\Models\Estilo\Estilo;
 use App\Models\Grupo\Grupo;
 use App\Models\Grupo\GrupoCliente;
 use App\Models\Participante\Participante;
@@ -107,6 +107,7 @@ class Criar extends Component
             $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
             $this->tbMembrosGrupo = true;
             $this->nomeGrupo = null;
+            $this->listaEstilos = "";
         }
     }
 

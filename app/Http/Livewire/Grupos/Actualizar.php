@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Grupos;
 
-use App\Models\Gravacao\Estilo as GravacaoEstilo;
-use App\Models\Grupo\Estilo;
+use App\Models\Estilo\Estilo; 
 use App\Models\Grupo\Grupo;
 use App\Models\Grupo\GrupoCliente;
 use App\Models\Participante\Participante;
@@ -28,15 +27,7 @@ class Actualizar extends Component
     public $dadosActualGrupo;
 
     protected $messages = [
-        "cliente_id.required" => "Campo obrigatório",
-        "grupoEscolhido.required" => "Campo obrigatório",
-        "tituloAudio.required" => "Campo obrigatório",
         "estilo_id.required" => "Campo obrigatório",
-
-        "dataGrupo.required" => "Campo obrigatório",
-        "dataGrupo.regex" => "Só é possível agendar das 08:00 até 18:00",
-
-        "duracaoGrupo.required" => "Campo obrigatório",
         "nomeGrupo.required" => "Escreva o nome do grupo",
         "nomeParticipante.required" => "Escreva o nome do participante",
     ];
@@ -56,7 +47,7 @@ class Actualizar extends Component
     
     public function render()
     {
-        $this->listaEstilos = GravacaoEstilo::all();
+        $this->listaEstilos = Estilo::all();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
         return view('livewire.grupos.actualizar');
     }

@@ -125,29 +125,26 @@
                 </ul>
             </li>
 
-            {{-- Músicas --}}
+            {{-- Estilos --}}
+            @if (session('tipo_acesso') == 1)
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#musicas-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-music-note-list"></i><span>Músicas</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#estilos-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-music-note-list"></i><span>Estilos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="musicas-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="estilos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="musicas-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
+                        <a href="{{ route('estilos.adicionar') }}">
+                            <i class="bi bi-circle"></i><span>Adicionar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="musicas-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix musicas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="musicas-boxmusicas.html">
-                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
+                        <a href="{{ route('estilos.listar') }}">
+                            <i class="bi bi-circle"></i><span>Listar</span>
                         </a>
                     </li>
                 </ul>
             </li>
+            @endif
 
             {{-- Utilizadores --}}
             @if (session('tipo_acesso') == 1)
@@ -177,6 +174,7 @@
             @endif
 
             {{-- Acesso --}}
+            @if (session('tipo_acesso') == 1)
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#acessos-nav" data-bs-toggle="collapse"
                     href="#">
@@ -185,21 +183,22 @@
                 <ul id="acessos-nav" class="nav-content collapse d-none" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="acessos-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap musicas</span>
+                            <i class="bi bi-circle"></i><span>Bootstrap estilos</span>
                         </a>
                     </li>
                     <li>
                         <a href="acessos-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix musicas</span>
+                            <i class="bi bi-circle"></i><span>Remix estilos</span>
                         </a>
                     </li>
                     <li>
-                        <a href="acessos-boxmusicas.html">
-                            <i class="bi bi-circle"></i><span>Boxmusicas</span>
+                        <a href="acessos-boxestilos.html">
+                            <i class="bi bi-circle"></i><span>Boxestilos</span>
                         </a>
                     </li>
                 </ul>
             </li>
+            @endif
         @endif
 
         <li class="nav-heading">Páginas</li>

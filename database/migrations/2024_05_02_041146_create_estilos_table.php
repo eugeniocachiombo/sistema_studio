@@ -17,8 +17,11 @@ class CreateEstilosTable extends Migration
         Schema::create('estilos', function (Blueprint $table) {
             $table->id();
             $table->string("tipo");
+            $table->string("preco")->nullable();
+            $table->unsignedBigInteger('responsavel')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('responsavel')->references('id')->on('users')->onDelete("cascade");
         });
 
         Estilo::create(["tipo" => "Kizomba"]);

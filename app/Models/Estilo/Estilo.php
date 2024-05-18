@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Models\Grupo;
+namespace App\Models\Estilo;
 
-use App\Models\Gravacao\Estilo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grupo extends Model
+class Estilo extends Model
 {
     use HasFactory;
-    protected $fillable = ["nome", "estilo_grupo", "responsavel"];
+
+    protected $fillable = ["tipo", "preco", "responsavel"];
 
     public function buscarResponsavel(){
         return $this->belongsTo(User::class, "responsavel", "id");
     }
 
-    public function buscarEstilo(){
-        return $this->belongsTo(Estilo::class, "estilo_grupo", "id");
-    }
 }

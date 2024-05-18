@@ -48,7 +48,7 @@ class Listar extends Component
         return rtrim($membrosEscolhidos);
     }
 
-    public function eliminarGrupo($id){
+    public function eliminarEstilo($id){
         Grupo::find($id)->delete();
         $this->emit('alerta', ['mensagem' => 'Grupo eliminado do sistema', 'icon' => 'success', 'tempo' => 5000]);
         $this->emit('atrazar_redirect', ['caminho' => '/grupo/listar', 'tempo' => 2500]);

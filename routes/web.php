@@ -30,6 +30,9 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Chat\Conversa;
+use App\Http\Livewire\Estilos\Actualizar as EstilosActualizar;
+use App\Http\Livewire\Estilos\Adicionar;
+use App\Http\Livewire\Estilos\Listar as EstilosListar;
 use App\Http\Livewire\Grupos\Actualizar as GruposActualizar;
 use App\Http\Livewire\Grupos\Criar;
 use App\Http\Livewire\Grupos\Listar as GruposListar;
@@ -83,6 +86,12 @@ Route::prefix("grupo")->name("grupo.")->group(function () {
     Route::get('criar', [Criar::class, "index"])->name("criar")->middleware(CheckAuth::class);
     Route::get('actualizar/{idGrupo}', [GruposActualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
     Route::get('listar', [GruposListar::class, "index"])->name("listar")->middleware(CheckAuth::class);
+});
+
+Route::prefix("estilos")->name("estilos.")->group(function () {
+    Route::get('adicionar', [Adicionar::class, "index"])->name("adicionar")->middleware(CheckAuth::class);
+    Route::get('actualizar/{idEstilo}', [EstilosActualizar::class, "index"])->name("actualizar")->middleware(CheckAuth::class);
+    Route::get('listar', [EstilosListar::class, "index"])->name("listar")->middleware(CheckAuth::class);
 });
 
 Route::prefix("mixagem")->name("mixagem.")->group(function () {
