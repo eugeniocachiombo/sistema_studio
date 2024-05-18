@@ -44,9 +44,9 @@
                                     </th>
 
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Concluido
-                                    </th>
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Concluido
+                                        </th>
                                     @endif
 
                                     <th class="bg-primary text-white" style="white-space: nowrap">
@@ -59,9 +59,9 @@
                                         Responsável
                                     </th>
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Editar
-                                    </th>
+                                        <th class="bg-primary text-white" style="white-space: nowrap">
+                                            Editar
+                                        </th>
                                     @endif
                                     @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
                                         <th class="bg-primary text-white" style="white-space: nowrap">
@@ -76,44 +76,49 @@
                                     <tr>
                                         <td class="bg-primary text-white text-center" style="white-space: nowrap">
                                             {{ $item->id }}</td>
-                                        <td style="white-space: nowrap">
-                                            <div class="d-flex">
-                                                <div>
-                                                    @php
-                                                        $proprietario = '';
-                                                    @endphp
-
-                                                    @if ($item->cliente_id)
+                                            <td style="white-space: nowrap">
+                                                <div class="d-flex">
+                                                    <div>
                                                         @php
-                                                            $cliente = $this->buscarUtilizador($item->cliente_id);
-                                                            $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
-                                                            $proprietario = $cliente->name;
+                                                            $proprietario = '';
                                                         @endphp
-
-                                                        @if ($fotoUtilizador)
-                                                            <a
-                                                                href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
-                                                                <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
-                                                                    class="rounded-circle" alt="foto"
+    
+                                                        @if ($item->cliente_id)
+                                                            @php
+                                                                $cliente = $this->buscarUtilizador($item->cliente_id);
+                                                                $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
+                                                                $proprietario = $cliente->name;
+                                                            @endphp
+    
+                                                            @if ($fotoUtilizador)
+                                                                <a
+                                                                    href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
+                                                                    <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
+                                                                        class="rounded-circle" alt="foto"
+                                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                                </a>
+                                                            @else
+                                                                <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                                    alt="foto"
                                                                     style="width: 40px; height: 40px; object-fit: cover;">
-                                                            </a>
-                                                        @else
-                                                            <img src="{{ asset('assets/img/img_default.jpg') }}"
-                                                                alt="foto"
-                                                                style="width: 40px; height: 40px; object-fit: cover;">
+                                                            @endif
+                                                            
+                                                                <a href="{{ route('utilizador.anonimo', $item->cliente_id) }}">
+                                                                    {{ $proprietario }}
+                                                                </a>
+                                                            
+                                                        @elseif($item->grupo_id)
+                                                            @php
+                                                                $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            @endphp
+                                                            <div class="d-flex align-items-center ms-1 text-primary">
+                                                                {{ $proprietario }}
+                                                            </div>
                                                         @endif
-                                                    @elseif($item->grupo_id)
-                                                        @php
-                                                            $proprietario =
-                                                                $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
-                                                        @endphp
-                                                    @endif
-
+    
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex align-items-center ms-1 text-primary">
-                                                    {{ $proprietario }}</div>
-                                            </div>
-                                        </td>
+                                            </td>
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             @php
@@ -141,14 +146,14 @@
                                             @endif
                                         </td>
 
-                                        @if ( $this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
+                                        @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
                                             <td style="white-space: nowrap">
                                                 @if ($item->estado_gravacao == 'gravado')
-                                                {{ $this->formatarData($item->updated_at) }}
+                                                    {{ $this->formatarData($item->updated_at) }}
                                                 @else
                                                     --
                                                 @endif
-                                                
+
                                             </td>
                                         @endif
 
@@ -160,13 +165,13 @@
                                         </td>
 
                                         @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
-                                        <td class="text-center" style="white-space: nowrap">
-                                            <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">
-                                                <button class="btn btn-success">
-                                                    <i class="bi bi-pen"></i>
-                                                </button>
-                                            </a>
-                                        </td>
+                                            <td class="text-center" style="white-space: nowrap">
+                                                <a href="{{ route('gravacao.actualizar', [$idGravacao]) }}">
+                                                    <button class="btn btn-success">
+                                                        <i class="bi bi-pen"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
                                         @endif
 
                                         @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)

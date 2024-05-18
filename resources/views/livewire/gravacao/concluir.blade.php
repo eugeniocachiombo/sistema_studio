@@ -81,16 +81,21 @@
                                                                 alt="foto"
                                                                 style="width: 40px; height: 40px; object-fit: cover;">
                                                         @endif
+                                                        
+                                                            <a href="{{ route('utilizador.anonimo', $item->cliente_id) }}">
+                                                                {{ $proprietario }}
+                                                            </a>
+                                                        
                                                     @elseif($item->grupo_id)
                                                         @php
-                                                            $proprietario =
-                                                                $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
                                                         @endphp
+                                                        <div class="d-flex align-items-center ms-1 text-primary">
+                                                            {{ $proprietario }}
+                                                        </div>
                                                     @endif
 
                                                 </div>
-                                                <div class="d-flex align-items-center ms-1 text-primary">
-                                                    {{ $proprietario }}</div>
                                             </div>
                                         </td>
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>

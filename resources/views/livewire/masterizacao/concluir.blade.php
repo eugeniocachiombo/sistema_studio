@@ -65,37 +65,49 @@
                                     <tr>
                                         <td class="bg-success text-white text-center" style="white-space: nowrap">
                                             {{ $dadosMasterizacao->id }}</td>
-                                        <td style="white-space: nowrap">
-                                            <div class="d-flex">
-                                                <div>
-                                                    @if ($item->cliente_id)
-                                                    @php
-                                                        $proprietario = $cliente->name;
-                                                        $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
-                                                    @endphp
-                                                        @if ($fotoUtilizador)
-                                                            <a
-                                                                href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
-                                                                <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
-                                                                    class="rounded-circle" alt="foto"
-                                                                    style="width: 40px; height: 40px; object-fit: cover;">
-                                                            </a>
-                                                        @else
-                                                            <img src="{{ asset('assets/img/img_default.jpg') }}"
-                                                                alt="foto"
-                                                                style="width: 40px; height: 40px; object-fit: cover;">
-                                                        @endif
-                                                    @elseif($item->grupo_id)
+                                            <td style="white-space: nowrap">
+                                                <div class="d-flex">
+                                                    <div>
                                                         @php
-                                                            $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            $proprietario = '';
                                                         @endphp
-                                                    @endif
-
+    
+                                                        @if ($item->cliente_id)
+                                                            @php
+                                                                $cliente = $this->buscarUtilizador($item->cliente_id);
+                                                                $fotoUtilizador = $this->buscarFotoPerfil($cliente->id);
+                                                                $proprietario = $cliente->name;
+                                                            @endphp
+    
+                                                            @if ($fotoUtilizador)
+                                                                <a
+                                                                    href="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}">
+                                                                    <img src="{{ asset('assets/' . $fotoUtilizador->caminho_arquivo) }}"
+                                                                        class="rounded-circle" alt="foto"
+                                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                                </a>
+                                                            @else
+                                                                <img src="{{ asset('assets/img/img_default.jpg') }}"
+                                                                    alt="foto"
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                            @endif
+                                                            
+                                                                <a href="{{ route('utilizador.anonimo', $item->cliente_id) }}">
+                                                                    {{ $proprietario }}
+                                                                </a>
+                                                            
+                                                        @elseif($item->grupo_id)
+                                                            @php
+                                                                $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            @endphp
+                                                            <div class="d-flex align-items-center ms-1 text-primary">
+                                                                {{ $proprietario }}
+                                                            </div>
+                                                        @endif
+    
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex align-items-center ms-1 text-primary">
-                                                    {{ $proprietario }}</div>
-                                            </div>
-                                        </td>
+                                            </td>
                                         <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
                                         <td style="min-width: 200px">
                                             {{ $particEscolhidos ? ' ( feat. ' . $particEscolhidos . ' )' : 'Nenhuma' }}
