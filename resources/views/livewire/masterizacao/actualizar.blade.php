@@ -98,10 +98,10 @@
                                     <div class="col ">
                                         <div class="col mb-3 ms-3">
                                             @if (date('H') > '07' && date('H') <= '18')
+                                            @endif
                                             <button wire:click.prevent="actualizarMasterizacao" class="btn btn-primary">
                                                 Actualizar
                                             </button>
-                                            @endif
 
                                             <button wire:click.prevent="verRegistroAgendamento" type="button" class="btn btn-success">
                                                 Ver Registro
