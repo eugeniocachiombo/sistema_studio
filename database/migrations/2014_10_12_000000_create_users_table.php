@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
         });
 
         User::create([
-            'name' => "Super Producer",
+            'name' => "Conta Produtor",
             'email' => "produtor@example.com",
             'telefone' => 911911911,
             'email_verified_at' => now(), 
@@ -42,7 +42,7 @@ class CreateUsersTable extends Migration
         ]);
         
         User::create([
-            'name' => "Responsavel Antendente",
+            'name' => "Conta Atendente",
             'email' => "atendente@example.com",
             'telefone' => 922922922,
             'email_verified_at' => now(), 
