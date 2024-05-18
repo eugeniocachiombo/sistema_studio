@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Estilos;
 
 use App\Models\Estilo\Estilo;
 use App\Models\User;
+use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -60,9 +61,21 @@ class Actualizar extends Component
             'responsavel' => Auth::user()->id,
         ]);
         $this->emit('alerta', ['mensagem' => 'Estilo actualizado com sucesso', 'icon' => 'success']);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um estilo  </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id); 
         $this->emit('atrazar_redirect', ['caminho' => '/estilos/listar', 'tempo' => 2500]);
         $this->tipo = null;
     }
+
+    
+public function registrarActividade($msg, $tipo, $user_id)
+{
+    RegistroActividade::create([
+        "mensagem" => $msg,
+        "tipo_msg" => $tipo,
+        "user_id" => $user_id,
+    ]);
+}
+
 
     public function buscarDadosDispositivo()
     {

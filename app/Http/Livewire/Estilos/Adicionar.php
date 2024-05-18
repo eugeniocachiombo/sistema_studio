@@ -7,6 +7,7 @@ use App\Models\Estilo\EstiloCliente;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -57,8 +58,18 @@ class Adicionar extends Component
                 'responsavel' => Auth::user()->id,
             ]);
             $this->emit('alerta', ['mensagem' => 'Estilo criado com sucesso', 'icon' => 'success']);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou um novo estilo do tipo " .  Estilo::find($estilo->id)->tipo . " no valor de " . number_format($this->preco, 2, ',', '.')  ." kz</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id); 
             $this->tipo = null;
         }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
     }
 
     public function buscarDadosDispositivo()
