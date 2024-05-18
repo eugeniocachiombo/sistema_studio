@@ -176,7 +176,7 @@
             @endif
 
             {{-- Acesso --}}
-            @if (session('tipo_acesso') == 1)
+            @if (session('tipo_acesso') == 0)
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#acessos-nav" data-bs-toggle="collapse"
                     href="#">
