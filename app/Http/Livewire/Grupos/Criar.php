@@ -8,6 +8,7 @@ use App\Models\Grupo\GrupoCliente;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
+use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -58,14 +59,16 @@ class Criar extends Component
     
     public function adicionarMembrosAoGrupo()
     {
+        $grupo_id =session("grupo_id");
+        session()->forget("grupo_id");
         foreach ($this->clientesEscolhidos as $item) {
             GrupoCliente::create([
                 "grupo_id" => session("grupo_id"),
                 "membro" => $item,
             ]);
         }
-        session()->forget("grupo_id");
         $this->emit('alerta', ['mensagem' => 'Membros adicionados com sucesso', 'icon' => 'success', 'tempo' => 5000]);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou membros ao grupo ". Grupo::find($grupo_id)->nome ." </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         $this->clientesEscolhidos = array();
         $this->tbMembrosGrupo = false;
     }
@@ -105,6 +108,7 @@ class Criar extends Component
             ]);
             session()->put("grupo_id", $grupo->id);
             $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou o grupo ". Grupo::find($grupo->id)->nome ." fazedores do estilo " . Estilo::find($this->estilo_id)->tipo ." ao sistema </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->tbMembrosGrupo = true;
             $this->nomeGrupo = null;
             $this->listaEstilos = "";
@@ -140,6 +144,15 @@ class Criar extends Component
         } else {
             return null;
         }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
     }
 
     public function buscarDadosDispositivo()

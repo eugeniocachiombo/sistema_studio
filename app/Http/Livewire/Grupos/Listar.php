@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Grupos;
 
 use App\Models\Grupo\Grupo;
+use App\Models\Estilo\Estilo;
 use App\Models\Grupo\GrupoCliente;
 use App\Models\User;
 use Livewire\Component;

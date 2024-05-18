@@ -89,6 +89,7 @@ class Actualizar extends Component
         ]);
         $this->adicionarMembrosAoGrupo();
         $this->emit('alerta', ['mensagem' => 'Grupo actualizado com sucesso', 'icon' => 'success']);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou dados do grupo ". $this->nomeGrupo . " no sistema </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         $this->emit('atrazar_redirect', ['caminho' => '/grupo/listar', 'tempo' => 2500]);
         $this->tbMembrosGrupo = true;
         $this->nomeGrupo = null;

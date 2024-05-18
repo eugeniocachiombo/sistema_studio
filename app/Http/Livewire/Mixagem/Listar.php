@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Mixagem;
 
-use App\Models\Gravacao\Estilo;
+use App\Models\Estilo\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
 use App\Models\Grupo\Grupo;

@@ -2,7 +2,7 @@
 
 namespace App\Models\Grupo;
 
-use App\Models\Gravacao\Estilo;
+use App\Models\Estilo\Estilo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
