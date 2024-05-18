@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public static function run()
     {
         \App\Models\User::factory(20)->create();
-        \App\Models\Utilizador\Pessoa::factory(rand(5, 20))->create();
+        \App\Models\Utilizador\Pessoa::factory(\App\Models\User::where("tipo_acesso", 3)->count())->create();
         \App\Models\Participante\Participante::factory(count(\App\Models\User::all()))->create();
         \App\Models\chat\Conversa::factory(rand(5, 100))->create();
         \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();

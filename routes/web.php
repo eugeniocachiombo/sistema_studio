@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Chat\Conversa;
 use App\Http\Livewire\PaginaInicial\PaginaInicial;
+use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function () {
     Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);
