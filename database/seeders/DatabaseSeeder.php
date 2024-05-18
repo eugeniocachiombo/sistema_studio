@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Participante\Participante;
+use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +17,8 @@ class DatabaseSeeder extends Seeder
     public static function run()
     {
         \App\Models\User::factory(20)->create();
-        \App\Models\Utilizador\Pessoa::factory(\App\Models\User::where("tipo_acesso", 3)->count())->create();
-        \App\Models\Participante\Participante::factory(count(\App\Models\User::all()))->create();
+        //\App\Models\Utilizador\Pessoa::factory(count(\App\Models\User::all()))->create();
+        //\App\Models\Participante\Participante::factory(count(\App\Models\User::all()))->create();
         \App\Models\chat\Conversa::factory(rand(5, 100))->create();
         \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
         \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();

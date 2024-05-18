@@ -2,6 +2,9 @@
 
 namespace Database\Factories\Utilizador;
 
+use App\Models\Participante\Participante;
+use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PessoaFactory extends Factory
@@ -13,24 +16,36 @@ class PessoaFactory extends Factory
      */
     public function definition()
     {
-        return [
-            "nome" => "Conta",
-            "sobrenome" => "Cantor",
-            "genero" => $this->faker->randomElement(["M", "F"]),
-            "nascimento" => rand(1990, 2002)."-". rand(1, 12) ."-". rand(1, 28),
-            "user_id" => $this->buscarIDUtilizador()
-        ];
+        $id = $this->buscarIDUtilizador();
+        $utilizador = User::find($id);
+        $pessoa = Pessoa::where("user_id", $utilizador->id)->first();
+
+        if ($pessoa) {
+            return [];
+        } else {
+            if ($utilizador) {
+                return [
+                    "nome" => "Conta",
+                    "sobrenome" => "Cantor",
+                    "genero" => $this->faker->randomElement(["M", "F"]),
+                    "nascimento" => rand(1990, 2002)."-". rand(1, 12) ."-". rand(1, 28),
+                    "user_id" => $this->buscarIDUtilizador()
+                ];
+            } else {
+                return [];
+            }
+        }
     }
 
     public function buscarIDUtilizador()
     {
         $user = \App\Models\User::select("users.*")
-        ->leftJoin('pessoas', 'users.id', '=', 'pessoas.user_id')
-        ->where("users.tipo_acesso", 3)
-        ->where(function ($query) {
-            $query->whereNull("pessoas.id");
-        })
-        ->get();
+            ->leftJoin('pessoas', 'users.id', '=', 'pessoas.user_id')
+            ->where("users.tipo_acesso", 3)
+            ->where(function ($query) {
+                $query->whereNull("pessoas.id");
+            })
+            ->get();
         $arrayIDsUsers = array();
         foreach ($user as $item) {
             array_push($arrayIDsUsers, $item->id);

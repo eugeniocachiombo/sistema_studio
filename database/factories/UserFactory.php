@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Acesso\Acesso;
+use App\Models\Participante\Participante;
 use App\Models\User;
+use App\Models\Utilizador\Pessoa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
