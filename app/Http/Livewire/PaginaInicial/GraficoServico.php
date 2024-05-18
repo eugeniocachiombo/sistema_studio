@@ -57,7 +57,7 @@ class GraficoServico extends Component
                     AND MONTH(masterizacaos.updated_at) = ?
                     AND masterizacaos.estado_master = 'masterizado'
                     AND gravacaos.cliente_id = ?
-            ", [$year, $month, $cliente_id, $year, $month, $cliente_id, $year, $month, $cliente_id]);
+            ", [$year, $month, $this->utilizador_id, $year, $month, $this->utilizador_id, $year, $month, $this->utilizador_id]);
 
         } else if ($this->utilizadorLogado->tipo_acesso == 2) {
 
