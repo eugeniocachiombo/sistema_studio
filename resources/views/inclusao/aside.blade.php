@@ -104,8 +104,7 @@
 
             {{-- Grupos --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#grupo-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link " data-bs-target="#grupo-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-people"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="grupo-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -126,18 +125,18 @@
             </li>
 
             {{-- Estilos --}}
-            
+
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#estilos-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-music-note-list"></i><span>Estilos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="estilos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     @if (session('tipo_acesso') == 1)
-                    <li>
-                        <a href="{{ route('estilos.adicionar') }}">
-                            <i class="bi bi-circle"></i><span>Adicionar</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{{ route('estilos.adicionar') }}">
+                                <i class="bi bi-circle"></i><span>Adicionar</span>
+                            </a>
+                        </li>
                     @endif
 
                     <li>
@@ -151,23 +150,23 @@
             {{-- Utilizadores --}}
             @if (session('tipo_acesso') == 1)
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#utilizadores-nav" data-bs-toggle="collapse"
+                    <a class="nav-link collapsed" data-bs-target="#utilizador-nav" data-bs-toggle="collapse"
                         href="#">
                         <i class="bi bi-person"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="utilizadores-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="utilizador-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="{{route('utilizador.listagem.clientes')}}">
+                            <a href="{{ route('utilizador.listagem.clientes') }}">
                                 <i class="bi bi-circle"></i><span>Clientes</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('utilizador.listagem.atendentes')}}">
+                            <a href="{{ route('utilizador.listagem.atendentes') }}">
                                 <i class="bi bi-circle"></i><span>Atendentes</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('utilizador.listagem.todos')}}">
+                            <a href="{{ route('utilizador.listagem.todos') }}">
                                 <i class="bi bi-circle"></i><span>Todos</span>
                             </a>
                         </li>
@@ -177,29 +176,29 @@
 
             {{-- Acesso --}}
             @if (session('tipo_acesso') == 0)
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#acessos-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-lock"></i><span>Acessos</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="acessos-nav" class="nav-content collapse d-none" data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="acessos-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap estilos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="acessos-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix estilos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="acessos-boxestilos.html">
-                            <i class="bi bi-circle"></i><span>Boxestilos</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#acessos-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="bi bi-lock"></i><span>Acessos</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="acessos-nav" class="nav-content collapse d-none" data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="acessos-bootstrap.html">
+                                <i class="bi bi-circle"></i><span>Bootstrap estilos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="acessos-remix.html">
+                                <i class="bi bi-circle"></i><span>Remix estilos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="acessos-boxestilos.html">
+                                <i class="bi bi-circle"></i><span>Boxestilos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             @endif
         @endif
 
@@ -247,3 +246,5 @@
         </li>
     </ul>
 </aside>
+
+<script src="{{ asset('assets/js/melhorar_menu.js') }}"></script>
