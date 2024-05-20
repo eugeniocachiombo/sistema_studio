@@ -66,6 +66,14 @@
                             {
                                 value: '<?php echo count($totalFuncionarios) ?>',
                                 name: 'Funcionários'
+                            },
+                            {
+                                value: '<?php echo count($totalEstilos) ?>',
+                                name: 'Estilos'
+                            },
+                            {
+                                value: '<?php echo count($totalGrupos) ?>',
+                                name: 'Grupos'
                             }
                         ]
                     }]
