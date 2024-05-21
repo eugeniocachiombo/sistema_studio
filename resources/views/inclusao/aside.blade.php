@@ -11,7 +11,7 @@
 
             {{-- Gravação --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#gravacao-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed gravacao-nav" data-bs-target="#gravacao-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-mic"></i><span>Gravação</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="gravacao-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -43,7 +43,7 @@
 
             {{-- Mixagem --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#mixagem-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed mixagem-nav" data-bs-target="#mixagem-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-soundwave"></i><span>Mixagem</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="mixagem-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -73,7 +73,7 @@
 
             {{-- Masterizacao --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#masterizacao-nav" data-bs-toggle="collapse"
+                <a class="nav-link collapsed masterizacao-nav" data-bs-target="#masterizacao-nav" data-bs-toggle="collapse"
                     href="#">
                     <i class="bi bi-speaker"></i><span>Masterização</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -104,7 +104,7 @@
 
             {{-- Grupos --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#grupo-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed grupo-nav" data-bs-target="#grupo-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-people"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="grupo-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -125,9 +125,8 @@
             </li>
 
             {{-- Estilos --}}
-
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#estilos-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed estilos-nav" data-bs-target="#estilos-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-music-note-list"></i><span>Estilos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="estilos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -150,7 +149,7 @@
             {{-- Utilizadores --}}
             @if (session('tipo_acesso') == 1)
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#utilizador-nav" data-bs-toggle="collapse"
+                    <a class="nav-link collapsed utilizador-nav" data-bs-target="#utilizador-nav" data-bs-toggle="collapse"
                         href="#">
                         <i class="bi bi-person"></i><span>Utilizadores</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>

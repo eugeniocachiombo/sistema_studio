@@ -9,21 +9,21 @@ if (caminho.length > 1) {
         indice = 0;
         $("#" + caminho + "-nav").addClass("show");
         $("#" + caminho + "-nav").addClass("active");
-        $("#" + caminho + "-nav").removeClass("collapsed");
+        $("." + caminho + "-nav").removeClass("collapsed");
         $("#" + caminho + "-nav a:eq(" + indice + ")").addClass("active");
     }
     else if (partes[2] == "listar" || partes[3] == "atendentes") {
         indice = 1;
         $("#" + caminho + "-nav").addClass("show");
         $("#" + caminho + "-nav").addClass("active");
-        $("#" + caminho + "-nav").removeClass("collapsed");
+        $("." + caminho + "-nav").removeClass("collapsed");
         $("#" + caminho + "-nav a:eq(" + indice + ")").addClass("active");
     }
     else if (partes[2] == "concluir" || partes[3] == "todos") {
         indice = 2;
         $("#" + caminho + "-nav").addClass("show");
         $("#" + caminho + "-nav").addClass("active");
-        $("#" + caminho + "-nav").removeClass("collapsed");
+        $("." + caminho + "-nav").removeClass("collapsed");
         $("#" + caminho + "-nav a:eq(" + indice + ")").addClass("active");
     }
 }
