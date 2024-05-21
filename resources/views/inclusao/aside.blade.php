@@ -104,7 +104,7 @@
 
             {{-- Grupos --}}
             <li class="nav-item">
-                <a class="nav-link " data-bs-target="#grupo-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#grupo-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-people"></i><span>Grupos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="grupo-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
