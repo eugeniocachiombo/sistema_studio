@@ -49,7 +49,7 @@ class ListaAtendentes extends Component
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Eliminou atendente " .  User::find($id)->name . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         User::find($id)->delete();
         $this->emit('alerta', ['mensagem' => 'Utilizador eliminado do sistema', 'icon' => 'success', 'tempo' => 5000]);
-        $this->emit('atrazar_redirect', ['caminho' => '/utilizador/listagem/todos', 'tempo' => 2500]);
+        $this->emit('atrazar_redirect', ['caminho' => '/utilizador/listagem/atendentes', 'tempo' => 2500]);
     }
 
     public function buscarNascimento($data)
