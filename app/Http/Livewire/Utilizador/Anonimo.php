@@ -59,6 +59,7 @@ class Anonimo extends Component
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Aprovou agendamento do cliente " .  User::find($id)->name . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         ClientesAprovado::create(["cliente" => $id]);
         $this->emit('alerta', ['mensagem' => 'Cliente aprovado com sucesso', 'icon' => 'success']);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Você foi aprovado para fazer agendamento. Aprovação feita por " .  User::find(Auth::user()->id)->name . " </b> <hr>" . $this->infoDispositivo, "normal", $id);
     }
 
     public function buscarNascimento($data)
