@@ -18,6 +18,7 @@
                     <th scope="col" class="text-center" style="white-space: nowrap">Nome Completo</th>
                     <th scope="col" class="text-center" style="white-space: nowrap">Telefone</th>
                     <th scope="col" class="text-center" style="white-space: nowrap">Registrado</th>
+                    <th scope="col" class="text-center" style="white-space: nowrap">Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,8 +34,17 @@
                             {{ $item->telefone }}
                         </td>
                         <td class="text-center">{{ $this->formatarData($item->created_at) }}</td>
+
+                        <td>
+                            @if ($item->buscarEstadoAprovacao)
+                                <span class="badge bg-success">Aprovado</span>
+                            @else
+                                <span class="badge bg-danger">Não aprovado</span>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+</div>

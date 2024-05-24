@@ -60,6 +60,10 @@
                                     </th>
 
                                     <th class="bg-primary text-white" style="white-space: nowrap">
+                                        Estado de Aprovação
+                                    </th>
+
+                                    <th class="bg-primary text-white" style="white-space: nowrap">
                                         Alterar Acesso
                                     </th>
 
@@ -133,6 +137,14 @@
 
                                         <td style="white-space: nowrap">
                                             {{ $item->buscarDadosPessoais->sobre}}
+                                        </td>
+
+                                        <td style="white-space: nowrap" class="text-center">
+                                            @if ($item->buscarEstadoAprovacao)
+                                                <span class="badge bg-success">Aprovado</span>
+                                            @else
+                                                <span class="badge bg-danger">Não aprovado</span>
+                                            @endif
                                         </td>
 
                                         <td class="text-center" style="white-space: nowrap">
