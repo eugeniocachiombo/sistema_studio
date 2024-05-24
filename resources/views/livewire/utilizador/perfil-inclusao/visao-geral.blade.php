@@ -6,9 +6,9 @@
     <h5 class="card-title">Detalhes do Perfil</h5>
 
     @if (\Illuminate\Support\Facades\Auth::user()->id == $utilizador->id)
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label ">Identificador: {{ $dadosPessoais->id }}</div>
-    </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 label ">Identificador: {{ $dadosPessoais->id }}</div>
+        </div>
     @endif
 
     <div class="row">
@@ -67,4 +67,19 @@
         <div class="col-lg-9 col-md-8">{{ $provincia }}, {{ $municipio }},
             {{ $endereco }}</div>
     </div>
+
+    @if (\Illuminate\Support\Facades\Auth::user()->tipo_acesso == 1)
+        <div class="row">
+            <div class="col-lg-3 col-md-4 label">Estado de aprovação</div>
+            <div class="col-lg-9 col-md-8">
+                @if ($utilizador->buscarEstadoAprovacao)
+                    <span class="text-success fw-bold">Cliente Aprovado</span>
+                @else
+                    <button class="btn btn-success" wire:click.prevent="aprovarCliente({{ $utilizador->id }})">
+                        <span class="fw-bold">Aprovar</span>
+                    </button>
+                @endif
+            </div>
+        </div>
+    @endif
 </div>

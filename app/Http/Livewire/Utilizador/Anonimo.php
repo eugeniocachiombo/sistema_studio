@@ -3,23 +3,27 @@
 namespace App\Http\Livewire\Utilizador;
 
 use App\Models\Acesso\Acesso;
+use App\Models\Aprovacao\ClientesAprovado;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RegistroActividade;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
 use Livewire\Component;
 
 class Anonimo extends Component
 {
-    public $utilizador_id = null;
+    public $utilizador_id = null, $infoDispositivo;
     public $tabVisaoGeral = null, $tabConteudoVisaoGeral = null;
 
     public function mount($id)
     {
+        $this->utilizador_id = $id;
         $this->tabVisaoGeral = "active";
         $this->tabConteudoVisaoGeral = "show active";
-        $this->utilizador_id = $id;
+        $this->buscarDadosDispositivo();
     }
 
     public function index($id)
@@ -49,6 +53,12 @@ class Anonimo extends Component
     public function buscarTipoAcesso($id)
     {
         return Acesso::find($id);
+    }
+
+    public function aprovarCliente($id){
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Aprovou agendamento do cliente " .  User::find($id)->name . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        ClientesAprovado::create(["cliente" => $id]);
+        $this->emit('alerta', ['mensagem' => 'Cliente aprovado com sucesso', 'icon' => 'success']);
     }
 
     public function buscarNascimento($data)
@@ -92,5 +102,27 @@ class Anonimo extends Component
         } else {
             return null;
         }
+    }
+
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
+
+    public function buscarDadosDispositivo()
+    {
+        $agente = new Agent();
+        $dispositivo = $agente->device();
+        $plataforma = $agente->platform();
+        $versaoPlataforma = $agente->version($plataforma);
+        $navegador = $agente->browser();
+        $versaoNavegador = $agente->version($navegador);
+        $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
+            "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
+            "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";
     }
 }

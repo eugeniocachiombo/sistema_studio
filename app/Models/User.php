@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Acesso\Acesso;
+use App\Models\Aprovacao\ClientesAprovado;
 use App\Models\Utilizador\Pessoa;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,5 +53,9 @@ class User extends Authenticatable
 
     public function buscarDadosPessoais(){
         return $this->belongsTo(Pessoa::class, "id", "user_id");
+    }
+
+    public function buscarEstadoAprovacao(){
+        return $this->belongsTo(ClientesAprovado::class, "id", "cliente");
     }
 }
