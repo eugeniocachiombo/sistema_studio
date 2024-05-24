@@ -68,7 +68,7 @@
             {{ $endereco }}</div>
     </div>
 
-    @if (\Illuminate\Support\Facades\Auth::user()->tipo_acesso == 1)
+    @if (\Illuminate\Support\Facades\Auth::user()->tipo_acesso == 1 && $utilizador->tipo_acesso == 3)
         <div class="row">
             <div class="col-lg-3 col-md-4 label">Estado de aprovação</div>
             <div class="col-lg-9 col-md-8">
