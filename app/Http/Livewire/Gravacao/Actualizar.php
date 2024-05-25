@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Gravacao;
 
-
+use App\Models\Aprovacao\ClientesAprovado;
 use App\Models\Estilo\Estilo;
 use App\Models\Gravacao\Gravacao;
 use App\Models\Gravacao\GravacaoParticipante;
@@ -72,7 +72,7 @@ class Actualizar extends Component
         $this->listaEstilos = Estilo::all();
         $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
-        $this->listaClientes = User::where("tipo_acesso", 3)->get();
+        $this->listaClientes = ClientesAprovado::all();
         $this->listaGrupos = Grupo::all();
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);

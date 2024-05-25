@@ -30,7 +30,6 @@ class ModalNotificacoes extends Component
         array_push($todasDatas, $mixagem);
         array_push($todasDatas, $masterizacao);
         $maiorData = array_filter($todasDatas) ? max(array_filter($todasDatas)) : null;
-        //dd($todasDatas);
 
         if (!empty($maiorData)) {
             if ($maiorData == $gravacao) {
