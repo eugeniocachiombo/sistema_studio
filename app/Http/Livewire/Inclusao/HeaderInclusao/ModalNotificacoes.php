@@ -67,7 +67,7 @@ class ModalNotificacoes extends Component
         $duracao = (int) trim($agendaEmProrocesso->duracao, " hr");
         $maiorHora = (int) date('H', strtotime($maiorData));
         $horaAgenda = $maiorHora + $duracao;
-        return date($horaAgenda + 1) . ":00";
+        return date($horaAgenda) . ":00";
     }
 
     public function buscarComMaiorDataGravacao($maiorData)
