@@ -30,7 +30,7 @@
                                     </th>
 
                                     <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Preço
+                                        Preço de gravação
                                     </th>
 
                                     @if ($utilizador->tipo_acesso < 3)

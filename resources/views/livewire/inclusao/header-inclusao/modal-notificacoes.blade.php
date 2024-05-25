@@ -7,7 +7,7 @@
                         <ul type="none" class=" dropdown-menu-arrow notifications">
                             <li class="notification-item">
                                 @if ($agendaEmProrocesso)
-                                    <div style="white-space: nowrap; border-bottom: 2px solid black"
+                                    <div style="white-space: nowrap;""
                                         class="text-dark pt-4 mb-3">
                                         <h4>Agendamento em Processo <i
                                                 class="bi bi-exclamation-circle text-warning"></i></h4>

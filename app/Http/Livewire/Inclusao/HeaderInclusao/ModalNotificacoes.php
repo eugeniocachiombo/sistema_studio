@@ -21,9 +21,9 @@ class ModalNotificacoes extends Component
 
     public function verRegistroAgendamento()
     {
-        $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->max("data_gravacao");
-        $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->max("data_mixagem");
-        $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->max("data_master");
+        $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->where("estado_gravacao", "pendente")->max("data_gravacao");
+        $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->where("estado_mixagem", "pendente")->max("data_mixagem");
+        $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->where("estado_master", "pendente")->max("data_master");
         $maiorData = max($gravacao, $mixagem, $masterizacao);
 
         if (!empty($maiorData)) {
@@ -32,28 +32,27 @@ class ModalNotificacoes extends Component
                 $this->agendaEmProrocesso = $this->buscarComMaiorDataGravacao($maiorData);
                 $this->data = $maiorData;
                 $this->agendado = $this->agendaEmProrocesso->created_at;
+                $this->fimAgendaEmProcesso = $this->buscarFimAgendamento($this->agendaEmProrocesso, $maiorData);
             } else if ($maiorData == $mixagem) {
                 $this->tipoAgendamento = "Mixagem";
                 $this->agendaEmProrocesso = $this->buscarComMaiorDataMixagem($maiorData);
                 $mixagem = Mixagem::where("data_mixagem", $maiorData)->first();
                 $this->data = $maiorData;
                 $this->agendado = $this->agendaEmProrocesso->created_at;
+                $this->fimAgendaEmProcesso = $this->buscarFimAgendamento($this->agendaEmProrocesso, $maiorData);
             } else if ($maiorData == $masterizacao) {
                 $this->tipoAgendamento = "Masterização";
                 $this->agendaEmProrocesso = $this->buscarComMaiorDataMasterizacao($maiorData);
                 $masterizacao = Masterizacao::where("data_master", $maiorData)->first();
                 $this->data = $maiorData;
                 $this->agendado = $this->agendaEmProrocesso->created_at;
+                $this->fimAgendaEmProcesso = $this->buscarFimAgendamento($this->agendaEmProrocesso, $maiorData);
             }
 
             if (date("H:i") > $this->fimAgendaEmProcesso) {
                 $this->agendaEmProrocesso = null;
                 session()->forget("agendamentoEmProcesso");
             } else {
-                $duracao = (int) trim($this->agendaEmProrocesso->duracao, " hr");
-                $maiorHora = (int) date('H', strtotime($maiorData));
-                $horaAgenda = $maiorHora + $duracao;
-                $this->fimAgendaEmProcesso = date($horaAgenda + 1) . ":00";
                 $this->data = date('H:i', strtotime($this->data));
                 session()->put("agendamentoEmProcesso", "existe");
             }
@@ -61,6 +60,14 @@ class ModalNotificacoes extends Component
             session()->forget("agendamentoEmProcesso");
             $this->agendaEmProrocesso = null;
         }
+    }
+
+    public function buscarFimAgendamento($agendaEmProrocesso, $maiorData)
+    {
+        $duracao = (int) trim($agendaEmProrocesso->duracao, " hr");
+        $maiorHora = (int) date('H', strtotime($maiorData));
+        $horaAgenda = $maiorHora + $duracao;
+        return date($horaAgenda + 1) . ":00";
     }
 
     public function buscarComMaiorDataGravacao($maiorData)
