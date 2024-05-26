@@ -236,18 +236,22 @@ class Agendar extends Component
 
     public function verificarData()
     {
-        $dataInserida = date("Y-m-d", strtotime($this->dataGravacao));
-        $horaInserida = date("H", strtotime($this->dataGravacao));
-        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
+        $dataInserida = date("Y-m-d H:i:s", strtotime($this->dataGravacao));
+        $gravacao = Gravacao::whereDate("data_gravacao", date("Y-m-d", strtotime($this->dataGravacao)))
             ->where("estado_gravacao", "!=", "gravado")
             ->orderBy("created_at", "desc")
             ->first();
+
         if ($gravacao) {
-            $dataDB = date("Y-m-d", strtotime($gravacao->data_gravacao));
-            $horaDB = date("H", strtotime($gravacao->data_gravacao));
+            
+            $dataDB = $gravacao->data_gravacao;
             $duracaoDB = (int) trim($gravacao->duracao, " hr");
-            $cargaDB = $horaDB + $duracaoDB;
-            if ($horaInserida > $cargaDB) {
+
+            $dataObj = DateTime::createFromFormat('Y-m-d H:i:s', $dataDB);
+            $dataObj->modify('+' . $duracaoDB . ' hours');
+            $dataCarregada = $dataObj->format('Y-m-d H:i:s');
+
+            if ($dataInserida >= $dataCarregada) {
                 $this->inserirNaBD();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo neste horário', 'icon' => 'warning', 'tempo' => 5000]);
