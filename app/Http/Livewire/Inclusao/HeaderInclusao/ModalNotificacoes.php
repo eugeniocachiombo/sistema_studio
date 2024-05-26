@@ -21,10 +21,16 @@ class ModalNotificacoes extends Component
 
     public function verRegistroAgendamento()
     {
-        $gravacao = Gravacao::whereDate("data_gravacao", Carbon::today())->where("estado_gravacao", "pendente")->max("data_gravacao");
-        $mixagem = Mixagem::whereDate("data_mixagem", Carbon::today())->where("estado_mixagem", "pendente")->max("data_mixagem");
-        $masterizacao = Masterizacao::whereDate("data_master", Carbon::today())->where("estado_master", "pendente")->max("data_master");
-        $maiorData = max($gravacao, $mixagem, $masterizacao);
+        $gravacao = Gravacao::whereTime("data_gravacao", "<=", Carbon::now())->where("estado_gravacao", "pendente")->max("data_gravacao");
+        $mixagem = Mixagem::whereTime("data_mixagem", "<=", Carbon::now())->where("estado_mixagem", "pendente")->max("data_mixagem");
+        $masterizacao = Masterizacao::whereTime("data_master", "<=", Carbon::now())->where("estado_master", "pendente")->max("data_master");
+        $todasDatas = array();
+
+        array_push($todasDatas, $gravacao);
+        array_push($todasDatas, $mixagem);
+        array_push($todasDatas, $masterizacao);
+        $maiorData = array_filter($todasDatas) ? max(array_filter($todasDatas)) : null;
+        //dd($todasDatas);
 
         if (!empty($maiorData)) {
             if ($maiorData == $gravacao) {
