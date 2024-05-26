@@ -7,16 +7,14 @@ use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class Listamodal extends Component
 {
-    public $utilizador_id = null, $idRemente=null;
+    public $utilizador_id = null, $idRemente = null;
     public $todasConversasGeral = array();
     public $listaParticipantes = array();
     public $todasPendentes = array();
-    //public $listeners = ['tempoRealMensagens'];
 
     public function mount()
     {
@@ -69,29 +67,29 @@ class Listamodal extends Component
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->idRemente)
                 ->where('estado', 'pendente');
-            })
-        ->orWhere(function ($query) {
+        })
+            ->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->idRemente)
                     ->where('estado', 'pendente');
             })
-        ->get();
+            ->get();
     }
 
     public function msgPendentesGeral()
     {
         return ChatConversa::where('receptor', $this->utilizador_id)
-        ->where('estado', 'pendente')
-        ->get();
+            ->where('estado', 'pendente')
+            ->get();
     }
-    
+
     public function totalParticipantesPendentes()
     {
         return ChatConversa::where('receptor', $this->utilizador_id)
-        ->where('estado', 'pendente')
-        ->select("emissor")
-        ->distinct()
-        ->get();
+            ->where('estado', 'pendente')
+            ->select("emissor")
+            ->distinct()
+            ->get();
     }
 
     public function listarParticipantes()
@@ -167,17 +165,18 @@ class Listamodal extends Component
         return $data_formatada;
     }
 
-    public function buscarFotoPerfil($idUtilizador){
+    public function buscarFotoPerfil($idUtilizador)
+    {
         $foto = FotoPerfil::where("user_id", $idUtilizador)->orderby("id", "desc")->first();
         if ($foto) {
-           $caminho = public_path('assets/' . $foto->caminho_arquivo);
-           if (file_exists($caminho)) {
-               return $foto;
-           } else {
-               return null;
-           }
-        }else{
-           return null;
+            $caminho = public_path('assets/' . $foto->caminho_arquivo);
+            if (file_exists($caminho)) {
+                return $foto;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
-   }
+    }
 }
