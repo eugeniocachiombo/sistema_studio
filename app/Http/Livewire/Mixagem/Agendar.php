@@ -74,8 +74,12 @@ class Agendar extends Component
             $duracao = (int) trim($maiorEntidade->duracao, " hr");
             $maiorHora = (int) date('H', strtotime($maiorData));
             $horaAgenda = $maiorHora + $duracao;
-            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda + 1) . ":00";
+            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda) . ":00";
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+
+            if($this->dataMixagem == null){
+                $this->dataMixagem =  $this->dataMin;
+            }
         } else {
             $dataAgenda = Carbon::now();
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
@@ -184,7 +188,7 @@ class Agendar extends Component
 
         if ($gravacao || $mixagem) {
 
-            $dataGravacaoDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
+            $dataMixagemDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
             $horaGravacaoDB = $gravacao ? date("H", strtotime($gravacao->data_gravacao)) : 0;
             $duracaoGravacaoDB = $gravacao ? (int)trim($gravacao->duracao, " hr") : 0;
             $cargaGravacaoDB = $horaGravacaoDB + $duracaoGravacaoDB;

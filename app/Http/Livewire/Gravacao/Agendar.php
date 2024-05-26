@@ -95,8 +95,12 @@ class Agendar extends Component
             $duracao = (int) trim($maiorEntidade->duracao, " hr");
             $maiorHora = (int) date('H', strtotime($maiorData));
             $horaAgenda = $maiorHora + $duracao;
-            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda + 1) . ":00";
+            $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda) . ":00";
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+            
+            if($this->dataGravacao == null){
+                $this->dataGravacao =  $this->dataMin;
+            }
         } else {
             $dataAgenda = Carbon::now();
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
