@@ -11,7 +11,7 @@
                     </ol>
                 </nav>
             </div>
-
+            
             <section class="section">
                 <div class="row gy-4">
                     <div class="col">
@@ -29,10 +29,11 @@
                                                 <img src="{{ asset('assets/img/img_default.jpg') }}" 
                                                 class="me-2"  alt="foto" style="width: 40px; height: 40px; object-fit: cover;">
                                         @endif
+                                        
                                         {{ $this->buscarNomeUsuario($remente) }}
                                     </a>
                                 </b>
-                                </h4>
+                                </h4> 
                             </caption>
                             <hr>
 

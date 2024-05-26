@@ -23,11 +23,7 @@ class Conversa extends Component
     public $habilitarUpload = false;
     public $arquivo = null;
     public $nomeArquivo, $extensaoArquivo, $tamanhoArquivo;
-    public $extensoesAceites = [
-        "img" => ["jpg", "jpeg", "png"],
-        "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
-        "texto" => ["pdf", "doc", "txt"],
-    ];
+    public $extensoesAceites;
     public $utilizador_id, $remente, $estado, $idMensagem = null, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
@@ -45,10 +41,28 @@ class Conversa extends Component
         'mensagem' => 'required',
     ];
 
+    public function mount($utilizador, $remente)
+    {
+        $this->utilizador_id = $utilizador;
+        $this->remente = $remente;
+        $nomeUtilizador = $this->buscarNomeUsuario($this->utilizador_id);
+        $nomeRemente = $this->buscarNomeUsuario($this->remente);
+        
+        $this->extensoesAceites = [
+            "img" => ["jpg", "jpeg", "png"],
+            "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
+            "texto" => ["pdf", "doc", "txt"],
+        ];
+        $this->totalMsgActual = $this->listarMsgRecibidas();
+        $this->buscarDadosDispositivo();
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> ".
+        $nomeUtilizador . " Entrou em conversa com " . $nomeRemente .
+        "</b> <hr>" . 
+        $this->infoDispositivo, "normal", Auth::user()->id);
+    }
+
     public function index($utilizador, $remente)
     {
-        /*$utilizador = Crypt::decrypt($utilizador);
-        $remente = Crypt::decrypt($remente);*/
         $utilizador = $utilizador;
         $remente = $remente;
         if ($utilizador == Auth::user()->id) {
@@ -56,21 +70,6 @@ class Conversa extends Component
         } else {
             return redirect()->to("/error");
         }
-    }
-
-    public function mount($utilizador, $remente)
-    {
-        $this->utilizador_id = $utilizador;
-        $this->remente = $remente;
-        $this->totalMsgActual = $this->listarMsgRecibidas();
-
-        $this->buscarDadosDispositivo();
-        $nomeUtilizador = $this->buscarNomeUsuario($this->utilizador_id);
-        $nomeRemente = $this->buscarNomeUsuario($this->remente);
-        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> ".
-        $nomeUtilizador . " Entrou em conversa com " . $nomeRemente .
-        "</b> <hr>" . 
-        $this->infoDispositivo, "normal", Auth::user()->id);
     }
 
     public function render()
@@ -88,13 +87,11 @@ class Conversa extends Component
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->remente)
                 ->where('estado', 'pendente');
-        })
-            ->orWhere(function ($query) {
+        })->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->remente)
                     ->where('estado', 'pendente');
-            })
-            ->get();
+        })->get();
     }
 
     public function ocutarMsgValidate()
@@ -127,27 +124,32 @@ class Conversa extends Component
         return ChatConversa::where(function ($query) {
             $query->where('emissor', $this->remente)
                 ->where('receptor', $this->utilizador_id);
-        })
-            ->get();
+        })->get();
     }
 
     public function listarTodasConversas()
     {
         $this->pagina_atual = 0;
         $this->itens_por_pagina = 5;
-        if (isset($_GET['pagina'])) {
-            $this->pagina_atual = $_GET['pagina'];
-        } else {
-            $this->pagina_atual = 1;
-        }
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : null;
+        $this->pagina_atual =  $this->buscarPaginaActual($pagina);
         $this->offset = ($this->pagina_atual - 1) * $this->itens_por_pagina;
         $this->total_itens = 100;
         $this->total_paginas = ceil(count($this->totalMsgAmbosUtilizadores()) / 5);
+
         return DB::select('select * from conversas ' .
             ' where (emissor = ' . $this->utilizador_id . ' and receptor = ' . $this->remente .
             ' or ' .
             ' receptor = ' . $this->utilizador_id . ' and emissor = ' . $this->remente . ')' .
             ' order by id desc limit ' . $this->itens_por_pagina . ' offset ' . $this->offset);
+    }
+
+    public function buscarPaginaActual($pagina){
+        if (isset($pagina)) {
+            return $pagina;
+        } else {
+           return 1;
+        }
     }
 
     public function totalMsgAmbosUtilizadores()
@@ -191,20 +193,24 @@ class Conversa extends Component
     {
         if ($this->arquivo) {
             $this->caminhoArquivo = $this->verificarExtensaoArquivo($this->extensaoArquivo);
-            if ($this->caminhoArquivo) {
-                $this->tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
-                $this->extensaoOriginalArquivo = $this->extensaoArquivo;
-                $this->nomeOriginalArquivo = $this->arquivo->getClientOriginalName();
-                $this->cadastrarMensagem();
-            } else {
-                $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
-                $this->arquivo == null;
-            }
+            $this->verificarSeArquivoValido($this->caminhoArquivo);
         } else if ($this->mensagem != null) {
             $this->cadastrarMensagem();
         } else {
             $this->ocultarValidate = false;
             $this->validate();
+        }
+    }
+
+    public function verificarSeArquivoValido($caminhoArquivo){
+        if ($caminhoArquivo) {
+            $this->tipoArquivo = $this->buscarTipoArquivo($this->extensaoArquivo);
+            $this->extensaoOriginalArquivo = $this->extensaoArquivo;
+            $this->nomeOriginalArquivo = $this->arquivo->getClientOriginalName();
+            $this->cadastrarMensagem();
+        } else {
+            $this->emit('alerta', ['mensagem' => 'Arquivo inválido', 'icon' => 'warning']);
+            $this->arquivo == null;
         }
     }
 
