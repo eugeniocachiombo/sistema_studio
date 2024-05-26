@@ -5,6 +5,7 @@
                 @php
                     $foto = $this->buscarFotoPerfil($remente);
                 @endphp
+                
                 @if ($foto)
                     <img src="{{ asset('assets/' . $foto->caminho_arquivo) }}"
                         class="rounded-circle me-2" alt="foto"

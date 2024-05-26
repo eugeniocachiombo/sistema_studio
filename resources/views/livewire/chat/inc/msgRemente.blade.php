@@ -10,6 +10,7 @@
             @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                 <div class=" col-12 d-table ">
                     <div class="text-start">
+
                         @switch($item->tipo_arquivo)
                             @case('img')
                                 <a href="{{ asset('assets/' . $item->caminho_arquivo) }}">
@@ -32,6 +33,7 @@
 
                             @default
                         @endswitch
+                        
                     </div>
 
                     <div class="" >
