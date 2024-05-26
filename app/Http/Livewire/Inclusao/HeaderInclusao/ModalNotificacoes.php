@@ -49,7 +49,7 @@ class ModalNotificacoes extends Component
                 $this->fimAgendaEmProcesso = $this->buscarFimAgendamento($this->agendaEmProrocesso, $maiorData);
             }
 
-            if (date("H:i") > $this->fimAgendaEmProcesso) {
+            if (date("H:i") >= $this->fimAgendaEmProcesso) {
                 $this->agendaEmProrocesso = null;
                 session()->forget("agendamentoEmProcesso");
             } else {
@@ -66,8 +66,9 @@ class ModalNotificacoes extends Component
     {
         $duracao = (int) trim($agendaEmProrocesso->duracao, " hr");
         $maiorHora = (int) date('H', strtotime($maiorData));
+        $minutos = date('i', strtotime($maiorData));
         $horaAgenda = $maiorHora + $duracao;
-        return date($horaAgenda) . ":00";
+        return date($horaAgenda) . ":" . $minutos;
     }
 
     public function buscarComMaiorDataGravacao($maiorData)
