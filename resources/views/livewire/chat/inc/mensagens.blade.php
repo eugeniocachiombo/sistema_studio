@@ -8,7 +8,6 @@
     <div class="col d-table" style="margin-bottom: -20px">
         @if (count($this->todasConversas) > 0)
             @include('livewire.chat.inc.msgs-encontradas')
-            @include('livewire.chat.inc.verificacao-msg-lida')
         @else
             <div class="col alert alert-danger text-center mb-5">
                 <b class="d-table d-md-flex justify-content-center align-items-center ">

@@ -19,3 +19,5 @@
         $ultimaActualizacao = $item->updated_at;
     @endphp
 @endforeach
+
+@include('livewire.chat.inc.verificacao-msg-lida')

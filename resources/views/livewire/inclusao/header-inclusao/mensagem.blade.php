@@ -1,3 +1,14 @@
+<style>
+    #bgMsg {
+        text-decoration: none;
+        background: rgb(194, 194, 194);
+    }
+
+    #bgMsg:hover {
+        background: gray;
+    }
+</style>
+
 <li class="nav-item dropdown">
     <a id="iconMensagem" class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
         <i class="bi bi-chat-left-text"></i>
@@ -30,17 +41,6 @@
         <li>
             <hr class="dropdown-divider">
         </li>
-
-        <style>
-            #bgMsg {
-                text-decoration: none;
-                background: rgb(194, 194, 194);
-            }
-
-            #bgMsg:hover {
-                background: gray;
-            }
-        </style>
 
         @for ($i = 0; $i < count($this->listaParticipantes); $i++)
             @if ($i < 3)
@@ -164,7 +164,7 @@
                             </div>
 
                             <div class="col text-center ">
-                                @if ($conversa->estado == 'lido')
+                                @if ($conversa->estado == 'lido' && $conversa->emissor != $idRemente)
                                     <i class="bi bi-check-circle-fill text-primary"></i>
                                 @else
                                     <i class="bi bi-check text-primary"></i>
