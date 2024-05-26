@@ -251,6 +251,7 @@ class Actualizar extends Component
         $dataInserida = date("Y-m-d H:i:s", strtotime($this->dataGravacao));
         $gravacao = Gravacao::whereDate("data_gravacao", date("Y-m-d", strtotime($this->dataGravacao)))
             ->where("estado_gravacao", "!=", "gravado")
+            ->where("id", "!=", $this->idGravacao)
             ->orderBy("created_at", "desc")
             ->first();
 
@@ -305,6 +306,7 @@ class Actualizar extends Component
             $this->emit('alerta', ['mensagem' => 'Actualizado com sucesso', 'icon' => 'success', 'tempo' => 5000]);
             $this->msgParaRegistroActividade();
             $this->limparCampos();
+            $this->emit('atrazar_redirect', ['caminho' => '/gravacao/listar', 'tempo' => 2500]);
         }
     }
 

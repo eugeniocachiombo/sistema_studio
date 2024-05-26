@@ -23,7 +23,7 @@ class Agendar extends Component
     public $infoDispositivo, $gravacao_id, $dataMixagem, $duracaoMixagem;
     public $listaGravacoes = array();
     public $dataMin;
-    
+
     protected $messages = [
         "gravacao_id.required" => "Campo obrigatório",
         "dataMixagem.required" => "Campo obrigatório",
@@ -78,8 +78,8 @@ class Agendar extends Component
             $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda) . ":" . $minutos;
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
 
-            if($this->dataMixagem == null){
-                $this->dataMixagem =  $this->dataMin;
+            if ($this->dataMixagem == null) {
+                $this->dataMixagem = $this->dataMin;
             }
         } else {
             $dataAgenda = Carbon::now();
@@ -95,7 +95,7 @@ class Agendar extends Component
 
         if (!empty($nomeCliente) && !empty($mebroEmGrupo)) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de mixagem para cliente $nomeCliente->name do grupo " . $this->buscarGrupo($mebroEmGrupo->grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
-        }else if ($nomeCliente) {
+        } else if ($nomeCliente) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de mixagem para cliente $nomeCliente->name </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         } elseif ($nomeGrupo) {
             $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Fez um agendamento de mixagem para o grupo $nomeGrupo->nome </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
@@ -164,7 +164,7 @@ class Agendar extends Component
 
     public function agendarMixagem()
     {
-       $this->validate([
+        $this->validate([
             "gravacao_id" => "required",
             "dataMixagem" => ["required", "regex:/^\d{4}-\d{2}-\d{2}T((0[8-9]|1[0-7]):[0-5][0-9]|18:00)$/"],
             "duracaoMixagem" => "required",
@@ -174,42 +174,50 @@ class Agendar extends Component
 
     public function verificarData()
     {
-        $dataInserida = date("Y-m-d", strtotime($this->dataMixagem));
-        $horaInserida = date("H", strtotime($this->dataMixagem));
+        $dataCarregadaGravacao = 0;
+        $dataCarregadaMixagem = 0;
+        $dataInserida = date("Y-m-d H:i:s", strtotime($this->dataMixagem));
 
-        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
-        ->where("estado_gravacao", "!=", "gravado")
-        ->orderBy("created_at", "desc")
-        ->first();
+        $gravacao = Gravacao::whereDate("data_gravacao", date("Y-m-d", strtotime($this->dataMixagem)))
+            ->where("estado_gravacao", "!=", "gravado")
+            ->orderBy("created_at", "desc")
+            ->first();
 
-        $mixagem = Mixagem::whereDate("data_mixagem", $dataInserida)
-        ->where("estado_mixagem", "!=", "mixado")
-        ->orderBy("created_at", "desc")
-        ->first();
+        $mixagem = Mixagem::whereDate("data_mixagem", date("Y-m-d", strtotime($this->dataMixagem)))
+            ->where("estado_mixagem", "!=", "mixado")
+            ->orderBy("created_at", "desc")
+            ->first();
 
         if ($gravacao || $mixagem) {
 
-            $dataMixagemDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
-            $horaGravacaoDB = $gravacao ? date("H", strtotime($gravacao->data_gravacao)) : 0;
-            $duracaoGravacaoDB = $gravacao ? (int)trim($gravacao->duracao, " hr") : 0;
-            $cargaGravacaoDB = $horaGravacaoDB + $duracaoGravacaoDB;
+            if ($gravacao) {
+                $dataDBGravacao = $gravacao->data_gravacao;
+                $duracaoDBGravacao = (int) trim($gravacao->duracao, " hr");
+                $dataObjGravacao = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBGravacao);
+                $dataObjGravacao->modify('+' . $duracaoDBGravacao . ' hours');
+                $dataCarregadaGravacao = $dataObjGravacao->format('Y-m-d H:i:s');
+            } 
 
-            $dataMixagemDB = $mixagem ? date("Y-m-d", strtotime($mixagem->data_mixagem)) : 0;
-            $horaMixagemDB = $mixagem ? date("H", strtotime($mixagem->data_mixagem)) : 0;
-            $duracaoMixagemDB = $mixagem ? (int)trim($mixagem->duracao, " hr") : 0;
-            $cargaMixagemDB = $horaMixagemDB + $duracaoMixagemDB;
+            if ($mixagem) {
+                $dataDBMixagem = $mixagem->data_mixagem;
+                $duracaoDBMixagem = (int) trim($mixagem->duracao, " hr");
+                $dataObjMixagem = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBMixagem);
+                $dataObjMixagem->modify('+' . $duracaoDBMixagem . ' hours');
+                $dataCarregadaMixagem = $dataObjMixagem->format('Y-m-d H:i:s');
+            } 
 
-            if ($horaInserida > $cargaGravacaoDB && $horaInserida > $cargaMixagemDB) {
+            if ($dataInserida >= $dataCarregadaGravacao && $dataInserida > $dataCarregadaMixagem) {
                 $this->inserirNaBD();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
             }
         } else {
-                $this->inserirNaBD();
+            $this->inserirNaBD();
         }
     }
 
-    public function inserirNaBD(){
+    public function inserirNaBD()
+    {
         $dados = [
             "gravacao_id" => $this->gravacao_id,
             "data_mixagem" => $this->dataMixagem,
@@ -240,7 +248,7 @@ class Agendar extends Component
         $masterizacao = Masterizacao::max("data_master");
         $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
 
-        if($ultimoHorario){
+        if ($ultimoHorario) {
             $this->emit('alerta', [
                 'icon' => "warning",
                 'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
@@ -248,7 +256,7 @@ class Agendar extends Component
                 'tempo' => 100000,
                 'position' => 'center',
             ]);
-        }else{
+        } else {
             $this->emit('alerta', [
                 'icon' => "warning",
                 'mensagem' => '<b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
@@ -260,7 +268,8 @@ class Agendar extends Component
 
     }
 
-    public function formatarDataNormal($data){
+    public function formatarDataNormal($data)
+    {
         $formato = new DateTime($data);
         return $formato->format('d-m-Y H:i');
     }

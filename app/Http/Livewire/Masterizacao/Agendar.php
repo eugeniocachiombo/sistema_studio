@@ -177,43 +177,54 @@ class Agendar extends Component
 
     public function verificarData()
     {
-        $dataInserida = date("Y-m-d", strtotime($this->dataMasterizacao));
-        $horaInserida = date("H", strtotime($this->dataMasterizacao));
+        $dataCarregadaGravacao = 0;
+        $dataCarregadaMixagem = 0;
+        $dataCarregadaMasterizacao = 0;
+        $dataInserida = date("Y-m-d H:i:s", strtotime($this->dataMasterizacao));
 
-        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
-        ->where("estado_gravacao", "!=", "gravado")
-        ->orderBy("created_at", "desc")
-        ->first();
+        $gravacao = Gravacao::whereDate("data_gravacao", date("Y-m-d", strtotime($this->dataMasterizacao)))
+            ->where("estado_gravacao", "!=", "gravado")
+            ->orderBy("created_at", "desc")
+            ->first();
 
-        $mixagem = Mixagem::whereDate("data_mixagem", $dataInserida)
-        ->where("estado_mixagem", "!=", "mixado")
-        ->orderBy("created_at", "desc")
-        ->first();
+        $mixagem = Mixagem::whereDate("data_mixagem", date("Y-m-d", strtotime($this->dataMasterizacao)))
+            ->where("estado_mixagem", "!=", "mixado")
+            ->orderBy("created_at", "desc")
+            ->first();
 
-        $masterizacao = Masterizacao::whereDate("data_master", $dataInserida)
+        $masterizacao = Masterizacao::whereDate("data_master", date("Y-m-d", strtotime($this->dataMasterizacao)))
         ->where("estado_master", "!=", "masterizado")
         ->orderBy("created_at", "desc")
         ->first();
 
         if ($gravacao || $mixagem || $masterizacao) {
 
-            $dataMasterizacaoDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
-            $horaGravacaoDB = $gravacao ? date("H", strtotime($gravacao->data_gravacao)) : 0;
-            $duracaoGravacaoDB = $gravacao ? (int)trim($gravacao->duracao, " hr") : 0;
-            $cargaGravacaoDB = $horaGravacaoDB + $duracaoGravacaoDB;
+            if ($gravacao) {
+                $dataDBGravacao = $gravacao->data_gravacao;
+                $duracaoDBGravacao = (int) trim($gravacao->duracao, " hr");
+                $dataObjGravacao = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBGravacao);
+                $dataObjGravacao->modify('+' . $duracaoDBGravacao . ' hours');
+                $dataCarregadaGravacao = $dataObjGravacao->format('Y-m-d H:i:s');
+            } 
 
-            $dataMixagemDB = $mixagem ? date("Y-m-d", strtotime($mixagem->data_mixagem)) : 0;
-            $horaMixagemDB = $mixagem ? date("H", strtotime($mixagem->data_mixagem)) : 0;
-            $duracaoMixagemDB = $mixagem ? (int)trim($mixagem->duracao, " hr") : 0;
-            $cargaMixagemDB = $horaMixagemDB + $duracaoMixagemDB;
+            if ($mixagem) {
+                $dataDBMixagem = $mixagem->data_mixagem;
+                $duracaoDBMixagem = (int) trim($mixagem->duracao, " hr");
+                $dataObjMixagem = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBMixagem);
+                $dataObjMixagem->modify('+' . $duracaoDBMixagem . ' hours');
+                $dataCarregadaMixagem = $dataObjMixagem->format('Y-m-d H:i:s');
+            } 
 
-            $dataMasterDB = $masterizacao ? date("Y-m-d", strtotime($masterizacao->data_master)) : 0;
-            $horaMasterDB = $masterizacao ? date("H", strtotime($masterizacao->data_master)) : 0;
-            $duracaoMasterDB = $masterizacao ? (int)trim($masterizacao->duracao, " hr") : 0;
-            $cargaMasterDB = $horaMasterDB + $duracaoMasterDB;
+            if ($masterizacao) {
+                $dataDBMasterizacao = $masterizacao->data_masterizacao;
+                $duracaoDBMasterizacao = (int) trim($masterizacao->duracao, " hr");
+                $dataObjMasterizacao = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBMasterizacao);
+                $dataObjMasterizacao->modify('+' . $duracaoDBMasterizacao . ' hours');
+                $dataCarregadaMasterizacao = $dataObjMasterizacao->format('Y-m-d H:i:s');
+            } 
 
-            if ($horaInserida > $cargaGravacaoDB && $horaInserida > $cargaMixagemDB && $horaInserida > $cargaMasterDB) {
-               $this->inserirNaBD();
+            if ($dataInserida >= $dataCarregadaGravacao && $dataInserida > $dataCarregadaMixagem && $dataInserida > $dataCarregadaMasterizacao) {
+                $this->inserirNaBD();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
             }

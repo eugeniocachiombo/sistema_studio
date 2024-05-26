@@ -178,33 +178,40 @@ class Actualizar extends Component
 
     public function verificarData()
     {
-        $dataInserida = date("Y-m-d", strtotime($this->dataMixagem));
-        $horaInserida = date("H", strtotime($this->dataMixagem));
+        $dataCarregadaGravacao = 0;
+        $dataCarregadaMixagem = 0;
+        $dataInserida = date("Y-m-d H:i:s", strtotime($this->dataMixagem));
 
-        $gravacao = Gravacao::whereDate("data_gravacao", $dataInserida)
-        ->where("estado_gravacao", "!=", "gravado")
-        ->orderBy("created_at", "desc")
-        ->first();
+        $gravacao = Gravacao::whereDate("data_gravacao", date("Y-m-d", strtotime($this->dataMixagem)))
+            ->where("estado_gravacao", "!=", "gravado")
+            ->orderBy("created_at", "desc")
+            ->first();
 
-        $mixagem = Mixagem::whereDate("data_mixagem", $dataInserida)
-        ->where("estado_mixagem", "!=", "mixado")
-        ->where("id", "!=", $this->idMixagem)
-        ->orderBy("created_at", "desc")
-        ->first();
+        $mixagem = Mixagem::whereDate("data_mixagem", date("Y-m-d", strtotime($this->dataMixagem)))
+            ->where("estado_mixagem", "!=", "mixado")
+            ->where("id", "!=", $this->idMixagem)
+            ->orderBy("created_at", "desc")
+            ->first();
 
         if ($gravacao || $mixagem) {
 
-            $dataGravacaoDB = $gravacao ? date("Y-m-d", strtotime($gravacao->data_gravacao)) : 0;
-            $horaGravacaoDB = $gravacao ? date("H", strtotime($gravacao->data_gravacao)) : 0;
-            $duracaoGravacaoDB = $gravacao ? (int)trim($gravacao->duracao, " hr") : 0;
-            $cargaGravacaoDB = $horaGravacaoDB + $duracaoGravacaoDB;
+            if ($gravacao) {
+                $dataDBGravacao = $gravacao->data_gravacao;
+                $duracaoDBGravacao = (int) trim($gravacao->duracao, " hr");
+                $dataObjGravacao = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBGravacao);
+                $dataObjGravacao->modify('+' . $duracaoDBGravacao . ' hours');
+                $dataCarregadaGravacao = $dataObjGravacao->format('Y-m-d H:i:s');
+            } 
 
-            $dataMixagemDB = $mixagem ? date("Y-m-d", strtotime($mixagem->data_mixagem)) : 0;
-            $horaMixagemDB = $mixagem ? date("H", strtotime($mixagem->data_mixagem)) : 0;
-            $duracaoMixagemDB = $mixagem ? (int)trim($mixagem->duracao, " hr") : 0;
-            $cargaMixagemDB = $horaMixagemDB + $duracaoMixagemDB;
+            if ($mixagem) {
+                $dataDBMixagem = $mixagem->data_mixagem;
+                $duracaoDBMixagem = (int) trim($mixagem->duracao, " hr");
+                $dataObjMixagem = DateTime::createFromFormat('Y-m-d H:i:s', $dataDBMixagem);
+                $dataObjMixagem->modify('+' . $duracaoDBMixagem . ' hours');
+                $dataCarregadaMixagem = $dataObjMixagem->format('Y-m-d H:i:s');
+            } 
 
-            if ($horaInserida > $cargaGravacaoDB && $horaInserida > $cargaMixagemDB) {
+            if ($dataInserida >= $dataCarregadaGravacao && $dataInserida > $dataCarregadaMixagem) {
                 $this->inserirNaBD();
             } else {
                 $this->emit('alerta', ['mensagem' => 'Existe um agendamento em processo nesta data', 'icon' => 'warning', 'tempo' => 5000]);
