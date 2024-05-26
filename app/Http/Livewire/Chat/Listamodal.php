@@ -45,13 +45,43 @@ class Listamodal extends Component
             ->get();
     }
 
+    public function listarParticipantes()
+    {
+        $conversas = ChatConversa::where(function ($query) {
+            $query->where('emissor', $this->utilizador_id)
+                ->where('receptor', '!=', $this->utilizador_id);
+            })
+            ->orWhere(function ($query) {
+                $query->where('receptor', $this->utilizador_id)
+                    ->where('emissor', '!=', $this->utilizador_id);
+            })
+            ->orderby('id', 'desc')
+            ->distinct()
+            ->get();
+
+        return $this->contarParticipantesDaConversa($conversas);
+    }
+
+    function contarParticipantesDaConversa($conversas){
+        $emissoresReceptores = [];
+        foreach ($conversas as $conversa) {
+            $emissoresReceptores[] = $conversa->emissor;
+            $emissoresReceptores[] = $conversa->receptor;
+        }
+
+        $emissoresReceptores = array_unique($emissoresReceptores);
+        $emissoresReceptores = array_diff($emissoresReceptores, [$this->utilizador_id]);
+        $emissoresReceptores = array_values($emissoresReceptores);
+        return $emissoresReceptores;
+    }
+
     public function ultimaMensagem($idRemente)
     {
         $this->idRemente = $idRemente;
         return ChatConversa::where(function ($query) {
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->idRemente);
-        })
+            })
             ->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->idRemente);
@@ -67,7 +97,7 @@ class Listamodal extends Component
             $query->where('emissor', $this->utilizador_id)
                 ->where('receptor', $this->idRemente)
                 ->where('estado', 'pendente');
-        })
+            })
             ->orWhere(function ($query) {
                 $query->where('receptor', $this->utilizador_id)
                     ->where('emissor', $this->idRemente)
@@ -90,32 +120,6 @@ class Listamodal extends Component
             ->select("emissor")
             ->distinct()
             ->get();
-    }
-
-    public function listarParticipantes()
-    {
-        $conversas = ChatConversa::where(function ($query) {
-            $query->where('emissor', $this->utilizador_id)
-                ->where('receptor', '!=', $this->utilizador_id);
-        })
-            ->orWhere(function ($query) {
-                $query->where('receptor', $this->utilizador_id)
-                    ->where('emissor', '!=', $this->utilizador_id);
-            })
-            ->orderby('id', 'desc')
-            ->distinct()
-            ->get();
-
-        $emissoresReceptores = [];
-        foreach ($conversas as $conversa) {
-            $emissoresReceptores[] = $conversa->emissor;
-            $emissoresReceptores[] = $conversa->receptor;
-        }
-
-        $emissoresReceptores = array_unique($emissoresReceptores);
-        $emissoresReceptores = array_diff($emissoresReceptores, [$this->utilizador_id]);
-        $emissoresReceptores = array_values($emissoresReceptores);
-        return $emissoresReceptores;
     }
 
     public function buscarNomeUsuario($id)
