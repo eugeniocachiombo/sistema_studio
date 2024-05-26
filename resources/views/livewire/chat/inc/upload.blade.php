@@ -1,5 +1,5 @@
 @if ($this->habilitarUpload == true)
-    <div class="col bg-primary align-items-center d-flex justify-content-between border">
+    <div class="col bg-primary align-items-center d-flex justify-content-between border ">
         <div class="col">
             <label for="file-input" class="file-input {{ $arquivo ? 'bg-success' : '' }} ">
                 @if ($arquivo)
@@ -45,7 +45,7 @@
     </div>
 
     @empty($arquivo)
-        <div class="container d-table bg-primary text-light  align-items-center">
+        <div class="container d-table bg-primary text-light  align-items-center mb-5">
             <div class="row">
                 <div class="col">
                     <b>Somente Com Extensões:</b>
