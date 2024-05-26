@@ -3,10 +3,7 @@
 namespace App\Http\Livewire\Estilos;
 
 use App\Models\Estilo\Estilo;
-use App\Models\Estilo\EstiloCliente;
-use App\Models\Participante\Participante;
 use App\Models\User;
-use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
@@ -21,7 +18,7 @@ class Adicionar extends Component
 
     protected $messages = [
         "preco.required" => "Campo obrigatório",
-        "tipo.required" => "Escreva o tipo de estilo"
+        "tipo.required" => "Escreva o tipo de estilo",
     ];
 
     public function mount()
@@ -33,7 +30,7 @@ class Adicionar extends Component
     {
         return view('index.estilos.adicionar');
     }
-    
+
     public function render()
     {
         $this->listaEstilos = Estilo::all();
@@ -44,23 +41,31 @@ class Adicionar extends Component
     {
         $this->validate([
             "tipo" => "required",
-            "preco" => "required"
+            "preco" => "required",
         ]);
 
         $estilo = Estilo::where('tipo', $this->tipo)->first();
+        $this->verificarSeEstiloExiste($estilo);
+    }
+
+    public function verificarSeEstiloExiste($estilo){
         if ($estilo) {
             $this->emit('alerta', ['mensagem' => 'Este estilo já existe', 'icon' => 'warning', 'tempo' => 4500]);
             $this->tipo = null;
         } else {
-            $estilo = Estilo::create([
-                'tipo' => $this->tipo,
-                'preco' => $this->preco,
-                'responsavel' => Auth::user()->id,
-            ]);
-            $this->emit('alerta', ['mensagem' => 'Estilo criado com sucesso', 'icon' => 'success']);
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou um novo estilo do tipo " .  Estilo::find($estilo->id)->tipo . " no valor de " . number_format($this->preco, 2, ',', '.')  ." kz</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id); 
-            $this->tipo = null;
+            $this->inserirNaBD();
         }
+    }
+
+    public function inserirNaBD(){
+        $estilo = Estilo::create([
+            'tipo' => $this->tipo,
+            'preco' => $this->preco,
+            'responsavel' => Auth::user()->id,
+        ]);
+        $this->emit('alerta', ['mensagem' => 'Estilo criado com sucesso', 'icon' => 'success']);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou um novo estilo do tipo " . Estilo::find($estilo->id)->tipo . " no valor de " . number_format($this->preco, 2, ',', '.') . " kz</b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        $this->tipo = null;
     }
 
     public function registrarActividade($msg, $tipo, $user_id)
@@ -90,4 +95,3 @@ class Adicionar extends Component
         $this->tipo = null;
     }
 }
-

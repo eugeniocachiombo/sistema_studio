@@ -55,27 +55,26 @@ class Actualizar extends Component
             "preco" => "required",
         ]);
 
-        $estilo = Estilo::where("id", $this->estilo_id)->update([
+        Estilo::where("id", $this->estilo_id)->update([
             'tipo' => $this->tipo,
             'preco' => $this->preco,
             'responsavel' => Auth::user()->id,
         ]);
+
         $this->emit('alerta', ['mensagem' => 'Estilo actualizado com sucesso', 'icon' => 'success']);
-        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou um estilo  </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id); 
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou dados de um estilo  </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         $this->emit('atrazar_redirect', ['caminho' => '/estilos/listar', 'tempo' => 2500]);
         $this->tipo = null;
     }
 
-    
-public function registrarActividade($msg, $tipo, $user_id)
-{
-    RegistroActividade::create([
-        "mensagem" => $msg,
-        "tipo_msg" => $tipo,
-        "user_id" => $user_id,
-    ]);
-}
-
+    public function registrarActividade($msg, $tipo, $user_id)
+    {
+        RegistroActividade::create([
+            "mensagem" => $msg,
+            "tipo_msg" => $tipo,
+            "user_id" => $user_id,
+        ]);
+    }
 
     public function buscarDadosDispositivo()
     {
