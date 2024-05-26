@@ -6,7 +6,7 @@
             </span>
         </div>
 
-        <div class=" col d-flex d-flex justify-content-end" {{-- wire:click.debounce.500ms='mensagemPressionada' --}}>
+        <div class=" col d-flex d-flex justify-content-end" >
             @if ($item->caminho_arquivo != '' && $item->tipo_arquivo != '')
                 <div class=" col-12 d-table ">
                     <div class="text-end">
