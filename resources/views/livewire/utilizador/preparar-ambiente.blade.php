@@ -59,20 +59,26 @@
 <body>
     <div id="logo-container">
         <div id="logo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="logo" 
-            style="object-fit: cover"
-            width="150px">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="logo" style="object-fit: cover" width="150px">
         </div>
         <div id="session-ending">
-            <div class="spinner-border spinner-border-sm text-dark" role="status"></div> 
-                <b>Iniciando:</b> Por favor Aguarde...
+            <div class="spinner-border spinner-border-sm text-dark" role="status"></div>
+            <b>Iniciando:</b> Por favor Aguarde...
         </div>
     </div>
 
+    @php
+        $texto = "Olá, " . session("utilizador") . " estamos a preparar o ambiente. Por favor aguarde.";
+    @endphp
+
     <script>
+        const synthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance('<?php echo $texto; ?>');
+        synthesis.speak(utterance);
+
         setTimeout(() => {
             window.location = "{{ route('pagina_inicial.') }}";
-        }, 5000);
+        }, 8000);
     </script>
 </body>
 

@@ -18,3 +18,4 @@
         @endif
     </ul>
 </nav>
+<script src="{{ asset('assets/js/textoEmVoz.js') }}"></script>

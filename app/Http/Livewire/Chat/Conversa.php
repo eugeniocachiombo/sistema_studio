@@ -108,12 +108,14 @@ class Conversa extends Component
         // seu listener public $listeners = ['tempoRealMensagens'];
         // $this->actualizarParaLidoMensagem();
         $this->alertarNovaMsg();
+        
     }
 
     public function alertarNovaMsg()
     {
         $this->novaMensagem = $this->listarMsgRecibidas();
         if (count($this->totalMsgActual) < count($this->novaMensagem)) {
+            $this->emit('textoEmVoz', "Você tem nova mensagem");
             $this->emit('somReceberMensagem', asset('assets/toques_msg/audio2.mp3'));
             $this->totalMsgActual = $this->listarMsgRecibidas();
         }

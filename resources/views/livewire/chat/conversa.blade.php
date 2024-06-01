@@ -26,5 +26,6 @@
             </section>
         </main>
     </div>
+    <script src="{{ asset('assets/js/textoEmVoz.js') }}"></script>
     <script src="{{ asset('assets/js/temporeal_conversa.js') }}"></script>
 </div>

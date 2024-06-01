@@ -16,6 +16,7 @@ class PaginaInicial extends Component
     {
         $this->utilizador_id = Auth::user()->id;
     }
+
     public function index()
     {
         return view('index.pagina-inicial.pagina-inicial');
@@ -31,5 +32,4 @@ class PaginaInicial extends Component
     {
         return User::find($id);
     }
-   
 }
