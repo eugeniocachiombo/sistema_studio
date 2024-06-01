@@ -1,4 +1,4 @@
-<form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation" novalidate>
+<form wire:submit.prevent="enviarMensagem" class="php-email-form needs-validation mt-4" novalidate>
     <div class="col-md-12">
         @if ($ocultarValidate == false)
             @error('mensagem')

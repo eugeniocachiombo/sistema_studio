@@ -11,6 +11,14 @@
                 <b class=""><i class="bi bi-info-circle"></i> Mensagem eliminada </b>
                 <br> {{ $this->formatarData($item->updated_at) }}
             </div>
+
+            <hr 
+                style="
+            opacity: 0.08;
+            border: none;
+        height: 3px;
+        background-color: #FF5733;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);">
         @endif
     </div>
 

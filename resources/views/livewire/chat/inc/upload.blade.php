@@ -45,7 +45,7 @@
     </div>
 
     @empty($arquivo)
-        <div class="container d-table bg-primary text-light  align-items-center mb-5">
+        <div class="container d-table bg-primary text-light  align-items-center mb-2">
             <div class="row">
                 <div class="col">
                     <b>Somente Com Extensões:</b>
