@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pessoa_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->bigInteger('telefone')->unique()->nullable();
@@ -29,9 +30,11 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('tipo_acesso')->references('id')->on('acessos')->onDelete("cascade");
+            $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete("cascade");
         });
 
         User::create([
+            'pessoa_id' => 1,
             'name' => "Conta Produtor",
             'email' => "produtor@example.com",
             'telefone' => 911911911,
@@ -42,6 +45,7 @@ class CreateUsersTable extends Migration
         ]);
         
         User::create([
+            'pessoa_id' => 2,
             'name' => "Conta Atendente",
             'email' => "atendente@example.com",
             'telefone' => 922922922,

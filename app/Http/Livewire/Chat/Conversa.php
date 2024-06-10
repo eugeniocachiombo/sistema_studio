@@ -19,18 +19,17 @@ class Conversa extends Component
 {
     use WithFileUploads;
 
-    protected $todasConversas = array();
-    public $habilitarUpload = false;
-    public $arquivo = null;
-    public $nomeArquivo, $extensaoArquivo, $tamanhoArquivo;
-    public $extensoesAceites;
     public $utilizador_id, $remente, $estado, $idMensagem = null, $mensagem = null, $tipo_arquivo;
     public $caminhoArquivo = null, $tipoArquivo = null, $nomeOriginalArquivo = null, $extensaoOriginalArquivo = null;
+    public $arquivo = null, $nomeArquivo, $extensaoArquivo, $tamanhoArquivo, $extensoesAceites;
+
+    public $habilitarUpload = false;
     public $pagina_atual, $itens_por_pagina, $offset, $total_itens, $total_paginas;
-    public $ocultarValidate = false, $btnEliminarMsg = false;
     public $placeholderMsg, $rowsMessagem;
     public $totalMsgActual, $novaMensagem;
+    public $ocultarValidate = false, $btnEliminarMsg = false;
     public $infoDispositivo;
+    protected $todasConversas = array();
     public $listeners = ['tempoRealMensagens'];
 
     protected $messages = [

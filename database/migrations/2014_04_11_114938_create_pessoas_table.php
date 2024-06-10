@@ -20,7 +20,6 @@ class CreatePessoasTable extends Migration
             $table->string('sobrenome')->nullable();
             $table->enum('genero', ['M', 'F'])->default('M');
             $table->date('nascimento')->nullable()->default('1990-01-01');
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->text('sobre')->nullable()->default("Sem informação");
             $table->string('nacionalidade')->nullable()->default("Sem informação");
             $table->string('provincia')->nullable()->default("Sem informação");
@@ -32,22 +31,19 @@ class CreatePessoasTable extends Migration
             $table->string('linkedin')->nullable()->default("https://linkedin.com/#");
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
         });
 
         Pessoa::create([
             "nome" => "Conta",
             "sobrenome" => "Produtor",
             "genero" => "M",
-            "nascimento" => "1999-04-24",
-            "user_id" => 1
+            "nascimento" => "1999-04-24"
         ]);
         Pessoa::create([
             "nome" => "Conta",
             "sobrenome" => "Atendente",
             "genero" => "F",
-            "nascimento" => "1999-04-24",
-            "user_id" => 2
+            "nascimento" => "1999-04-24"
         ]);
     }
 
