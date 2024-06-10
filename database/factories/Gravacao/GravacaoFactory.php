@@ -37,17 +37,8 @@ class GravacaoFactory extends Factory
     }
 
     public function pessoasParticipantes(){
-        $utilizador = User::all();
-        foreach ($utilizador as $item) {
-            if(!Pessoa::where("user_id", $item->id)->first()){
-                Pessoa::create([
-                    "nome" => $this->faker->word,
-                    "sobrenome" => $this->faker->word,
-                    "genero" => 'M',
-                    "nascimento" => rand(1990, 2002)."-". rand(1, 5) ."-". rand(1, 28),
-                    "user_id" => $item->id
-                ]);
-            }
+        $users = User::all();
+        foreach ($users as $item) {
             if(!Participante::where("user_id", $item->id)->first()){
                 Participante::create([
                     "nome" => $item->name,
