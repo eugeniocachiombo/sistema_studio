@@ -53,7 +53,7 @@ class User extends Authenticatable
     }
 
     public function buscarDadosPessoais(){
-        return $this->belongsTo(Pessoa::class, "id", "user_id");
+        return $this->belongsTo(Pessoa::class, "pessoa_id", "id");
     }
 
     public function buscarEstadoAprovacao(){

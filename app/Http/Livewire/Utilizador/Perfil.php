@@ -142,7 +142,7 @@ class Perfil extends Component
 
     public function buscarDadosPessoais($idUtilizador)
     {
-        return Pessoa::where("user_id", $idUtilizador)->first();
+        return User::find($idUtilizador)->buscarDadosPessoais;
     }
 
     public function buscarTipoAcesso($id)
@@ -313,7 +313,6 @@ class Perfil extends Component
             'email' => $this->email,
             'telefone' => $this->telefone,
         ];
-
         User::where('id', $this->utilizador_id)->update($dadosUser);
 
         $dadosPessoa = [
@@ -323,7 +322,6 @@ class Perfil extends Component
             "genero" => $this->genero,
             "nascimento" => $this->nascimento,
             "nacionalidade" => $this->nacionalidade,
-            "user_id" => $this->utilizador_id,
             "provincia" => $this->provincia,
             "municipio" => $this->municipio,
             "endereco" => $this->endereco,
@@ -332,7 +330,9 @@ class Perfil extends Component
             "instagram" => $this->instagram,
             "linkedin" => $this->linkedin,
         ];
-        Pessoa::where('user_id', $this->utilizador_id)->update($dadosPessoa);
+        $user = User::find($this->utilizador_id);
+        Pessoa::where('id', $user->pessoa_id)->update($dadosPessoa);
+
         $this->emit('alerta', ['mensagem' => 'Dados actualizados com sucesso', 'icon' => 'success']);
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou seus dados </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
     }
