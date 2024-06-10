@@ -14,14 +14,13 @@ class Pessoa extends Model
         "sobrenome",
         "genero",
         "nascimento",
-        "user_id",
         "nacionalidade",
         "provincia",
         "municipio",
         "endereco",
         "twitter",
         "facebook",
-        "instagram ",
-        "linkedin "
+        "instagram",
+        "linkedin"
     ];
 }

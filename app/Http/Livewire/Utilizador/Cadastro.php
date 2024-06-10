@@ -104,7 +104,16 @@ class Cadastro extends Component
 
     public function inserirNaBD()
     {
+        $dadosPessoa = [
+            "nome" => $this->nome,
+            "sobrenome" => $this->sobrenome,
+            "genero" => $this->genero,
+            "nascimento" => $this->nascimento,
+        ];
+        $pessoa = Pessoa::create($dadosPessoa);
+        
         $dadosUser = [
+            "pessoa_id" => $pessoa->id,
             'name' => $this->nomeArtistico,
             'email' => $this->email,
             'email_verified_at' => now(),
@@ -114,15 +123,7 @@ class Cadastro extends Component
             'remember_token' => Str::random(10),
         ];
         $user = User::create($dadosUser);
-
-        $dadosPessoa = [
-            "nome" => $this->nome,
-            "sobrenome" => $this->sobrenome,
-            "genero" => $this->genero,
-            "nascimento" => $this->nascimento,
-            "user_id" => $user->id,
-        ];
-        $pessoa = Pessoa::create($dadosPessoa);
+        
         Participante::create(['nome' => $user->name, 'user_id' => $user->id]);
         $this->msgRegistroActividades($pessoa, $user);
         $this->emit('alerta', ['mensagem' => 'Conta criada com sucesso', 'icon' => 'success']);
