@@ -72,13 +72,13 @@
     @endphp
 
     <script>
-        const synthesis = window.speechSynthesis;
+        /*const synthesis = window.speechSynthesis;
         const utterance = new SpeechSynthesisUtterance('<?php echo $texto; ?>');
-        synthesis.speak(utterance);
+        synthesis.speak(utterance); */
 
         setTimeout(() => {
             window.location = "{{ route('pagina_inicial.') }}";
-        }, 8000);
+        }, 4000);
     </script>
 </body>
 
