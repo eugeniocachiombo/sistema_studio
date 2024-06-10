@@ -47,7 +47,7 @@ class Anonimo extends Component
 
     public function buscarDadosPessoais($idUtilizador)
     {
-        return Pessoa::where("user_id", $idUtilizador)->first();
+        return User::find($idUtilizador)->buscarDadosPessoais;
     }
 
     public function buscarTipoAcesso($id)
