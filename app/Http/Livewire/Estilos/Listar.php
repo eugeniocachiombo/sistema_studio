@@ -52,6 +52,7 @@ class Listar extends Component
         $versaoPlataforma = $agente->version($plataforma);
         $navegador = $agente->browser();
         $versaoNavegador = $agente->version($navegador);
+        
         $this->infoDispositivo = "<b class='text-primary'>Dispositivo:</b> " . $agente->device() . " <br>" .
             "<b class='text-primary'>Plataforma:</b> " . $plataforma . " " . $versaoPlataforma . " <br>" .
             "<b class='text-primary'>Navegador:</b> " . $navegador . " " . $versaoNavegador . " ";

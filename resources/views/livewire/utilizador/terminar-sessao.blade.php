@@ -59,7 +59,7 @@
 <body>
     <div id="logo-container">
         <div id="logo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="logo" 
+            <img class="d-none" src="{{ asset('assets/img/logo.png') }}" alt="logo" 
             style="object-fit: cover"
             width="150px">
         </div>

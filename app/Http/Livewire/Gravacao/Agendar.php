@@ -66,12 +66,14 @@ class Agendar extends Component
     {
         $this->dataMinimaAgendamento();
         $this->listaEstilos = Estilo::all();
-        $participantes = $this->buscarTodosParticipantes();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
         $this->listaClientes = ClientesAprovado::all();
         $this->listaGrupos = Grupo::all();
+
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
+
+        $participantes = $this->buscarTodosParticipantes();
         return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
     }
 
@@ -84,6 +86,7 @@ class Agendar extends Component
         $maiorData = max($gravacao, $mixagem, $masterizacao);
 
         if (!empty($maiorData)) {
+
             if ($maiorData == $gravacao) {
                 $maiorEntidade = Gravacao::where("data_gravacao", $maiorData)->first();
             } else if ($maiorData == $mixagem) {
@@ -98,9 +101,9 @@ class Agendar extends Component
             $minutos = date('i', strtotime($maiorData));
             $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda) . ":" . $minutos;
             $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
-            
-            if($this->dataGravacao == null){
-                $this->dataGravacao =  $this->dataMin;
+
+            if ($this->dataGravacao == null) {
+                $this->dataGravacao = $this->dataMin;
             }
         } else {
             $dataAgenda = Carbon::now();
@@ -115,7 +118,7 @@ class Agendar extends Component
                 $query->where('nome', 'like', '%' . $this->termoPesquisa . '%')
                     ->orWhere('user_id', 'like', '%' . $this->termoPesquisa . '%');
             })
-               ->where(function ($query) {
+                ->where(function ($query) {
                     $query->where('grupo_id', '!=', $this->grupoEscolhido)
                         ->orWhereNull('grupo_id');
                 })
@@ -162,7 +165,7 @@ class Agendar extends Component
             ]);
             session()->put("grupo_id", $grupo->id);
             $this->emit('alerta', ['mensagem' => 'Grupo criado com sucesso', 'icon' => 'success']);
-            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou o grupo ". Grupo::find($grupo->id)->nome ."  ao sistema </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+            $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou o grupo " . Grupo::find($grupo->id)->nome . "  ao sistema </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
             $this->tbMembrosGrupo = true;
             $this->nomeGrupo = null;
         }
@@ -179,7 +182,7 @@ class Agendar extends Component
             ]);
         }
         $this->emit('alerta', ['mensagem' => 'Membros adicionados com sucesso', 'icon' => 'success', 'tempo' => 5000]);
-        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou membros ao grupo ". Grupo::find($grupo_id)->nome ." </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
+        $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Adicionou membros ao grupo " . Grupo::find($grupo_id)->nome . " </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);
         $this->clientesEscolhidos = array();
         $this->tbMembrosGrupo = false;
     }
@@ -243,7 +246,7 @@ class Agendar extends Component
             ->first();
 
         if ($gravacao) {
-            
+
             $dataDB = $gravacao->data_gravacao;
             $duracaoDB = (int) trim($gravacao->duracao, " hr");
 
@@ -409,7 +412,7 @@ class Agendar extends Component
         $masterizacao = Masterizacao::max("data_master");
         $ultimoHorario = max($gravacao, $mixagem, $masterizacao);
 
-        if($ultimoHorario){
+        if ($ultimoHorario) {
             $this->emit('alerta', [
                 'icon' => "warning",
                 'mensagem' => '<b> Último Agendamento: </b> ' . $this->formatarDataNormal($ultimoHorario) . '<br> <br> <b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
@@ -417,7 +420,7 @@ class Agendar extends Component
                 'tempo' => 100000,
                 'position' => 'center',
             ]);
-        }else{
+        } else {
             $this->emit('alerta', [
                 'icon' => "warning",
                 'mensagem' => '<b>Horário Disponível:</b> ' . $this->formatarDataNormal($this->dataMin) . " <br>",
@@ -428,7 +431,8 @@ class Agendar extends Component
         }
     }
 
-    public function formatarDataNormal($data){
+    public function formatarDataNormal($data)
+    {
         $formato = new DateTime($data);
         return $formato->format('d-m-Y H:i');
     }

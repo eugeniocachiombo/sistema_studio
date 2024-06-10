@@ -57,9 +57,9 @@
 </head>
 
 <body>
-    <div id="logo-container">
+    <div id="logo-container d-none">
         <div id="logo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="logo" style="object-fit: cover" width="150px">
+            <img class="d-none" src="{{ asset('assets/img/logo.png') }}" alt="logo" style="object-fit: cover" width="150px">
         </div>
         <div id="session-ending">
             <div class="spinner-border spinner-border-sm text-dark" role="status"></div>
