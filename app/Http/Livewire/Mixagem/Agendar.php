@@ -76,7 +76,9 @@ class Agendar extends Component
             $horaAgenda = $maiorHora + $duracao;
             $minutos = date('i', strtotime($maiorData));
             $dataAgenda = date('Y-m-d', strtotime($maiorData)) . " " . ($horaAgenda) . ":" . $minutos;
-            $this->dataMin = date('Y-m-d\TH:i', strtotime($dataAgenda));
+            $dataAgendaFormatada = date('Y-m-d\TH:i', strtotime($dataAgenda));
+            $dataHojeFormatada = date('Y-m-d\TH:i', strtotime(Carbon::now()));
+            $this->dataMin = max($dataAgendaFormatada, $dataHojeFormatada);
 
             if ($this->dataMixagem == null) {
                 $this->dataMixagem = $this->dataMin;
