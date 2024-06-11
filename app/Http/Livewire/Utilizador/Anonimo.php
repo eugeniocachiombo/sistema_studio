@@ -7,6 +7,7 @@ use App\Models\Aprovacao\ClientesAprovado;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RedesSociais;
 use App\Models\Utilizador\RegistroActividade;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,11 @@ class Anonimo extends Component
     public function buscarDadosPessoais($idUtilizador)
     {
         return User::find($idUtilizador)->buscarDadosPessoais;
+    }
+
+    public function buscarRedesSociais($idUtilizador)
+    {
+        return RedesSociais::where("user_id", $idUtilizador)->first();
     }
 
     public function buscarTipoAcesso($id)

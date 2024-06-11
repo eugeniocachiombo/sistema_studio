@@ -6,6 +6,7 @@ use App\Models\Acesso\Acesso;
 use App\Models\User;
 use App\Models\Utilizador\FotoPerfil;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RedesSociais;
 use App\Models\Utilizador\RegistroActividade;
 use DateTime;
 use Illuminate\Http\Request;
@@ -114,25 +115,28 @@ class Perfil extends Component
     {
         $utilizador = $this->buscarDadosUtilizador($this->utilizador_id);
         $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
+        $redesSociais = $this->buscarRedesSociais($utilizador->id);
         $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
         $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
 
+        $this->nomeArtistico = ucwords($utilizador->name);
+        $this->telefone = $utilizador->telefone;
+        $this->email = $utilizador->email;
+        
         $this->nome = ucwords($dadosPessoais->nome);
         $this->sobrenome = ucwords($dadosPessoais->sobrenome);
         $this->sobre = $dadosPessoais->sobre != null ? $dadosPessoais->sobre : '';
-        $this->nomeArtistico = ucwords($utilizador->name);
         $this->genero = $dadosPessoais->genero;
         $this->nascimento = $dadosPessoais->nascimento;
-        $this->telefone = $utilizador->telefone;
-        $this->email = $utilizador->email;
         $this->nacionalidade = ucwords($dadosPessoais->nacionalidade) ;
         $this->provincia =  ucwords($dadosPessoais->provincia) ;
         $this->municipio =  ucwords($dadosPessoais->municipio) ;
         $this->endereco =  ucwords($dadosPessoais->endereco);
-        $this->twitter = $dadosPessoais->twitter;
-        $this->facebook =  $dadosPessoais->facebook;
-        $this->instagram =  $dadosPessoais->instagram;
-        $this->linkedin = $dadosPessoais->linkedin;
+
+        $this->twitter = $redesSociais->twitter;
+        $this->facebook =  $redesSociais->facebook;
+        $this->instagram =  $redesSociais->instagram;
+        $this->linkedin = $redesSociais->linkedin;
     }
 
     public function buscarDadosUtilizador($id)
@@ -143,6 +147,11 @@ class Perfil extends Component
     public function buscarDadosPessoais($idUtilizador)
     {
         return User::find($idUtilizador)->buscarDadosPessoais;
+    }
+
+    public function buscarRedesSociais($idUtilizador)
+    {
+        return RedesSociais::where("user_id", $idUtilizador)->first();
     }
 
     public function buscarTipoAcesso($id)
@@ -324,14 +333,18 @@ class Perfil extends Component
             "nacionalidade" => $this->nacionalidade,
             "provincia" => $this->provincia,
             "municipio" => $this->municipio,
-            "endereco" => $this->endereco,
-            "twitter" => $this->twitter,
-            "facebook" => $this->facebook,
-            "instagram" => $this->instagram,
-            "linkedin" => $this->linkedin,
+            "endereco" => $this->endereco
         ];
         $user = User::find($this->utilizador_id);
         Pessoa::where('id', $user->pessoa_id)->update($dadosPessoa);
+
+        $dadosRedesSociais = [
+            "twitter" => $this->twitter,
+            "facebook" => $this->facebook,
+            "instagram" => $this->instagram,
+            "linkedin" => $this->linkedin
+        ];
+        RedesSociais::where('user_id', $this->utilizador_id)->update($dadosRedesSociais);
 
         $this->emit('alerta', ['mensagem' => 'Dados actualizados com sucesso', 'icon' => 'success']);
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> Actualizou seus dados </b> <hr>" . $this->infoDispositivo, "normal", Auth::user()->id);

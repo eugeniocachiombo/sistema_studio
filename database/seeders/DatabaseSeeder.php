@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     public static function run()
     {
         \App\Models\User::factory(10)->create();
+        \App\Models\Utilizador\RedesSociais::factory(1)->create();
         \App\Models\chat\Conversa::factory(rand(5, 100))->create();
         \App\Models\Gravacao\Gravacao::factory(rand(5, 20))->create();
         \App\Models\Mixagem\Mixagem::factory(rand(5, 20))->create();

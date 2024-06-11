@@ -3,6 +3,7 @@
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RedesSociais;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +35,7 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
 
-        User::create([
+        $produtor = User::create([
             'pessoa_id' => 1,
             'name' => "Conta Produtor",
             'email' => "produtor@example.com",
@@ -45,7 +46,7 @@ class CreateUsersTable extends Migration
             'remember_token' => Str::random(10),
         ]);
         
-        User::create([
+        $atendente = User::create([
             'pessoa_id' => 2,
             'name' => "Conta Atendente",
             'email' => "atendente@example.com",

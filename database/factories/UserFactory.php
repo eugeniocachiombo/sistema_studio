@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RedesSociais;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -23,7 +24,7 @@ class UserFactory extends Factory
             "genero" => $this->faker->randomElement(["M", "F"]),
             "nascimento" => rand(1990, 2002) . "-" . rand(1, 12) . "-" . rand(1, 28),
         ]);
-        
+
         return [
             "pessoa_id" => $pessoa->id,
             'name' => $this->faker->name(),

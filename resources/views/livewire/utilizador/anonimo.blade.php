@@ -2,6 +2,7 @@
     @php
         $utilizador = $this->buscarDadosUtilizador($utilizador_id);
         $dadosPessoais = $this->buscarDadosPessoais($utilizador->id);
+        $redesSociais = $this->buscarRedesSociais($utilizador->id);
         $acesso = $this->buscarTipoAcesso($utilizador->tipo_acesso);
         $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
         $foto = $this->buscarFotoPerfil($utilizador_id);

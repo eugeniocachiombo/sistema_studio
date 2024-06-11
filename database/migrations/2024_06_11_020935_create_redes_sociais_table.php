@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Utilizador\RedesSociais;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ class CreateRedesSociaisTable extends Migration
     {
         Schema::create('redes_sociais', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('twitter')->nullable()->default("https://twitter.com/#");
             $table->string('facebook')->nullable()->default("https://facebook.com/#");
             $table->string('instagram')->nullable()->default("https://instagram.com/#");
@@ -24,6 +25,9 @@ class CreateRedesSociaisTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        RedesSociais::create(["user_id" => 1]);
+        RedesSociais::create(["user_id" => 2]);
     }
 
     /**

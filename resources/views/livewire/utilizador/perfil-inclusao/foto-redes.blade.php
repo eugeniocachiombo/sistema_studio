@@ -17,13 +17,13 @@
         <h3 class="pt-2 text-center"><b>{{ $utilizador->name }}</b></h3>
         <h3>{{ ucwords($utilizador->buscarTipoAcesso->tipo) }}</h3>
         <div class="social-links mt-2">
-            <a href="{{ $dadosPessoais->twitter != null ? $dadosPessoais->twitter : '#' }}" class="twitter"><i
+            <a href="{{ $redesSociais->twitter != null ? $redesSociais->twitter : '#' }}" class="twitter"><i
                     class="bi bi-twitter"></i></a>
-            <a href="{{ $dadosPessoais->facebook != null ? $dadosPessoais->facebook : '#' }}" class="facebook"><i
+            <a href="{{ $redesSociais->facebook != null ? $redesSociais->facebook : '#' }}" class="facebook"><i
                     class="bi bi-facebook"></i></a>
-            <a href="{{ $dadosPessoais->instagram != null ? $dadosPessoais->instagram : '#' }}" class="instagram"><i
+            <a href="{{ $redesSociais->instagram != null ? $redesSociais->instagram : '#' }}" class="instagram"><i
                     class="bi bi-instagram"></i></a>
-            <a href="{{ $dadosPessoais->linkedin != null ? $dadosPessoais->linkedin : '#' }}" class="linkedin"><i
+            <a href="{{ $redesSociais->linkedin != null ? $redesSociais->linkedin : '#' }}" class="linkedin"><i
                     class="bi bi-linkedin"></i></a>
                     
             @php

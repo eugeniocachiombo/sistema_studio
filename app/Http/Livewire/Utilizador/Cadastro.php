@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Utilizador;
 use App\Models\Participante\Participante;
 use App\Models\User;
 use App\Models\Utilizador\Pessoa;
+use App\Models\Utilizador\RedesSociais;
 use App\Models\Utilizador\RegistroActividade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
@@ -123,8 +124,9 @@ class Cadastro extends Component
             'remember_token' => Str::random(10),
         ];
         $user = User::create($dadosUser);
-        
+        RedesSociais::create(["user_id" => $user->id]);
         Participante::create(['nome' => $user->name, 'user_id' => $user->id]);
+        
         $this->msgRegistroActividades($pessoa, $user);
         $this->emit('alerta', ['mensagem' => 'Conta criada com sucesso', 'icon' => 'success']);
         $this->limparCampos();
