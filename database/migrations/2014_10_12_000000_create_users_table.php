@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->foreign('tipo_acesso')->references('id')->on('acessos')->onDelete("cascade");
             $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete("cascade");
+            $table->softDeletes();
         });
 
         User::create([
