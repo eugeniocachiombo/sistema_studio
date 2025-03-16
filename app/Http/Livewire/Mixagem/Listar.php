@@ -35,7 +35,8 @@ class Listar extends Component
     public function render()
     {
         $this->buscarDadosListagem();
-        return view('livewire.mixagem.listar');
+        return view('livewire.mixagem.listar')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarDadosListagem(){

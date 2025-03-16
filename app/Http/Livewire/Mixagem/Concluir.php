@@ -26,11 +26,6 @@ class Concluir extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.mixagem.concluir');
-    }
-
     public function render()
     {
         $this->listaGravacoes = Gravacao::select("gravacaos.*")
@@ -39,7 +34,8 @@ class Concluir extends Component
             ->whereNotNull("mixagems.id")
             ->distinct()
             ->get();
-        return view('livewire.mixagem.concluir');
+        return view('livewire.mixagem.concluir')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarEstilos($id)

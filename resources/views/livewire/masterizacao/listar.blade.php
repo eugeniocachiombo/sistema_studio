@@ -1,3 +1,4 @@
+@section('titulo', 'Listagem de agendamentos de masterização')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

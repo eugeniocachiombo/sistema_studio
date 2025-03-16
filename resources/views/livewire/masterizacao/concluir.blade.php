@@ -1,3 +1,4 @@
+@section('titulo', 'Concluir masterização')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

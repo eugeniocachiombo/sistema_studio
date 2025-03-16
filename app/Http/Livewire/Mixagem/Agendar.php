@@ -36,11 +36,6 @@ class Agendar extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.mixagem.agendar');
-    }
-
     public function render()
     {
         $this->dataMinimaAgendamento();
@@ -51,7 +46,8 @@ class Agendar extends Component
                 $query->whereNull("mixagems.id");
             })
             ->get();
-        return view('livewire.mixagem.agendar');
+        return view('livewire.mixagem.agendar')
+        ->layout("layouts.logado.app");
     }
 
     public function dataMinimaAgendamento()

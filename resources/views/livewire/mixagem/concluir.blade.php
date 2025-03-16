@@ -1,3 +1,4 @@
+@section('titulo', 'Concluir mixagem')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

@@ -31,16 +31,11 @@ class Actualizar extends Component
         "duracaoMixagem.required" => "Campo obrigatório",
     ];
 
-    public function mount($idMixagem)
+    public function mount($id)
     {
-        $this->idMixagem = $idMixagem;
+        $this->idMixagem = $id;
         $this->buscarDadosDispositivo();
         $this->setarInicialmenteDadosMixagem();
-    }
-
-    public function index($idMixagem)
-    {
-        return view('index.mixagem.actualizar', ["idMixagem" => $idMixagem]);
     }
 
     public function render()
@@ -53,7 +48,8 @@ class Actualizar extends Component
                 $query->whereNotNull("mixagems.id");
             })
             ->get();
-        return view('livewire.mixagem.actualizar');
+        return view('livewire.mixagem.actualizar')
+        ->layout("layouts.logado.app");
     }
 
     public function dataMinimaAgendamento()

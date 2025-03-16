@@ -1,3 +1,4 @@
+@section('titulo', 'Actualizar agendamento de mixagem')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">
