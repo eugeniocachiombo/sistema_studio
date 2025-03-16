@@ -57,6 +57,7 @@
 </head>
 
 <body>
+    @section('titulo', 'Preparando o Ambiente')
     <div id="logo-container d-none">
         <div id="logo">
             <img class="d-none" src="{{ asset('assets/img/logo.png') }}" alt="logo" style="object-fit: cover" width="150px">

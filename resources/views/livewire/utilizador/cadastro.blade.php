@@ -1,3 +1,4 @@
+@section('titulo', 'Cadastro')
 <div>
     <main>
         <div class="container ">

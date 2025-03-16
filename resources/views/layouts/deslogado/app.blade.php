@@ -1,6 +1,6 @@
 @include('inclusao.headHtml')
-<title>Autenticacao</title>
+<title>@yield('titulo')</title>
 <main>
-    @livewire('utilizador.autenticacao')
+   {{$slot}}
 </main>
 @include('inclusao.footHtml')

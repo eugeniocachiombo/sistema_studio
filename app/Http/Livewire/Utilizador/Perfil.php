@@ -76,15 +76,11 @@ class Perfil extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.utilizador.perfil');
-    }
-
     public function render()
     {
         $this->setarDadosArquivo();
-        return view('livewire.utilizador.perfil');
+        return view('livewire.utilizador.perfil')
+        ->layout("layouts.logado.app");
     }
 
     public function updated(){

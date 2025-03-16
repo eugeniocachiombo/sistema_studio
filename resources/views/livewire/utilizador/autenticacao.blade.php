@@ -1,3 +1,4 @@
+@section('titulo', 'Autenticação')
 <div>
     <main>
         <div class="container">

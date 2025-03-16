@@ -59,21 +59,18 @@ class Cadastro extends Component
 
     public function mount()
     {
-        $this->buscarDadosDispositivo();
-    }
-
-    public function index()
-    {
         if (session('utilizador')) {
             return redirect()->route("pagina_inicial.");
         } else {
-            return view('index.utilizador.cadastro');
+            return view('livewire.utilizador.cadastro');
         }
+        $this->buscarDadosDispositivo();
     }
 
     public function render()
     {
-        return view('livewire.utilizador.cadastro');
+        return view('livewire.utilizador.cadastro')
+        ->layout("layouts.deslogado.app");
     }
 
     public function cadastrar()

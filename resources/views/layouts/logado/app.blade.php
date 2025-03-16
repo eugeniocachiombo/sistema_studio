@@ -1,9 +1,9 @@
 @include('inclusao.headHtml')
-<title>Actualizar Acesso</title>
+<title>@yield('titulo')</title>
 <main>
     @include('inclusao.header')
     @include('inclusao.aside')
-    @livewire('utilizador.actualizar-acesso', ["id" => $id])
+    {{$slot}}
     @include('inclusao.footer')
 </main>
 @include('inclusao.footHtml')

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAuth;
 
 Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function () {
-    Route::get('/', [PaginaInicial::class, "index"])->name("")->middleware(CheckAuth::class);
+    Route::get('/', PaginaInicial::class)->name("")->middleware(CheckAuth::class);
 });
 
 Route::prefix("recuperar_conta")->name("recuperar_conta.")->group(function () {

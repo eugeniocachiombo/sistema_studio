@@ -23,16 +23,12 @@ class ActualizarAcesso extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index($id)
-    {
-        return view('index.utilizador.actualizar-acesso', ["id" => $id]);
-    }
-
     public function render()
     {
         $this->dadosUtilizador = User::where("id", $this->utilizador_id)->first();
         $this->listaAcessos = Acesso::all();
-        return view('livewire.utilizador.actualizar-acesso');
+        return view('livewire.utilizador.actualizar-acesso')
+        ->layout("layouts.logado.app");
     }
 
     public function actualizarAcesso(){

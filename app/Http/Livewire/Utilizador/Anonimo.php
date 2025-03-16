@@ -25,20 +25,18 @@ class Anonimo extends Component
         $this->tabVisaoGeral = "active";
         $this->tabConteudoVisaoGeral = "show active";
         $this->buscarDadosDispositivo();
-    }
 
-    public function index($id)
-    {
         if (Auth::user()->id == $id) {
             return redirect()->route('utilizador.perfil');
         } else {
-            return view('index.utilizador.anonimo', ["id" => $id]);
+            return view('livewire.utilizador.anonimo', ["id" => $id]);
         }
     }
 
     public function render()
     {
-        return view('livewire.utilizador.anonimo');
+        return view('livewire.utilizador.anonimo')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarDadosUtilizador($id)

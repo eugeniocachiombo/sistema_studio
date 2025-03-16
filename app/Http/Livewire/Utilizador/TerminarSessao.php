@@ -17,11 +17,6 @@ class TerminarSessao extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.utilizador.terminar-sessao');
-    }
-
     public function render()
     {
         $this->registrarUltimoLogin(Auth::user()->id);
@@ -30,7 +25,8 @@ class TerminarSessao extends Component
         session()->forget("ambientePreparado");
         session()->forget("utilizador");
         cookie("sessao_iniciada", '', 0);
-        return view('livewire.utilizador.terminar-sessao');
+        return view('livewire.utilizador.terminar-sessao')
+        ->layout("layouts.deslogado.app");
     }
 
     public function registrarUltimoLogin($id){

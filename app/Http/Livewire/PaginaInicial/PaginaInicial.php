@@ -17,15 +17,11 @@ class PaginaInicial extends Component
         $this->utilizador_id = Auth::user()->id;
     }
 
-    public function index()
-    {
-        return view('index.pagina-inicial.pagina-inicial');
-    }
-
     public function render()
     {
-        $this->utilizadorLogado = $this->buscarDadosUtilizador($this->utilizador_id);
-        return view('livewire.pagina-inicial.pagina-inicial');
+        $this->utilizadorLogado = User::find($this->utilizador_id);
+        return view('livewire.pagina-inicial.pagina-inicial')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarDadosUtilizador($id)

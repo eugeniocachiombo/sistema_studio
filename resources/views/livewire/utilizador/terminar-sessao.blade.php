@@ -54,8 +54,11 @@
             color: #333;
         }
     </style>
+
+    
 </head>
 
+@section('titulo', 'Terminar Sessão')
 <body>
     <div id="logo-container">
         <div id="logo">

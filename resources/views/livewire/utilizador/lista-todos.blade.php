@@ -1,3 +1,4 @@
+@section('titulo', 'Todos Utilizadores')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

@@ -19,15 +19,11 @@ class ListaAtendentes extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.utilizador.lista-atendentes');
-    }
-
     public function render()
     {
         $this->listaUtilizadores = User::where("tipo_acesso", "=", 2)->get();
-        return view('livewire.utilizador.lista-atendentes');
+        return view('livewire.utilizador.lista-atendentes')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarFotoPerfil($idUtilizador)

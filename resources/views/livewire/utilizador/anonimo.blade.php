@@ -1,3 +1,4 @@
+@section('titulo', 'Perfil do utilizador')
 <div>
     @php
         $utilizador = $this->buscarDadosUtilizador($utilizador_id);
@@ -7,6 +8,7 @@
         $nascimento = $this->buscarNascimento($dadosPessoais->nascimento);
         $foto = $this->buscarFotoPerfil($utilizador_id);
     @endphp
+    
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Perfil do {{ucwords($acesso->tipo)}}</h1>

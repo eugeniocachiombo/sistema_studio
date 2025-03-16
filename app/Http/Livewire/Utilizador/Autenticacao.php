@@ -29,21 +29,18 @@ class Autenticacao extends Component
 
     public function mount()
     {
-        $this->buscarDadosDispositivo();
-    }
-
-    public function index()
-    {
         if (session('utilizador')) {
             return redirect()->route("pagina_inicial.");
         } else {
-            return view('index.utilizador.autenticacao');
+            return view('livewire.utilizador.autenticacao');
         }
+        $this->buscarDadosDispositivo();
     }
 
     public function render()
     {
-        return view('livewire.utilizador.autenticacao');
+        return view('livewire.utilizador.autenticacao')
+        ->layout("layouts.deslogado.app");
     }
 
     public function buscarDadosDispositivo()

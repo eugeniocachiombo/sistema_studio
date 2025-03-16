@@ -19,15 +19,11 @@ class ListaTodos extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.utilizador.lista-todos');
-    }
-
     public function render()
     {
         $this->listaUtilizadores = User::where("id", "!=", Auth::user()->id)->get();
-        return view('livewire.utilizador.lista-todos');
+        return view('livewire.utilizador.lista-todos')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarFotoPerfil($idUtilizador)
