@@ -25,16 +25,12 @@ class Adicionar extends Component
     {
         $this->buscarDadosDispositivo();
     }
-
-    public function index()
-    {
-        return view('index.estilos.adicionar');
-    }
-
+    
     public function render()
     {
         $this->listaEstilos = Estilo::all();
-        return view('livewire.estilos.adicionar');
+        return view('livewire.estilos.adicionar')
+        ->layout("layouts.logado.app");
     }
 
     public function criarEstilo()

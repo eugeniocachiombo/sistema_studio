@@ -30,15 +30,11 @@ class Actualizar extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index($id)
-    {
-        return view('index.estilos.actualizar', ["id" => $id]);
-    }
-
     public function render()
     {
         $this->listaEstilos = Estilo::all();
-        return view('livewire.estilos.actualizar');
+        return view('livewire.estilos.actualizar')
+        ->layout("layouts.logado.app");
     }
 
     public function setarInicialmenteDadosEstilo()

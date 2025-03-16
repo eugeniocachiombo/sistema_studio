@@ -1,3 +1,4 @@
+@section('titulo', 'Actualizar estilo')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

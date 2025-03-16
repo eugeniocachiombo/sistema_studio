@@ -17,15 +17,11 @@ class Listar extends Component
         $this->utilizador = Auth::user();
     }
 
-    public function index()
-    {
-        return view('index.estilos.listar');
-    }
-
     public function render()
     {
         $this->listaEstilo = Estilo::all();
-        return view('livewire.estilos.listar');
+        return view('livewire.estilos.listar')
+        ->layout("layouts.logado.app");
     }
 
     public function eliminarEstilo($id){
