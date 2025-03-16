@@ -1,3 +1,4 @@
+@section('titulo', 'Centrar de Ajuda')
 <div>
     <main id="main" class="main">
 

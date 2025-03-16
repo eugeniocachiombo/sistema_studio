@@ -12,14 +12,22 @@ Route::prefix("pagina_inicial")->name("pagina_inicial.")->group(function () {
 });
 
 Route::prefix("recuperar_conta")->name("recuperar_conta.")->group(function () {
-    Route::get('/', [RecuperarConta::class, "index"])->name("");
+    Route::get('/', RecuperarConta::class)->name("");
 });
 
 Route::prefix("info")->name("info.")->group(function () {
-    Route::get('ajuda', [Ajuda::class, "index"])->name("ajuda");
-    Route::get('contacto', [Contacto::class, "index"])->name("contacto");
+    Route::get('ajuda', Ajuda::class)->name("ajuda");
+    Route::get('contacto', Contacto::class)->name("contacto");
 });
 
-Route::get("/", function () {return redirect()->route("utilizador.autenticacao");});
-Route::get("/erro_data", function () {return view("index.erro_de_pagina.data-erro");});
-Route::fallback(function () {return view("index.erro_de_pagina.pagina-de-erro");});
+Route::get("/", function () {
+    return redirect()->route("utilizador.autenticacao");
+});
+
+Route::get("/erro_data", function () {
+    return view("erro_de_pagina.data-erro");
+});
+
+Route::fallback(function () {
+    return view("erro_de_pagina.pagina-de-erro");
+});

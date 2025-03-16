@@ -32,20 +32,16 @@ class RecuperarConta extends Component
 
     public function mount()
     {
-        $this->buscarDadosDispositivo();
-    }
-
-    public function index()
-    {
         if (Auth::check()) {
             return redirect()->route('pagina_inicial.');
         }
-        return view('index.recuperar-conta.recuperar-conta');
+        $this->buscarDadosDispositivo();
     }
 
     public function render()
     {
-        return view('livewire.recuperar-conta.recuperar-conta');
+        return view('livewire.recuperar-conta.recuperar-conta')
+        ->layout("layouts.logado.app");
     }
 
     public function alterarPalavraPasse()

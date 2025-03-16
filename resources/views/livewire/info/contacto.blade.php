@@ -1,3 +1,4 @@
+@section('titulo', 'Contactos')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

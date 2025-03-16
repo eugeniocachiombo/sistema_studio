@@ -27,14 +27,10 @@ class Contacto extends Component
         'assunto' => 'required',
     ];
 
-    public function index()
-    {
-        return view('index.info.contacto');
-    }
-
     public function render()
     {
-        return view('livewire.info.contacto');
+        return view('livewire.info.contacto')
+        ->layout("layouts.logado.app");
     }
 
     public function enviarEmail()

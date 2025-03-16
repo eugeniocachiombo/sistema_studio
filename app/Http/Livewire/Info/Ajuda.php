@@ -8,11 +8,7 @@ class Ajuda extends Component
 {
     public function render()
     {
-        return view('livewire.info.ajuda');
-    }
-
-    public function index()
-    {
-        return view('index.info.ajuda');
+        return view('livewire.info.ajuda')
+        ->layout("layouts.logado.app");
     }
 }
