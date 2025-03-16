@@ -44,17 +44,13 @@ class Criar extends Component
         $this->buscarDadosDispositivo();
         $this->participantesEscolhidos = [];
     }
-
-    public function index()
-    {
-        return view('index.grupos.criar');
-    }
     
     public function render()
     {
         $this->listaEstilos = Estilo::all();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
-        return view('livewire.grupos.criar');
+        return view('livewire.grupos.criar')
+        ->layout("layouts.logado.app");
     }
     
     public function adicionarMembrosAoGrupo()

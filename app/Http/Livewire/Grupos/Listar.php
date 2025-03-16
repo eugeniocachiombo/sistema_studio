@@ -12,15 +12,11 @@ class Listar extends Component
 {
     public $listaGrupo = array();
 
-    public function index()
-    {
-        return view('index.grupos.listar');
-    }
-
     public function render()
     {
         $this->listaGrupo = Grupo::all();
-        return view('livewire.grupos.listar');
+        return view('livewire.grupos.listar')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarClientesGrupo($id)

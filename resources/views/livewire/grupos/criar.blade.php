@@ -1,3 +1,4 @@
+@section('titulo', 'Criação de grupos')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">

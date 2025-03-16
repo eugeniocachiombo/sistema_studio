@@ -40,17 +40,13 @@ class Actualizar extends Component
         $this->membrosEscolhidos = array();
         $this->setarInicialmenteDadosGrupo();
     }
-
-    public function index($id)
-    {
-        return view('index.grupos.actualizar', ["id"=>$id]);
-    }
     
     public function render()
     {
         $this->listaEstilos = Estilo::all();
         $this->listaMembrosClientes = $this->buscarListaParaMembrosParaGrupo();
-        return view('livewire.grupos.actualizar');
+        return view('livewire.grupos.actualizar')
+        ->layout("layouts.logado.app");
     }
 
     public function setarInicialmenteDadosGrupo(){
