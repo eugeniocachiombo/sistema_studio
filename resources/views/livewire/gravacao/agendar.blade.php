@@ -53,10 +53,10 @@
                                     </div>
                                 </div>
 
-                                <div class="col m-3">
-                                    <label class="text-primary fw-bold" for="">Escolher</label>
+                                <div class="col m-3" wire:ignore>
+                                    <label class="text-primary fw-bold mb-3" for="">Escolher</label>
                                     <select class="form-control mt-3" wire:model="grupoEscolhido" name=""
-                                        id="">
+                                        id="grupoEscolhido">
                                         <option value="" class="d-none">Selecione o grupo</option>
                                         <option value="">Desconhecido</option>
                                         @foreach ($listaGrupos as $item)
@@ -309,10 +309,10 @@
                                     </div>
                                 </div>
 
-                                <div class="col m-3">
+                                <div class="col m-3" wire:ignore>
                                     <label class="text-primary fw-bold" for="">Estilo</label>
                                     <select class="form-control mt-3" wire:model="estilo_id" name=""
-                                        id="">
+                                        id="estilo_id">
                                         <option class="d-none">Selecione o estilo</option>
                                         @foreach ($listaEstilos as $item)
                                             <option value="{{ $item->id }}">{{ $item->tipo }}</option>
@@ -387,6 +387,24 @@
             });
             $('#cliente_id').on('change', function(e) {
                 @this.set('cliente_id', $('#cliente_id').select2("val"));
+            });
+        });
+        
+        $(document).ready(function() {
+            $('#estilo_id').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#estilo_id').on('change', function(e) {
+                @this.set('estilo_id', $('#estilo_id').select2("val"));
+            });
+        });
+
+        $(document).ready(function() {
+            $('#grupoEscolhido').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#grupoEscolhido').on('change', function(e) {
+                @this.set('grupoEscolhido', $('#grupoEscolhido').select2("val"));
             });
         });
     </script>

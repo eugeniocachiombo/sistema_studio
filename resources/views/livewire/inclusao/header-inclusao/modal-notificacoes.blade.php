@@ -12,7 +12,7 @@
                                         <h4>Agendamento em Processo <i
                                                 class="bi bi-exclamation-circle text-warning"></i></h4>
                                         <span class="text-dark"><b>Proprietário:</b>
-                                            {{ $agendaEmProrocesso->buscarCliente->name }}</span> <br>
+                                            {{ $agendaEmProrocesso->buscarCliente->name ?? "N/D"}}</span> <br>
                                         <span class="text-dark"><b>Título:</b>
                                             {{ $agendaEmProrocesso->titulo_audio }}</span> <br>
                                         <span class="text-dark"><b>Tipo de Agendamento:</b>
