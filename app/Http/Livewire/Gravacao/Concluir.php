@@ -25,15 +25,11 @@ class Concluir extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.gravacao.concluir');
-    }
-
     public function render()
     {
         $this->listaGravacao = Gravacao::all();
-        return view('livewire.gravacao.concluir');
+        return view('livewire.gravacao.concluir')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarUtilizador($id)

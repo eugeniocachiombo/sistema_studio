@@ -51,11 +51,6 @@ class Agendar extends Component
         "nomeParticipante.required" => "Escreva o nome do participante",
     ];
 
-    public function index()
-    {
-        return view('index.gravacao.agendar');
-    }
-
     public function mount()
     {
         $this->buscarDadosDispositivo();
@@ -74,7 +69,9 @@ class Agendar extends Component
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
 
         $participantes = $this->buscarTodosParticipantes();
-        return view('livewire.gravacao.agendar', ["participantesFiltrados" => $participantes]);
+        return view('livewire.gravacao.agendar', [
+            "participantesFiltrados" => $participantes
+        ])->layout("layouts.logado.app");;
     }
 
     public function dataMinimaAgendamento()

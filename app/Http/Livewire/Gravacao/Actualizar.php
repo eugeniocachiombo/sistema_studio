@@ -53,11 +53,6 @@ class Actualizar extends Component
         "nomeParticipante.required" => "Escreva o nome do participante",
     ];
 
-    public function index($idGravacao)
-    {
-        return view('index.gravacao.actualizar', ["idGravacao" => $idGravacao]);
-    }
-
     public function mount($idGravacao)
     {
         $this->idGravacao = $idGravacao;
@@ -76,7 +71,10 @@ class Actualizar extends Component
         $this->listaGrupos = Grupo::all();
         $this->removerGrupoParticipanteJaSelecionado($this->grupoEscolhido);
         $this->removerClienteParticipanteJaSelecionado($this->cliente_id);
-        return view('livewire.gravacao.actualizar', ["participantesFiltrados" => $participantes]);
+        return view('livewire.gravacao.actualizar', [
+            "participantesFiltrados" => $participantes
+            ])
+        ->layout("layouts.logado.app");
     }
 
     public function dataMinimaAgendamento()

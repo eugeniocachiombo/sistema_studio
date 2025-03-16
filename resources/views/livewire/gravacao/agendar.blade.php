@@ -1,3 +1,4 @@
+@section('titulo', 'Agendamento de gravação')
 <div>
     <main id="main" class="main">
         <div class="pagetitle">
