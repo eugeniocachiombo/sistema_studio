@@ -28,15 +28,11 @@ class Listar extends Component
         $this->buscarDadosDispositivo();
     }
 
-    public function index()
-    {
-        return view('index.masterizacao.listar');
-    }
-
     public function render()
     {
         $this->buscarDadosListagem();
-        return view('livewire.masterizacao.listar');
+        return view('livewire.masterizacao.listar')
+        ->layout("layouts.logado.app");
     }
 
     public function buscarDadosListagem(){

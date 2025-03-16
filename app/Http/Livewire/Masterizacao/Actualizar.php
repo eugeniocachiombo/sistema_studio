@@ -32,16 +32,11 @@ class Actualizar extends Component
         "duracaoMasterizacao.required" => "Campo obrigatório",
     ];
 
-    public function mount($idMasterizacao)
+    public function mount($id)
     {
-        $this->idMasterizacao = $idMasterizacao;
+        $this->idMasterizacao = $id;
         $this->buscarDadosDispositivo();
         $this->setarInicialmenteDadosMixagem();
-    }
-
-    public function index($idMasterizacao)
-    {
-        return view('index.masterizacao.actualizar', ["idMasterizacao" => $idMasterizacao]);
     }
 
     public function render()
@@ -55,7 +50,8 @@ class Actualizar extends Component
             ->whereNotNull("masterizacaos.mixagem_id")
             ->distinct()
             ->get();
-        return view('livewire.masterizacao.actualizar');
+        return view('livewire.masterizacao.actualizar')
+        ->layout("layouts.logado.app");
     }
 
     public function dataMinimaAgendamento()
