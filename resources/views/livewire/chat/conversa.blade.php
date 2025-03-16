@@ -1,3 +1,4 @@
+@section('titulo', 'Chat')
 <div>
     <link rel="stylesheet" href="{{ asset('assets/css/paginacao-conversa.css') }}">
     <div>

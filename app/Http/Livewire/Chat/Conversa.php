@@ -52,20 +52,18 @@ class Conversa extends Component
             "audio" => ["aac", "ogg", "m4a", "wav", "mp3"],
             "texto" => ["pdf", "doc", "txt"],
         ];
+
         $this->totalMsgActual = $this->listarMsgRecibidas();
         $this->buscarDadosDispositivo();
         $this->registrarActividade("<b><i class='bi bi-check-circle-fill text-success'></i> ".
         $nomeUtilizador . " Entrou em conversa com " . $nomeRemente .
         "</b> <hr>" . 
         $this->infoDispositivo, "normal", Auth::user()->id);
-    }
 
-    public function index($utilizador, $remente)
-    {
         $utilizador = $utilizador;
         $remente = $remente;
         if ($utilizador == Auth::user()->id) {
-            return view('index.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
+            return view('livewire.chat.conversa', ["utilizador" => $utilizador, "remente" => $remente]);
         } else {
             return redirect()->to("/error");
         }
@@ -77,7 +75,10 @@ class Conversa extends Component
         $this->ocutarMsgValidate();
         $this->setarDadosArquivo();
         $this->actualizarParaLidoMensagem();
-        return view('livewire.chat.conversa', ["todasConversas", $this->todasConversas]);
+        return view('livewire.chat.conversa', [
+            "todasConversas", $this->todasConversas
+            ])
+        ->layout("layouts.logado.app");
     }
 
     public function msgPendentes()
