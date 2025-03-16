@@ -41,6 +41,12 @@
      <!-- Wavesurfer-->
      <link rel="stylesheet" href="{{ asset('assets/wavesurfer/wavesurfer.css') }}" >
      
+
+     <!-- Assets Select 2 & tema Bootsrap-->
+     <link rel="stylesheet" href="{{ asset('assets/select2/tema-bootstrap.css') }}" />
+     <link href="{{ asset('assets/select2/select2.css') }}" rel="stylesheet">
+    
+
     @livewireStyles
 </head>
 

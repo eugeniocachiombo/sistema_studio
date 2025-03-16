@@ -17,13 +17,14 @@
                     {{-- Coluna 1 --}}
                     <div class="col">
                         {{-- Cliente --}}
-                        <div class="card card-animated p-4">
+                        <div class="card card-animated p-4" wire:ignore>
                             <label class="text-primary fw-bold" for="">Cliente</label>
-                            <select class="form-control" name="" id="" wire:model="cliente_id">
+                            <select class="select-control" name="cliente_id" id="cliente_id" wire:model="cliente_id">
                                 <option value="" class="d-none" selected>Escolha o cliente</option>
                                 <option value="">Desconhecido</option>
                                 @foreach ($listaClientes as $item)
-                                <option value="{{ $item->buscarCliente->id }}">Id: {{ $item->buscarCliente->id }} ..... <span class="fw-bold">{{ $item->buscarCliente->name }}</span></option>
+                                    <option value="{{ $item->buscarCliente->id }}">Id: {{ $item->buscarCliente->id }}
+                                        ..... <span class="fw-bold">{{ $item->buscarCliente->name }}</span></option>
                                 @endforeach
                             </select>
                             <div class="text-danger" style="font-size: 12.5px">
@@ -378,3 +379,15 @@
     </main>
 </div>
 
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#cliente_id').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#cliente_id').on('change', function(e) {
+                @this.set('cliente_id', $('#cliente_id').select2("val"));
+            });
+        });
+    </script>
+@endpush
