@@ -19,6 +19,7 @@ use Livewire\Component;
 class Listar extends Component
 {
     public $listaGravacao = array();
+    public $listaGravacaoModal = [];
     public $infoDispositivo;
     public $idUtilizadorLogado;
 
@@ -152,6 +153,11 @@ class Listar extends Component
         $particEscolhidos = str_replace(" (Grupo)", "", $particEscolhidos);
         $particEscolhidos = str_replace(" (Anônimo)", "", $particEscolhidos);
         return rtrim($particEscolhidos);
+    }
+
+    public function buscarListaGravacaoModal($id){
+        $this->listaGravacaoModal = Gravacao::find($id); 
+        $this->dispatchBrowserEvent('abrirModalListaGravacao');
     }
 
     public function formatarData($data)

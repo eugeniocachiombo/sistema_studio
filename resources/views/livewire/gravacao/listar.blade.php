@@ -126,8 +126,9 @@
                                         </td>
 
                                         <td class="text-center" style="white-space: nowrap">
-                                            <button class="btn btn-primary">
-                                                <i class="bi bi-eye "></i>
+                                            <button wire:click="buscarListaGravacaoModal({{ $item->id }})"
+                                                class="btn btn-primary">
+                                                <i class="bi bi-eye"></i>
                                             </button>
 
                                             @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso != 3)
@@ -154,4 +155,5 @@
             </div>
         </section>
     </main>
+    @include('livewire.gravacao.modal.lista-modal')
 </div>
