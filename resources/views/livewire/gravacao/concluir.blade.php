@@ -26,22 +26,13 @@
                                         Id
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Proprietário
-                                    </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Título do áudio
-                                    </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Participação
+                                        Música
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Estilo
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Data da gravação
-                                    </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Estado
                                     </th>
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Concluido
@@ -56,9 +47,9 @@
                                 @foreach ($listaGravacao as $item)
                                     <tr>
                                         <td class="bg-success text-white text-center" style="white-space: nowrap">{{ $item->id }}</td>
-                                        <td style="white-space: nowrap">
-                                            <div class="d-flex">
-                                                <div>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div style="white-space: nowrap">
                                                     @php
                                                         $proprietario = '';
                                                     @endphp
@@ -82,14 +73,14 @@
                                                                 alt="foto"
                                                                 style="width: 40px; height: 40px; object-fit: cover;">
                                                         @endif
-                                                        
-                                                            <a href="{{ route('utilizador.anonimo', $item->cliente_id) }}">
-                                                                {{ $proprietario }}
-                                                            </a>
-                                                        
+
+                                                        <a href="{{ route('utilizador.anonimo', $item->cliente_id) }}">
+                                                            {{ $proprietario }}
+                                                        </a>
                                                     @elseif($item->grupo_id)
                                                         @php
-                                                            $proprietario = $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
+                                                            $proprietario =
+                                                                $this->buscarGrupo($item->grupo_id)->nome . ' (Grupo)';
                                                         @endphp
                                                         <div class="d-flex align-items-center ms-1 text-primary">
                                                             {{ $proprietario }}
@@ -97,36 +88,31 @@
                                                     @endif
 
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td style="min-width: 200px">{{ $item->titulo_audio }}</td>
-                                        <td style="min-width: 200px">
-                                            @php
-                                                $idGravacao = $item->id;
-                                                $todosParticipantes = $this->buscarParticipantesGravacao($idGravacao);
-                                                $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
-                                            @endphp
 
-                                            {{ $particEscolhidos ? 'Feat. ( ' . $particEscolhidos . ' )' : 'Nenhum' }}
+                                                <div style="white-space: nowrap" class="ps-2">
+                                                    - {{ $item->titulo_audio }}
+                                                </div>
+                                            </div>
+
+                                            <div style="white-space: no-wrap">
+                                                @php
+                                                    $idGravacao = $item->id;
+                                                    $todosParticipantes = $this->buscarParticipantesGravacao(
+                                                        $idGravacao,
+                                                    );
+                                                    $particEscolhidos = $this->cortarUltimavirgula($todosParticipantes);
+                                                @endphp
+
+                                                <b>{{ $particEscolhidos ? ' ( Feat. ' . $particEscolhidos . ' )' : '' }}</b>
+                                            </div>
                                         </td>
                                         <td class="bg-success text-white" style="white-space: nowrap">
                                             {{ $this->buscarEstilos($item->estilo_audio) ? $this->buscarEstilos($item->estilo_audio)->tipo : '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $this->formatarDataNormal($item->data_gravacao) }}</td>
-                                        <td style="white-space: nowrap">
-                                            @if ($item->estado_gravacao == 'gravado')
-                                                <span class="badge bg-success text-light ">
-                                                    {{ ucwords($item->estado_gravacao) }}
-                                                </span>
-                                            @else
-                                                <span class="badge bg-danger text-light ">
-                                                    {{ ucwords($item->estado_gravacao) }}
-                                                </span>
-                                            @endif
-                                        </td>
 
                                         @if ($item->estado_gravacao == 'gravado')
-                                            <td style="white-space: nowrap">
+                                            <td>
                                                 {{ $this->formatarData($item->updated_at) }}
                                             </td>
                                         @else
