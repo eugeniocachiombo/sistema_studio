@@ -167,7 +167,7 @@ class Listar extends Component
         $gravacao = Gravacao::find($idGravacao);
         $this->msgParaRegistroActividade($gravacao->cliente_id, $gravacao->grupo_id);
         $this->emit('alerta', ['mensagem' => 'Agendamento concluido com sucesso', 'icon' => 'success']);
-        $this->emit('atrazar_redirect', ['caminho' => '/gravacao/listar', 'tempo' => 2500]);
+        $this->emit('atrazar_redirect', ['caminho' => '/gravacao/lista', 'tempo' => 2500]);
     }
 
     public function formatarData($data)
