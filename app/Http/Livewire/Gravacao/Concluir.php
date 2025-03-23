@@ -27,7 +27,7 @@ class Concluir extends Component
 
     public function render()
     {
-        $this->listaGravacao = Gravacao::all();
+        $this->listaGravacao = Gravacao::where("estado_gravacao", "gravado")->get();
         return view('livewire.gravacao.concluir')
         ->layout("layouts.logado.app");
     }

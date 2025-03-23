@@ -26,14 +26,14 @@
 
                     <li>
                         <a href="{{ route('gravacao.listar') }}">
-                            <i class="bi bi-circle"></i><span>Listar</span>
+                            <i class="bi bi-circle"></i><span>Lista</span>
                         </a>
                     </li>
 
                     @if (session('tipo_acesso') < 2)
                         <li>
                             <a href="{{ route('gravacao.concluir') }}">
-                                <i class="bi bi-circle"></i><span>Concluir</span>
+                                <i class="bi bi-circle"></i><span>Concluidas</span>
                             </a>
                         </li>
                     @endif

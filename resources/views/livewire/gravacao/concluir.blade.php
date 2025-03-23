@@ -37,9 +37,6 @@
                                     <th class="bg-primary text-white" style="white-space: nowrap">
                                         Concluido
                                     </th>
-                                    <th class="bg-primary text-white" style="white-space: nowrap">
-                                        Acção
-                                    </th>
                                 </tr>
                             </thead>
 
@@ -120,17 +117,6 @@
                                                 --
                                             </td>
                                         @endif
-
-                                        <td style="white-space: nowrap" class="text-center">
-                                            @if ($item->estado_gravacao == 'gravado')
-                                                <i class="bi bi-check text-success display-6 "></i>
-                                            @else
-                                                <button class="btn btn-success"
-                                                    wire:click="concluirAgendamento({{ $item->id }})">
-                                                    Concluir
-                                                </button>
-                                            @endif
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
