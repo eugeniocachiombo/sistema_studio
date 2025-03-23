@@ -36,7 +36,7 @@
                                     $proprietario =
                                         $this->buscarGrupo($listaGravacaoModal->grupo_id)->nome . ' (Grupo)';
                                 @endphp
-                                 {{ $proprietario }}
+                                {{ $proprietario }}
                             @endif
                         </div>
                     </div>
@@ -64,19 +64,24 @@
                         {{ ucwords($listaGravacaoModal->estado_gravacao) }}
                     </p>
 
-                    @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 3)
-                        <p><b>Foi Gravado:</b>
-                            @if ($listaGravacaoModal->estado_gravacao == 'gravado')
-                                {{ $this->formatarData($listaGravacaoModal->updated_at) }}
-                            @else
-                                --
-                            @endif
-                        </p>
-                    @endif
-
                     <p><b>Duração da Gravação: </b> {{ $listaGravacaoModal->duracao }}</p>
                     <p><b>Responsável pelo Agendamento: </b>
                         {{ $this->buscarUtilizador($listaGravacaoModal->responsavel)->name }}
+                    </p>
+
+                    <p>
+                        @if ($listaGravacaoModal->estado_gravacao == 'gravado')
+                            <b>Foi Gravado:</b>
+                            {{ $this->formatarData($listaGravacaoModal->updated_at) }} <i
+                                class="bi bi-check text-success  "></i>
+                        @else
+                            @if ($this->buscarUtilizador($idUtilizadorLogado)->tipo_acesso == 1)
+                                <b>Concluir Gravação:</b>
+                                <button class="btn btn-success" wire:click="concluirAgendamento({{ $idGravacao }})">
+                                    Concluir
+                                </button>
+                            @endif
+                        @endif
                     </p>
                 @else
                     <p>Nenhuma informação disponível.</p>

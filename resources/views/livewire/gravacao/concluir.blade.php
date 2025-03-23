@@ -126,7 +126,7 @@
                                                 <i class="bi bi-check text-success display-6 "></i>
                                             @else
                                                 <button class="btn btn-success"
-                                                    wire:click="concluirAgendamento({{ $idGravacao }})">
+                                                    wire:click="concluirAgendamento({{ $item->id }})">
                                                     Concluir
                                                 </button>
                                             @endif
